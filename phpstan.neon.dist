@@ -1,0 +1,14 @@
+includes:
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+
+parameters:
+    level: max
+    paths:
+        - src/ApiException.php
+        - src/Client.php
+        - src/ClientBuilder.php
+        - src/Exception
+        - src/Support
+        - src/Webhook
+    tmpDir: .phpstan-cache
+    treatPhpDocTypesAsCertain: true

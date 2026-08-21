@@ -1,0 +1,8 @@
+{
+    "commit": "a1d5fce88f5597d83a80036db91c7cf71a93e6c8",
+    "repository": "papaproxy/api",
+    "sha256": "8e7204468669250b453fdc4c6325855c9255c0afd82963c60fd21eb09decbe00",
+    "source": "openapi.yml",
+    "operations": 82,
+    "schemas": 127
+}

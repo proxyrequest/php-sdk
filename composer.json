@@ -1,0 +1,89 @@
+{
+  "name": "proxyrequest/php-sdk",
+  "description": "Official PHP SDK for the ProxyRequest public API.",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "proxyrequest",
+    "proxy",
+    "sdk",
+    "api",
+    "residential-proxy"
+  ],
+  "homepage": "https://proxyrequest.com",
+  "support": {
+    "docs": "https://proxyrequest.com/docs/",
+    "issues": "https://github.com/proxyrequest/php-sdk/issues",
+    "source": "https://github.com/proxyrequest/php-sdk"
+  },
+  "require": {
+    "php": "^8.5",
+    "php-64bit": "^8.5",
+    "ext-curl": "*",
+    "ext-hash": "*",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "guzzlehttp/guzzle": "^7.15 || ^8.0",
+    "guzzlehttp/psr7": "^2.8 || ^3.0",
+    "psr/http-client": "^1.0",
+    "psr/http-message": "^1.1 || ^2.0"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.0",
+    "phpstan/phpstan": "^2.2",
+    "phpstan/phpstan-strict-rules": "^2.0",
+    "phpunit/phpunit": "^13.3",
+    "symfony/yaml": "^8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "ProxyRequest\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ProxyRequest\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": "phpunit",
+    "analyse": "phpstan analyse --memory-limit=1G",
+    "format": "php-cs-fixer fix --allow-risky=yes",
+    "format:check": "php-cs-fixer fix --dry-run --diff --allow-risky=yes",
+    "quality": [
+      "@format:check",
+      "@analyse",
+      "@test"
+    ]
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": false
+  },
+  "prefer-stable": true,
+  "archive": {
+    "exclude": [
+      "/.gitattributes",
+      "/.github",
+      "/.gitignore",
+      "/.idea",
+      "/.openapi-generator",
+      "/.openapi-generator-ignore",
+      "/.php-cs-fixer.cache",
+      "/.phpstan-cache",
+      "/.phpunit.cache",
+      "/.DS_Store",
+      "/openapi",
+      "/scripts",
+      "/tests",
+      "/vendor",
+      "/composer.lock",
+      "/coverage",
+      "/Makefile",
+      "/.php-cs-fixer.dist.php",
+      "/CONTRIBUTING.md",
+      "/phpstan.neon.dist",
+      "/phpunit.xml.dist"
+    ]
+  }
+}

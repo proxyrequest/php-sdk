@@ -1,0 +1,107 @@
+invokerPackage: ProxyRequest
+apiPackage: Resource
+modelPackage: Dto
+packageName: ProxyRequest
+composerPackageName: proxyrequest/php-sdk
+artifactVersion: 1.0.0
+artifactUrl: https://github.com/proxyrequest/php-sdk
+developerOrganization: ProxyRequest
+developerOrganizationUrl: https://proxyrequest.com
+licenseName: MIT
+srcBasePath: src
+variableNamingConvention: camelCase
+hideGenerationTimestamp: true
+enumUnknownDefaultCase: true
+disallowAdditionalPropertiesIfNotPresent: false
+library: guzzle
+operationIdNameMappings:
+  affiliates_list: list
+  affiliates_rewards_list: listRewards
+  affiliates_rewards_overall_retrieve: getRewardsOverall
+  analytics_transactions_retrieve: getTransactions
+  analytics_connections_retrieve: getConnections
+  analytics_domains_retrieve: listDomains
+  analytics_feed_retrieve: listFeed
+  analytics_logs_retrieve: listLogs
+  analytics_overall_retrieve: getOverall
+  api_keys_list: list
+  api_keys_create: create
+  api_keys_destroy: delete
+  coupons_list: list
+  coupons_create: create
+  coupons_retrieve: get
+  coupons_update: replace
+  coupons_partial_update: update
+  coupons_destroy: delete
+  coupons_redeems_list: listRedeems
+  coupons_calculate_price_create: calculatePrice
+  integrations_telegram_connection_retrieve: getConnection
+  integrations_telegram_connection_partial_update: updateConnection
+  integrations_telegram_connection_destroy: deleteConnection
+  integrations_telegram_link_create: createLink
+  integrations_telegram_link_consume_create: consumeLink
+  integrations_telegram_session_create: createSession
+  invoices_list: list
+  invoices_create: create
+  invoices_retrieve: get
+  invoices_destroy: delete
+  invoices_download_pdf_retrieve: downloadPdf
+  invoices_pay_retrieve: getPaymentLink
+  locations_asn_list: listAsns
+  locations_cities_list: listCities
+  locations_cities_retrieve: getCity
+  locations_continents_list: listContinents
+  locations_continents_retrieve: getContinent
+  locations_countries_list: listCountries
+  locations_countries_retrieve: getCountry
+  locations_isps_list: listIsps
+  locations_regions_list: listRegions
+  locations_regions_retrieve: getRegion
+  login_create: login
+  login_google_create: loginWithGoogle
+  news_list: list
+  orders_list: list
+  orders_retrieve: get
+  orders_partial_update: updateAutoRenewal
+  orders_destroy: delete
+  packages_list: list
+  packages_commissions_list: listCommissions
+  profile_retrieve: get
+  profile_partial_update: update
+  profile_destroy: delete
+  profile_2fa_confirm_create: confirmTwoFactor
+  profile_2fa_disable_create: disableTwoFactor
+  profile_2fa_setup_create: setupTwoFactor
+  profile_2fa_status_retrieve: getTwoFactorStatus
+  profile_change_password_create: changePassword
+  proxies_generate_create: generate
+  recover_password_create: recoverPassword
+  refresh_create: refresh
+  reset_password_create: resetPassword
+  rewards_list: list
+  rewards_claim_create: claim
+  sessions_list: list
+  sessions_destroy: delete
+  settings_retrieve: get
+  signup_create: signup
+  users_list: list
+  users_create: create
+  users_retrieve: get
+  users_partial_update: update
+  users_destroy: delete
+  users_data_add_create: addData
+  users_data_subtract_create: subtractData
+  users_orders_list: listOrders
+  users_password_create: resetPassword
+  webhooks_list: list
+  webhooks_create: create
+  webhooks_retrieve: get
+  webhooks_destroy: delete
+modelNameMappings:
+  LoginRequestRequest: LoginRequest
+  InvoiceCreateRequestRequest: InvoiceCreateRequest
+  RewardClaimRequestRequest: RewardClaimRequest
+  TokenRefreshRequestRequest: TokenRefreshRequest
+  UserPasswordResetRequestRequest: UserPasswordResetRequest
+  PaginatedAPIKeyListList: PaginatedAPIKeyList
+  PaginatedWebhookListList: PaginatedWebhookList

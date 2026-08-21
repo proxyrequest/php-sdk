@@ -1,0 +1,27 @@
+# Hand-written package and runtime files.
+composer.json
+README.md
+LICENSE
+CHANGELOG.md
+CONTRIBUTING.md
+SECURITY.md
+Makefile
+phpunit.xml.dist
+phpstan.neon.dist
+.php-cs-fixer.dist.php
+.gitattributes
+.gitignore
+.github/**
+.travis.yml
+git_push.sh
+openapi/**
+scripts/**
+tests/**
+docs/Guides/**
+src/Client.php
+src/ClientBuilder.php
+src/ApiException.php
+src/Auth/**
+src/Exception/**
+src/Support/**
+src/Webhook/**
