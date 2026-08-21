@@ -1,7 +1,12 @@
 # ProxyRequest PHP SDK
 
-Official PHP 8.5 client for the [ProxyRequest](https://proxyrequest.com/)
-public API. The package covers all 82 operations from the current OpenAPI
+[![Packagist Version](https://img.shields.io/packagist/v/proxyrequest/php-sdk.svg)](https://packagist.org/packages/proxyrequest/php-sdk)
+[![CI](https://github.com/proxyrequest/php-sdk/actions/workflows/ci.yml/badge.svg)](https://github.com/proxyrequest/php-sdk/actions/workflows/ci.yml)
+[![PHP](https://img.shields.io/packagist/php-v/proxyrequest/php-sdk.svg)](https://packagist.org/packages/proxyrequest/php-sdk)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+Official PHP 8.5 client for the [ProxyRequest public API](https://proxyrequest.com/docs/).
+The package covers all 82 operations from the current OpenAPI
 contract, including users, orders, proxy generation, analytics, invoices,
 packages, locations, webhooks, API keys, and Telegram integration.
 
