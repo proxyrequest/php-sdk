@@ -174,6 +174,16 @@ class ProfileResource
     }
 
     /**
+     * Operation changePasswordWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function changePasswordWithResponse($changePasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['changePassword'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->changePasswordWithHttpInfo($changePasswordRequest, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation changePasswordWithHttpInfo
      *
      * Change the account password
@@ -199,14 +209,16 @@ class ProfileResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -240,7 +252,7 @@ class ProfileResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -295,7 +307,7 @@ class ProfileResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -502,6 +514,16 @@ class ProfileResource
     }
 
     /**
+     * Operation confirmTwoFactorWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function confirmTwoFactorWithResponse($twoFactorConfirmRequest, $acceptLanguage = null, string $contentType = self::contentTypes['confirmTwoFactor'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->confirmTwoFactorWithHttpInfo($twoFactorConfirmRequest, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation confirmTwoFactorWithHttpInfo
      *
      * Confirm two-factor setup
@@ -527,14 +549,16 @@ class ProfileResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -568,7 +592,7 @@ class ProfileResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -623,7 +647,7 @@ class ProfileResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -815,6 +839,7 @@ class ProfileResource
      *
      * Delete the current account
      *
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
@@ -822,9 +847,19 @@ class ProfileResource
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function delete($acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function delete($ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
     {
-        $this->deleteWithHttpInfo($acceptLanguage, $contentType);
+        $this->deleteWithHttpInfo($ifMatch, $acceptLanguage, $contentType);
+    }
+
+    /**
+     * Operation deleteWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function deleteWithResponse($ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->deleteWithHttpInfo($ifMatch, $acceptLanguage, $contentType));
     }
 
     /**
@@ -832,6 +867,7 @@ class ProfileResource
      *
      * Delete the current account
      *
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
@@ -839,9 +875,9 @@ class ProfileResource
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deleteWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteWithHttpInfo($ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
     {
-        $request = $this->deleteRequest($acceptLanguage, $contentType);
+        $request = $this->deleteRequest($ifMatch, $acceptLanguage, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -852,14 +888,16 @@ class ProfileResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -893,8 +931,16 @@ class ProfileResource
                     );
                     $e->setResponseObject($data);
                     throw $e;
+                case 412:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\ProxyRequest\Dto\AffiliatesList401Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -905,15 +951,16 @@ class ProfileResource
      *
      * Delete the current account
      *
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteAsync($acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteAsync($ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
     {
-        return $this->deleteAsyncWithHttpInfo($acceptLanguage, $contentType)
+        return $this->deleteAsyncWithHttpInfo($ifMatch, $acceptLanguage, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -926,16 +973,17 @@ class ProfileResource
      *
      * Delete the current account
      *
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteAsyncWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteAsyncWithHttpInfo($ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
     {
         $returnType = '';
-        $request = $this->deleteRequest($acceptLanguage, $contentType);
+        $request = $this->deleteRequest($ifMatch, $acceptLanguage, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -963,14 +1011,16 @@ class ProfileResource
     /**
      * Create request for operation 'delete'
      *
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function deleteRequest($acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteRequest($ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
     {
+
 
 
 
@@ -982,6 +1032,10 @@ class ProfileResource
         $multipart = false;
 
 
+        // header params
+        if ($ifMatch !== null) {
+            $headerParams['If-Match'] = ObjectSerializer::toHeaderValue($ifMatch);
+        }
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
@@ -1071,6 +1125,16 @@ class ProfileResource
     }
 
     /**
+     * Operation disableTwoFactorWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function disableTwoFactorWithResponse($twoFactorDisableRequest, $acceptLanguage = null, string $contentType = self::contentTypes['disableTwoFactor'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->disableTwoFactorWithHttpInfo($twoFactorDisableRequest, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation disableTwoFactorWithHttpInfo
      *
      * Disable two-factor authentication
@@ -1096,14 +1160,16 @@ class ProfileResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -1137,7 +1203,7 @@ class ProfileResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -1192,7 +1258,7 @@ class ProfileResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -1398,6 +1464,16 @@ class ProfileResource
     }
 
     /**
+     * Operation getWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function getWithResponse($acceptLanguage = null, string $contentType = self::contentTypes['get'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getWithHttpInfo($acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation getWithHttpInfo
      *
      * Get the current profile
@@ -1422,14 +1498,16 @@ class ProfileResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -1463,7 +1541,7 @@ class ProfileResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -1518,7 +1596,7 @@ class ProfileResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -1707,6 +1785,16 @@ class ProfileResource
     }
 
     /**
+     * Operation getTwoFactorStatusWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function getTwoFactorStatusWithResponse($acceptLanguage = null, string $contentType = self::contentTypes['getTwoFactorStatus'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getTwoFactorStatusWithHttpInfo($acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation getTwoFactorStatusWithHttpInfo
      *
      * Get two-factor status
@@ -1731,14 +1819,16 @@ class ProfileResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -1772,7 +1862,7 @@ class ProfileResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -1827,7 +1917,7 @@ class ProfileResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -2016,6 +2106,16 @@ class ProfileResource
     }
 
     /**
+     * Operation setupTwoFactorWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function setupTwoFactorWithResponse($acceptLanguage = null, string $contentType = self::contentTypes['setupTwoFactor'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->setupTwoFactorWithHttpInfo($acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation setupTwoFactorWithHttpInfo
      *
      * Start two-factor setup
@@ -2040,14 +2140,16 @@ class ProfileResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -2081,7 +2183,7 @@ class ProfileResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -2136,7 +2238,7 @@ class ProfileResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -2311,18 +2413,29 @@ class ProfileResource
      *
      * Update the current profile
      *
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  \ProxyRequest\Dto\PatchedProfileUpdateRequest|null $patchedProfileUpdateRequest patchedProfileUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['update'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \ProxyRequest\Dto\User|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     * @return \ProxyRequest\Dto\User|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function update($acceptLanguage = null, $patchedProfileUpdateRequest = null, string $contentType = self::contentTypes['update'][0])
+    public function update($ifMatch = null, $acceptLanguage = null, $patchedProfileUpdateRequest = null, string $contentType = self::contentTypes['update'][0])
     {
-        list($response) = $this->updateWithHttpInfo($acceptLanguage, $patchedProfileUpdateRequest, $contentType);
+        list($response) = $this->updateWithHttpInfo($ifMatch, $acceptLanguage, $patchedProfileUpdateRequest, $contentType);
         return $response;
+    }
+
+    /**
+     * Operation updateWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function updateWithResponse($ifMatch = null, $acceptLanguage = null, $patchedProfileUpdateRequest = null, string $contentType = self::contentTypes['update'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->updateWithHttpInfo($ifMatch, $acceptLanguage, $patchedProfileUpdateRequest, $contentType));
     }
 
     /**
@@ -2330,17 +2443,18 @@ class ProfileResource
      *
      * Update the current profile
      *
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  \ProxyRequest\Dto\PatchedProfileUpdateRequest|null $patchedProfileUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['update'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \ProxyRequest\Dto\User|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ProxyRequest\Dto\User|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function updateWithHttpInfo($acceptLanguage = null, $patchedProfileUpdateRequest = null, string $contentType = self::contentTypes['update'][0])
+    public function updateWithHttpInfo($ifMatch = null, $acceptLanguage = null, $patchedProfileUpdateRequest = null, string $contentType = self::contentTypes['update'][0])
     {
-        $request = $this->updateRequest($acceptLanguage, $patchedProfileUpdateRequest, $contentType);
+        $request = $this->updateRequest($ifMatch, $acceptLanguage, $patchedProfileUpdateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2351,14 +2465,16 @@ class ProfileResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -2390,9 +2506,15 @@ class ProfileResource
                         $request,
                         $response,
                     );
+                case 412:
+                    return $this->handleResponseWithDataType(
+                        '\ProxyRequest\Dto\AffiliatesList401Response',
+                        $request,
+                        $response,
+                    );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -2446,8 +2568,16 @@ class ProfileResource
                     );
                     $e->setResponseObject($data);
                     throw $e;
+                case 412:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\ProxyRequest\Dto\AffiliatesList401Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -2458,6 +2588,7 @@ class ProfileResource
      *
      * Update the current profile
      *
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  \ProxyRequest\Dto\PatchedProfileUpdateRequest|null $patchedProfileUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['update'] to see the possible values for this operation
@@ -2465,9 +2596,9 @@ class ProfileResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function updateAsync($acceptLanguage = null, $patchedProfileUpdateRequest = null, string $contentType = self::contentTypes['update'][0])
+    public function updateAsync($ifMatch = null, $acceptLanguage = null, $patchedProfileUpdateRequest = null, string $contentType = self::contentTypes['update'][0])
     {
-        return $this->updateAsyncWithHttpInfo($acceptLanguage, $patchedProfileUpdateRequest, $contentType)
+        return $this->updateAsyncWithHttpInfo($ifMatch, $acceptLanguage, $patchedProfileUpdateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2480,6 +2611,7 @@ class ProfileResource
      *
      * Update the current profile
      *
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  \ProxyRequest\Dto\PatchedProfileUpdateRequest|null $patchedProfileUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['update'] to see the possible values for this operation
@@ -2487,10 +2619,10 @@ class ProfileResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function updateAsyncWithHttpInfo($acceptLanguage = null, $patchedProfileUpdateRequest = null, string $contentType = self::contentTypes['update'][0])
+    public function updateAsyncWithHttpInfo($ifMatch = null, $acceptLanguage = null, $patchedProfileUpdateRequest = null, string $contentType = self::contentTypes['update'][0])
     {
         $returnType = '\ProxyRequest\Dto\User';
-        $request = $this->updateRequest($acceptLanguage, $patchedProfileUpdateRequest, $contentType);
+        $request = $this->updateRequest($ifMatch, $acceptLanguage, $patchedProfileUpdateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2531,6 +2663,7 @@ class ProfileResource
     /**
      * Create request for operation 'update'
      *
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  \ProxyRequest\Dto\PatchedProfileUpdateRequest|null $patchedProfileUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['update'] to see the possible values for this operation
@@ -2538,8 +2671,9 @@ class ProfileResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function updateRequest($acceptLanguage = null, $patchedProfileUpdateRequest = null, string $contentType = self::contentTypes['update'][0])
+    public function updateRequest($ifMatch = null, $acceptLanguage = null, $patchedProfileUpdateRequest = null, string $contentType = self::contentTypes['update'][0])
     {
+
 
 
 
@@ -2552,6 +2686,10 @@ class ProfileResource
         $multipart = false;
 
 
+        // header params
+        if ($ifMatch !== null) {
+            $headerParams['If-Match'] = ObjectSerializer::toHeaderValue($ifMatch);
+        }
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);

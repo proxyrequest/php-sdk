@@ -86,7 +86,7 @@ try {
 ## `create()`
 
 ```php
-create($couponCreateRequest, $acceptLanguage): \ProxyRequest\Dto\Coupon
+create($couponCreateRequest, $idempotencyKey, $acceptLanguage): \ProxyRequest\Dto\Coupon
 ```
 
 Create a coupon
@@ -116,10 +116,11 @@ $apiInstance = new ProxyRequest\Api\CouponsResource(
     $config
 );
 $couponCreateRequest = {"value":1,"code":"us","is_multi_use":true,"is_available_to_one_time":true,"marketer":"550e8400-e29b-41d4-a716-446655440001","type":"free_data","limit":100,"valid_until":"2026-07-01T12:30:00Z","packages":["package"]}; // \ProxyRequest\Dto\CouponCreateRequest
+$idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $result = $apiInstance->create($couponCreateRequest, $acceptLanguage);
+    $result = $apiInstance->create($couponCreateRequest, $idempotencyKey, $acceptLanguage);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling CouponsResource->create: ', $e->getMessage(), PHP_EOL;
@@ -131,6 +132,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **couponCreateRequest** | [**\ProxyRequest\Dto\CouponCreateRequest**](../Model/CouponCreateRequest.md)|  | |
+| **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
@@ -153,7 +155,7 @@ try {
 ## `delete()`
 
 ```php
-delete($id, $acceptLanguage)
+delete($id, $idempotencyKey, $ifMatch, $acceptLanguage)
 ```
 
 Delete a coupon
@@ -183,10 +185,12 @@ $apiInstance = new ProxyRequest\Api\CouponsResource(
     $config
 );
 $id = 'id_example'; // string | A unique value identifying this Coupon.
+$idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
+$ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $apiInstance->delete($id, $acceptLanguage);
+    $apiInstance->delete($id, $idempotencyKey, $ifMatch, $acceptLanguage);
 } catch (Exception $e) {
     echo 'Exception when calling CouponsResource->delete: ', $e->getMessage(), PHP_EOL;
 }
@@ -197,6 +201,8 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**| A unique value identifying this Coupon. | |
+| **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
+| **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
@@ -440,7 +446,7 @@ try {
 ## `replace()`
 
 ```php
-replace($id, $couponUpdateRequest, $acceptLanguage): \ProxyRequest\Dto\Coupon
+replace($id, $couponUpdateRequest, $ifMatch, $acceptLanguage): \ProxyRequest\Dto\Coupon
 ```
 
 Replace a coupon
@@ -471,10 +477,11 @@ $apiInstance = new ProxyRequest\Api\CouponsResource(
 );
 $id = 'id_example'; // string | A unique value identifying this Coupon.
 $couponUpdateRequest = {"value":1,"code":"us","is_multi_use":true,"is_available_to_one_time":true,"marketer":"550e8400-e29b-41d4-a716-446655440001","type":"free_data","limit":100,"valid_until":"2026-07-01T12:30:00Z","packages":["package"]}; // \ProxyRequest\Dto\CouponUpdateRequest
+$ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $result = $apiInstance->replace($id, $couponUpdateRequest, $acceptLanguage);
+    $result = $apiInstance->replace($id, $couponUpdateRequest, $ifMatch, $acceptLanguage);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling CouponsResource->replace: ', $e->getMessage(), PHP_EOL;
@@ -487,6 +494,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**| A unique value identifying this Coupon. | |
 | **couponUpdateRequest** | [**\ProxyRequest\Dto\CouponUpdateRequest**](../Model/CouponUpdateRequest.md)|  | |
+| **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
@@ -509,7 +517,7 @@ try {
 ## `update()`
 
 ```php
-update($id, $acceptLanguage, $patchedCouponUpdateRequest): \ProxyRequest\Dto\Coupon
+update($id, $ifMatch, $acceptLanguage, $patchedCouponUpdateRequest): \ProxyRequest\Dto\Coupon
 ```
 
 Update a coupon
@@ -539,11 +547,12 @@ $apiInstance = new ProxyRequest\Api\CouponsResource(
     $config
 );
 $id = 'id_example'; // string | A unique value identifying this Coupon.
+$ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 $patchedCouponUpdateRequest = {"value":1,"code":"us","is_multi_use":true,"is_available_to_one_time":true,"marketer":"550e8400-e29b-41d4-a716-446655440001","type":"free_data","limit":100,"valid_until":"2026-07-01T12:30:00Z","packages":["package"]}; // \ProxyRequest\Dto\PatchedCouponUpdateRequest
 
 try {
-    $result = $apiInstance->update($id, $acceptLanguage, $patchedCouponUpdateRequest);
+    $result = $apiInstance->update($id, $ifMatch, $acceptLanguage, $patchedCouponUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling CouponsResource->update: ', $e->getMessage(), PHP_EOL;
@@ -555,6 +564,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**| A unique value identifying this Coupon. | |
+| **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 | **patchedCouponUpdateRequest** | [**\ProxyRequest\Dto\PatchedCouponUpdateRequest**](../Model/PatchedCouponUpdateRequest.md)|  | [optional] |
 

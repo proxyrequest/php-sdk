@@ -17,7 +17,7 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 ## `create()`
 
 ```php
-create($invoiceCreateRequest, $acceptLanguage): \ProxyRequest\Dto\Invoice
+create($invoiceCreateRequest, $idempotencyKey, $acceptLanguage): \ProxyRequest\Dto\Invoice
 ```
 
 Create an invoice
@@ -47,10 +47,11 @@ $apiInstance = new ProxyRequest\Api\InvoicesResource(
     $config
 );
 $invoiceCreateRequest = {"package_id":"550e8400-e29b-41d4-a716-446655440002","data":10737418240,"gateway":"stripe"}; // \ProxyRequest\Dto\InvoiceCreateRequest
+$idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $result = $apiInstance->create($invoiceCreateRequest, $acceptLanguage);
+    $result = $apiInstance->create($invoiceCreateRequest, $idempotencyKey, $acceptLanguage);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling InvoicesResource->create: ', $e->getMessage(), PHP_EOL;
@@ -62,6 +63,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **invoiceCreateRequest** | [**\ProxyRequest\Dto\InvoiceCreateRequest**](../Model/InvoiceCreateRequest.md)|  | |
+| **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
@@ -84,7 +86,7 @@ try {
 ## `delete()`
 
 ```php
-delete($id, $acceptLanguage)
+delete($id, $idempotencyKey, $ifMatch, $acceptLanguage)
 ```
 
 Delete an invoice
@@ -114,10 +116,12 @@ $apiInstance = new ProxyRequest\Api\InvoicesResource(
     $config
 );
 $id = 'id_example'; // string | A unique value identifying this Invoice.
+$idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
+$ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $apiInstance->delete($id, $acceptLanguage);
+    $apiInstance->delete($id, $idempotencyKey, $ifMatch, $acceptLanguage);
 } catch (Exception $e) {
     echo 'Exception when calling InvoicesResource->delete: ', $e->getMessage(), PHP_EOL;
 }
@@ -128,6 +132,8 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**| A unique value identifying this Invoice. | |
+| **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
+| **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type

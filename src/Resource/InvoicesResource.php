@@ -148,17 +148,28 @@ class InvoicesResource
      * Create an invoice
      *
      * @param  \ProxyRequest\Dto\InvoiceCreateRequest $invoiceCreateRequest invoiceCreateRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['create'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \ProxyRequest\Dto\Invoice|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     * @return \ProxyRequest\Dto\Invoice|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function create($invoiceCreateRequest, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0])
+    public function create($invoiceCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0])
     {
-        list($response) = $this->createWithHttpInfo($invoiceCreateRequest, $acceptLanguage, $contentType);
+        list($response) = $this->createWithHttpInfo($invoiceCreateRequest, $idempotencyKey, $acceptLanguage, $contentType);
         return $response;
+    }
+
+    /**
+     * Operation createWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function createWithResponse($invoiceCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->createWithHttpInfo($invoiceCreateRequest, $idempotencyKey, $acceptLanguage, $contentType));
     }
 
     /**
@@ -167,16 +178,17 @@ class InvoicesResource
      * Create an invoice
      *
      * @param  \ProxyRequest\Dto\InvoiceCreateRequest $invoiceCreateRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['create'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \ProxyRequest\Dto\Invoice|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ProxyRequest\Dto\Invoice|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function createWithHttpInfo($invoiceCreateRequest, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0])
+    public function createWithHttpInfo($invoiceCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0])
     {
-        $request = $this->createRequest($invoiceCreateRequest, $acceptLanguage, $contentType);
+        $request = $this->createRequest($invoiceCreateRequest, $idempotencyKey, $acceptLanguage, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -187,14 +199,16 @@ class InvoicesResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -226,9 +240,15 @@ class InvoicesResource
                         $request,
                         $response,
                     );
+                case 409:
+                    return $this->handleResponseWithDataType(
+                        '\ProxyRequest\Dto\AffiliatesList401Response',
+                        $request,
+                        $response,
+                    );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -282,8 +302,16 @@ class InvoicesResource
                     );
                     $e->setResponseObject($data);
                     throw $e;
+                case 409:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\ProxyRequest\Dto\AffiliatesList401Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -295,15 +323,16 @@ class InvoicesResource
      * Create an invoice
      *
      * @param  \ProxyRequest\Dto\InvoiceCreateRequest $invoiceCreateRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['create'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createAsync($invoiceCreateRequest, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0])
+    public function createAsync($invoiceCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0])
     {
-        return $this->createAsyncWithHttpInfo($invoiceCreateRequest, $acceptLanguage, $contentType)
+        return $this->createAsyncWithHttpInfo($invoiceCreateRequest, $idempotencyKey, $acceptLanguage, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -317,16 +346,17 @@ class InvoicesResource
      * Create an invoice
      *
      * @param  \ProxyRequest\Dto\InvoiceCreateRequest $invoiceCreateRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['create'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createAsyncWithHttpInfo($invoiceCreateRequest, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0])
+    public function createAsyncWithHttpInfo($invoiceCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0])
     {
         $returnType = '\ProxyRequest\Dto\Invoice';
-        $request = $this->createRequest($invoiceCreateRequest, $acceptLanguage, $contentType);
+        $request = $this->createRequest($invoiceCreateRequest, $idempotencyKey, $acceptLanguage, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -368,13 +398,14 @@ class InvoicesResource
      * Create request for operation 'create'
      *
      * @param  \ProxyRequest\Dto\InvoiceCreateRequest $invoiceCreateRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['create'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function createRequest($invoiceCreateRequest, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0])
+    public function createRequest($invoiceCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0])
     {
 
         // verify the required parameter 'invoiceCreateRequest' is set
@@ -382,6 +413,10 @@ class InvoicesResource
             throw new \InvalidArgumentException(
                 'Missing the required parameter $invoiceCreateRequest when calling create'
             );
+        }
+
+        if ($idempotencyKey !== null && strlen($idempotencyKey) > 255) {
+            throw new \InvalidArgumentException('invalid length for "$idempotencyKey" when calling InvoicesResource.create, must be smaller than or equal to 255.');
         }
 
 
@@ -394,6 +429,10 @@ class InvoicesResource
         $multipart = false;
 
 
+        // header params
+        if ($idempotencyKey !== null) {
+            $headerParams['Idempotency-Key'] = ObjectSerializer::toHeaderValue($idempotencyKey);
+        }
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
@@ -476,6 +515,8 @@ class InvoicesResource
      * Delete an invoice
      *
      * @param  string $id A unique value identifying this Invoice. (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
@@ -483,9 +524,19 @@ class InvoicesResource
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function delete($id, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function delete($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
     {
-        $this->deleteWithHttpInfo($id, $acceptLanguage, $contentType);
+        $this->deleteWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType);
+    }
+
+    /**
+     * Operation deleteWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function deleteWithResponse($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->deleteWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType));
     }
 
     /**
@@ -494,6 +545,8 @@ class InvoicesResource
      * Delete an invoice
      *
      * @param  string $id A unique value identifying this Invoice. (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
@@ -501,9 +554,9 @@ class InvoicesResource
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deleteWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteWithHttpInfo($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
     {
-        $request = $this->deleteRequest($id, $acceptLanguage, $contentType);
+        $request = $this->deleteRequest($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -514,14 +567,16 @@ class InvoicesResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -563,8 +618,24 @@ class InvoicesResource
                     );
                     $e->setResponseObject($data);
                     throw $e;
+                case 409:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\ProxyRequest\Dto\AffiliatesList401Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 412:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\ProxyRequest\Dto\AffiliatesList401Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -576,15 +647,17 @@ class InvoicesResource
      * Delete an invoice
      *
      * @param  string $id A unique value identifying this Invoice. (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteAsync($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
     {
-        return $this->deleteAsyncWithHttpInfo($id, $acceptLanguage, $contentType)
+        return $this->deleteAsyncWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -598,16 +671,18 @@ class InvoicesResource
      * Delete an invoice
      *
      * @param  string $id A unique value identifying this Invoice. (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteAsyncWithHttpInfo($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
     {
         $returnType = '';
-        $request = $this->deleteRequest($id, $acceptLanguage, $contentType);
+        $request = $this->deleteRequest($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -636,13 +711,15 @@ class InvoicesResource
      * Create request for operation 'delete'
      *
      * @param  string $id A unique value identifying this Invoice. (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function deleteRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteRequest($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
     {
 
         // verify the required parameter 'id' is set
@@ -651,6 +728,11 @@ class InvoicesResource
                 'Missing the required parameter $id when calling delete'
             );
         }
+
+        if ($idempotencyKey !== null && strlen($idempotencyKey) > 255) {
+            throw new \InvalidArgumentException('invalid length for "$idempotencyKey" when calling InvoicesResource.delete, must be smaller than or equal to 255.');
+        }
+
 
 
 
@@ -662,6 +744,14 @@ class InvoicesResource
         $multipart = false;
 
 
+        // header params
+        if ($idempotencyKey !== null) {
+            $headerParams['Idempotency-Key'] = ObjectSerializer::toHeaderValue($idempotencyKey);
+        }
+        // header params
+        if ($ifMatch !== null) {
+            $headerParams['If-Match'] = ObjectSerializer::toHeaderValue($ifMatch);
+        }
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
@@ -759,6 +849,16 @@ class InvoicesResource
     }
 
     /**
+     * Operation downloadPdfWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function downloadPdfWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['downloadPdf'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->downloadPdfWithHttpInfo($id, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation downloadPdfWithHttpInfo
      *
      * Download an invoice PDF
@@ -784,14 +884,16 @@ class InvoicesResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -831,7 +933,7 @@ class InvoicesResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -894,7 +996,7 @@ class InvoicesResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -1102,6 +1204,16 @@ class InvoicesResource
     }
 
     /**
+     * Operation getWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function getWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getWithHttpInfo($id, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation getWithHttpInfo
      *
      * Get an invoice
@@ -1127,14 +1239,16 @@ class InvoicesResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -1174,7 +1288,7 @@ class InvoicesResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -1237,7 +1351,7 @@ class InvoicesResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -1445,6 +1559,16 @@ class InvoicesResource
     }
 
     /**
+     * Operation getPaymentLinkWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function getPaymentLinkWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['getPaymentLink'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getPaymentLinkWithHttpInfo($id, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation getPaymentLinkWithHttpInfo
      *
      * Get an invoice payment link
@@ -1470,14 +1594,16 @@ class InvoicesResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -1517,7 +1643,7 @@ class InvoicesResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -1580,7 +1706,7 @@ class InvoicesResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -1798,6 +1924,16 @@ class InvoicesResource
     }
 
     /**
+     * Operation listWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function listWithResponse($gateway = null, $internalId = null, $limit = null, $offset = null, $ordering = null, $packageId = null, $search = null, $status = null, $type = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listWithHttpInfo($gateway, $internalId, $limit, $offset, $ordering, $packageId, $search, $status, $type, $userEmail, $userId, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation listWithHttpInfo
      *
      * List invoices
@@ -1833,14 +1969,16 @@ class InvoicesResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -1874,7 +2012,7 @@ class InvoicesResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -1929,7 +2067,7 @@ class InvoicesResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }

@@ -26,6 +26,7 @@ snapshot() {
             "$sdk_root/src/FormDataProcessor.php" \
             "$sdk_root/src/HeaderSelector.php" \
             "$sdk_root/src/ObjectSerializer.php"
+        printf '%s\0' "$sdk_root/src/Support/IdempotencyPolicy.php"
     } | LC_ALL=C sort -z \
         | xargs -0 sha256sum \
         | sed "s#  $sdk_root/#  #" > "$destination"

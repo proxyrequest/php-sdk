@@ -67,8 +67,13 @@ class ApiException extends Exception
      * @param string[][]|null       $responseHeaders HTTP response header
      * @param \stdClass|string|null $responseBody    HTTP decoded body of the server response either as \stdClass or string
      */
-    public function __construct($message = "", $code = 0, $responseHeaders = [], $responseBody = null)
-    {
+    public function __construct(
+        $message = "",
+        $code = 0,
+        $responseHeaders = [],
+        $responseBody = null,
+        private readonly ?string $idempotencyKey = null,
+    ) {
         parent::__construct($message, $code);
         $this->responseHeaders = $responseHeaders;
         $this->responseBody = $responseBody;
@@ -128,6 +133,7 @@ class ApiException extends Exception
             403 === $this->getCode() => ErrorKind::Permission,
             404 === $this->getCode() => ErrorKind::NotFound,
             409 === $this->getCode() => ErrorKind::Conflict,
+            412 === $this->getCode() => ErrorKind::Precondition,
             429 === $this->getCode() => ErrorKind::RateLimit,
             $this->getCode() >= 500 => ErrorKind::Server,
             0 === $this->getCode() => ErrorKind::Network,
@@ -217,6 +223,16 @@ class ApiException extends Exception
         }
 
         return (int) $value;
+    }
+
+    public function getCurrentEtag(): ?string
+    {
+        return $this->getHeaderLine('ETag');
+    }
+
+    public function getIdempotencyKey(): ?string
+    {
+        return $this->idempotencyKey;
     }
 
     private function getHeaderLine(string $name): ?string

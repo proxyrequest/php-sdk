@@ -9,6 +9,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use InvalidArgumentException;
+use ProxyRequest\Support\IdempotencyClient;
 use Psr\Http\Message\RequestInterface;
 
 final class ClientBuilder
@@ -22,6 +23,7 @@ final class ClientBuilder
     private float $timeout = 15.0;
     private float $connectTimeout = 5.0;
     private ?ClientInterface $httpClient = null;
+    private bool $idempotency = true;
 
     public function withApiKey(string $apiKey): self
     {
@@ -111,6 +113,14 @@ final class ClientBuilder
         return $clone;
     }
 
+    public function withIdempotency(bool $enabled = true): self
+    {
+        $clone = clone $this;
+        $clone->idempotency = $enabled;
+
+        return $clone;
+    }
+
     public function build(): Client
     {
         $configuration = new Configuration()
@@ -125,8 +135,14 @@ final class ClientBuilder
             $configuration->setAccessToken($this->bearerToken);
         }
 
-        return new Client(
+        $httpClient = new IdempotencyClient(
             $this->httpClient ?? $this->createDefaultHttpClient(),
+            (string) (parse_url($this->baseUri, PHP_URL_PATH) ?? ''),
+            $this->idempotency,
+        );
+
+        return new Client(
+            $httpClient,
             $configuration,
             $this->language,
         );

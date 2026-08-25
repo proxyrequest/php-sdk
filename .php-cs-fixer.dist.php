@@ -11,8 +11,11 @@ $finder = PhpCsFixer\Finder::create()
     ])
     ->append([
         __DIR__.'/src/ApiException.php',
+        __DIR__.'/src/ApiResponse.php',
         __DIR__.'/src/Client.php',
         __DIR__.'/src/ClientBuilder.php',
+        __DIR__.'/scripts/add-response-methods.php',
+        __DIR__.'/scripts/generate-idempotency-policy.php',
         __DIR__.'/scripts/sync-openapi.php',
     ]);
 

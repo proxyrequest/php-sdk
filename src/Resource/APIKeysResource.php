@@ -153,6 +153,16 @@ class APIKeysResource
     }
 
     /**
+     * Operation createWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function createWithResponse($acceptLanguage = null, $aPIKeyCreateRequest = null, string $contentType = self::contentTypes['create'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->createWithHttpInfo($acceptLanguage, $aPIKeyCreateRequest, $contentType));
+    }
+
+    /**
      * Operation createWithHttpInfo
      *
      * Create an API key
@@ -178,14 +188,16 @@ class APIKeysResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -219,7 +231,7 @@ class APIKeysResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -274,7 +286,7 @@ class APIKeysResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -461,6 +473,7 @@ class APIKeysResource
      * Revoke an API key
      *
      * @param  string $id A unique value identifying this API Key. (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
@@ -468,9 +481,19 @@ class APIKeysResource
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function delete($id, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function delete($id, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
     {
-        $this->deleteWithHttpInfo($id, $acceptLanguage, $contentType);
+        $this->deleteWithHttpInfo($id, $idempotencyKey, $acceptLanguage, $contentType);
+    }
+
+    /**
+     * Operation deleteWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function deleteWithResponse($id, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->deleteWithHttpInfo($id, $idempotencyKey, $acceptLanguage, $contentType));
     }
 
     /**
@@ -479,6 +502,7 @@ class APIKeysResource
      * Revoke an API key
      *
      * @param  string $id A unique value identifying this API Key. (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
@@ -486,9 +510,9 @@ class APIKeysResource
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deleteWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteWithHttpInfo($id, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
     {
-        $request = $this->deleteRequest($id, $acceptLanguage, $contentType);
+        $request = $this->deleteRequest($id, $idempotencyKey, $acceptLanguage, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -499,14 +523,16 @@ class APIKeysResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -548,8 +574,16 @@ class APIKeysResource
                     );
                     $e->setResponseObject($data);
                     throw $e;
+                case 409:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\ProxyRequest\Dto\AffiliatesList401Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -561,15 +595,16 @@ class APIKeysResource
      * Revoke an API key
      *
      * @param  string $id A unique value identifying this API Key. (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteAsync($id, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
     {
-        return $this->deleteAsyncWithHttpInfo($id, $acceptLanguage, $contentType)
+        return $this->deleteAsyncWithHttpInfo($id, $idempotencyKey, $acceptLanguage, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -583,16 +618,17 @@ class APIKeysResource
      * Revoke an API key
      *
      * @param  string $id A unique value identifying this API Key. (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteAsyncWithHttpInfo($id, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
     {
         $returnType = '';
-        $request = $this->deleteRequest($id, $acceptLanguage, $contentType);
+        $request = $this->deleteRequest($id, $idempotencyKey, $acceptLanguage, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -621,13 +657,14 @@ class APIKeysResource
      * Create request for operation 'delete'
      *
      * @param  string $id A unique value identifying this API Key. (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function deleteRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteRequest($id, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
     {
 
         // verify the required parameter 'id' is set
@@ -635,6 +672,10 @@ class APIKeysResource
             throw new \InvalidArgumentException(
                 'Missing the required parameter $id when calling delete'
             );
+        }
+
+        if ($idempotencyKey !== null && strlen($idempotencyKey) > 255) {
+            throw new \InvalidArgumentException('invalid length for "$idempotencyKey" when calling APIKeysResource.delete, must be smaller than or equal to 255.');
         }
 
 
@@ -647,6 +688,10 @@ class APIKeysResource
         $multipart = false;
 
 
+        // header params
+        if ($idempotencyKey !== null) {
+            $headerParams['Idempotency-Key'] = ObjectSerializer::toHeaderValue($idempotencyKey);
+        }
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
@@ -745,6 +790,16 @@ class APIKeysResource
     }
 
     /**
+     * Operation listWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function listWithResponse($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listWithHttpInfo($limit, $offset, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation listWithHttpInfo
      *
      * List API keys
@@ -771,14 +826,16 @@ class APIKeysResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -812,7 +869,7 @@ class APIKeysResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -867,7 +924,7 @@ class APIKeysResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }

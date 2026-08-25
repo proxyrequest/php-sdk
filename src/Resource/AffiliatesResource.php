@@ -150,6 +150,16 @@ class AffiliatesResource
     }
 
     /**
+     * Operation getRewardsOverallWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function getRewardsOverallWithResponse($acceptLanguage = null, string $contentType = self::contentTypes['getRewardsOverall'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getRewardsOverallWithHttpInfo($acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation getRewardsOverallWithHttpInfo
      *
      * Get affiliate earnings over time
@@ -174,14 +184,16 @@ class AffiliatesResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -215,7 +227,7 @@ class AffiliatesResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -270,7 +282,7 @@ class AffiliatesResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -461,6 +473,16 @@ class AffiliatesResource
     }
 
     /**
+     * Operation listWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function listWithResponse($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listWithHttpInfo($limit, $offset, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation listWithHttpInfo
      *
      * List referred customers
@@ -487,14 +509,16 @@ class AffiliatesResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -528,7 +552,7 @@ class AffiliatesResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -583,7 +607,7 @@ class AffiliatesResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -800,6 +824,16 @@ class AffiliatesResource
     }
 
     /**
+     * Operation listRewardsWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function listRewardsWithResponse($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRewards'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listRewardsWithHttpInfo($limit, $offset, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation listRewardsWithHttpInfo
      *
      * List affiliate reward entries
@@ -826,14 +860,16 @@ class AffiliatesResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -867,7 +903,7 @@ class AffiliatesResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -922,7 +958,7 @@ class AffiliatesResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }

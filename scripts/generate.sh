@@ -30,3 +30,19 @@ find "${SDK_ROOT}/src/Resource" -type f -name '*Resource.php' -exec \
 # through the SDK compatibility helper while retaining Guzzle 7 support.
 find "${SDK_ROOT}/src/Resource" -type f -name '*Resource.php' -exec \
   perl -0pi -e 's/\\GuzzleHttp\\Utils::jsonEncode/\\ProxyRequest\\Support\\Json::encode/g' {} +
+
+php "${SDK_ROOT}/scripts/generate-idempotency-policy.php"
+php "${SDK_ROOT}/scripts/add-response-methods.php"
+php "${SDK_ROOT}/vendor/bin/php-cs-fixer" fix --allow-risky=yes --quiet \
+  "${SDK_ROOT}/src/Support/IdempotencyPolicy.php"
+
+# Preserve the generated request key on normalized SDK exceptions so callers
+# can continue an application-level retry after the built-in attempts finish.
+find "${SDK_ROOT}/src/Resource" -type f -name '*Resource.php' -exec \
+  perl -0pi -e "s/(\\\$e->getResponse\(\) \? \(string\) \\\$e->getResponse\(\)->getBody\(\) : null)\n(\s*)\);/\\1,\n\\2\\\$e->getRequest()->getHeaderLine('Idempotency-Key') ?: null\n\\2);/g" {} +
+find "${SDK_ROOT}/src/Resource" -type f -name '*Resource.php' -exec \
+  perl -0pi -e "s/(null,\n\s*null)\n(\s*)\);/\\1,\n\\2\\\$e->getRequest()->getHeaderLine('Idempotency-Key') ?: null\n\\2);/g" {} +
+
+# Avoid whitespace-only drift from upstream templates.
+find "${SDK_ROOT}/src/Resource" -type f -name '*Resource.php' -exec \
+  perl -pi -e 's/[ \t]+$//' {} +

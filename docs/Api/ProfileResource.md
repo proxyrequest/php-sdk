@@ -153,7 +153,7 @@ try {
 ## `delete()`
 
 ```php
-delete($acceptLanguage)
+delete($ifMatch, $acceptLanguage)
 ```
 
 Delete the current account
@@ -182,10 +182,11 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
     new GuzzleHttp\Client(),
     $config
 );
+$ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $apiInstance->delete($acceptLanguage);
+    $apiInstance->delete($ifMatch, $acceptLanguage);
 } catch (Exception $e) {
     echo 'Exception when calling ProfileResource->delete: ', $e->getMessage(), PHP_EOL;
 }
@@ -195,6 +196,7 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
+| **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
@@ -479,7 +481,7 @@ try {
 ## `update()`
 
 ```php
-update($acceptLanguage, $patchedProfileUpdateRequest): \ProxyRequest\Dto\User
+update($ifMatch, $acceptLanguage, $patchedProfileUpdateRequest): \ProxyRequest\Dto\User
 ```
 
 Update the current profile
@@ -508,11 +510,12 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
     new GuzzleHttp\Client(),
     $config
 );
+$ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 $patchedProfileUpdateRequest = {"first_name":"Dana","last_name":"Morgan"}; // \ProxyRequest\Dto\PatchedProfileUpdateRequest
 
 try {
-    $result = $apiInstance->update($acceptLanguage, $patchedProfileUpdateRequest);
+    $result = $apiInstance->update($ifMatch, $acceptLanguage, $patchedProfileUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ProfileResource->update: ', $e->getMessage(), PHP_EOL;
@@ -523,6 +526,7 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
+| **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 | **patchedProfileUpdateRequest** | [**\ProxyRequest\Dto\PatchedProfileUpdateRequest**](../Model/PatchedProfileUpdateRequest.md)|  | [optional] |
 

@@ -58,6 +58,10 @@ final class OpenApiCoverageTest extends TestCase
                     method_exists(self::RESOURCE_BY_TAG[$tag], $mappings[$operationId]),
                     \sprintf('%s::%s() is missing for %s.', self::RESOURCE_BY_TAG[$tag], $mappings[$operationId], $operationId),
                 );
+                self::assertTrue(
+                    method_exists(self::RESOURCE_BY_TAG[$tag], $mappings[$operationId] . 'WithResponse'),
+                    \sprintf('%s::%sWithResponse() is missing for %s.', self::RESOURCE_BY_TAG[$tag], $mappings[$operationId], $operationId),
+                );
                 ++$covered;
             }
         }

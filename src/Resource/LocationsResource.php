@@ -172,6 +172,16 @@ class LocationsResource
     }
 
     /**
+     * Operation getCityWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function getCityWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getCityWithHttpInfo($id, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation getCityWithHttpInfo
      *
      * Get a city
@@ -197,14 +207,16 @@ class LocationsResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -244,7 +256,7 @@ class LocationsResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -307,7 +319,7 @@ class LocationsResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -515,6 +527,16 @@ class LocationsResource
     }
 
     /**
+     * Operation getContinentWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function getContinentWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['getContinent'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getContinentWithHttpInfo($id, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation getContinentWithHttpInfo
      *
      * Get a continent
@@ -540,14 +562,16 @@ class LocationsResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -587,7 +611,7 @@ class LocationsResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -650,7 +674,7 @@ class LocationsResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -858,6 +882,16 @@ class LocationsResource
     }
 
     /**
+     * Operation getCountryWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function getCountryWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getCountryWithHttpInfo($id, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation getCountryWithHttpInfo
      *
      * Get a country
@@ -883,14 +917,16 @@ class LocationsResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -930,7 +966,7 @@ class LocationsResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -993,7 +1029,7 @@ class LocationsResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -1201,6 +1237,16 @@ class LocationsResource
     }
 
     /**
+     * Operation getRegionWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function getRegionWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getRegionWithHttpInfo($id, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation getRegionWithHttpInfo
      *
      * Get a region
@@ -1226,14 +1272,16 @@ class LocationsResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -1273,7 +1321,7 @@ class LocationsResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -1336,7 +1384,7 @@ class LocationsResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -1552,6 +1600,16 @@ class LocationsResource
     }
 
     /**
+     * Operation listAsnsWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function listAsnsWithResponse($code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listAsnsWithHttpInfo($code, $countryCode, $global, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation listAsnsWithHttpInfo
      *
      * List available autonomous systems
@@ -1585,14 +1643,16 @@ class LocationsResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -1626,7 +1686,7 @@ class LocationsResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -1681,7 +1741,7 @@ class LocationsResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -1996,6 +2056,16 @@ class LocationsResource
     }
 
     /**
+     * Operation listCitiesWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function listCitiesWithResponse($code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listCitiesWithHttpInfo($code, $countryCode, $limit, $name, $offset, $ordering, $packageId, $regionCode, $search, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation listCitiesWithHttpInfo
      *
      * List available cities
@@ -2029,14 +2099,16 @@ class LocationsResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -2070,7 +2142,7 @@ class LocationsResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -2125,7 +2197,7 @@ class LocationsResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -2438,6 +2510,16 @@ class LocationsResource
     }
 
     /**
+     * Operation listContinentsWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function listContinentsWithResponse($code = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listContinents'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listContinentsWithHttpInfo($code, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation listContinentsWithHttpInfo
      *
      * List available continents
@@ -2469,14 +2551,16 @@ class LocationsResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -2510,7 +2594,7 @@ class LocationsResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -2565,7 +2649,7 @@ class LocationsResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -2852,6 +2936,16 @@ class LocationsResource
     }
 
     /**
+     * Operation listCountriesWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function listCountriesWithResponse($code = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listCountriesWithHttpInfo($code, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation listCountriesWithHttpInfo
      *
      * List available countries
@@ -2883,14 +2977,16 @@ class LocationsResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -2924,7 +3020,7 @@ class LocationsResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -2979,7 +3075,7 @@ class LocationsResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -3267,6 +3363,16 @@ class LocationsResource
     }
 
     /**
+     * Operation listIspsWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function listIspsWithResponse($code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listIspsWithHttpInfo($code, $countryCode, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation listIspsWithHttpInfo
      *
      * List available internet service providers
@@ -3299,14 +3405,16 @@ class LocationsResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -3340,7 +3448,7 @@ class LocationsResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -3395,7 +3503,7 @@ class LocationsResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -3696,6 +3804,16 @@ class LocationsResource
     }
 
     /**
+     * Operation listRegionsWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function listRegionsWithResponse($code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listRegionsWithHttpInfo($code, $countryCode, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation listRegionsWithHttpInfo
      *
      * List available regions
@@ -3728,14 +3846,16 @@ class LocationsResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -3769,7 +3889,7 @@ class LocationsResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -3824,7 +3944,7 @@ class LocationsResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }

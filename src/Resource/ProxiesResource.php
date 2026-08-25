@@ -147,6 +147,16 @@ class ProxiesResource
     }
 
     /**
+     * Operation generateWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function generateWithResponse($generateProxyRequest, $acceptLanguage = null, string $contentType = self::contentTypes['generate'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->generateWithHttpInfo($generateProxyRequest, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation generateWithHttpInfo
      *
      * Generate proxy credentials
@@ -172,14 +182,16 @@ class ProxiesResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -219,7 +231,7 @@ class ProxiesResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -282,7 +294,7 @@ class ProxiesResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }

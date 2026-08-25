@@ -163,6 +163,16 @@ class AnalyticsResource
     }
 
     /**
+     * Operation getConnectionsWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function getConnectionsWithResponse($limit = null, $offset = null, $packageId = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getConnections'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getConnectionsWithHttpInfo($limit, $offset, $packageId, $userId, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation getConnectionsWithHttpInfo
      *
      * List active proxy connections
@@ -191,14 +201,16 @@ class AnalyticsResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -238,7 +250,7 @@ class AnalyticsResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -301,7 +313,7 @@ class AnalyticsResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -550,6 +562,16 @@ class AnalyticsResource
     }
 
     /**
+     * Operation getOverallWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function getOverallWithResponse($end = null, $includeSubUsers = false, $limit = null, $offset = null, $packageId = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getOverall'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getOverallWithHttpInfo($end, $includeSubUsers, $limit, $offset, $packageId, $start, $timezone, $userId, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation getOverallWithHttpInfo
      *
      * Get traffic totals over time
@@ -582,14 +604,16 @@ class AnalyticsResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -629,7 +653,7 @@ class AnalyticsResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -692,7 +716,7 @@ class AnalyticsResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -994,6 +1018,16 @@ class AnalyticsResource
     }
 
     /**
+     * Operation getTransactionsWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function getTransactionsWithResponse($id, $end = null, $limit = null, $offset = null, $recipientId = null, $senderId = null, $start = null, $timezone = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['getTransactions'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getTransactionsWithHttpInfo($id, $end, $limit, $offset, $recipientId, $senderId, $start, $timezone, $type, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation getTransactionsWithHttpInfo
      *
      * List data transactions
@@ -1027,14 +1061,16 @@ class AnalyticsResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -1080,7 +1116,7 @@ class AnalyticsResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -1151,7 +1187,7 @@ class AnalyticsResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -1474,6 +1510,16 @@ class AnalyticsResource
     }
 
     /**
+     * Operation listDomainsWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function listDomainsWithResponse($end = null, $hostname = null, $includeSubUsers = false, $ledgerId = null, $limit = null, $offset = null, $ordering = '-data', $packageId = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDomains'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listDomainsWithHttpInfo($end, $hostname, $includeSubUsers, $ledgerId, $limit, $offset, $ordering, $packageId, $search, $start, $timezone, $userId, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation listDomainsWithHttpInfo
      *
      * List top destination domains
@@ -1510,14 +1556,16 @@ class AnalyticsResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -1557,7 +1605,7 @@ class AnalyticsResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -1620,7 +1668,7 @@ class AnalyticsResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -1979,6 +2027,16 @@ class AnalyticsResource
     }
 
     /**
+     * Operation listFeedWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function listFeedWithResponse($city = null, $country = null, $end = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listFeed'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listFeedWithHttpInfo($city, $country, $end, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $search, $start, $timezone, $userId, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation listFeedWithHttpInfo
      *
      * List proxy request activity
@@ -2017,14 +2075,16 @@ class AnalyticsResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -2064,7 +2124,7 @@ class AnalyticsResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -2127,7 +2187,7 @@ class AnalyticsResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -2512,6 +2572,16 @@ class AnalyticsResource
     }
 
     /**
+     * Operation listLogsWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function listLogsWithResponse($city = null, $country = null, $end = null, $errorCode = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listLogs'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listLogsWithHttpInfo($city, $country, $end, $errorCode, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $start, $timezone, $userId, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation listLogsWithHttpInfo
      *
      * List proxy error logs
@@ -2550,14 +2620,16 @@ class AnalyticsResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -2597,7 +2669,7 @@ class AnalyticsResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -2660,7 +2732,7 @@ class AnalyticsResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }

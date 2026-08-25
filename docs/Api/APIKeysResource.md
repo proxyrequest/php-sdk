@@ -81,7 +81,7 @@ try {
 ## `delete()`
 
 ```php
-delete($id, $acceptLanguage)
+delete($id, $idempotencyKey, $acceptLanguage)
 ```
 
 Revoke an API key
@@ -111,10 +111,11 @@ $apiInstance = new ProxyRequest\Api\APIKeysResource(
     $config
 );
 $id = 'id_example'; // string | A unique value identifying this API Key.
+$idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $apiInstance->delete($id, $acceptLanguage);
+    $apiInstance->delete($id, $idempotencyKey, $acceptLanguage);
 } catch (Exception $e) {
     echo 'Exception when calling APIKeysResource->delete: ', $e->getMessage(), PHP_EOL;
 }
@@ -125,6 +126,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**| A unique value identifying this API Key. | |
+| **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type

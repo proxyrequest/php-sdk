@@ -154,6 +154,16 @@ class PackagesResource
     }
 
     /**
+     * Operation listWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function listWithResponse($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listWithHttpInfo($alias, $limit, $offset, $ordering, $pricingUnit, $search, $type, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation listWithHttpInfo
      *
      * List available proxy packages
@@ -185,14 +195,16 @@ class PackagesResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -226,7 +238,7 @@ class PackagesResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -281,7 +293,7 @@ class PackagesResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -567,6 +579,16 @@ class PackagesResource
     }
 
     /**
+     * Operation listCommissionsWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function listCommissionsWithResponse($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCommissions'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listCommissionsWithHttpInfo($alias, $limit, $offset, $ordering, $pricingUnit, $type, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation listCommissionsWithHttpInfo
      *
      * List affiliate package commissions
@@ -597,14 +619,16 @@ class PackagesResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -638,7 +662,7 @@ class PackagesResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -693,7 +717,7 @@ class PackagesResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }

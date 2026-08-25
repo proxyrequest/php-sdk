@@ -5,6 +5,7 @@ parameters:
     level: max
     paths:
         - src/ApiException.php
+        - src/ApiResponse.php
         - src/Client.php
         - src/ClientBuilder.php
         - src/Exception

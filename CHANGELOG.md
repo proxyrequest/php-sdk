@@ -10,6 +10,11 @@ the package uses [Semantic Versioning](https://semver.org/).
 - Expanded the README with the ProxyRequest platform model and added practical
   invoice-purchase and reseller-provisioning guides.
 
+### Added
+
+- Automatic and explicit idempotency keys with bounded ambiguous-outcome retries.
+- Response metadata variants and explicit ETag/`If-Match` optimistic concurrency support.
+
 ## [1.0.0] - 2026-08-21
 
 ### Added

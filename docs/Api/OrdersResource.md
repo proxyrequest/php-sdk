@@ -16,7 +16,7 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 ## `delete()`
 
 ```php
-delete($id, $acceptLanguage)
+delete($id, $idempotencyKey, $ifMatch, $acceptLanguage)
 ```
 
 Delete a sub-user order
@@ -46,10 +46,12 @@ $apiInstance = new ProxyRequest\Api\OrdersResource(
     $config
 );
 $id = 'id_example'; // string | A unique value identifying this Order.
+$idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
+$ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $apiInstance->delete($id, $acceptLanguage);
+    $apiInstance->delete($id, $idempotencyKey, $ifMatch, $acceptLanguage);
 } catch (Exception $e) {
     echo 'Exception when calling OrdersResource->delete: ', $e->getMessage(), PHP_EOL;
 }
@@ -60,6 +62,8 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**| A unique value identifying this Order. | |
+| **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
+| **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
@@ -290,7 +294,7 @@ No authorization required
 ## `updateAutoRenewal()`
 
 ```php
-updateAutoRenewal($id, $acceptLanguage, $patchedOrderAutoRenewalRequest): \ProxyRequest\Dto\Order
+updateAutoRenewal($id, $ifMatch, $acceptLanguage, $patchedOrderAutoRenewalRequest): \ProxyRequest\Dto\Order
 ```
 
 Update order auto-renewal
@@ -320,11 +324,12 @@ $apiInstance = new ProxyRequest\Api\OrdersResource(
     $config
 );
 $id = 'id_example'; // string | A unique value identifying this Order.
+$ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 $patchedOrderAutoRenewalRequest = {"auto_renewal_percentage":1,"auto_renewal_data":1}; // \ProxyRequest\Dto\PatchedOrderAutoRenewalRequest
 
 try {
-    $result = $apiInstance->updateAutoRenewal($id, $acceptLanguage, $patchedOrderAutoRenewalRequest);
+    $result = $apiInstance->updateAutoRenewal($id, $ifMatch, $acceptLanguage, $patchedOrderAutoRenewalRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling OrdersResource->updateAutoRenewal: ', $e->getMessage(), PHP_EOL;
@@ -336,6 +341,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**| A unique value identifying this Order. | |
+| **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 | **patchedOrderAutoRenewalRequest** | [**\ProxyRequest\Dto\PatchedOrderAutoRenewalRequest**](../Model/PatchedOrderAutoRenewalRequest.md)|  | [optional] |
 

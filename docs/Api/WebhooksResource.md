@@ -15,7 +15,7 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 ## `create()`
 
 ```php
-create($webhookCreateRequest, $acceptLanguage): \ProxyRequest\Dto\WebhookCreated
+create($webhookCreateRequest, $idempotencyKey, $acceptLanguage): \ProxyRequest\Dto\WebhookCreated
 ```
 
 Create a customer webhook
@@ -45,10 +45,11 @@ $apiInstance = new ProxyRequest\Api\WebhooksResource(
     $config
 );
 $webhookCreateRequest = {"type":"user","endpoint":"https://developer.example.com/webhooks/proxy-events","read_timeout":5,"write_timeout":5,"retries":3,"retry_timeout":10}; // \ProxyRequest\Dto\WebhookCreateRequest
+$idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $result = $apiInstance->create($webhookCreateRequest, $acceptLanguage);
+    $result = $apiInstance->create($webhookCreateRequest, $idempotencyKey, $acceptLanguage);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling WebhooksResource->create: ', $e->getMessage(), PHP_EOL;
@@ -60,6 +61,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **webhookCreateRequest** | [**\ProxyRequest\Dto\WebhookCreateRequest**](../Model/WebhookCreateRequest.md)|  | |
+| **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
@@ -82,7 +84,7 @@ try {
 ## `delete()`
 
 ```php
-delete($id, $acceptLanguage)
+delete($id, $idempotencyKey, $ifMatch, $acceptLanguage)
 ```
 
 Delete a customer webhook
@@ -112,10 +114,12 @@ $apiInstance = new ProxyRequest\Api\WebhooksResource(
     $config
 );
 $id = 'id_example'; // string | A unique value identifying this Webhook.
+$idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
+$ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $apiInstance->delete($id, $acceptLanguage);
+    $apiInstance->delete($id, $idempotencyKey, $ifMatch, $acceptLanguage);
 } catch (Exception $e) {
     echo 'Exception when calling WebhooksResource->delete: ', $e->getMessage(), PHP_EOL;
 }
@@ -126,6 +130,8 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**| A unique value identifying this Webhook. | |
+| **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
+| **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type

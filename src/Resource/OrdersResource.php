@@ -147,6 +147,8 @@ class OrdersResource
      * Delete a sub-user order
      *
      * @param  string $id A unique value identifying this Order. (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
@@ -154,9 +156,19 @@ class OrdersResource
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function delete($id, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function delete($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
     {
-        $this->deleteWithHttpInfo($id, $acceptLanguage, $contentType);
+        $this->deleteWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType);
+    }
+
+    /**
+     * Operation deleteWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function deleteWithResponse($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->deleteWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType));
     }
 
     /**
@@ -165,6 +177,8 @@ class OrdersResource
      * Delete a sub-user order
      *
      * @param  string $id A unique value identifying this Order. (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
@@ -172,9 +186,9 @@ class OrdersResource
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deleteWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteWithHttpInfo($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
     {
-        $request = $this->deleteRequest($id, $acceptLanguage, $contentType);
+        $request = $this->deleteRequest($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -185,14 +199,16 @@ class OrdersResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -234,8 +250,24 @@ class OrdersResource
                     );
                     $e->setResponseObject($data);
                     throw $e;
+                case 409:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\ProxyRequest\Dto\AffiliatesList401Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 412:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\ProxyRequest\Dto\AffiliatesList401Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -247,15 +279,17 @@ class OrdersResource
      * Delete a sub-user order
      *
      * @param  string $id A unique value identifying this Order. (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteAsync($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
     {
-        return $this->deleteAsyncWithHttpInfo($id, $acceptLanguage, $contentType)
+        return $this->deleteAsyncWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -269,16 +303,18 @@ class OrdersResource
      * Delete a sub-user order
      *
      * @param  string $id A unique value identifying this Order. (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteAsyncWithHttpInfo($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
     {
         $returnType = '';
-        $request = $this->deleteRequest($id, $acceptLanguage, $contentType);
+        $request = $this->deleteRequest($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -307,13 +343,15 @@ class OrdersResource
      * Create request for operation 'delete'
      *
      * @param  string $id A unique value identifying this Order. (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function deleteRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteRequest($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
     {
 
         // verify the required parameter 'id' is set
@@ -322,6 +360,11 @@ class OrdersResource
                 'Missing the required parameter $id when calling delete'
             );
         }
+
+        if ($idempotencyKey !== null && strlen($idempotencyKey) > 255) {
+            throw new \InvalidArgumentException('invalid length for "$idempotencyKey" when calling OrdersResource.delete, must be smaller than or equal to 255.');
+        }
+
 
 
 
@@ -333,6 +376,14 @@ class OrdersResource
         $multipart = false;
 
 
+        // header params
+        if ($idempotencyKey !== null) {
+            $headerParams['Idempotency-Key'] = ObjectSerializer::toHeaderValue($idempotencyKey);
+        }
+        // header params
+        if ($ifMatch !== null) {
+            $headerParams['If-Match'] = ObjectSerializer::toHeaderValue($ifMatch);
+        }
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
@@ -430,6 +481,16 @@ class OrdersResource
     }
 
     /**
+     * Operation getWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function getWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getWithHttpInfo($id, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation getWithHttpInfo
      *
      * Get an order
@@ -455,14 +516,16 @@ class OrdersResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -502,7 +565,7 @@ class OrdersResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -565,7 +628,7 @@ class OrdersResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -781,6 +844,16 @@ class OrdersResource
     }
 
     /**
+     * Operation listWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function listWithResponse($limit = null, $offset = null, $ordering = null, $packageAlias = null, $packageId = null, $packageType = null, $search = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listWithHttpInfo($limit, $offset, $ordering, $packageAlias, $packageId, $packageType, $search, $userEmail, $userId, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation listWithHttpInfo
      *
      * List active orders
@@ -814,14 +887,16 @@ class OrdersResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -855,7 +930,7 @@ class OrdersResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -910,7 +985,7 @@ class OrdersResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -1217,6 +1292,16 @@ class OrdersResource
     }
 
     /**
+     * Operation resetPasswordWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function resetPasswordWithResponse($resetPasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['resetPassword'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->resetPasswordWithHttpInfo($resetPasswordRequest, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation resetPasswordWithHttpInfo
      *
      * Reset an order&#39;s proxy password
@@ -1242,14 +1327,16 @@ class OrdersResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -1277,7 +1364,7 @@ class OrdersResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -1324,7 +1411,7 @@ class OrdersResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -1508,18 +1595,29 @@ class OrdersResource
      * Update order auto-renewal
      *
      * @param  string $id A unique value identifying this Order. (required)
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  \ProxyRequest\Dto\PatchedOrderAutoRenewalRequest|null $patchedOrderAutoRenewalRequest patchedOrderAutoRenewalRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateAutoRenewal'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \ProxyRequest\Dto\Order|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     * @return \ProxyRequest\Dto\Order|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function updateAutoRenewal($id, $acceptLanguage = null, $patchedOrderAutoRenewalRequest = null, string $contentType = self::contentTypes['updateAutoRenewal'][0])
+    public function updateAutoRenewal($id, $ifMatch = null, $acceptLanguage = null, $patchedOrderAutoRenewalRequest = null, string $contentType = self::contentTypes['updateAutoRenewal'][0])
     {
-        list($response) = $this->updateAutoRenewalWithHttpInfo($id, $acceptLanguage, $patchedOrderAutoRenewalRequest, $contentType);
+        list($response) = $this->updateAutoRenewalWithHttpInfo($id, $ifMatch, $acceptLanguage, $patchedOrderAutoRenewalRequest, $contentType);
         return $response;
+    }
+
+    /**
+     * Operation updateAutoRenewalWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function updateAutoRenewalWithResponse($id, $ifMatch = null, $acceptLanguage = null, $patchedOrderAutoRenewalRequest = null, string $contentType = self::contentTypes['updateAutoRenewal'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->updateAutoRenewalWithHttpInfo($id, $ifMatch, $acceptLanguage, $patchedOrderAutoRenewalRequest, $contentType));
     }
 
     /**
@@ -1528,17 +1626,18 @@ class OrdersResource
      * Update order auto-renewal
      *
      * @param  string $id A unique value identifying this Order. (required)
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  \ProxyRequest\Dto\PatchedOrderAutoRenewalRequest|null $patchedOrderAutoRenewalRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateAutoRenewal'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \ProxyRequest\Dto\Order|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ProxyRequest\Dto\Order|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function updateAutoRenewalWithHttpInfo($id, $acceptLanguage = null, $patchedOrderAutoRenewalRequest = null, string $contentType = self::contentTypes['updateAutoRenewal'][0])
+    public function updateAutoRenewalWithHttpInfo($id, $ifMatch = null, $acceptLanguage = null, $patchedOrderAutoRenewalRequest = null, string $contentType = self::contentTypes['updateAutoRenewal'][0])
     {
-        $request = $this->updateAutoRenewalRequest($id, $acceptLanguage, $patchedOrderAutoRenewalRequest, $contentType);
+        $request = $this->updateAutoRenewalRequest($id, $ifMatch, $acceptLanguage, $patchedOrderAutoRenewalRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1549,14 +1648,16 @@ class OrdersResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -1594,9 +1695,15 @@ class OrdersResource
                         $request,
                         $response,
                     );
+                case 412:
+                    return $this->handleResponseWithDataType(
+                        '\ProxyRequest\Dto\AffiliatesList401Response',
+                        $request,
+                        $response,
+                    );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -1658,8 +1765,16 @@ class OrdersResource
                     );
                     $e->setResponseObject($data);
                     throw $e;
+                case 412:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\ProxyRequest\Dto\AffiliatesList401Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -1671,6 +1786,7 @@ class OrdersResource
      * Update order auto-renewal
      *
      * @param  string $id A unique value identifying this Order. (required)
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  \ProxyRequest\Dto\PatchedOrderAutoRenewalRequest|null $patchedOrderAutoRenewalRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateAutoRenewal'] to see the possible values for this operation
@@ -1678,9 +1794,9 @@ class OrdersResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function updateAutoRenewalAsync($id, $acceptLanguage = null, $patchedOrderAutoRenewalRequest = null, string $contentType = self::contentTypes['updateAutoRenewal'][0])
+    public function updateAutoRenewalAsync($id, $ifMatch = null, $acceptLanguage = null, $patchedOrderAutoRenewalRequest = null, string $contentType = self::contentTypes['updateAutoRenewal'][0])
     {
-        return $this->updateAutoRenewalAsyncWithHttpInfo($id, $acceptLanguage, $patchedOrderAutoRenewalRequest, $contentType)
+        return $this->updateAutoRenewalAsyncWithHttpInfo($id, $ifMatch, $acceptLanguage, $patchedOrderAutoRenewalRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1694,6 +1810,7 @@ class OrdersResource
      * Update order auto-renewal
      *
      * @param  string $id A unique value identifying this Order. (required)
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  \ProxyRequest\Dto\PatchedOrderAutoRenewalRequest|null $patchedOrderAutoRenewalRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateAutoRenewal'] to see the possible values for this operation
@@ -1701,10 +1818,10 @@ class OrdersResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function updateAutoRenewalAsyncWithHttpInfo($id, $acceptLanguage = null, $patchedOrderAutoRenewalRequest = null, string $contentType = self::contentTypes['updateAutoRenewal'][0])
+    public function updateAutoRenewalAsyncWithHttpInfo($id, $ifMatch = null, $acceptLanguage = null, $patchedOrderAutoRenewalRequest = null, string $contentType = self::contentTypes['updateAutoRenewal'][0])
     {
         $returnType = '\ProxyRequest\Dto\Order';
-        $request = $this->updateAutoRenewalRequest($id, $acceptLanguage, $patchedOrderAutoRenewalRequest, $contentType);
+        $request = $this->updateAutoRenewalRequest($id, $ifMatch, $acceptLanguage, $patchedOrderAutoRenewalRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1746,6 +1863,7 @@ class OrdersResource
      * Create request for operation 'updateAutoRenewal'
      *
      * @param  string $id A unique value identifying this Order. (required)
+     * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  \ProxyRequest\Dto\PatchedOrderAutoRenewalRequest|null $patchedOrderAutoRenewalRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateAutoRenewal'] to see the possible values for this operation
@@ -1753,7 +1871,7 @@ class OrdersResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function updateAutoRenewalRequest($id, $acceptLanguage = null, $patchedOrderAutoRenewalRequest = null, string $contentType = self::contentTypes['updateAutoRenewal'][0])
+    public function updateAutoRenewalRequest($id, $ifMatch = null, $acceptLanguage = null, $patchedOrderAutoRenewalRequest = null, string $contentType = self::contentTypes['updateAutoRenewal'][0])
     {
 
         // verify the required parameter 'id' is set
@@ -1766,6 +1884,7 @@ class OrdersResource
 
 
 
+
         $resourcePath = '/orders/{id}';
         $formParams = [];
         $queryParams = [];
@@ -1774,6 +1893,10 @@ class OrdersResource
         $multipart = false;
 
 
+        // header params
+        if ($ifMatch !== null) {
+            $headerParams['If-Match'] = ObjectSerializer::toHeaderValue($ifMatch);
+        }
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);

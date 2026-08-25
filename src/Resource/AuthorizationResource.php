@@ -167,6 +167,16 @@ class AuthorizationResource
     }
 
     /**
+     * Operation loginWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function loginWithResponse($loginRequest, $acceptLanguage = null, string $contentType = self::contentTypes['login'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->loginWithHttpInfo($loginRequest, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation loginWithHttpInfo
      *
      * Sign in with email or username
@@ -192,14 +202,16 @@ class AuthorizationResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -221,7 +233,7 @@ class AuthorizationResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -260,7 +272,7 @@ class AuthorizationResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -458,6 +470,16 @@ class AuthorizationResource
     }
 
     /**
+     * Operation loginWithGoogleWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function loginWithGoogleWithResponse($googleAuthRequest, $acceptLanguage = null, string $contentType = self::contentTypes['loginWithGoogle'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->loginWithGoogleWithHttpInfo($googleAuthRequest, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation loginWithGoogleWithHttpInfo
      *
      * Sign in with Google
@@ -483,14 +505,16 @@ class AuthorizationResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -518,7 +542,7 @@ class AuthorizationResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -565,7 +589,7 @@ class AuthorizationResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -763,6 +787,16 @@ class AuthorizationResource
     }
 
     /**
+     * Operation recoverPasswordWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function recoverPasswordWithResponse($recoverPasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['recoverPassword'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->recoverPasswordWithHttpInfo($recoverPasswordRequest, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation recoverPasswordWithHttpInfo
      *
      * Send a password recovery email
@@ -788,14 +822,16 @@ class AuthorizationResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -817,7 +853,7 @@ class AuthorizationResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -856,7 +892,7 @@ class AuthorizationResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -1054,6 +1090,16 @@ class AuthorizationResource
     }
 
     /**
+     * Operation refreshWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function refreshWithResponse($tokenRefreshRequest, $acceptLanguage = null, string $contentType = self::contentTypes['refresh'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->refreshWithHttpInfo($tokenRefreshRequest, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation refreshWithHttpInfo
      *
      * Refresh an access token
@@ -1079,14 +1125,16 @@ class AuthorizationResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -1114,7 +1162,7 @@ class AuthorizationResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -1161,7 +1209,7 @@ class AuthorizationResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -1359,6 +1407,16 @@ class AuthorizationResource
     }
 
     /**
+     * Operation signupWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function signupWithResponse($signUpRequest, $acceptLanguage = null, string $contentType = self::contentTypes['signup'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->signupWithHttpInfo($signUpRequest, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation signupWithHttpInfo
      *
      * Create a customer account
@@ -1384,14 +1442,16 @@ class AuthorizationResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -1419,7 +1479,7 @@ class AuthorizationResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -1466,7 +1526,7 @@ class AuthorizationResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }

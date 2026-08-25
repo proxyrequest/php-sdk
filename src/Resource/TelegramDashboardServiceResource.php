@@ -153,6 +153,16 @@ class TelegramDashboardServiceResource
     }
 
     /**
+     * Operation consumeLinkWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function consumeLinkWithResponse($xProxyRequestTelegramSecret, $telegramLinkConsumeRequest, $acceptLanguage = null, string $contentType = self::contentTypes['consumeLink'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->consumeLinkWithHttpInfo($xProxyRequestTelegramSecret, $telegramLinkConsumeRequest, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation consumeLinkWithHttpInfo
      *
      * Consume a Telegram account link
@@ -179,14 +189,16 @@ class TelegramDashboardServiceResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -208,7 +220,7 @@ class TelegramDashboardServiceResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -247,7 +259,7 @@ class TelegramDashboardServiceResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }
@@ -460,6 +472,16 @@ class TelegramDashboardServiceResource
     }
 
     /**
+     * Operation createSessionWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function createSessionWithResponse($xProxyRequestTelegramSecret, $telegramSessionRequest, $acceptLanguage = null, string $contentType = self::contentTypes['createSession'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->createSessionWithHttpInfo($xProxyRequestTelegramSecret, $telegramSessionRequest, $acceptLanguage, $contentType));
+    }
+
+    /**
      * Operation createSessionWithHttpInfo
      *
      * Create a Telegram API session
@@ -486,14 +508,16 @@ class TelegramDashboardServiceResource
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             } catch (ConnectException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
                     null,
-                    null
+                    null,
+                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
                 );
             }
 
@@ -515,7 +539,7 @@ class TelegramDashboardServiceResource
                     );
             }
 
-            
+
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
@@ -554,7 +578,7 @@ class TelegramDashboardServiceResource
                     $e->setResponseObject($data);
                     throw $e;
             }
-        
+
 
             throw $e;
         }

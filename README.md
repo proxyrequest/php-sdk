@@ -145,6 +145,36 @@ All operation parameters and return types are documented in the generated
 [API resource reference](docs/Api/) and [DTO model reference](docs/Model/).
 IDs are opaque strings and byte amounts use 64-bit integers.
 
+## Safe mutations and optimistic concurrency
+
+For operations that declare `Idempotency-Key`, the SDK generates a UUID by
+default. It reuses that key for up to three total attempts after a network
+failure, or after `409 Conflict` with a numeric `Retry-After` of at most five
+seconds. Other HTTP errors are returned immediately. Existing calls need no
+changes; supply a stable key when it must survive a process restart:
+
+```php
+$response = $client->webhooks()->createWithResponse(
+    new \ProxyRequest\Dto\WebhookCreateRequest([
+        'type' => \ProxyRequest\Dto\WebhookScopeEnum::USER,
+        'endpoint' => 'https://example.com/webhook',
+    ]),
+    'webhook:customer-123',
+);
+
+echo $response->data->getEndpoint();
+var_dump($response->etag(), $response->idempotencyReplayed());
+```
+
+Every generated method has a `WithResponse` variant exposing `data`,
+`statusCode`, `headers`, `etag()`, and `idempotencyReplayed()`. Disable automatic
+UUIDs with `Client::builder()->withIdempotency(false)`; explicit keys still work.
+
+Operations that declare `If-Match` accept the latest strong ETag. A stale value
+throws `ApiException` with `ErrorKind::Precondition` and exposes the current
+server value through `getCurrentEtag()`. ETags are explicit response metadata
+and are not cached by the SDK.
+
 ## Pagination
 
 List endpoints return their typed OpenAPI page model. Use `paginate()` when all
@@ -185,9 +215,10 @@ try {
 }
 ```
 
-The SDK does not automatically retry writes or refresh JWTs. Applications may
-call `$client->authorization()->refresh(...)` explicitly. A manual access token
-can be configured with `Client::withBearerToken()`.
+Only ambiguous outcomes for operations carrying an idempotency key are retried
+automatically. JWTs are never refreshed automatically; applications may call
+`$client->authorization()->refresh(...)` explicitly. A manual access token can
+be configured with `Client::withBearerToken()`.
 
 ## Configuration and custom deployments
 

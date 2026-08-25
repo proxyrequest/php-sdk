@@ -11,6 +11,7 @@ enum ErrorKind: string
     case Permission = 'permission';
     case NotFound = 'not_found';
     case Conflict = 'conflict';
+    case Precondition = 'precondition';
     case RateLimit = 'rate_limit';
     case Server = 'server';
     case Network = 'network';

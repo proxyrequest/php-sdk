@@ -21,6 +21,7 @@ docs/Guides/**
 src/Client.php
 src/ClientBuilder.php
 src/ApiException.php
+src/ApiResponse.php
 src/Auth/**
 src/Exception/**
 src/Support/**
