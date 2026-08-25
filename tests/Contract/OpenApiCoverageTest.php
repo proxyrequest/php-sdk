@@ -29,7 +29,6 @@ final class OpenApiCoverageTest extends TestCase
         'Sessions' => \ProxyRequest\Resource\SessionsResource::class,
         'Settings' => \ProxyRequest\Resource\SettingsResource::class,
         'Telegram dashboard' => \ProxyRequest\Resource\TelegramDashboardResource::class,
-        'Telegram dashboard service' => \ProxyRequest\Resource\TelegramDashboardServiceResource::class,
         'Users' => \ProxyRequest\Resource\UsersResource::class,
         'Webhooks' => \ProxyRequest\Resource\WebhooksResource::class,
     ];
@@ -66,8 +65,8 @@ final class OpenApiCoverageTest extends TestCase
             }
         }
 
-        self::assertSame(82, $covered);
-        self::assertCount(82, $mappings);
+        self::assertSame(80, $covered);
+        self::assertCount(80, $mappings);
     }
 
     public function testVendoredSchemaMatchesItsManifest(): void
@@ -76,7 +75,7 @@ final class OpenApiCoverageTest extends TestCase
         $manifest = json_decode((string) file_get_contents($root . '/openapi/source.json'), true, 512, JSON_THROW_ON_ERROR);
 
         self::assertSame($manifest['sha256'], hash_file('sha256', $root . '/openapi/openapi.yaml'));
-        self::assertSame(82, $manifest['operations']);
-        self::assertSame(127, $manifest['schemas']);
+        self::assertSame(80, $manifest['operations']);
+        self::assertSame(124, $manifest['schemas']);
     }
 }

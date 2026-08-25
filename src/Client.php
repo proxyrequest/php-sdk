@@ -23,7 +23,6 @@ use ProxyRequest\Resource\RewardsResource;
 use ProxyRequest\Resource\SessionsResource;
 use ProxyRequest\Resource\SettingsResource;
 use ProxyRequest\Resource\TelegramDashboardResource;
-use ProxyRequest\Resource\TelegramDashboardServiceResource;
 use ProxyRequest\Resource\UsersResource;
 use ProxyRequest\Resource\WebhooksResource;
 use ProxyRequest\Support\FileDownload;
@@ -144,11 +143,6 @@ final class Client
     public function telegram(): TelegramDashboardResource
     {
         return $this->resource(TelegramDashboardResource::class);
-    }
-
-    public function telegramService(): TelegramDashboardServiceResource
-    {
-        return $this->resource(TelegramDashboardServiceResource::class);
     }
 
     public function users(): UsersResource

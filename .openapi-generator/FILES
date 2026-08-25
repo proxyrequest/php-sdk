@@ -14,7 +14,6 @@ docs/Api/RewardsResource.md
 docs/Api/SessionsResource.md
 docs/Api/SettingsResource.md
 docs/Api/TelegramDashboardResource.md
-docs/Api/TelegramDashboardServiceResource.md
 docs/Api/UsersResource.md
 docs/Api/WebhooksResource.md
 docs/Model/APIKeyCreate.md
@@ -127,10 +126,7 @@ docs/Model/SignUpRequest.md
 docs/Model/SubtractDataRequest.md
 docs/Model/TargetingOptions.md
 docs/Model/TelegramConnectionResponse.md
-docs/Model/TelegramLinkConsumeRequest.md
 docs/Model/TelegramLinkResponse.md
-docs/Model/TelegramSessionRequest.md
-docs/Model/TelegramSessionResponse.md
 docs/Model/TokenPairResponse.md
 docs/Model/TokenRefreshRequest.md
 docs/Model/TokenRefreshResponse.md
@@ -258,10 +254,7 @@ src/Dto/SignUpRequest.php
 src/Dto/SubtractDataRequest.php
 src/Dto/TargetingOptions.php
 src/Dto/TelegramConnectionResponse.php
-src/Dto/TelegramLinkConsumeRequest.php
 src/Dto/TelegramLinkResponse.php
-src/Dto/TelegramSessionRequest.php
-src/Dto/TelegramSessionResponse.php
 src/Dto/TokenPairResponse.php
 src/Dto/TokenRefreshRequest.php
 src/Dto/TokenRefreshResponse.php
@@ -296,6 +289,5 @@ src/Resource/RewardsResource.php
 src/Resource/SessionsResource.php
 src/Resource/SettingsResource.php
 src/Resource/TelegramDashboardResource.php
-src/Resource/TelegramDashboardServiceResource.php
 src/Resource/UsersResource.php
 src/Resource/WebhooksResource.php

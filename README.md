@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 Official PHP 8.5 client for the [ProxyRequest public API](https://proxyrequest.com/docs/).
-The package covers all 82 operations from the current OpenAPI
+The package covers all 80 operations from the current OpenAPI
 contract, including users, orders, proxy generation, analytics, invoices,
 packages, locations, webhooks, API keys, and Telegram integration.
 
@@ -135,7 +135,6 @@ $client->locations();
 $client->apiKeys();
 $client->webhooks();
 $client->telegram();
-$client->telegramService();
 $client->sessions();
 $client->settings();
 $client->news();
@@ -240,23 +239,6 @@ documented 4xx responses follow the same exception contract with every client.
 ```php
 $pdf = $client->downloadInvoicePdf($invoiceId);
 $pdf->saveTo(__DIR__.'/'.$pdf->filename);
-```
-
-## Telegram service operations
-
-Account-side Telegram operations use the client's API key. Bot service
-operations require the service secret explicitly:
-
-```php
-use ProxyRequest\Dto\TelegramSessionRequest;
-
-$session = $client->telegramService()->createSession(
-    $_ENV['PROXYREQUEST_TELEGRAM_SECRET'],
-    new TelegramSessionRequest([
-        'telegramUserId' => 123456789,
-        'chatId' => 123456789,
-    ]),
-);
 ```
 
 ## Webhook verification

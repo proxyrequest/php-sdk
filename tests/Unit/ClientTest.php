@@ -17,7 +17,6 @@ use ProxyRequest\ApiResponse;
 use ProxyRequest\Client;
 use ProxyRequest\Dto\LoginRequest;
 use ProxyRequest\Dto\PatchedUserUpdateRequest;
-use ProxyRequest\Dto\TelegramSessionRequest;
 use ProxyRequest\Dto\WebhookCreateRequest;
 use ProxyRequest\Dto\WebhookScopeEnum;
 use ProxyRequest\Exception\ErrorKind;
@@ -100,21 +99,6 @@ final class ClientTest extends TestCase
         self::assertSame(13, $download->size());
         self::assertNotNull($request);
         self::assertSame('Static key', $request->getHeaderLine('Authorization'));
-    }
-
-    public function testTelegramServiceUsesItsDedicatedCredentialHeader(): void
-    {
-        $request = Client::anonymous()->telegramService()->createSessionRequest(
-            'telegram-service-secret',
-            new TelegramSessionRequest(['telegramUserId' => 100, 'chatId' => 200]),
-        );
-
-        self::assertSame('telegram-service-secret', $request->getHeaderLine('X-ProxyRequest-Telegram-Secret'));
-        self::assertSame('', $request->getHeaderLine('Authorization'));
-        self::assertJsonStringEqualsJsonString(
-            '{"telegram_user_id":100,"chat_id":200}',
-            (string) $request->getBody(),
-        );
     }
 
     public function testDefaultIdempotencyIsLimitedToSupportedMutations(): void

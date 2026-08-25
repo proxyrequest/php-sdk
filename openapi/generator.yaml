@@ -39,8 +39,6 @@ operationIdNameMappings:
   integrations_telegram_connection_partial_update: updateConnection
   integrations_telegram_connection_destroy: deleteConnection
   integrations_telegram_link_create: createLink
-  integrations_telegram_link_consume_create: consumeLink
-  integrations_telegram_session_create: createSession
   invoices_list: list
   invoices_create: create
   invoices_retrieve: get

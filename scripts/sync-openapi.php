@@ -42,6 +42,14 @@ foreach ($paths as $pathItem) {
 }
 
 $schemas = $document['components']['schemas'] ?? [];
+if (80 !== $operations || !\is_array($schemas) || 124 !== \count($schemas)) {
+    fwrite(STDERR, \sprintf(
+        "Unexpected contract size: %d operations and %d schemas.\n",
+        $operations,
+        \is_array($schemas) ? \count($schemas) : 0,
+    ));
+    exit(1);
+}
 $bytes = file_get_contents($source);
 if (false === $bytes) {
     fwrite(STDERR, "Unable to read the source schema.\n");
