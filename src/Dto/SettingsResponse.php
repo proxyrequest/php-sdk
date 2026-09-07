@@ -40,7 +40,7 @@ use \ProxyRequest\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class SettingsResponse implements ModelInterface, ArrayAccess, \JsonSerializable
+class SettingsResponse extends \ProxyRequest\Support\AdditionalProperties implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -65,7 +65,8 @@ class SettingsResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'dataSpent' => 'int',
         'referrals' => '\ProxyRequest\Dto\SettingsReferral',
         'crypto' => '\ProxyRequest\Dto\SettingsCrypto',
-        'paymentMethods' => 'string[]'
+        'paymentMethods' => 'string[]',
+        'paymentGateways' => '\ProxyRequest\Dto\PaymentGateway[]'
     ];
 
     /**
@@ -84,7 +85,8 @@ class SettingsResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'dataSpent' => null,
         'referrals' => null,
         'crypto' => null,
-        'paymentMethods' => null
+        'paymentMethods' => null,
+        'paymentGateways' => null
     ];
 
     /**
@@ -101,7 +103,8 @@ class SettingsResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'dataSpent' => false,
         'referrals' => false,
         'crypto' => false,
-        'paymentMethods' => false
+        'paymentMethods' => false,
+        'paymentGateways' => false
     ];
 
     /**
@@ -198,7 +201,8 @@ class SettingsResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'dataSpent' => 'data_spent',
         'referrals' => 'referrals',
         'crypto' => 'crypto',
-        'paymentMethods' => 'payment_methods'
+        'paymentMethods' => 'payment_methods',
+        'paymentGateways' => 'payment_gateways'
     ];
 
     /**
@@ -215,7 +219,8 @@ class SettingsResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'dataSpent' => 'setDataSpent',
         'referrals' => 'setReferrals',
         'crypto' => 'setCrypto',
-        'paymentMethods' => 'setPaymentMethods'
+        'paymentMethods' => 'setPaymentMethods',
+        'paymentGateways' => 'setPaymentGateways'
     ];
 
     /**
@@ -232,7 +237,8 @@ class SettingsResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'dataSpent' => 'getDataSpent',
         'referrals' => 'getReferrals',
         'crypto' => 'getCrypto',
-        'paymentMethods' => 'getPaymentMethods'
+        'paymentMethods' => 'getPaymentMethods',
+        'paymentGateways' => 'getPaymentGateways'
     ];
 
     /**
@@ -301,6 +307,7 @@ class SettingsResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('referrals', $data ?? [], null);
         $this->setIfExists('crypto', $data ?? [], null);
         $this->setIfExists('paymentMethods', $data ?? [], null);
+        $this->setIfExists('paymentGateways', $data ?? [], null);
     }
 
     /**
@@ -356,6 +363,9 @@ class SettingsResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         }
         if ($this->container['paymentMethods'] === null) {
             $invalidProperties[] = "'paymentMethods' can't be null";
+        }
+        if ($this->container['paymentGateways'] === null) {
+            $invalidProperties[] = "'paymentGateways' can't be null";
         }
         return $invalidProperties;
     }
@@ -614,6 +624,33 @@ class SettingsResponse implements ModelInterface, ArrayAccess, \JsonSerializable
 
         return $this;
     }
+
+    /**
+     * Gets paymentGateways
+     *
+     * @return \ProxyRequest\Dto\PaymentGateway[]
+     */
+    public function getPaymentGateways()
+    {
+        return $this->container['paymentGateways'];
+    }
+
+    /**
+     * Sets paymentGateways
+     *
+     * @param \ProxyRequest\Dto\PaymentGateway[] $paymentGateways paymentGateways
+     *
+     * @return self
+     */
+    public function setPaymentGateways($paymentGateways)
+    {
+        if (is_null($paymentGateways)) {
+            throw new \InvalidArgumentException('non-nullable paymentGateways cannot be null');
+        }
+        $this->container['paymentGateways'] = $paymentGateways;
+
+        return $this;
+    }
     /**
      * Returns true if offset exists. False otherwise.
      *
@@ -704,5 +741,3 @@ class SettingsResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
-

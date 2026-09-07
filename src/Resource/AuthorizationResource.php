@@ -99,6 +99,11 @@ class AuthorizationResource
             'application/x-www-form-urlencoded',
             'multipart/form-data',
         ],
+        'verifyOtp' => [
+            'application/json',
+            'application/x-www-form-urlencoded',
+            'multipart/form-data',
+        ],
     ];
 
     /**
@@ -158,7 +163,7 @@ class AuthorizationResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \ProxyRequest\Dto\TokenPairResponse|\ProxyRequest\Dto\AffiliatesList401Response
+     * @return \ProxyRequest\Dto\TokenPairResponse|\ProxyRequest\Dto\OTPChallenge|\ProxyRequest\Dto\AffiliatesList401Response
      */
     public function login($loginRequest, $acceptLanguage = null, string $contentType = self::contentTypes['login'][0])
     {
@@ -187,95 +192,15 @@ class AuthorizationResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \ProxyRequest\Dto\TokenPairResponse|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ProxyRequest\Dto\TokenPairResponse|\ProxyRequest\Dto\OTPChallenge|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
     public function loginWithHttpInfo($loginRequest, $acceptLanguage = null, string $contentType = self::contentTypes['login'][0])
     {
         $request = $this->loginRequest($loginRequest, $acceptLanguage, $contentType);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
-                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null,
-                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-
-            switch($statusCode) {
-                case 200:
-                    return $this->handleResponseWithDataType(
-                        '\ProxyRequest\Dto\TokenPairResponse',
-                        $request,
-                        $response,
-                    );
-                case 400:
-                    return $this->handleResponseWithDataType(
-                        '\ProxyRequest\Dto\AffiliatesList401Response',
-                        $request,
-                        $response,
-                    );
-            }
-
-
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            return $this->handleResponseWithDataType(
-                '\ProxyRequest\Dto\TokenPairResponse',
-                $request,
-                $response,
-            );
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\ProxyRequest\Dto\TokenPairResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\ProxyRequest\Dto\AffiliatesList401Response',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-            }
-
-
-            throw $e;
-        }
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\TokenPairResponse',
+  202 => '\\ProxyRequest\\Dto\\OTPChallenge',
+));
     }
 
     /**
@@ -314,43 +239,11 @@ class AuthorizationResource
      */
     public function loginAsyncWithHttpInfo($loginRequest, $acceptLanguage = null, string $contentType = self::contentTypes['login'][0])
     {
-        $returnType = '\ProxyRequest\Dto\TokenPairResponse';
         $request = $this->loginRequest($loginRequest, $acceptLanguage, $contentType);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    if ($returnType === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
-                    );
-                }
-            );
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\TokenPairResponse',
+  202 => '\\ProxyRequest\\Dto\\OTPChallenge',
+));
     }
 
     /**
@@ -461,7 +354,7 @@ class AuthorizationResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \ProxyRequest\Dto\TokenPairResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     * @return \ProxyRequest\Dto\TokenPairResponse|\ProxyRequest\Dto\OTPChallenge|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
     public function loginWithGoogle($googleAuthRequest, $acceptLanguage = null, string $contentType = self::contentTypes['loginWithGoogle'][0])
     {
@@ -490,109 +383,15 @@ class AuthorizationResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \ProxyRequest\Dto\TokenPairResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ProxyRequest\Dto\TokenPairResponse|\ProxyRequest\Dto\OTPChallenge|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
     public function loginWithGoogleWithHttpInfo($googleAuthRequest, $acceptLanguage = null, string $contentType = self::contentTypes['loginWithGoogle'][0])
     {
         $request = $this->loginWithGoogleRequest($googleAuthRequest, $acceptLanguage, $contentType);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
-                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null,
-                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-
-            switch($statusCode) {
-                case 200:
-                    return $this->handleResponseWithDataType(
-                        '\ProxyRequest\Dto\TokenPairResponse',
-                        $request,
-                        $response,
-                    );
-                case 400:
-                    return $this->handleResponseWithDataType(
-                        '\ProxyRequest\Dto\AffiliatesList401Response',
-                        $request,
-                        $response,
-                    );
-                case 403:
-                    return $this->handleResponseWithDataType(
-                        '\ProxyRequest\Dto\AffiliatesList401Response',
-                        $request,
-                        $response,
-                    );
-            }
-
-
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            return $this->handleResponseWithDataType(
-                '\ProxyRequest\Dto\TokenPairResponse',
-                $request,
-                $response,
-            );
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\ProxyRequest\Dto\TokenPairResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\ProxyRequest\Dto\AffiliatesList401Response',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\ProxyRequest\Dto\AffiliatesList401Response',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-            }
-
-
-            throw $e;
-        }
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\TokenPairResponse',
+  202 => '\\ProxyRequest\\Dto\\OTPChallenge',
+));
     }
 
     /**
@@ -631,43 +430,11 @@ class AuthorizationResource
      */
     public function loginWithGoogleAsyncWithHttpInfo($googleAuthRequest, $acceptLanguage = null, string $contentType = self::contentTypes['loginWithGoogle'][0])
     {
-        $returnType = '\ProxyRequest\Dto\TokenPairResponse';
         $request = $this->loginWithGoogleRequest($googleAuthRequest, $acceptLanguage, $contentType);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    if ($returnType === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
-                    );
-                }
-            );
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\TokenPairResponse',
+  202 => '\\ProxyRequest\\Dto\\OTPChallenge',
+));
     }
 
     /**
@@ -812,90 +579,9 @@ class AuthorizationResource
     public function recoverPasswordWithHttpInfo($recoverPasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['recoverPassword'][0])
     {
         $request = $this->recoverPasswordRequest($recoverPasswordRequest, $acceptLanguage, $contentType);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
-                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null,
-                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-
-            switch($statusCode) {
-                case 200:
-                    return $this->handleResponseWithDataType(
-                        '\ProxyRequest\Dto\PasswordRecoveryResponse',
-                        $request,
-                        $response,
-                    );
-                case 400:
-                    return $this->handleResponseWithDataType(
-                        '\ProxyRequest\Dto\AffiliatesList401Response',
-                        $request,
-                        $response,
-                    );
-            }
-
-
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            return $this->handleResponseWithDataType(
-                '\ProxyRequest\Dto\PasswordRecoveryResponse',
-                $request,
-                $response,
-            );
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\ProxyRequest\Dto\PasswordRecoveryResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\ProxyRequest\Dto\AffiliatesList401Response',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-            }
-
-
-            throw $e;
-        }
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\PasswordRecoveryResponse',
+));
     }
 
     /**
@@ -934,43 +620,10 @@ class AuthorizationResource
      */
     public function recoverPasswordAsyncWithHttpInfo($recoverPasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['recoverPassword'][0])
     {
-        $returnType = '\ProxyRequest\Dto\PasswordRecoveryResponse';
         $request = $this->recoverPasswordRequest($recoverPasswordRequest, $acceptLanguage, $contentType);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    if ($returnType === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
-                    );
-                }
-            );
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\PasswordRecoveryResponse',
+));
     }
 
     /**
@@ -1115,104 +768,9 @@ class AuthorizationResource
     public function refreshWithHttpInfo($tokenRefreshRequest, $acceptLanguage = null, string $contentType = self::contentTypes['refresh'][0])
     {
         $request = $this->refreshRequest($tokenRefreshRequest, $acceptLanguage, $contentType);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
-                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null,
-                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-
-            switch($statusCode) {
-                case 200:
-                    return $this->handleResponseWithDataType(
-                        '\ProxyRequest\Dto\TokenRefreshResponse',
-                        $request,
-                        $response,
-                    );
-                case 400:
-                    return $this->handleResponseWithDataType(
-                        '\ProxyRequest\Dto\AffiliatesList401Response',
-                        $request,
-                        $response,
-                    );
-                case 401:
-                    return $this->handleResponseWithDataType(
-                        '\ProxyRequest\Dto\AffiliatesList401Response',
-                        $request,
-                        $response,
-                    );
-            }
-
-
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            return $this->handleResponseWithDataType(
-                '\ProxyRequest\Dto\TokenRefreshResponse',
-                $request,
-                $response,
-            );
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\ProxyRequest\Dto\TokenRefreshResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\ProxyRequest\Dto\AffiliatesList401Response',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-                case 401:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\ProxyRequest\Dto\AffiliatesList401Response',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-            }
-
-
-            throw $e;
-        }
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\TokenRefreshResponse',
+));
     }
 
     /**
@@ -1251,43 +809,10 @@ class AuthorizationResource
      */
     public function refreshAsyncWithHttpInfo($tokenRefreshRequest, $acceptLanguage = null, string $contentType = self::contentTypes['refresh'][0])
     {
-        $returnType = '\ProxyRequest\Dto\TokenRefreshResponse';
         $request = $this->refreshRequest($tokenRefreshRequest, $acceptLanguage, $contentType);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    if ($returnType === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
-                    );
-                }
-            );
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\TokenRefreshResponse',
+));
     }
 
     /**
@@ -1432,104 +957,9 @@ class AuthorizationResource
     public function signupWithHttpInfo($signUpRequest, $acceptLanguage = null, string $contentType = self::contentTypes['signup'][0])
     {
         $request = $this->signupRequest($signUpRequest, $acceptLanguage, $contentType);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null,
-                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null,
-                $e->getRequest()->getHeaderLine('Idempotency-Key') ?: null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-
-            switch($statusCode) {
-                case 201:
-                    return $this->handleResponseWithDataType(
-                        '\ProxyRequest\Dto\TokenPairResponse',
-                        $request,
-                        $response,
-                    );
-                case 400:
-                    return $this->handleResponseWithDataType(
-                        '\ProxyRequest\Dto\AffiliatesList401Response',
-                        $request,
-                        $response,
-                    );
-                case 403:
-                    return $this->handleResponseWithDataType(
-                        '\ProxyRequest\Dto\AffiliatesList401Response',
-                        $request,
-                        $response,
-                    );
-            }
-
-
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            return $this->handleResponseWithDataType(
-                '\ProxyRequest\Dto\TokenPairResponse',
-                $request,
-                $response,
-            );
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 201:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\ProxyRequest\Dto\TokenPairResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\ProxyRequest\Dto\AffiliatesList401Response',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\ProxyRequest\Dto\AffiliatesList401Response',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-            }
-
-
-            throw $e;
-        }
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  201 => '\\ProxyRequest\\Dto\\TokenPairResponse',
+));
     }
 
     /**
@@ -1568,43 +998,10 @@ class AuthorizationResource
      */
     public function signupAsyncWithHttpInfo($signUpRequest, $acceptLanguage = null, string $contentType = self::contentTypes['signup'][0])
     {
-        $returnType = '\ProxyRequest\Dto\TokenPairResponse';
         $request = $this->signupRequest($signUpRequest, $acceptLanguage, $contentType);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    if ($returnType === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
-                    );
-                }
-            );
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  201 => '\\ProxyRequest\\Dto\\TokenPairResponse',
+));
     }
 
     /**
@@ -1657,6 +1054,195 @@ class AuthorizationResource
                 $httpBody = \ProxyRequest\Support\Json::encode(ObjectSerializer::sanitizeForSerialization($signUpRequest));
             } else {
                 $httpBody = $signUpRequest;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation verifyOtp
+     *
+     * Complete two-factor sign-in
+     *
+     * @param  \ProxyRequest\Dto\VerifyOTPRequest $verifyOTPRequest verifyOTPRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['verifyOtp'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\TokenPairResponse|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function verifyOtp($verifyOTPRequest, $acceptLanguage = null, string $contentType = self::contentTypes['verifyOtp'][0])
+    {
+        list($response) = $this->verifyOtpWithHttpInfo($verifyOTPRequest, $acceptLanguage, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation verifyOtpWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function verifyOtpWithResponse($verifyOTPRequest, $acceptLanguage = null, string $contentType = self::contentTypes['verifyOtp'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->verifyOtpWithHttpInfo($verifyOTPRequest, $acceptLanguage, $contentType));
+    }
+
+    /**
+     * Operation verifyOtpWithHttpInfo
+     *
+     * Complete two-factor sign-in
+     *
+     * @param  \ProxyRequest\Dto\VerifyOTPRequest $verifyOTPRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['verifyOtp'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\TokenPairResponse|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function verifyOtpWithHttpInfo($verifyOTPRequest, $acceptLanguage = null, string $contentType = self::contentTypes['verifyOtp'][0])
+    {
+        $request = $this->verifyOtpRequest($verifyOTPRequest, $acceptLanguage, $contentType);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\TokenPairResponse',
+));
+    }
+
+    /**
+     * Operation verifyOtpAsync
+     *
+     * Complete two-factor sign-in
+     *
+     * @param  \ProxyRequest\Dto\VerifyOTPRequest $verifyOTPRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['verifyOtp'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function verifyOtpAsync($verifyOTPRequest, $acceptLanguage = null, string $contentType = self::contentTypes['verifyOtp'][0])
+    {
+        return $this->verifyOtpAsyncWithHttpInfo($verifyOTPRequest, $acceptLanguage, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation verifyOtpAsyncWithHttpInfo
+     *
+     * Complete two-factor sign-in
+     *
+     * @param  \ProxyRequest\Dto\VerifyOTPRequest $verifyOTPRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['verifyOtp'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function verifyOtpAsyncWithHttpInfo($verifyOTPRequest, $acceptLanguage = null, string $contentType = self::contentTypes['verifyOtp'][0])
+    {
+        $request = $this->verifyOtpRequest($verifyOTPRequest, $acceptLanguage, $contentType);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\TokenPairResponse',
+));
+    }
+
+    /**
+     * Create request for operation 'verifyOtp'
+     *
+     * @param  \ProxyRequest\Dto\VerifyOTPRequest $verifyOTPRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['verifyOtp'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function verifyOtpRequest($verifyOTPRequest, $acceptLanguage = null, string $contentType = self::contentTypes['verifyOtp'][0])
+    {
+
+        // verify the required parameter 'verifyOTPRequest' is set
+        if ($verifyOTPRequest === null || (is_array($verifyOTPRequest) && count($verifyOTPRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $verifyOTPRequest when calling verifyOtp'
+            );
+        }
+
+
+
+        $resourcePath = '/login/otp';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($verifyOTPRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \ProxyRequest\Support\Json::encode(ObjectSerializer::sanitizeForSerialization($verifyOTPRequest));
+            } else {
+                $httpBody = $verifyOTPRequest;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {

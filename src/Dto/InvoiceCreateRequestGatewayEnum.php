@@ -33,7 +33,7 @@ use \ProxyRequest\ObjectSerializer;
  * InvoiceCreateRequestGatewayEnum Class Doc Comment
  *
  * @category Class
- * @description * &#x60;crypto&#x60; - crypto * &#x60;wallet&#x60; - wallet * &#x60;manual&#x60; - manual * &#x60;stripe&#x60; - stripe
+ * @description * &#x60;crypto&#x60; - crypto * &#x60;credit_card&#x60; - credit_card * &#x60;wallet&#x60; - wallet * &#x60;manual&#x60; - manual * &#x60;stripe&#x60; - stripe * &#x60;coinbase&#x60; - coinbase * &#x60;cryptomus&#x60; - cryptomus * &#x60;coingate&#x60; - coingate * &#x60;whitepay&#x60; - whitepay * &#x60;wayforpay&#x60; - wayforpay * &#x60;usegateway&#x60; - usegateway * &#x60;binance&#x60; - binance * &#x60;anymoney&#x60; - anymoney * &#x60;coinpayments&#x60; - coinpayments * &#x60;checkoutcom&#x60; - checkoutcom * &#x60;nowpayments&#x60; - nowpayments * &#x60;btcpay&#x60; - btcpay * &#x60;braintree&#x60; - braintree * &#x60;monobank&#x60; - monobank * &#x60;liqpay&#x60; - liqpay * &#x60;iyzico&#x60; - iyzico * &#x60;paytr&#x60; - paytr * &#x60;payu&#x60; - payu * &#x60;tpay&#x60; - tpay * &#x60;przelewy24&#x60; - przelewy24 * &#x60;gopay&#x60; - gopay * &#x60;comgate&#x60; - comgate * &#x60;monei&#x60; - monei * &#x60;redsys&#x60; - redsys * &#x60;payplug&#x60; - payplug * &#x60;mollie&#x60; - mollie * &#x60;unzer&#x60; - unzer * &#x60;payone&#x60; - payone * &#x60;nexi_xpay&#x60; - nexi_xpay * &#x60;halyk_epay&#x60; - halyk_epay * &#x60;kaspi_pay&#x60; - kaspi_pay * &#x60;vipps_mobilepay&#x60; - vipps_mobilepay * &#x60;paytrail&#x60; - paytrail
  * @package  ProxyRequest
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
@@ -45,11 +45,79 @@ class InvoiceCreateRequestGatewayEnum
      */
     public const CRYPTO = 'crypto';
 
+    public const CREDIT_CARD = 'credit_card';
+
     public const WALLET = 'wallet';
 
     public const MANUAL = 'manual';
 
     public const STRIPE = 'stripe';
+
+    public const COINBASE = 'coinbase';
+
+    public const CRYPTOMUS = 'cryptomus';
+
+    public const COINGATE = 'coingate';
+
+    public const WHITEPAY = 'whitepay';
+
+    public const WAYFORPAY = 'wayforpay';
+
+    public const USEGATEWAY = 'usegateway';
+
+    public const BINANCE = 'binance';
+
+    public const ANYMONEY = 'anymoney';
+
+    public const COINPAYMENTS = 'coinpayments';
+
+    public const CHECKOUTCOM = 'checkoutcom';
+
+    public const NOWPAYMENTS = 'nowpayments';
+
+    public const BTCPAY = 'btcpay';
+
+    public const BRAINTREE = 'braintree';
+
+    public const MONOBANK = 'monobank';
+
+    public const LIQPAY = 'liqpay';
+
+    public const IYZICO = 'iyzico';
+
+    public const PAYTR = 'paytr';
+
+    public const PAYU = 'payu';
+
+    public const TPAY = 'tpay';
+
+    public const PRZELEWY24 = 'przelewy24';
+
+    public const GOPAY = 'gopay';
+
+    public const COMGATE = 'comgate';
+
+    public const MONEI = 'monei';
+
+    public const REDSYS = 'redsys';
+
+    public const PAYPLUG = 'payplug';
+
+    public const MOLLIE = 'mollie';
+
+    public const UNZER = 'unzer';
+
+    public const PAYONE = 'payone';
+
+    public const NEXI_XPAY = 'nexi_xpay';
+
+    public const HALYK_EPAY = 'halyk_epay';
+
+    public const KASPI_PAY = 'kaspi_pay';
+
+    public const VIPPS_MOBILEPAY = 'vipps_mobilepay';
+
+    public const PAYTRAIL = 'paytrail';
 
     public const UNKNOWN_DEFAULT_OPEN_API = 'unknown_default_open_api';
 
@@ -61,12 +129,44 @@ class InvoiceCreateRequestGatewayEnum
     {
         return [
             self::CRYPTO,
+            self::CREDIT_CARD,
             self::WALLET,
             self::MANUAL,
             self::STRIPE,
+            self::COINBASE,
+            self::CRYPTOMUS,
+            self::COINGATE,
+            self::WHITEPAY,
+            self::WAYFORPAY,
+            self::USEGATEWAY,
+            self::BINANCE,
+            self::ANYMONEY,
+            self::COINPAYMENTS,
+            self::CHECKOUTCOM,
+            self::NOWPAYMENTS,
+            self::BTCPAY,
+            self::BRAINTREE,
+            self::MONOBANK,
+            self::LIQPAY,
+            self::IYZICO,
+            self::PAYTR,
+            self::PAYU,
+            self::TPAY,
+            self::PRZELEWY24,
+            self::GOPAY,
+            self::COMGATE,
+            self::MONEI,
+            self::REDSYS,
+            self::PAYPLUG,
+            self::MOLLIE,
+            self::UNZER,
+            self::PAYONE,
+            self::NEXI_XPAY,
+            self::HALYK_EPAY,
+            self::KASPI_PAY,
+            self::VIPPS_MOBILEPAY,
+            self::PAYTRAIL,
             self::UNKNOWN_DEFAULT_OPEN_API
         ];
     }
 }
-
-

@@ -57,6 +57,7 @@ operationIdNameMappings:
   locations_regions_retrieve: getRegion
   login_create: login
   login_google_create: loginWithGoogle
+  login_otp_create: verifyOtp
   news_list: list
   orders_list: list
   orders_retrieve: get
@@ -78,8 +79,6 @@ operationIdNameMappings:
   reset_password_create: resetPassword
   rewards_list: list
   rewards_claim_create: claim
-  sessions_list: list
-  sessions_destroy: delete
   settings_retrieve: get
   signup_create: signup
   users_list: list

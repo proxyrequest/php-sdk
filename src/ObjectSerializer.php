@@ -83,13 +83,14 @@ class ObjectSerializer
         if (is_object($data)) {
             $values = [];
             if ($data instanceof ModelInterface) {
+                $values = $data->getAdditionalProperties();
                 $formats = $data::openAPIFormats();
                 foreach ($data::openAPITypes() as $property => $openAPIType) {
                     $getter = $data::getters()[$property];
                     $value = $data->$getter();
                     if ($value !== null && !in_array($openAPIType, ['\DateTime', '\SplFileObject', 'array', 'bool', 'boolean', 'byte', 'float', 'int', 'integer', 'mixed', 'number', 'object', 'string', 'void'], true)) {
                         $callable = [$openAPIType, 'getAllowableEnumValues'];
-                        if (is_callable($callable)) {
+                        if (is_callable($callable) && !(is_string($value) && str_ends_with($openAPIType, 'GatewayEnum'))) {
                             /** array $callable */
                             $allowedEnumTypes = $callable();
                             if (!in_array($value, $allowedEnumTypes, true)) {
@@ -320,7 +321,7 @@ class ObjectSerializer
     public static function toHeaderValue($value)
     {
         $callable = [$value, 'toHeaderValue'];
-        if (is_callable($callable)) {
+        if (is_callable($callable) && !(is_string($value) && str_ends_with($openAPIType, 'GatewayEnum'))) {
             return $callable();
         }
 
@@ -491,8 +492,12 @@ class ObjectSerializer
         }
 
 
+        if ($class === '\ProxyRequest\Dto\InvoiceRead') {
+            $data = is_string($data) ? json_decode($data, false, 512, JSON_THROW_ON_ERROR) : (object) $data;
+            return self::deserialize($data, property_exists($data, 'package') ? '\ProxyRequest\Dto\Invoice' : '\ProxyRequest\Dto\InvoiceShort', $httpHeaders);
+        }
         if (method_exists($class, 'getAllowableEnumValues')) {
-            if (!in_array($data, $class::getAllowableEnumValues(), true)) {
+            if (!in_array($data, $class::getAllowableEnumValues(), true) && !(is_string($data) && str_ends_with($class, 'GatewayEnum'))) {
                 $imploded = implode("', '", $class::getAllowableEnumValues());
                 throw new \InvalidArgumentException("Invalid value for enum '$class', must be one of: '$imploded'");
             }
@@ -522,19 +527,16 @@ class ObjectSerializer
                     continue;
                 }
 
-                if (!isset($data->{$instance::attributeMap()[$property]})) {
-                    if ($instance::isNullable($property)) {
-                        $instance->$propertySetter(null);
-                    }
-
+                if (!property_exists($data, $instance::attributeMap()[$property])) {
                     continue;
                 }
 
-                if (isset($data->{$instance::attributeMap()[$property]})) {
+                if (property_exists($data, $instance::attributeMap()[$property])) {
                     $propertyValue = $data->{$instance::attributeMap()[$property]};
                     $instance->$propertySetter(self::deserialize($propertyValue, $type, null));
                 }
             }
+            $instance->setAdditionalProperties(array_diff_key((array) $data, array_flip($instance::attributeMap())));
             return $instance;
         }
     }

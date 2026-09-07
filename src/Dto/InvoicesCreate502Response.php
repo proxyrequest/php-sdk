@@ -1,6 +1,6 @@
 <?php
 /**
- * SessionDeleteResponse
+ * InvoicesCreate502Response
  *
  * PHP version 8.1
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \ProxyRequest\ObjectSerializer;
 
 /**
- * SessionDeleteResponse Class Doc Comment
+ * InvoicesCreate502Response Class Doc Comment
  *
  * @category Class
  * @package  ProxyRequest
@@ -40,7 +40,7 @@ use \ProxyRequest\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class SessionDeleteResponse implements ModelInterface, ArrayAccess, \JsonSerializable
+class InvoicesCreate502Response extends \ProxyRequest\Support\AdditionalProperties implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class SessionDeleteResponse implements ModelInterface, ArrayAccess, \JsonSeriali
      *
      * @var string
      */
-    protected static $openAPIModelName = 'SessionDeleteResponse';
+    protected static $openAPIModelName = 'invoices_create_502_response';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -57,7 +57,10 @@ class SessionDeleteResponse implements ModelInterface, ArrayAccess, \JsonSeriali
      * @var string[]
      */
     protected static $openAPITypes = [
-        'deleted' => 'bool'
+        'invoiceId' => 'string',
+        'gateway' => 'string',
+        'retryable' => 'bool',
+        'nonFieldErrors' => 'string[]'
     ];
 
     /**
@@ -68,7 +71,10 @@ class SessionDeleteResponse implements ModelInterface, ArrayAccess, \JsonSeriali
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'deleted' => null
+        'invoiceId' => 'uuid',
+        'gateway' => null,
+        'retryable' => null,
+        'nonFieldErrors' => null
     ];
 
     /**
@@ -77,7 +83,10 @@ class SessionDeleteResponse implements ModelInterface, ArrayAccess, \JsonSeriali
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'deleted' => false
+        'invoiceId' => false,
+        'gateway' => false,
+        'retryable' => false,
+        'nonFieldErrors' => false
     ];
 
     /**
@@ -166,7 +175,10 @@ class SessionDeleteResponse implements ModelInterface, ArrayAccess, \JsonSeriali
      * @var string[]
      */
     protected static $attributeMap = [
-        'deleted' => 'deleted'
+        'invoiceId' => 'invoice_id',
+        'gateway' => 'gateway',
+        'retryable' => 'retryable',
+        'nonFieldErrors' => 'non_field_errors'
     ];
 
     /**
@@ -175,7 +187,10 @@ class SessionDeleteResponse implements ModelInterface, ArrayAccess, \JsonSeriali
      * @var string[]
      */
     protected static $setters = [
-        'deleted' => 'setDeleted'
+        'invoiceId' => 'setInvoiceId',
+        'gateway' => 'setGateway',
+        'retryable' => 'setRetryable',
+        'nonFieldErrors' => 'setNonFieldErrors'
     ];
 
     /**
@@ -184,7 +199,10 @@ class SessionDeleteResponse implements ModelInterface, ArrayAccess, \JsonSeriali
      * @var string[]
      */
     protected static $getters = [
-        'deleted' => 'getDeleted'
+        'invoiceId' => 'getInvoiceId',
+        'gateway' => 'getGateway',
+        'retryable' => 'getRetryable',
+        'nonFieldErrors' => 'getNonFieldErrors'
     ];
 
     /**
@@ -244,7 +262,10 @@ class SessionDeleteResponse implements ModelInterface, ArrayAccess, \JsonSeriali
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('deleted', $data ?? [], null);
+        $this->setIfExists('invoiceId', $data ?? [], null);
+        $this->setIfExists('gateway', $data ?? [], null);
+        $this->setIfExists('retryable', $data ?? [], null);
+        $this->setIfExists('nonFieldErrors', $data ?? [], null);
     }
 
     /**
@@ -274,8 +295,17 @@ class SessionDeleteResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     {
         $invalidProperties = [];
 
-        if ($this->container['deleted'] === null) {
-            $invalidProperties[] = "'deleted' can't be null";
+        if ($this->container['invoiceId'] === null) {
+            $invalidProperties[] = "'invoiceId' can't be null";
+        }
+        if ($this->container['gateway'] === null) {
+            $invalidProperties[] = "'gateway' can't be null";
+        }
+        if ($this->container['retryable'] === null) {
+            $invalidProperties[] = "'retryable' can't be null";
+        }
+        if ($this->container['nonFieldErrors'] === null) {
+            $invalidProperties[] = "'nonFieldErrors' can't be null";
         }
         return $invalidProperties;
     }
@@ -293,28 +323,109 @@ class SessionDeleteResponse implements ModelInterface, ArrayAccess, \JsonSeriali
 
 
     /**
-     * Gets deleted
+     * Gets invoiceId
      *
-     * @return bool
+     * @return string
      */
-    public function getDeleted()
+    public function getInvoiceId()
     {
-        return $this->container['deleted'];
+        return $this->container['invoiceId'];
     }
 
     /**
-     * Sets deleted
+     * Sets invoiceId
      *
-     * @param bool $deleted deleted
+     * @param string $invoiceId invoiceId
      *
      * @return self
      */
-    public function setDeleted($deleted)
+    public function setInvoiceId($invoiceId)
     {
-        if (is_null($deleted)) {
-            throw new \InvalidArgumentException('non-nullable deleted cannot be null');
+        if (is_null($invoiceId)) {
+            throw new \InvalidArgumentException('non-nullable invoiceId cannot be null');
         }
-        $this->container['deleted'] = $deleted;
+        $this->container['invoiceId'] = $invoiceId;
+
+        return $this;
+    }
+
+    /**
+     * Gets gateway
+     *
+     * @return string
+     */
+    public function getGateway()
+    {
+        return $this->container['gateway'];
+    }
+
+    /**
+     * Sets gateway
+     *
+     * @param string $gateway gateway
+     *
+     * @return self
+     */
+    public function setGateway($gateway)
+    {
+        if (is_null($gateway)) {
+            throw new \InvalidArgumentException('non-nullable gateway cannot be null');
+        }
+        $this->container['gateway'] = $gateway;
+
+        return $this;
+    }
+
+    /**
+     * Gets retryable
+     *
+     * @return bool
+     */
+    public function getRetryable()
+    {
+        return $this->container['retryable'];
+    }
+
+    /**
+     * Sets retryable
+     *
+     * @param bool $retryable retryable
+     *
+     * @return self
+     */
+    public function setRetryable($retryable)
+    {
+        if (is_null($retryable)) {
+            throw new \InvalidArgumentException('non-nullable retryable cannot be null');
+        }
+        $this->container['retryable'] = $retryable;
+
+        return $this;
+    }
+
+    /**
+     * Gets nonFieldErrors
+     *
+     * @return string[]
+     */
+    public function getNonFieldErrors()
+    {
+        return $this->container['nonFieldErrors'];
+    }
+
+    /**
+     * Sets nonFieldErrors
+     *
+     * @param string[] $nonFieldErrors nonFieldErrors
+     *
+     * @return self
+     */
+    public function setNonFieldErrors($nonFieldErrors)
+    {
+        if (is_null($nonFieldErrors)) {
+            throw new \InvalidArgumentException('non-nullable nonFieldErrors cannot be null');
+        }
+        $this->container['nonFieldErrors'] = $nonFieldErrors;
 
         return $this;
     }
@@ -408,5 +519,3 @@ class SessionDeleteResponse implements ModelInterface, ArrayAccess, \JsonSeriali
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
-

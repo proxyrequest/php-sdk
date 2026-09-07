@@ -3,12 +3,25 @@ set -euo pipefail
 
 SDK_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 GENERATOR_IMAGE="openapitools/openapi-generator-cli:v7.23.0"
+schema_tmp="$(mktemp "${SDK_ROOT}/openapi/.sdk.XXXXXX.json")"
+trap 'rm -f "$schema_tmp"' EXIT
+php "${SDK_ROOT}/scripts/prepare-openapi.php" "$schema_tmp"
+
+# OpenAPI Generator does not remove files for operations deleted from the input.
+# These exact artifacts belong to the intentionally removed sessions resource.
+rm -f \
+  "${SDK_ROOT}/src/Resource/SessionsResource.php" \
+  "${SDK_ROOT}/src/Dto/SessionListResponse.php" \
+  "${SDK_ROOT}/src/Dto/SessionDeleteResponse.php" \
+  "${SDK_ROOT}/docs/Api/SessionsResource.md" \
+  "${SDK_ROOT}/docs/Model/SessionListResponse.md" \
+  "${SDK_ROOT}/docs/Model/SessionDeleteResponse.md"
 
 docker run --rm \
   --user "$(id -u):$(id -g)" \
   --volume "${SDK_ROOT}:/local" \
   "${GENERATOR_IMAGE}" generate \
-  --input-spec /local/openapi/openapi.yaml \
+  --input-spec "/local/openapi/$(basename "$schema_tmp")" \
   --generator-name php \
   --output /local \
   --config /local/openapi/generator.yaml \
@@ -32,6 +45,7 @@ find "${SDK_ROOT}/src/Resource" -type f -name '*Resource.php' -exec \
   perl -0pi -e 's/\\GuzzleHttp\\Utils::jsonEncode/\\ProxyRequest\\Support\\Json::encode/g' {} +
 
 php "${SDK_ROOT}/scripts/generate-idempotency-policy.php"
+php "${SDK_ROOT}/scripts/postprocess-generated.php"
 php "${SDK_ROOT}/scripts/add-response-methods.php"
 php "${SDK_ROOT}/vendor/bin/php-cs-fixer" fix --allow-risky=yes --quiet \
   "${SDK_ROOT}/src/Support/IdempotencyPolicy.php"

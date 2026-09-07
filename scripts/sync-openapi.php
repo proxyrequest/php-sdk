@@ -32,17 +32,26 @@ if (!\is_array($paths) || [] !== array_filter(array_keys($paths), static fn(mixe
 }
 
 $operations = 0;
-foreach ($paths as $pathItem) {
-    if (!\is_array($pathItem)) {
-        continue;
+$operationIds = [];
+foreach ($paths as $path => $pathItem) {
+    if (!\is_array($pathItem) || isset($pathItem['$ref'])) {
+        throw new RuntimeException('Invalid or unresolved path: ' . $path);
     }
-    foreach (['get', 'post', 'put', 'patch', 'delete'] as $method) {
-        $operations += isset($pathItem[$method]) ? 1 : 0;
+    foreach (['get', 'post', 'put', 'patch', 'delete', 'head', 'options', 'trace'] as $method) {
+        if (!\array_key_exists($method, $pathItem)) {
+            continue;
+        }
+        $id = $pathItem[$method]['operationId'] ?? null;
+        if (!\is_string($id) || '' === trim($id) || isset($operationIds[$id])) {
+            throw new RuntimeException('Missing or duplicate operationId at ' . $method . ' ' . $path);
+        }
+        $operationIds[$id] = true;
+        ++$operations;
     }
 }
 
 $schemas = $document['components']['schemas'] ?? [];
-if (80 !== $operations || !\is_array($schemas) || 124 !== \count($schemas)) {
+if (0 === $operations || !\is_array($schemas) || [] === $schemas) {
     fwrite(STDERR, \sprintf(
         "Unexpected contract size: %d operations and %d schemas.\n",
         $operations,
@@ -68,6 +77,7 @@ if (1 !== preg_match('/^[0-9a-f]{40}$/D', $commit)) {
 file_put_contents($root . '/openapi/openapi.yaml', $bytes);
 file_put_contents($root . '/openapi/source.json', json_encode([
     'commit' => $commit,
+    'excludedOperations' => ['sessions_destroy', 'sessions_list'],
     'repository' => 'papaproxy/api',
     'sha256' => hash('sha256', $bytes),
     'source' => basename($source),

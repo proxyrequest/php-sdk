@@ -40,7 +40,7 @@ use \ProxyRequest\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class InvoiceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
+class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -61,6 +61,7 @@ class InvoiceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'userId' => 'string',
         'gateway' => '\ProxyRequest\Dto\InvoiceCreateRequestGatewayEnum',
         'cryptoCurrency' => 'string',
+        'paymentCurrency' => 'string',
         'couponCode' => 'string',
         'countryCode' => 'string',
         'data' => 'int',
@@ -85,6 +86,7 @@ class InvoiceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'userId' => 'uuid',
         'gateway' => null,
         'cryptoCurrency' => null,
+        'paymentCurrency' => null,
         'couponCode' => null,
         'countryCode' => null,
         'data' => null,
@@ -107,6 +109,7 @@ class InvoiceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'userId' => false,
         'gateway' => false,
         'cryptoCurrency' => false,
+        'paymentCurrency' => false,
         'couponCode' => false,
         'countryCode' => false,
         'data' => false,
@@ -209,6 +212,7 @@ class InvoiceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'userId' => 'user_id',
         'gateway' => 'gateway',
         'cryptoCurrency' => 'crypto_currency',
+        'paymentCurrency' => 'payment_currency',
         'couponCode' => 'coupon_code',
         'countryCode' => 'country_code',
         'data' => 'data',
@@ -231,6 +235,7 @@ class InvoiceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'userId' => 'setUserId',
         'gateway' => 'setGateway',
         'cryptoCurrency' => 'setCryptoCurrency',
+        'paymentCurrency' => 'setPaymentCurrency',
         'couponCode' => 'setCouponCode',
         'countryCode' => 'setCountryCode',
         'data' => 'setData',
@@ -253,6 +258,7 @@ class InvoiceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'userId' => 'getUserId',
         'gateway' => 'getGateway',
         'cryptoCurrency' => 'getCryptoCurrency',
+        'paymentCurrency' => 'getPaymentCurrency',
         'couponCode' => 'getCouponCode',
         'countryCode' => 'getCountryCode',
         'data' => 'getData',
@@ -326,6 +332,7 @@ class InvoiceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         $this->setIfExists('userId', $data ?? [], null);
         $this->setIfExists('gateway', $data ?? [], null);
         $this->setIfExists('cryptoCurrency', $data ?? [], null);
+        $this->setIfExists('paymentCurrency', $data ?? [], null);
         $this->setIfExists('couponCode', $data ?? [], null);
         $this->setIfExists('countryCode', $data ?? [], null);
         $this->setIfExists('data', $data ?? [], null);
@@ -370,6 +377,14 @@ class InvoiceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         }
         if (!is_null($this->container['cryptoCurrency']) && (mb_strlen($this->container['cryptoCurrency']) < 1)) {
             $invalidProperties[] = "invalid value for 'cryptoCurrency', the character length must be bigger than or equal to 1.";
+        }
+
+        if (!is_null($this->container['paymentCurrency']) && (mb_strlen($this->container['paymentCurrency']) > 3)) {
+            $invalidProperties[] = "invalid value for 'paymentCurrency', the character length must be smaller than or equal to 3.";
+        }
+
+        if (!is_null($this->container['paymentCurrency']) && (mb_strlen($this->container['paymentCurrency']) < 1)) {
+            $invalidProperties[] = "invalid value for 'paymentCurrency', the character length must be bigger than or equal to 1.";
         }
 
         if (!is_null($this->container['countryCode']) && (mb_strlen($this->container['countryCode']) > 2)) {
@@ -520,6 +535,40 @@ class InvoiceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         }
 
         $this->container['cryptoCurrency'] = $cryptoCurrency;
+
+        return $this;
+    }
+
+    /**
+     * Gets paymentCurrency
+     *
+     * @return string|null
+     */
+    public function getPaymentCurrency()
+    {
+        return $this->container['paymentCurrency'];
+    }
+
+    /**
+     * Sets paymentCurrency
+     *
+     * @param string|null $paymentCurrency ISO 4217 currency charged by a regional fiat provider.
+     *
+     * @return self
+     */
+    public function setPaymentCurrency($paymentCurrency)
+    {
+        if (is_null($paymentCurrency)) {
+            throw new \InvalidArgumentException('non-nullable paymentCurrency cannot be null');
+        }
+        if ((mb_strlen($paymentCurrency) > 3)) {
+            throw new \InvalidArgumentException('invalid length for $paymentCurrency when calling InvoiceCreateRequest., must be smaller than or equal to 3.');
+        }
+        if ((mb_strlen($paymentCurrency) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $paymentCurrency when calling InvoiceCreateRequest., must be bigger than or equal to 1.');
+        }
+
+        $this->container['paymentCurrency'] = $paymentCurrency;
 
         return $this;
     }
@@ -910,5 +959,3 @@ class InvoiceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
-

@@ -6,11 +6,8 @@ namespace ProxyRequest;
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Middleware;
 use InvalidArgumentException;
 use ProxyRequest\Support\IdempotencyClient;
-use Psr\Http\Message\RequestInterface;
 
 final class ClientBuilder
 {
@@ -139,6 +136,7 @@ final class ClientBuilder
             $this->httpClient ?? $this->createDefaultHttpClient(),
             (string) (parse_url($this->baseUri, PHP_URL_PATH) ?? ''),
             $this->idempotency,
+            $this->language,
         );
 
         return new Client(
@@ -150,14 +148,7 @@ final class ClientBuilder
 
     private function createDefaultHttpClient(): ClientInterface
     {
-        $language = $this->language;
-        $stack = HandlerStack::create();
-        $stack->push(Middleware::mapRequest(
-            static fn(RequestInterface $request): RequestInterface => $request->withHeader('Accept-Language', $language),
-        ));
-
         return new GuzzleClient([
-            'handler' => $stack,
             'timeout' => $this->timeout,
             'connect_timeout' => $this->connectTimeout,
             'http_errors' => true,

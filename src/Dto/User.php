@@ -41,7 +41,7 @@ use \ProxyRequest\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class User implements ModelInterface, ArrayAccess, \JsonSerializable
+class User extends \ProxyRequest\Support\AdditionalProperties implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -99,7 +99,8 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
         'dataSpent' => 'int',
         'dataUpdated' => '\DateTime',
         'proxyPassword' => 'string',
-        'proxyPasswordReset' => '\DateTime'
+        'proxyPasswordReset' => '\DateTime',
+        'orders' => '\ProxyRequest\Dto\Order[]'
     ];
 
     /**
@@ -151,7 +152,8 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
         'dataSpent' => null,
         'dataUpdated' => 'date-time',
         'proxyPassword' => null,
-        'proxyPasswordReset' => 'date-time'
+        'proxyPasswordReset' => 'date-time',
+        'orders' => null
     ];
 
     /**
@@ -201,7 +203,8 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
         'dataSpent' => true,
         'dataUpdated' => true,
         'proxyPassword' => true,
-        'proxyPasswordReset' => true
+        'proxyPasswordReset' => true,
+        'orders' => false
     ];
 
     /**
@@ -331,7 +334,8 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
         'dataSpent' => 'data_spent',
         'dataUpdated' => 'data_updated',
         'proxyPassword' => 'proxy_password',
-        'proxyPasswordReset' => 'proxy_password_reset'
+        'proxyPasswordReset' => 'proxy_password_reset',
+        'orders' => 'orders'
     ];
 
     /**
@@ -381,7 +385,8 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
         'dataSpent' => 'setDataSpent',
         'dataUpdated' => 'setDataUpdated',
         'proxyPassword' => 'setProxyPassword',
-        'proxyPasswordReset' => 'setProxyPasswordReset'
+        'proxyPasswordReset' => 'setProxyPasswordReset',
+        'orders' => 'setOrders'
     ];
 
     /**
@@ -431,7 +436,8 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
         'dataSpent' => 'getDataSpent',
         'dataUpdated' => 'getDataUpdated',
         'proxyPassword' => 'getProxyPassword',
-        'proxyPasswordReset' => 'getProxyPasswordReset'
+        'proxyPasswordReset' => 'getProxyPasswordReset',
+        'orders' => 'getOrders'
     ];
 
     /**
@@ -533,6 +539,7 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('dataUpdated', $data ?? [], null);
         $this->setIfExists('proxyPassword', $data ?? [], null);
         $this->setIfExists('proxyPasswordReset', $data ?? [], null);
+        $this->setIfExists('orders', $data ?? [], null);
     }
 
     /**
@@ -692,21 +699,6 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
         }
         if ($this->container['coupons'] === null) {
             $invalidProperties[] = "'coupons' can't be null";
-        }
-        if ($this->container['data'] === null && !$this->isNullableSetToNull('data')) {
-            $invalidProperties[] = "'data' is required";
-        }
-        if ($this->container['dataSpent'] === null && !$this->isNullableSetToNull('dataSpent')) {
-            $invalidProperties[] = "'dataSpent' is required";
-        }
-        if ($this->container['dataUpdated'] === null && !$this->isNullableSetToNull('dataUpdated')) {
-            $invalidProperties[] = "'dataUpdated' is required";
-        }
-        if ($this->container['proxyPassword'] === null && !$this->isNullableSetToNull('proxyPassword')) {
-            $invalidProperties[] = "'proxyPassword' is required";
-        }
-        if ($this->container['proxyPasswordReset'] === null && !$this->isNullableSetToNull('proxyPasswordReset')) {
-            $invalidProperties[] = "'proxyPasswordReset' is required";
         }
         return $invalidProperties;
     }
@@ -1815,7 +1807,7 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets data
      *
-     * @param int|null $data Available data allowance for the user
+     * @param int|null $data Present only when SITE_PACKAGE_BASED_AUTH is disabled.
      *
      * @return self
      */
@@ -1849,7 +1841,7 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets dataSpent
      *
-     * @param int|null $dataSpent Amount of data consumed by the user
+     * @param int|null $dataSpent Present only when SITE_PACKAGE_BASED_AUTH is disabled.
      *
      * @return self
      */
@@ -1883,7 +1875,7 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets dataUpdated
      *
-     * @param \DateTime|null $dataUpdated Last update timestamp for user's data
+     * @param \DateTime|null $dataUpdated Present only when SITE_PACKAGE_BASED_AUTH is disabled.
      *
      * @return self
      */
@@ -1917,7 +1909,7 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets proxyPassword
      *
-     * @param string|null $proxyPassword Proxy authentication password
+     * @param string|null $proxyPassword Present only when SITE_PACKAGE_BASED_AUTH is disabled.
      *
      * @return self
      */
@@ -1951,7 +1943,7 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets proxyPasswordReset
      *
-     * @param \DateTime|null $proxyPasswordReset Last proxy password reset timestamp
+     * @param \DateTime|null $proxyPasswordReset Present only when SITE_PACKAGE_BASED_AUTH is disabled.
      *
      * @return self
      */
@@ -1968,6 +1960,33 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
             }
         }
         $this->container['proxyPasswordReset'] = $proxyPasswordReset;
+
+        return $this;
+    }
+
+    /**
+     * Gets orders
+     *
+     * @return \ProxyRequest\Dto\Order[]|null
+     */
+    public function getOrders()
+    {
+        return $this->container['orders'];
+    }
+
+    /**
+     * Sets orders
+     *
+     * @param \ProxyRequest\Dto\Order[]|null $orders Present only when SITE_PACKAGE_BASED_AUTH is enabled.
+     *
+     * @return self
+     */
+    public function setOrders($orders)
+    {
+        if (is_null($orders)) {
+            throw new \InvalidArgumentException('non-nullable orders cannot be null');
+        }
+        $this->container['orders'] = $orders;
 
         return $this;
     }
@@ -2061,5 +2080,3 @@ class User implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
-

@@ -223,7 +223,7 @@ try {
 ## `get()`
 
 ```php
-get($id, $acceptLanguage): \ProxyRequest\Dto\Invoice
+get($id, $acceptLanguage): \ProxyRequest\Dto\InvoiceRead
 ```
 
 Get an invoice
@@ -272,7 +272,7 @@ try {
 
 ### Return type
 
-[**\ProxyRequest\Dto\Invoice**](../Model/Invoice.md)
+[**\ProxyRequest\Dto\InvoiceRead**](../Model/InvoiceRead.md)
 
 ### Authorization
 
@@ -357,7 +357,7 @@ try {
 ## `list()`
 
 ```php
-list($gateway, $internalId, $limit, $offset, $ordering, $packageId, $search, $status, $type, $userEmail, $userId, $acceptLanguage): \ProxyRequest\Dto\PaginatedInvoiceList
+list($gateway, $internalId, $limit, $offset, $ordering, $packageId, $search, $status, $type, $userEmail, $userId, $acceptLanguage): \ProxyRequest\Dto\PaginatedInvoiceReadList
 ```
 
 List invoices
@@ -386,7 +386,7 @@ $apiInstance = new ProxyRequest\Api\InvoicesResource(
     new GuzzleHttp\Client(),
     $config
 );
-$gateway = 'gateway_example'; // string | The payment gateway used for processing the payment. * `coinbase` - Coinbase * `cryptomus` - Cryptomus * `stripe` - Stripe * `coingate` - Coingate * `wallet` - Wallet * `manual` - Manual
+$gateway = 'gateway_example'; // string | The payment gateway used for processing the payment. * `coinbase` - Coinbase * `cryptomus` - Cryptomus * `stripe` - Stripe * `coingate` - Coingate * `wallet` - Wallet * `manual` - Manual * `whitepay` - Whitepay * `wayforpay` - WayForPay * `usegateway` - UseGateway * `binance` - Binance Pay * `anymoney` - Any.Money * `coinpayments` - CoinPayments * `checkoutcom` - Checkout.com * `nowpayments` - NOWPayments * `btcpay` - BTCPay Server * `braintree` - Braintree * `monobank` - monobank * `liqpay` - LiqPay * `iyzico` - iyzico * `paytr` - PayTR * `payu` - PayU * `tpay` - Tpay * `przelewy24` - Przelewy24 * `gopay` - GoPay * `comgate` - Comgate * `monei` - MONEI * `redsys` - Redsys * `payplug` - PayPlug * `mollie` - Mollie * `unzer` - Unzer * `payone` - PAYONE * `nexi_xpay` - Nexi XPay * `halyk_epay` - Halyk ePay * `kaspi_pay` - Kaspi Pay * `vipps_mobilepay` - Vipps MobilePay * `paytrail` - Paytrail
 $internalId = 'internalId_example'; // string
 $limit = 56; // int | Number of results to return per page.
 $offset = 56; // int | The initial index from which to return the results.
@@ -411,7 +411,7 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **gateway** | **string**| The payment gateway used for processing the payment. * &#x60;coinbase&#x60; - Coinbase * &#x60;cryptomus&#x60; - Cryptomus * &#x60;stripe&#x60; - Stripe * &#x60;coingate&#x60; - Coingate * &#x60;wallet&#x60; - Wallet * &#x60;manual&#x60; - Manual | [optional] |
+| **gateway** | **string**| The payment gateway used for processing the payment. * &#x60;coinbase&#x60; - Coinbase * &#x60;cryptomus&#x60; - Cryptomus * &#x60;stripe&#x60; - Stripe * &#x60;coingate&#x60; - Coingate * &#x60;wallet&#x60; - Wallet * &#x60;manual&#x60; - Manual * &#x60;whitepay&#x60; - Whitepay * &#x60;wayforpay&#x60; - WayForPay * &#x60;usegateway&#x60; - UseGateway * &#x60;binance&#x60; - Binance Pay * &#x60;anymoney&#x60; - Any.Money * &#x60;coinpayments&#x60; - CoinPayments * &#x60;checkoutcom&#x60; - Checkout.com * &#x60;nowpayments&#x60; - NOWPayments * &#x60;btcpay&#x60; - BTCPay Server * &#x60;braintree&#x60; - Braintree * &#x60;monobank&#x60; - monobank * &#x60;liqpay&#x60; - LiqPay * &#x60;iyzico&#x60; - iyzico * &#x60;paytr&#x60; - PayTR * &#x60;payu&#x60; - PayU * &#x60;tpay&#x60; - Tpay * &#x60;przelewy24&#x60; - Przelewy24 * &#x60;gopay&#x60; - GoPay * &#x60;comgate&#x60; - Comgate * &#x60;monei&#x60; - MONEI * &#x60;redsys&#x60; - Redsys * &#x60;payplug&#x60; - PayPlug * &#x60;mollie&#x60; - Mollie * &#x60;unzer&#x60; - Unzer * &#x60;payone&#x60; - PAYONE * &#x60;nexi_xpay&#x60; - Nexi XPay * &#x60;halyk_epay&#x60; - Halyk ePay * &#x60;kaspi_pay&#x60; - Kaspi Pay * &#x60;vipps_mobilepay&#x60; - Vipps MobilePay * &#x60;paytrail&#x60; - Paytrail | [optional] |
 | **internalId** | **string**|  | [optional] |
 | **limit** | **int**| Number of results to return per page. | [optional] |
 | **offset** | **int**| The initial index from which to return the results. | [optional] |
@@ -426,7 +426,7 @@ try {
 
 ### Return type
 
-[**\ProxyRequest\Dto\PaginatedInvoiceList**](../Model/PaginatedInvoiceList.md)
+[**\ProxyRequest\Dto\PaginatedInvoiceReadList**](../Model/PaginatedInvoiceReadList.md)
 
 ### Authorization
 

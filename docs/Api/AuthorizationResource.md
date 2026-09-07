@@ -11,6 +11,7 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 | [**recoverPassword()**](AuthorizationResource.md#recoverPassword) | **POST** /recover-password | Send a password recovery email |
 | [**refresh()**](AuthorizationResource.md#refresh) | **POST** /refresh | Refresh an access token |
 | [**signup()**](AuthorizationResource.md#signup) | **POST** /signup | Create a customer account |
+| [**verifyOtp()**](AuthorizationResource.md#verifyOtp) | **POST** /login/otp | Complete two-factor sign-in |
 
 
 ## `login()`
@@ -284,6 +285,64 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **signUpRequest** | [**\ProxyRequest\Dto\SignUpRequest**](../Model/SignUpRequest.md)|  | |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+
+### Return type
+
+[**\ProxyRequest\Dto\TokenPairResponse**](../Model/TokenPairResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `verifyOtp()`
+
+```php
+verifyOtp($verifyOTPRequest, $acceptLanguage): \ProxyRequest\Dto\TokenPairResponse
+```
+
+Complete two-factor sign-in
+
+Exchanges a single-use sign-in challenge and authenticator code for account tokens.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+
+$apiInstance = new ProxyRequest\Api\AuthorizationResource(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client()
+);
+$verifyOTPRequest = {"challenge":"a-single-use-challenge-returned-by-login","code":"492031"}; // \ProxyRequest\Dto\VerifyOTPRequest
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+
+try {
+    $result = $apiInstance->verifyOtp($verifyOTPRequest, $acceptLanguage);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling AuthorizationResource->verifyOtp: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **verifyOTPRequest** | [**\ProxyRequest\Dto\VerifyOTPRequest**](../Model/VerifyOTPRequest.md)|  | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type

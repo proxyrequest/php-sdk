@@ -13,5 +13,6 @@ Name | Type | Description | Notes
 **referrals** | [**\ProxyRequest\Dto\SettingsReferral**](SettingsReferral.md) |  |
 **crypto** | [**\ProxyRequest\Dto\SettingsCrypto**](SettingsCrypto.md) |  |
 **paymentMethods** | **string[]** |  |
+**paymentGateways** | [**\ProxyRequest\Dto\PaymentGateway[]**](PaymentGateway.md) |  |
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

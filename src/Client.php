@@ -20,7 +20,6 @@ use ProxyRequest\Resource\PackagesResource;
 use ProxyRequest\Resource\ProfileResource;
 use ProxyRequest\Resource\ProxiesResource;
 use ProxyRequest\Resource\RewardsResource;
-use ProxyRequest\Resource\SessionsResource;
 use ProxyRequest\Resource\SettingsResource;
 use ProxyRequest\Resource\TelegramDashboardResource;
 use ProxyRequest\Resource\UsersResource;
@@ -128,11 +127,6 @@ final class Client
     public function rewards(): RewardsResource
     {
         return $this->resource(RewardsResource::class);
-    }
-
-    public function sessions(): SessionsResource
-    {
-        return $this->resource(SessionsResource::class);
     }
 
     public function settings(): SettingsResource

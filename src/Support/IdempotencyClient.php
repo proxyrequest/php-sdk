@@ -17,6 +17,7 @@ final class IdempotencyClient implements ClientInterface
         private readonly ClientInterface $client,
         private readonly string $basePath,
         private readonly bool $enabled,
+        private readonly string $language = 'en',
     ) {}
 
     /** @param RetryOptions $options */
@@ -77,6 +78,9 @@ final class IdempotencyClient implements ClientInterface
     /** @return array{RequestInterface, bool} */
     private function prepare(RequestInterface $request): array
     {
+        if (!$request->hasHeader('Accept-Language')) {
+            $request = $request->withHeader('Accept-Language', $this->language);
+        }
         $supported = IdempotencyPolicy::supports($request, $this->basePath);
         if (!$supported) {
             return [$request, false];
@@ -86,6 +90,12 @@ final class IdempotencyClient implements ClientInterface
         }
 
         return [$request, $request->hasHeader('Idempotency-Key')];
+    }
+
+    /** Prepare once before decoding so failures retain the actual request key. */
+    public function prepareRequest(RequestInterface $request): RequestInterface
+    {
+        return $this->prepare($request)[0];
     }
 
     /** @param RetryOptions $options */

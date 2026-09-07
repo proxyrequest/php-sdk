@@ -40,8 +40,10 @@ use \ProxyRequest\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class PaginatedInvoiceList implements ModelInterface, ArrayAccess, \JsonSerializable
+class PaginatedInvoiceList extends \ProxyRequest\Support\AdditionalProperties implements ModelInterface, ArrayAccess, \JsonSerializable
 {
+    use \ProxyRequest\Support\AdditionalProperties;
+
     public const DISCRIMINATOR = null;
 
     /**
@@ -527,5 +529,3 @@ class PaginatedInvoiceList implements ModelInterface, ArrayAccess, \JsonSerializ
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
-

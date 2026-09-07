@@ -1,6 +1,6 @@
 <?php
 /**
- * SessionListResponse
+ * PaymentGateway
  *
  * PHP version 8.1
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \ProxyRequest\ObjectSerializer;
 
 /**
- * SessionListResponse Class Doc Comment
+ * PaymentGateway Class Doc Comment
  *
  * @category Class
  * @package  ProxyRequest
@@ -40,7 +40,7 @@ use \ProxyRequest\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class SessionListResponse implements ModelInterface, ArrayAccess, \JsonSerializable
+class PaymentGateway extends \ProxyRequest\Support\AdditionalProperties implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class SessionListResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      *
      * @var string
      */
-    protected static $openAPIModelName = 'SessionListResponse';
+    protected static $openAPIModelName = 'PaymentGateway';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -57,8 +57,12 @@ class SessionListResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $openAPITypes = [
-        'count' => 'int',
-        'results' => 'string[]'
+        'code' => 'string',
+        'name' => 'string',
+        'kind' => 'string',
+        'supportedCurrencies' => 'string[]',
+        'supportedCryptoCurrencies' => 'string[]',
+        'requiresCryptoCurrency' => 'bool'
     ];
 
     /**
@@ -69,8 +73,12 @@ class SessionListResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'count' => null,
-        'results' => null
+        'code' => null,
+        'name' => null,
+        'kind' => null,
+        'supportedCurrencies' => null,
+        'supportedCryptoCurrencies' => null,
+        'requiresCryptoCurrency' => null
     ];
 
     /**
@@ -79,8 +87,12 @@ class SessionListResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'count' => false,
-        'results' => false
+        'code' => false,
+        'name' => false,
+        'kind' => false,
+        'supportedCurrencies' => false,
+        'supportedCryptoCurrencies' => false,
+        'requiresCryptoCurrency' => false
     ];
 
     /**
@@ -169,8 +181,12 @@ class SessionListResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $attributeMap = [
-        'count' => 'count',
-        'results' => 'results'
+        'code' => 'code',
+        'name' => 'name',
+        'kind' => 'kind',
+        'supportedCurrencies' => 'supported_currencies',
+        'supportedCryptoCurrencies' => 'supported_crypto_currencies',
+        'requiresCryptoCurrency' => 'requires_crypto_currency'
     ];
 
     /**
@@ -179,8 +195,12 @@ class SessionListResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $setters = [
-        'count' => 'setCount',
-        'results' => 'setResults'
+        'code' => 'setCode',
+        'name' => 'setName',
+        'kind' => 'setKind',
+        'supportedCurrencies' => 'setSupportedCurrencies',
+        'supportedCryptoCurrencies' => 'setSupportedCryptoCurrencies',
+        'requiresCryptoCurrency' => 'setRequiresCryptoCurrency'
     ];
 
     /**
@@ -189,8 +209,12 @@ class SessionListResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      * @var string[]
      */
     protected static $getters = [
-        'count' => 'getCount',
-        'results' => 'getResults'
+        'code' => 'getCode',
+        'name' => 'getName',
+        'kind' => 'getKind',
+        'supportedCurrencies' => 'getSupportedCurrencies',
+        'supportedCryptoCurrencies' => 'getSupportedCryptoCurrencies',
+        'requiresCryptoCurrency' => 'getRequiresCryptoCurrency'
     ];
 
     /**
@@ -250,8 +274,12 @@ class SessionListResponse implements ModelInterface, ArrayAccess, \JsonSerializa
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('count', $data ?? [], null);
-        $this->setIfExists('results', $data ?? [], null);
+        $this->setIfExists('code', $data ?? [], null);
+        $this->setIfExists('name', $data ?? [], null);
+        $this->setIfExists('kind', $data ?? [], null);
+        $this->setIfExists('supportedCurrencies', $data ?? [], null);
+        $this->setIfExists('supportedCryptoCurrencies', $data ?? [], null);
+        $this->setIfExists('requiresCryptoCurrency', $data ?? [], null);
     }
 
     /**
@@ -281,11 +309,23 @@ class SessionListResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     {
         $invalidProperties = [];
 
-        if ($this->container['count'] === null) {
-            $invalidProperties[] = "'count' can't be null";
+        if ($this->container['code'] === null) {
+            $invalidProperties[] = "'code' can't be null";
         }
-        if ($this->container['results'] === null) {
-            $invalidProperties[] = "'results' can't be null";
+        if ($this->container['name'] === null) {
+            $invalidProperties[] = "'name' can't be null";
+        }
+        if ($this->container['kind'] === null) {
+            $invalidProperties[] = "'kind' can't be null";
+        }
+        if ($this->container['supportedCurrencies'] === null) {
+            $invalidProperties[] = "'supportedCurrencies' can't be null";
+        }
+        if ($this->container['supportedCryptoCurrencies'] === null) {
+            $invalidProperties[] = "'supportedCryptoCurrencies' can't be null";
+        }
+        if ($this->container['requiresCryptoCurrency'] === null) {
+            $invalidProperties[] = "'requiresCryptoCurrency' can't be null";
         }
         return $invalidProperties;
     }
@@ -303,55 +343,163 @@ class SessionListResponse implements ModelInterface, ArrayAccess, \JsonSerializa
 
 
     /**
-     * Gets count
+     * Gets code
      *
-     * @return int
+     * @return string
      */
-    public function getCount()
+    public function getCode()
     {
-        return $this->container['count'];
+        return $this->container['code'];
     }
 
     /**
-     * Sets count
+     * Sets code
      *
-     * @param int $count count
+     * @param string $code code
      *
      * @return self
      */
-    public function setCount($count)
+    public function setCode($code)
     {
-        if (is_null($count)) {
-            throw new \InvalidArgumentException('non-nullable count cannot be null');
+        if (is_null($code)) {
+            throw new \InvalidArgumentException('non-nullable code cannot be null');
         }
-        $this->container['count'] = $count;
+        $this->container['code'] = $code;
 
         return $this;
     }
 
     /**
-     * Gets results
+     * Gets name
      *
-     * @return string[]
+     * @return string
      */
-    public function getResults()
+    public function getName()
     {
-        return $this->container['results'];
+        return $this->container['name'];
     }
 
     /**
-     * Sets results
+     * Sets name
      *
-     * @param string[] $results results
+     * @param string $name name
      *
      * @return self
      */
-    public function setResults($results)
+    public function setName($name)
     {
-        if (is_null($results)) {
-            throw new \InvalidArgumentException('non-nullable results cannot be null');
+        if (is_null($name)) {
+            throw new \InvalidArgumentException('non-nullable name cannot be null');
         }
-        $this->container['results'] = $results;
+        $this->container['name'] = $name;
+
+        return $this;
+    }
+
+    /**
+     * Gets kind
+     *
+     * @return string
+     */
+    public function getKind()
+    {
+        return $this->container['kind'];
+    }
+
+    /**
+     * Sets kind
+     *
+     * @param string $kind kind
+     *
+     * @return self
+     */
+    public function setKind($kind)
+    {
+        if (is_null($kind)) {
+            throw new \InvalidArgumentException('non-nullable kind cannot be null');
+        }
+        $this->container['kind'] = $kind;
+
+        return $this;
+    }
+
+    /**
+     * Gets supportedCurrencies
+     *
+     * @return string[]
+     */
+    public function getSupportedCurrencies()
+    {
+        return $this->container['supportedCurrencies'];
+    }
+
+    /**
+     * Sets supportedCurrencies
+     *
+     * @param string[] $supportedCurrencies supportedCurrencies
+     *
+     * @return self
+     */
+    public function setSupportedCurrencies($supportedCurrencies)
+    {
+        if (is_null($supportedCurrencies)) {
+            throw new \InvalidArgumentException('non-nullable supportedCurrencies cannot be null');
+        }
+        $this->container['supportedCurrencies'] = $supportedCurrencies;
+
+        return $this;
+    }
+
+    /**
+     * Gets supportedCryptoCurrencies
+     *
+     * @return string[]
+     */
+    public function getSupportedCryptoCurrencies()
+    {
+        return $this->container['supportedCryptoCurrencies'];
+    }
+
+    /**
+     * Sets supportedCryptoCurrencies
+     *
+     * @param string[] $supportedCryptoCurrencies supportedCryptoCurrencies
+     *
+     * @return self
+     */
+    public function setSupportedCryptoCurrencies($supportedCryptoCurrencies)
+    {
+        if (is_null($supportedCryptoCurrencies)) {
+            throw new \InvalidArgumentException('non-nullable supportedCryptoCurrencies cannot be null');
+        }
+        $this->container['supportedCryptoCurrencies'] = $supportedCryptoCurrencies;
+
+        return $this;
+    }
+
+    /**
+     * Gets requiresCryptoCurrency
+     *
+     * @return bool
+     */
+    public function getRequiresCryptoCurrency()
+    {
+        return $this->container['requiresCryptoCurrency'];
+    }
+
+    /**
+     * Sets requiresCryptoCurrency
+     *
+     * @param bool $requiresCryptoCurrency requiresCryptoCurrency
+     *
+     * @return self
+     */
+    public function setRequiresCryptoCurrency($requiresCryptoCurrency)
+    {
+        if (is_null($requiresCryptoCurrency)) {
+            throw new \InvalidArgumentException('non-nullable requiresCryptoCurrency cannot be null');
+        }
+        $this->container['requiresCryptoCurrency'] = $requiresCryptoCurrency;
 
         return $this;
     }
@@ -445,5 +593,3 @@ class SessionListResponse implements ModelInterface, ArrayAccess, \JsonSerializa
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
-

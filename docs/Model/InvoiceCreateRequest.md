@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **userId** | **string** | Managed sub-user that should receive the purchase. | [optional]
 **gateway** | [**\ProxyRequest\Dto\InvoiceCreateRequestGatewayEnum**](InvoiceCreateRequestGatewayEnum.md) |  |
 **cryptoCurrency** | **string** |  | [optional]
+**paymentCurrency** | **string** | ISO 4217 currency charged by a regional fiat provider. | [optional]
 **couponCode** | **string** |  | [optional]
 **countryCode** | **string** |  | [optional]
 **data** | **int** | Residential proxy data to purchase, in bytes. | [optional]

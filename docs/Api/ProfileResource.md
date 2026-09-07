@@ -7,12 +7,12 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
 | [**changePassword()**](ProfileResource.md#changePassword) | **POST** /profile/change-password | Change the account password |
-| [**confirmTwoFactor()**](ProfileResource.md#confirmTwoFactor) | **POST** /profile/2fa/confirm | Confirm two-factor setup |
+| [**confirmTwoFactor()**](ProfileResource.md#confirmTwoFactor) | **POST** /profile/2fa/confirm | Confirm two-factor authentication |
 | [**delete()**](ProfileResource.md#delete) | **DELETE** /profile | Delete the current account |
 | [**disableTwoFactor()**](ProfileResource.md#disableTwoFactor) | **POST** /profile/2fa/disable | Disable two-factor authentication |
 | [**get()**](ProfileResource.md#get) | **GET** /profile | Get the current profile |
 | [**getTwoFactorStatus()**](ProfileResource.md#getTwoFactorStatus) | **GET** /profile/2fa/status | Get two-factor status |
-| [**setupTwoFactor()**](ProfileResource.md#setupTwoFactor) | **POST** /profile/2fa/setup | Start two-factor setup |
+| [**setupTwoFactor()**](ProfileResource.md#setupTwoFactor) | **POST** /profile/2fa/setup | Prepare two-factor authentication |
 | [**update()**](ProfileResource.md#update) | **PATCH** /profile | Update the current profile |
 
 
@@ -89,9 +89,9 @@ try {
 confirmTwoFactor($twoFactorConfirmRequest, $acceptLanguage): \ProxyRequest\Dto\EnabledResponse
 ```
 
-Confirm two-factor setup
+Confirm two-factor authentication
 
-Verifies a six-digit TOTP code generated from the pending secret and enables two-factor authentication for the account.
+Activates the pending authenticator after verifying its code and revokes previous JWTs.
 
 ### Example
 
@@ -224,7 +224,7 @@ disableTwoFactor($twoFactorDisableRequest, $acceptLanguage): \ProxyRequest\Dto\E
 
 Disable two-factor authentication
 
-Verifies a current TOTP code, disables two-factor authentication, and removes the stored TOTP secret.
+Requires the primary factor and current authenticator code, then revokes previous JWTs.
 
 ### Example
 
@@ -248,7 +248,7 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
     new GuzzleHttp\Client(),
     $config
 );
-$twoFactorDisableRequest = {"code":"492031"}; // \ProxyRequest\Dto\TwoFactorDisableRequest
+$twoFactorDisableRequest = {"password":"Correct-Horse-Battery-Staple-42","code":"492031"}; // \ProxyRequest\Dto\TwoFactorDisableRequest
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
@@ -416,12 +416,12 @@ try {
 ## `setupTwoFactor()`
 
 ```php
-setupTwoFactor($acceptLanguage): \ProxyRequest\Dto\TwoFactorSetupResponse
+setupTwoFactor($acceptLanguage, $twoFactorSetupRequestRequest): \ProxyRequest\Dto\TwoFactorSetupResponse
 ```
 
-Start two-factor setup
+Prepare two-factor authentication
 
-Creates a new TOTP secret and provisioning URI. Two-factor authentication remains disabled until the code is confirmed.
+Confirms the primary factor and prepares a pending secret without disabling current protection.
 
 ### Example
 
@@ -446,9 +446,10 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
     $config
 );
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$twoFactorSetupRequestRequest = {"password":"Correct-Horse-Battery-Staple-42"}; // \ProxyRequest\Dto\TwoFactorSetupRequestRequest
 
 try {
-    $result = $apiInstance->setupTwoFactor($acceptLanguage);
+    $result = $apiInstance->setupTwoFactor($acceptLanguage, $twoFactorSetupRequestRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ProfileResource->setupTwoFactor: ', $e->getMessage(), PHP_EOL;
@@ -460,6 +461,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **twoFactorSetupRequestRequest** | [**\ProxyRequest\Dto\TwoFactorSetupRequestRequest**](../Model/TwoFactorSetupRequestRequest.md)|  | [optional] |
 
 ### Return type
 
@@ -471,7 +473,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

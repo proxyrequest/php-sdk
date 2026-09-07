@@ -40,7 +40,7 @@ use \ProxyRequest\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
+class Invoice extends \ProxyRequest\Support\AdditionalProperties implements ModelInterface, InvoiceRead, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -62,6 +62,12 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'country' => '\ProxyRequest\Dto\Country',
         'userId' => 'string',
         'coupon' => '\ProxyRequest\Dto\CouponShort',
+        'paymentAmount' => 'int',
+        'paymentCurrency' => 'string',
+        'fxMarketRate' => 'string',
+        'fxEffectiveRate' => 'string',
+        'fxMarkupPercent' => 'string',
+        'fxQuotedAt' => '\DateTime',
         'updated' => '\DateTime',
         'created' => '\DateTime',
         'type' => '\ProxyRequest\Dto\InvoiceTypeEnum',
@@ -77,8 +83,10 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'priceTotal' => 'int',
         'gateway' => '\ProxyRequest\Dto\InvoiceGatewayEnum',
         'paymentUrl' => 'string',
-        'coingateOrderToken' => 'string',
-        'coinbaseChargeId' => 'string',
+        'currency' => 'string',
+        'providerCheckoutId' => 'string',
+        'providerPaymentId' => 'string',
+        'checkoutStatus' => '\ProxyRequest\Dto\CheckoutStatusEnum',
         'vat' => 'float',
         'companyName' => 'string',
         'companyAddress' => 'string',
@@ -102,6 +110,12 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'country' => null,
         'userId' => 'uuid',
         'coupon' => null,
+        'paymentAmount' => null,
+        'paymentCurrency' => null,
+        'fxMarketRate' => null,
+        'fxEffectiveRate' => null,
+        'fxMarkupPercent' => null,
+        'fxQuotedAt' => 'date-time',
         'updated' => 'date-time',
         'created' => 'date-time',
         'type' => null,
@@ -117,8 +131,10 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'priceTotal' => 'int64',
         'gateway' => null,
         'paymentUrl' => 'uri',
-        'coingateOrderToken' => null,
-        'coinbaseChargeId' => null,
+        'currency' => null,
+        'providerCheckoutId' => null,
+        'providerPaymentId' => null,
+        'checkoutStatus' => null,
         'vat' => 'double',
         'companyName' => null,
         'companyAddress' => null,
@@ -136,10 +152,16 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static array $openAPINullables = [
         'id' => false,
-        'package' => false,
-        'country' => false,
+        'package' => true,
+        'country' => true,
         'userId' => false,
-        'coupon' => false,
+        'coupon' => true,
+        'paymentAmount' => false,
+        'paymentCurrency' => false,
+        'fxMarketRate' => false,
+        'fxEffectiveRate' => false,
+        'fxMarkupPercent' => false,
+        'fxQuotedAt' => true,
         'updated' => false,
         'created' => false,
         'type' => false,
@@ -155,8 +177,10 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'priceTotal' => false,
         'gateway' => false,
         'paymentUrl' => false,
-        'coingateOrderToken' => false,
-        'coinbaseChargeId' => false,
+        'currency' => false,
+        'providerCheckoutId' => false,
+        'providerPaymentId' => false,
+        'checkoutStatus' => false,
         'vat' => false,
         'companyName' => false,
         'companyAddress' => false,
@@ -258,6 +282,12 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'country' => 'country',
         'userId' => 'user_id',
         'coupon' => 'coupon',
+        'paymentAmount' => 'payment_amount',
+        'paymentCurrency' => 'payment_currency',
+        'fxMarketRate' => 'fx_market_rate',
+        'fxEffectiveRate' => 'fx_effective_rate',
+        'fxMarkupPercent' => 'fx_markup_percent',
+        'fxQuotedAt' => 'fx_quoted_at',
         'updated' => 'updated',
         'created' => 'created',
         'type' => 'type',
@@ -273,8 +303,10 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'priceTotal' => 'price_total',
         'gateway' => 'gateway',
         'paymentUrl' => 'payment_url',
-        'coingateOrderToken' => 'coingate_order_token',
-        'coinbaseChargeId' => 'coinbase_charge_id',
+        'currency' => 'currency',
+        'providerCheckoutId' => 'provider_checkout_id',
+        'providerPaymentId' => 'provider_payment_id',
+        'checkoutStatus' => 'checkout_status',
         'vat' => 'vat',
         'companyName' => 'company_name',
         'companyAddress' => 'company_address',
@@ -296,6 +328,12 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'country' => 'setCountry',
         'userId' => 'setUserId',
         'coupon' => 'setCoupon',
+        'paymentAmount' => 'setPaymentAmount',
+        'paymentCurrency' => 'setPaymentCurrency',
+        'fxMarketRate' => 'setFxMarketRate',
+        'fxEffectiveRate' => 'setFxEffectiveRate',
+        'fxMarkupPercent' => 'setFxMarkupPercent',
+        'fxQuotedAt' => 'setFxQuotedAt',
         'updated' => 'setUpdated',
         'created' => 'setCreated',
         'type' => 'setType',
@@ -311,8 +349,10 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'priceTotal' => 'setPriceTotal',
         'gateway' => 'setGateway',
         'paymentUrl' => 'setPaymentUrl',
-        'coingateOrderToken' => 'setCoingateOrderToken',
-        'coinbaseChargeId' => 'setCoinbaseChargeId',
+        'currency' => 'setCurrency',
+        'providerCheckoutId' => 'setProviderCheckoutId',
+        'providerPaymentId' => 'setProviderPaymentId',
+        'checkoutStatus' => 'setCheckoutStatus',
         'vat' => 'setVat',
         'companyName' => 'setCompanyName',
         'companyAddress' => 'setCompanyAddress',
@@ -334,6 +374,12 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'country' => 'getCountry',
         'userId' => 'getUserId',
         'coupon' => 'getCoupon',
+        'paymentAmount' => 'getPaymentAmount',
+        'paymentCurrency' => 'getPaymentCurrency',
+        'fxMarketRate' => 'getFxMarketRate',
+        'fxEffectiveRate' => 'getFxEffectiveRate',
+        'fxMarkupPercent' => 'getFxMarkupPercent',
+        'fxQuotedAt' => 'getFxQuotedAt',
         'updated' => 'getUpdated',
         'created' => 'getCreated',
         'type' => 'getType',
@@ -349,8 +395,10 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'priceTotal' => 'getPriceTotal',
         'gateway' => 'getGateway',
         'paymentUrl' => 'getPaymentUrl',
-        'coingateOrderToken' => 'getCoingateOrderToken',
-        'coinbaseChargeId' => 'getCoinbaseChargeId',
+        'currency' => 'getCurrency',
+        'providerCheckoutId' => 'getProviderCheckoutId',
+        'providerPaymentId' => 'getProviderPaymentId',
+        'checkoutStatus' => 'getCheckoutStatus',
         'vat' => 'getVat',
         'companyName' => 'getCompanyName',
         'companyAddress' => 'getCompanyAddress',
@@ -423,6 +471,12 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('country', $data ?? [], null);
         $this->setIfExists('userId', $data ?? [], null);
         $this->setIfExists('coupon', $data ?? [], null);
+        $this->setIfExists('paymentAmount', $data ?? [], null);
+        $this->setIfExists('paymentCurrency', $data ?? [], null);
+        $this->setIfExists('fxMarketRate', $data ?? [], null);
+        $this->setIfExists('fxEffectiveRate', $data ?? [], null);
+        $this->setIfExists('fxMarkupPercent', $data ?? [], null);
+        $this->setIfExists('fxQuotedAt', $data ?? [], null);
         $this->setIfExists('updated', $data ?? [], null);
         $this->setIfExists('created', $data ?? [], null);
         $this->setIfExists('type', $data ?? [], null);
@@ -438,8 +492,10 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('priceTotal', $data ?? [], null);
         $this->setIfExists('gateway', $data ?? [], null);
         $this->setIfExists('paymentUrl', $data ?? [], null);
-        $this->setIfExists('coingateOrderToken', $data ?? [], null);
-        $this->setIfExists('coinbaseChargeId', $data ?? [], null);
+        $this->setIfExists('currency', $data ?? [], null);
+        $this->setIfExists('providerCheckoutId', $data ?? [], null);
+        $this->setIfExists('providerPaymentId', $data ?? [], null);
+        $this->setIfExists('checkoutStatus', $data ?? [], null);
         $this->setIfExists('vat', $data ?? [], null);
         $this->setIfExists('companyName', $data ?? [], null);
         $this->setIfExists('companyAddress', $data ?? [], null);
@@ -481,17 +537,35 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
             $invalidProperties[] = "invalid value for 'id', the character length must be smaller than or equal to 36.";
         }
 
-        if ($this->container['package'] === null) {
-            $invalidProperties[] = "'package' can't be null";
+        if ($this->container['package'] === null && !$this->isNullableSetToNull('package')) {
+            $invalidProperties[] = "'package' is required";
         }
-        if ($this->container['country'] === null) {
-            $invalidProperties[] = "'country' can't be null";
+        if ($this->container['country'] === null && !$this->isNullableSetToNull('country')) {
+            $invalidProperties[] = "'country' is required";
         }
         if ($this->container['userId'] === null) {
             $invalidProperties[] = "'userId' can't be null";
         }
-        if ($this->container['coupon'] === null) {
-            $invalidProperties[] = "'coupon' can't be null";
+        if ($this->container['coupon'] === null && !$this->isNullableSetToNull('coupon')) {
+            $invalidProperties[] = "'coupon' is required";
+        }
+        if ($this->container['paymentAmount'] === null) {
+            $invalidProperties[] = "'paymentAmount' can't be null";
+        }
+        if ($this->container['paymentCurrency'] === null) {
+            $invalidProperties[] = "'paymentCurrency' can't be null";
+        }
+        if ($this->container['fxMarketRate'] === null) {
+            $invalidProperties[] = "'fxMarketRate' can't be null";
+        }
+        if ($this->container['fxEffectiveRate'] === null) {
+            $invalidProperties[] = "'fxEffectiveRate' can't be null";
+        }
+        if ($this->container['fxMarkupPercent'] === null) {
+            $invalidProperties[] = "'fxMarkupPercent' can't be null";
+        }
+        if ($this->container['fxQuotedAt'] === null && !$this->isNullableSetToNull('fxQuotedAt')) {
+            $invalidProperties[] = "'fxQuotedAt' is required";
         }
         if ($this->container['updated'] === null) {
             $invalidProperties[] = "'updated' can't be null";
@@ -547,20 +621,24 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
             $invalidProperties[] = "invalid value for 'paymentUrl', the character length must be smaller than or equal to 500.";
         }
 
-        if (!is_null($this->container['coingateOrderToken']) && (mb_strlen($this->container['coingateOrderToken']) > 255)) {
-            $invalidProperties[] = "invalid value for 'coingateOrderToken', the character length must be smaller than or equal to 255.";
+        if (!is_null($this->container['currency']) && (mb_strlen($this->container['currency']) > 3)) {
+            $invalidProperties[] = "invalid value for 'currency', the character length must be smaller than or equal to 3.";
         }
 
-        if (!is_null($this->container['coinbaseChargeId']) && (mb_strlen($this->container['coinbaseChargeId']) > 255)) {
-            $invalidProperties[] = "invalid value for 'coinbaseChargeId', the character length must be smaller than or equal to 255.";
+        if (!is_null($this->container['providerCheckoutId']) && (mb_strlen($this->container['providerCheckoutId']) > 255)) {
+            $invalidProperties[] = "invalid value for 'providerCheckoutId', the character length must be smaller than or equal to 255.";
         }
 
-        if (!is_null($this->container['vat']) && ($this->container['vat'] > 100.0)) {
-            $invalidProperties[] = "invalid value for 'vat', must be smaller than or equal to 100.0.";
+        if (!is_null($this->container['providerPaymentId']) && (mb_strlen($this->container['providerPaymentId']) > 255)) {
+            $invalidProperties[] = "invalid value for 'providerPaymentId', the character length must be smaller than or equal to 255.";
         }
 
-        if (!is_null($this->container['vat']) && ($this->container['vat'] < 0.0)) {
-            $invalidProperties[] = "invalid value for 'vat', must be bigger than or equal to 0.0.";
+        if (!is_null($this->container['vat']) && ($this->container['vat'] > 100)) {
+            $invalidProperties[] = "invalid value for 'vat', must be smaller than or equal to 100.";
+        }
+
+        if (!is_null($this->container['vat']) && ($this->container['vat'] < 0)) {
+            $invalidProperties[] = "invalid value for 'vat', must be bigger than or equal to 0.";
         }
 
         if (!is_null($this->container['companyName']) && (mb_strlen($this->container['companyName']) > 255)) {
@@ -636,7 +714,7 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets package
      *
-     * @return \ProxyRequest\Dto\PackageShort
+     * @return \ProxyRequest\Dto\PackageShort|null
      */
     public function getPackage()
     {
@@ -646,14 +724,21 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets package
      *
-     * @param \ProxyRequest\Dto\PackageShort $package package
+     * @param \ProxyRequest\Dto\PackageShort|null $package package
      *
      * @return self
      */
     public function setPackage($package)
     {
         if (is_null($package)) {
-            throw new \InvalidArgumentException('non-nullable package cannot be null');
+            array_push($this->openAPINullablesSetToNull, 'package');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('package', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
         }
         $this->container['package'] = $package;
 
@@ -663,7 +748,7 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets country
      *
-     * @return \ProxyRequest\Dto\Country
+     * @return \ProxyRequest\Dto\Country|null
      */
     public function getCountry()
     {
@@ -673,14 +758,21 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets country
      *
-     * @param \ProxyRequest\Dto\Country $country country
+     * @param \ProxyRequest\Dto\Country|null $country country
      *
      * @return self
      */
     public function setCountry($country)
     {
         if (is_null($country)) {
-            throw new \InvalidArgumentException('non-nullable country cannot be null');
+            array_push($this->openAPINullablesSetToNull, 'country');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('country', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
         }
         $this->container['country'] = $country;
 
@@ -717,7 +809,7 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets coupon
      *
-     * @return \ProxyRequest\Dto\CouponShort
+     * @return \ProxyRequest\Dto\CouponShort|null
      */
     public function getCoupon()
     {
@@ -727,16 +819,192 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets coupon
      *
-     * @param \ProxyRequest\Dto\CouponShort $coupon coupon
+     * @param \ProxyRequest\Dto\CouponShort|null $coupon coupon
      *
      * @return self
      */
     public function setCoupon($coupon)
     {
         if (is_null($coupon)) {
-            throw new \InvalidArgumentException('non-nullable coupon cannot be null');
+            array_push($this->openAPINullablesSetToNull, 'coupon');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('coupon', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
         }
         $this->container['coupon'] = $coupon;
+
+        return $this;
+    }
+
+    /**
+     * Gets paymentAmount
+     *
+     * @return int
+     */
+    public function getPaymentAmount()
+    {
+        return $this->container['paymentAmount'];
+    }
+
+    /**
+     * Sets paymentAmount
+     *
+     * @param int $paymentAmount paymentAmount
+     *
+     * @return self
+     */
+    public function setPaymentAmount($paymentAmount)
+    {
+        if (is_null($paymentAmount)) {
+            throw new \InvalidArgumentException('non-nullable paymentAmount cannot be null');
+        }
+        $this->container['paymentAmount'] = $paymentAmount;
+
+        return $this;
+    }
+
+    /**
+     * Gets paymentCurrency
+     *
+     * @return string
+     */
+    public function getPaymentCurrency()
+    {
+        return $this->container['paymentCurrency'];
+    }
+
+    /**
+     * Sets paymentCurrency
+     *
+     * @param string $paymentCurrency paymentCurrency
+     *
+     * @return self
+     */
+    public function setPaymentCurrency($paymentCurrency)
+    {
+        if (is_null($paymentCurrency)) {
+            throw new \InvalidArgumentException('non-nullable paymentCurrency cannot be null');
+        }
+        $this->container['paymentCurrency'] = $paymentCurrency;
+
+        return $this;
+    }
+
+    /**
+     * Gets fxMarketRate
+     *
+     * @return string
+     */
+    public function getFxMarketRate()
+    {
+        return $this->container['fxMarketRate'];
+    }
+
+    /**
+     * Sets fxMarketRate
+     *
+     * @param string $fxMarketRate fxMarketRate
+     *
+     * @return self
+     */
+    public function setFxMarketRate($fxMarketRate)
+    {
+        if (is_null($fxMarketRate)) {
+            throw new \InvalidArgumentException('non-nullable fxMarketRate cannot be null');
+        }
+        $this->container['fxMarketRate'] = $fxMarketRate;
+
+        return $this;
+    }
+
+    /**
+     * Gets fxEffectiveRate
+     *
+     * @return string
+     */
+    public function getFxEffectiveRate()
+    {
+        return $this->container['fxEffectiveRate'];
+    }
+
+    /**
+     * Sets fxEffectiveRate
+     *
+     * @param string $fxEffectiveRate fxEffectiveRate
+     *
+     * @return self
+     */
+    public function setFxEffectiveRate($fxEffectiveRate)
+    {
+        if (is_null($fxEffectiveRate)) {
+            throw new \InvalidArgumentException('non-nullable fxEffectiveRate cannot be null');
+        }
+        $this->container['fxEffectiveRate'] = $fxEffectiveRate;
+
+        return $this;
+    }
+
+    /**
+     * Gets fxMarkupPercent
+     *
+     * @return string
+     */
+    public function getFxMarkupPercent()
+    {
+        return $this->container['fxMarkupPercent'];
+    }
+
+    /**
+     * Sets fxMarkupPercent
+     *
+     * @param string $fxMarkupPercent fxMarkupPercent
+     *
+     * @return self
+     */
+    public function setFxMarkupPercent($fxMarkupPercent)
+    {
+        if (is_null($fxMarkupPercent)) {
+            throw new \InvalidArgumentException('non-nullable fxMarkupPercent cannot be null');
+        }
+        $this->container['fxMarkupPercent'] = $fxMarkupPercent;
+
+        return $this;
+    }
+
+    /**
+     * Gets fxQuotedAt
+     *
+     * @return \DateTime|null
+     */
+    public function getFxQuotedAt()
+    {
+        return $this->container['fxQuotedAt'];
+    }
+
+    /**
+     * Sets fxQuotedAt
+     *
+     * @param \DateTime|null $fxQuotedAt fxQuotedAt
+     *
+     * @return self
+     */
+    public function setFxQuotedAt($fxQuotedAt)
+    {
+        if (is_null($fxQuotedAt)) {
+            array_push($this->openAPINullablesSetToNull, 'fxQuotedAt');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('fxQuotedAt', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['fxQuotedAt'] = $fxQuotedAt;
 
         return $this;
     }
@@ -1149,7 +1417,7 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets gateway
      *
-     * @param \ProxyRequest\Dto\InvoiceGatewayEnum|null $gateway The payment gateway used for processing the payment. * `coinbase` - Coinbase * `cryptomus` - Cryptomus * `stripe` - Stripe * `coingate` - Coingate * `wallet` - Wallet * `manual` - Manual
+     * @param \ProxyRequest\Dto\InvoiceGatewayEnum|null $gateway The payment gateway used for processing the payment. * `coinbase` - Coinbase * `cryptomus` - Cryptomus * `stripe` - Stripe * `coingate` - Coingate * `wallet` - Wallet * `manual` - Manual * `whitepay` - Whitepay * `wayforpay` - WayForPay * `usegateway` - UseGateway * `binance` - Binance Pay * `anymoney` - Any.Money * `coinpayments` - CoinPayments * `checkoutcom` - Checkout.com * `nowpayments` - NOWPayments * `btcpay` - BTCPay Server * `braintree` - Braintree * `monobank` - monobank * `liqpay` - LiqPay * `iyzico` - iyzico * `paytr` - PayTR * `payu` - PayU * `tpay` - Tpay * `przelewy24` - Przelewy24 * `gopay` - GoPay * `comgate` - Comgate * `monei` - MONEI * `redsys` - Redsys * `payplug` - PayPlug * `mollie` - Mollie * `unzer` - Unzer * `payone` - PAYONE * `nexi_xpay` - Nexi XPay * `halyk_epay` - Halyk ePay * `kaspi_pay` - Kaspi Pay * `vipps_mobilepay` - Vipps MobilePay * `paytrail` - Paytrail
      *
      * @return self
      */
@@ -1195,63 +1463,121 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     /**
-     * Gets coingateOrderToken
+     * Gets currency
      *
      * @return string|null
      */
-    public function getCoingateOrderToken()
+    public function getCurrency()
     {
-        return $this->container['coingateOrderToken'];
+        return $this->container['currency'];
     }
 
     /**
-     * Sets coingateOrderToken
+     * Sets currency
      *
-     * @param string|null $coingateOrderToken The Coingate order token for the payment. Optional field with a maximum length of 255 characters.
+     * @param string|null $currency ISO 4217 currency captured when the invoice is created.
      *
      * @return self
      */
-    public function setCoingateOrderToken($coingateOrderToken)
+    public function setCurrency($currency)
     {
-        if (is_null($coingateOrderToken)) {
-            throw new \InvalidArgumentException('non-nullable coingateOrderToken cannot be null');
+        if (is_null($currency)) {
+            throw new \InvalidArgumentException('non-nullable currency cannot be null');
         }
-        if ((mb_strlen($coingateOrderToken) > 255)) {
-            throw new \InvalidArgumentException('invalid length for $coingateOrderToken when calling Invoice., must be smaller than or equal to 255.');
+        if ((mb_strlen($currency) > 3)) {
+            throw new \InvalidArgumentException('invalid length for $currency when calling Invoice., must be smaller than or equal to 3.');
         }
 
-        $this->container['coingateOrderToken'] = $coingateOrderToken;
+        $this->container['currency'] = $currency;
 
         return $this;
     }
 
     /**
-     * Gets coinbaseChargeId
+     * Gets providerCheckoutId
      *
      * @return string|null
      */
-    public function getCoinbaseChargeId()
+    public function getProviderCheckoutId()
     {
-        return $this->container['coinbaseChargeId'];
+        return $this->container['providerCheckoutId'];
     }
 
     /**
-     * Sets coinbaseChargeId
+     * Sets providerCheckoutId
      *
-     * @param string|null $coinbaseChargeId The Coinbase charge ID for the payment. Optional field with a maximum length of 255 characters.
+     * @param string|null $providerCheckoutId Provider-side hosted checkout identifier used for reconciliation.
      *
      * @return self
      */
-    public function setCoinbaseChargeId($coinbaseChargeId)
+    public function setProviderCheckoutId($providerCheckoutId)
     {
-        if (is_null($coinbaseChargeId)) {
-            throw new \InvalidArgumentException('non-nullable coinbaseChargeId cannot be null');
+        if (is_null($providerCheckoutId)) {
+            throw new \InvalidArgumentException('non-nullable providerCheckoutId cannot be null');
         }
-        if ((mb_strlen($coinbaseChargeId) > 255)) {
-            throw new \InvalidArgumentException('invalid length for $coinbaseChargeId when calling Invoice., must be smaller than or equal to 255.');
+        if ((mb_strlen($providerCheckoutId) > 255)) {
+            throw new \InvalidArgumentException('invalid length for $providerCheckoutId when calling Invoice., must be smaller than or equal to 255.');
         }
 
-        $this->container['coinbaseChargeId'] = $coinbaseChargeId;
+        $this->container['providerCheckoutId'] = $providerCheckoutId;
+
+        return $this;
+    }
+
+    /**
+     * Gets providerPaymentId
+     *
+     * @return string|null
+     */
+    public function getProviderPaymentId()
+    {
+        return $this->container['providerPaymentId'];
+    }
+
+    /**
+     * Sets providerPaymentId
+     *
+     * @param string|null $providerPaymentId Provider-side payment or transaction identifier used for reconciliation.
+     *
+     * @return self
+     */
+    public function setProviderPaymentId($providerPaymentId)
+    {
+        if (is_null($providerPaymentId)) {
+            throw new \InvalidArgumentException('non-nullable providerPaymentId cannot be null');
+        }
+        if ((mb_strlen($providerPaymentId) > 255)) {
+            throw new \InvalidArgumentException('invalid length for $providerPaymentId when calling Invoice., must be smaller than or equal to 255.');
+        }
+
+        $this->container['providerPaymentId'] = $providerPaymentId;
+
+        return $this;
+    }
+
+    /**
+     * Gets checkoutStatus
+     *
+     * @return \ProxyRequest\Dto\CheckoutStatusEnum|null
+     */
+    public function getCheckoutStatus()
+    {
+        return $this->container['checkoutStatus'];
+    }
+
+    /**
+     * Sets checkoutStatus
+     *
+     * @param \ProxyRequest\Dto\CheckoutStatusEnum|null $checkoutStatus checkoutStatus
+     *
+     * @return self
+     */
+    public function setCheckoutStatus($checkoutStatus)
+    {
+        if (is_null($checkoutStatus)) {
+            throw new \InvalidArgumentException('non-nullable checkoutStatus cannot be null');
+        }
+        $this->container['checkoutStatus'] = $checkoutStatus;
 
         return $this;
     }
@@ -1279,11 +1605,11 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable vat cannot be null');
         }
 
-        if (($vat > 100.0)) {
-            throw new \InvalidArgumentException('invalid value for $vat when calling Invoice., must be smaller than or equal to 100.0.');
+        if (($vat > 100)) {
+            throw new \InvalidArgumentException('invalid value for $vat when calling Invoice., must be smaller than or equal to 100.');
         }
-        if (($vat < 0.0)) {
-            throw new \InvalidArgumentException('invalid value for $vat when calling Invoice., must be bigger than or equal to 0.0.');
+        if (($vat < 0)) {
+            throw new \InvalidArgumentException('invalid value for $vat when calling Invoice., must be bigger than or equal to 0.');
         }
 
         $this->container['vat'] = $vat;
@@ -1600,5 +1926,3 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
-

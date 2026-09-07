@@ -40,7 +40,7 @@ use \ProxyRequest\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class TwoFactorDisableRequest implements ModelInterface, ArrayAccess, \JsonSerializable
+class TwoFactorDisableRequest extends \ProxyRequest\Support\AdditionalProperties implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -57,6 +57,8 @@ class TwoFactorDisableRequest implements ModelInterface, ArrayAccess, \JsonSeria
      * @var string[]
      */
     protected static $openAPITypes = [
+        'password' => 'string',
+        'credential' => 'string',
         'code' => 'string'
     ];
 
@@ -68,6 +70,8 @@ class TwoFactorDisableRequest implements ModelInterface, ArrayAccess, \JsonSeria
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
+        'password' => null,
+        'credential' => null,
         'code' => null
     ];
 
@@ -77,6 +81,8 @@ class TwoFactorDisableRequest implements ModelInterface, ArrayAccess, \JsonSeria
      * @var boolean[]
      */
     protected static array $openAPINullables = [
+        'password' => false,
+        'credential' => false,
         'code' => false
     ];
 
@@ -166,6 +172,8 @@ class TwoFactorDisableRequest implements ModelInterface, ArrayAccess, \JsonSeria
      * @var string[]
      */
     protected static $attributeMap = [
+        'password' => 'password',
+        'credential' => 'credential',
         'code' => 'code'
     ];
 
@@ -175,6 +183,8 @@ class TwoFactorDisableRequest implements ModelInterface, ArrayAccess, \JsonSeria
      * @var string[]
      */
     protected static $setters = [
+        'password' => 'setPassword',
+        'credential' => 'setCredential',
         'code' => 'setCode'
     ];
 
@@ -184,6 +194,8 @@ class TwoFactorDisableRequest implements ModelInterface, ArrayAccess, \JsonSeria
      * @var string[]
      */
     protected static $getters = [
+        'password' => 'getPassword',
+        'credential' => 'getCredential',
         'code' => 'getCode'
     ];
 
@@ -244,6 +256,8 @@ class TwoFactorDisableRequest implements ModelInterface, ArrayAccess, \JsonSeria
      */
     public function __construct(?array $data = null)
     {
+        $this->setIfExists('password', $data ?? [], null);
+        $this->setIfExists('credential', $data ?? [], null);
         $this->setIfExists('code', $data ?? [], null);
     }
 
@@ -274,6 +288,14 @@ class TwoFactorDisableRequest implements ModelInterface, ArrayAccess, \JsonSeria
     {
         $invalidProperties = [];
 
+        if (!is_null($this->container['password']) && (mb_strlen($this->container['password']) < 1)) {
+            $invalidProperties[] = "invalid value for 'password', the character length must be bigger than or equal to 1.";
+        }
+
+        if (!is_null($this->container['credential']) && (mb_strlen($this->container['credential']) < 1)) {
+            $invalidProperties[] = "invalid value for 'credential', the character length must be bigger than or equal to 1.";
+        }
+
         if ($this->container['code'] === null) {
             $invalidProperties[] = "'code' can't be null";
         }
@@ -299,6 +321,70 @@ class TwoFactorDisableRequest implements ModelInterface, ArrayAccess, \JsonSeria
         return count($this->listInvalidProperties()) === 0;
     }
 
+
+    /**
+     * Gets password
+     *
+     * @return string|null
+     */
+    public function getPassword()
+    {
+        return $this->container['password'];
+    }
+
+    /**
+     * Sets password
+     *
+     * @param string|null $password password
+     *
+     * @return self
+     */
+    public function setPassword($password)
+    {
+        if (is_null($password)) {
+            throw new \InvalidArgumentException('non-nullable password cannot be null');
+        }
+
+        if ((mb_strlen($password) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $password when calling TwoFactorDisableRequest., must be bigger than or equal to 1.');
+        }
+
+        $this->container['password'] = $password;
+
+        return $this;
+    }
+
+    /**
+     * Gets credential
+     *
+     * @return string|null
+     */
+    public function getCredential()
+    {
+        return $this->container['credential'];
+    }
+
+    /**
+     * Sets credential
+     *
+     * @param string|null $credential credential
+     *
+     * @return self
+     */
+    public function setCredential($credential)
+    {
+        if (is_null($credential)) {
+            throw new \InvalidArgumentException('non-nullable credential cannot be null');
+        }
+
+        if ((mb_strlen($credential) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $credential when calling TwoFactorDisableRequest., must be bigger than or equal to 1.');
+        }
+
+        $this->container['credential'] = $credential;
+
+        return $this;
+    }
 
     /**
      * Gets code
@@ -423,5 +509,3 @@ class TwoFactorDisableRequest implements ModelInterface, ArrayAccess, \JsonSeria
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
-

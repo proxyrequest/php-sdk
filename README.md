@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 Official PHP 8.5 client for the [ProxyRequest public API](https://proxyrequest.com/docs/).
-The package covers all 80 operations from the current OpenAPI
+The package covers 79 supported operations from the current OpenAPI
 contract, including users, orders, proxy generation, analytics, invoices,
 packages, locations, webhooks, API keys, and Telegram integration.
 
@@ -117,7 +117,12 @@ them to browser code.
 
 ## Resource API
 
-`Client` exposes one resource object per API group:
+`Client` exposes 17 API groups. The pinned public schema contains 81 operations;
+disabled `sessions_list` and `sessions_destroy` operations are intentionally
+excluded. Sticky session options in proxy generation remain supported.
+
+See [backend compatibility and MFA](docs/backend-compatibility.md) for updated
+login examples and response-model migration notes.
 
 ```php
 $client->authorization();
@@ -135,7 +140,6 @@ $client->locations();
 $client->apiKeys();
 $client->webhooks();
 $client->telegram();
-$client->sessions();
 $client->settings();
 $client->news();
 ```

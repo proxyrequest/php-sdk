@@ -11,7 +11,6 @@ docs/Api/PackagesResource.md
 docs/Api/ProfileResource.md
 docs/Api/ProxiesResource.md
 docs/Api/RewardsResource.md
-docs/Api/SessionsResource.md
 docs/Api/SettingsResource.md
 docs/Api/TelegramDashboardResource.md
 docs/Api/UsersResource.md
@@ -27,6 +26,7 @@ docs/Model/AffiliateStatsResponse.md
 docs/Model/AffiliatesList401Response.md
 docs/Model/AffiliatesList401ResponseValue.md
 docs/Model/ChangePasswordRequest.md
+docs/Model/CheckoutStatusEnum.md
 docs/Model/City.md
 docs/Model/CommissionTypeEnum.md
 docs/Model/ConnectionRecord.md
@@ -55,8 +55,11 @@ docs/Model/Invoice.md
 docs/Model/InvoiceCreateRequest.md
 docs/Model/InvoiceCreateRequestGatewayEnum.md
 docs/Model/InvoiceGatewayEnum.md
+docs/Model/InvoiceRead.md
+docs/Model/InvoiceShort.md
 docs/Model/InvoiceStatusEnum.md
 docs/Model/InvoiceTypeEnum.md
+docs/Model/InvoicesCreate502Response.md
 docs/Model/LanguageEnum.md
 docs/Model/LevelEnum.md
 docs/Model/LocationASNGeoItem.md
@@ -69,6 +72,7 @@ docs/Model/LoginRequest.md
 docs/Model/LogsResponse.md
 docs/Model/MessageResponse.md
 docs/Model/News.md
+docs/Model/OTPChallenge.md
 docs/Model/Order.md
 docs/Model/OrderDetailed.md
 docs/Model/OverallPoint.md
@@ -85,7 +89,7 @@ docs/Model/PaginatedCountryList.md
 docs/Model/PaginatedCouponRedeemList.md
 docs/Model/PaginatedCouponShortList.md
 docs/Model/PaginatedISPList.md
-docs/Model/PaginatedInvoiceList.md
+docs/Model/PaginatedInvoiceReadList.md
 docs/Model/PaginatedLocationASNRecordList.md
 docs/Model/PaginatedNewsList.md
 docs/Model/PaginatedOrderList.md
@@ -101,6 +105,7 @@ docs/Model/PatchedOrderAutoRenewalRequest.md
 docs/Model/PatchedProfileUpdateRequest.md
 docs/Model/PatchedTelegramConnectionUpdateRequest.md
 docs/Model/PatchedUserUpdateRequest.md
+docs/Model/PaymentGateway.md
 docs/Model/PaymentLinkResponse.md
 docs/Model/PricingEnum.md
 docs/Model/PricingUnitEnum.md
@@ -116,8 +121,6 @@ docs/Model/ResetPasswordRequest.md
 docs/Model/Reward.md
 docs/Model/RewardClaimRequest.md
 docs/Model/RewardStatusEnum.md
-docs/Model/SessionDeleteResponse.md
-docs/Model/SessionListResponse.md
 docs/Model/SettingsCrypto.md
 docs/Model/SettingsGateway.md
 docs/Model/SettingsReferral.md
@@ -134,10 +137,12 @@ docs/Model/TransactionRecord.md
 docs/Model/TransactionsResponse.md
 docs/Model/TwoFactorConfirmRequest.md
 docs/Model/TwoFactorDisableRequest.md
+docs/Model/TwoFactorSetupRequestRequest.md
 docs/Model/TwoFactorSetupResponse.md
 docs/Model/User.md
 docs/Model/UserCreateRequest.md
 docs/Model/UserPasswordResetRequest.md
+docs/Model/VerifyOTPRequest.md
 docs/Model/WebhookCreateRequest.md
 docs/Model/WebhookCreated.md
 docs/Model/WebhookList.md
@@ -154,6 +159,7 @@ src/Dto/AffiliateStatsResponse.php
 src/Dto/AffiliatesList401Response.php
 src/Dto/AffiliatesList401ResponseValue.php
 src/Dto/ChangePasswordRequest.php
+src/Dto/CheckoutStatusEnum.php
 src/Dto/City.php
 src/Dto/CommissionTypeEnum.php
 src/Dto/ConnectionRecord.php
@@ -182,8 +188,11 @@ src/Dto/Invoice.php
 src/Dto/InvoiceCreateRequest.php
 src/Dto/InvoiceCreateRequestGatewayEnum.php
 src/Dto/InvoiceGatewayEnum.php
+src/Dto/InvoiceRead.php
+src/Dto/InvoiceShort.php
 src/Dto/InvoiceStatusEnum.php
 src/Dto/InvoiceTypeEnum.php
+src/Dto/InvoicesCreate502Response.php
 src/Dto/LanguageEnum.php
 src/Dto/LevelEnum.php
 src/Dto/LocationASNGeoItem.php
@@ -197,6 +206,7 @@ src/Dto/LogsResponse.php
 src/Dto/MessageResponse.php
 src/Dto/ModelInterface.php
 src/Dto/News.php
+src/Dto/OTPChallenge.php
 src/Dto/Order.php
 src/Dto/OrderDetailed.php
 src/Dto/OverallPoint.php
@@ -213,7 +223,7 @@ src/Dto/PaginatedCountryList.php
 src/Dto/PaginatedCouponRedeemList.php
 src/Dto/PaginatedCouponShortList.php
 src/Dto/PaginatedISPList.php
-src/Dto/PaginatedInvoiceList.php
+src/Dto/PaginatedInvoiceReadList.php
 src/Dto/PaginatedLocationASNRecordList.php
 src/Dto/PaginatedNewsList.php
 src/Dto/PaginatedOrderList.php
@@ -229,6 +239,7 @@ src/Dto/PatchedOrderAutoRenewalRequest.php
 src/Dto/PatchedProfileUpdateRequest.php
 src/Dto/PatchedTelegramConnectionUpdateRequest.php
 src/Dto/PatchedUserUpdateRequest.php
+src/Dto/PaymentGateway.php
 src/Dto/PaymentLinkResponse.php
 src/Dto/PricingEnum.php
 src/Dto/PricingUnitEnum.php
@@ -244,8 +255,6 @@ src/Dto/ResetPasswordRequest.php
 src/Dto/Reward.php
 src/Dto/RewardClaimRequest.php
 src/Dto/RewardStatusEnum.php
-src/Dto/SessionDeleteResponse.php
-src/Dto/SessionListResponse.php
 src/Dto/SettingsCrypto.php
 src/Dto/SettingsGateway.php
 src/Dto/SettingsReferral.php
@@ -262,10 +271,12 @@ src/Dto/TransactionRecord.php
 src/Dto/TransactionsResponse.php
 src/Dto/TwoFactorConfirmRequest.php
 src/Dto/TwoFactorDisableRequest.php
+src/Dto/TwoFactorSetupRequestRequest.php
 src/Dto/TwoFactorSetupResponse.php
 src/Dto/User.php
 src/Dto/UserCreateRequest.php
 src/Dto/UserPasswordResetRequest.php
+src/Dto/VerifyOTPRequest.php
 src/Dto/WebhookCreateRequest.php
 src/Dto/WebhookCreated.php
 src/Dto/WebhookList.php
@@ -286,7 +297,6 @@ src/Resource/PackagesResource.php
 src/Resource/ProfileResource.php
 src/Resource/ProxiesResource.php
 src/Resource/RewardsResource.php
-src/Resource/SessionsResource.php
 src/Resource/SettingsResource.php
 src/Resource/TelegramDashboardResource.php
 src/Resource/UsersResource.php

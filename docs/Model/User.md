@@ -41,10 +41,11 @@ Name | Type | Description | Notes
 **referralBalanceEarned** | **int** |  | [readonly]
 **currency** | **array<string,string>** | Currency information for the user&#39;s transactions | [readonly]
 **coupons** | **array<string,mixed>[]** | Available coupons for this user | [readonly]
-**data** | **int** | Available data allowance for the user | [readonly]
-**dataSpent** | **int** | Amount of data consumed by the user | [readonly]
-**dataUpdated** | **\DateTime** | Last update timestamp for user&#39;s data | [readonly]
-**proxyPassword** | **string** | Proxy authentication password | [readonly]
-**proxyPasswordReset** | **\DateTime** | Last proxy password reset timestamp | [readonly]
+**data** | **int** | Present only when SITE_PACKAGE_BASED_AUTH is disabled. | [optional] [readonly]
+**dataSpent** | **int** | Present only when SITE_PACKAGE_BASED_AUTH is disabled. | [optional] [readonly]
+**dataUpdated** | **\DateTime** | Present only when SITE_PACKAGE_BASED_AUTH is disabled. | [optional] [readonly]
+**proxyPassword** | **string** | Present only when SITE_PACKAGE_BASED_AUTH is disabled. | [optional] [readonly]
+**proxyPasswordReset** | **\DateTime** | Present only when SITE_PACKAGE_BASED_AUTH is disabled. | [optional] [readonly]
+**orders** | [**\ProxyRequest\Dto\Order[]**](Order.md) | Present only when SITE_PACKAGE_BASED_AUTH is enabled. | [optional] [readonly]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

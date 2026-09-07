@@ -26,7 +26,6 @@ final class OpenApiCoverageTest extends TestCase
         'Profile' => \ProxyRequest\Resource\ProfileResource::class,
         'Proxies' => \ProxyRequest\Resource\ProxiesResource::class,
         'Rewards' => \ProxyRequest\Resource\RewardsResource::class,
-        'Sessions' => \ProxyRequest\Resource\SessionsResource::class,
         'Settings' => \ProxyRequest\Resource\SettingsResource::class,
         'Telegram dashboard' => \ProxyRequest\Resource\TelegramDashboardResource::class,
         'Users' => \ProxyRequest\Resource\UsersResource::class,
@@ -50,6 +49,10 @@ final class OpenApiCoverageTest extends TestCase
 
                 $operation = $pathItem[$httpMethod];
                 $operationId = $operation['operationId'];
+                if (\in_array($operationId, ['sessions_list', 'sessions_destroy'], true)) {
+                    self::assertArrayNotHasKey($operationId, $mappings);
+                    continue;
+                }
                 $tag = $operation['tags'][0];
                 self::assertArrayHasKey($operationId, $mappings, \sprintf('%s %s has no public name.', strtoupper($httpMethod), $path));
                 self::assertArrayHasKey($tag, self::RESOURCE_BY_TAG, \sprintf('Tag "%s" has no resource class.', $tag));
@@ -65,8 +68,9 @@ final class OpenApiCoverageTest extends TestCase
             }
         }
 
-        self::assertSame(80, $covered);
-        self::assertCount(80, $mappings);
+        self::assertSame(\count($mappings), $covered);
+        self::assertFalse(method_exists(\ProxyRequest\Client::class, 'sessions'));
+        self::assertFalse(class_exists('ProxyRequest\\Resource\\SessionsResource'));
     }
 
     public function testVendoredSchemaMatchesItsManifest(): void
@@ -75,7 +79,13 @@ final class OpenApiCoverageTest extends TestCase
         $manifest = json_decode((string) file_get_contents($root . '/openapi/source.json'), true, 512, JSON_THROW_ON_ERROR);
 
         self::assertSame($manifest['sha256'], hash_file('sha256', $root . '/openapi/openapi.yaml'));
-        self::assertSame(80, $manifest['operations']);
-        self::assertSame(124, $manifest['schemas']);
+        $schema = Yaml::parseFile($root . '/openapi/openapi.yaml');
+        $operations = 0;
+        foreach ($schema['paths'] as $item) {
+            $operations += \count(array_intersect(array_keys($item), ['get', 'post', 'put', 'patch', 'delete']));
+        }
+        self::assertSame($operations, $manifest['operations']);
+        self::assertSame(\count($schema['components']['schemas']), $manifest['schemas']);
+        self::assertSame(['sessions_destroy', 'sessions_list'], $manifest['excludedOperations']);
     }
 }

@@ -73,8 +73,9 @@ class ApiException extends Exception
         $responseHeaders = [],
         $responseBody = null,
         private readonly ?string $idempotencyKey = null,
+        ?\Throwable $previous = null,
     ) {
-        parent::__construct($message, $code);
+        parent::__construct($message, $code, $previous);
         $this->responseHeaders = $responseHeaders;
         $this->responseBody = $responseBody;
     }

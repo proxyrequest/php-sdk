@@ -17,6 +17,8 @@ $finder = PhpCsFixer\Finder::create()
         __DIR__.'/scripts/add-response-methods.php',
         __DIR__.'/scripts/generate-idempotency-policy.php',
         __DIR__.'/scripts/sync-openapi.php',
+        __DIR__.'/scripts/prepare-openapi.php',
+        __DIR__.'/scripts/postprocess-generated.php',
     ]);
 
 return (new PhpCsFixer\Config())
