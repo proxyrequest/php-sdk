@@ -1,6 +1,6 @@
 <?php
 /**
- * UserPasswordResetRequest
+ * ResetDataRequest
  *
  * PHP version 8.1
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \ProxyRequest\ObjectSerializer;
 
 /**
- * UserPasswordResetRequest Class Doc Comment
+ * ResetDataRequest Class Doc Comment
  *
  * @category Class
  * @package  ProxyRequest
@@ -40,7 +40,7 @@ use \ProxyRequest\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class UserPasswordResetRequest extends \ProxyRequest\Support\AdditionalProperties implements ModelInterface, ArrayAccess, \JsonSerializable
+class ResetDataRequest extends \ProxyRequest\Support\AdditionalProperties implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class UserPasswordResetRequest extends \ProxyRequest\Support\AdditionalPropertie
      *
      * @var string
      */
-    protected static $openAPIModelName = 'UserPasswordResetRequestRequest';
+    protected static $openAPIModelName = 'ResetDataRequest';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -274,6 +274,9 @@ class UserPasswordResetRequest extends \ProxyRequest\Support\AdditionalPropertie
     {
         $invalidProperties = [];
 
+        if ($this->container['packageId'] === null) {
+            $invalidProperties[] = "'packageId' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -292,7 +295,7 @@ class UserPasswordResetRequest extends \ProxyRequest\Support\AdditionalPropertie
     /**
      * Gets packageId
      *
-     * @return string|null
+     * @return string
      */
     public function getPackageId()
     {
@@ -302,7 +305,7 @@ class UserPasswordResetRequest extends \ProxyRequest\Support\AdditionalPropertie
     /**
      * Sets packageId
      *
-     * @param string|null $packageId Package whose order's proxy password should be rotated.
+     * @param string $packageId Package whose remaining data is reset to zero.
      *
      * @return self
      */

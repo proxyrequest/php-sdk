@@ -379,7 +379,7 @@ class GenerateProxyRequest extends \ProxyRequest\Support\AdditionalProperties im
     /**
      * Sets userId
      *
-     * @param string|null $userId ProxyRequest sub-user UUID that will use the generated credentials. Headless integrations must resolve this from their local customer mapping.
+     * @param string|null $userId ProxyRequest sub-user UUID that will use the generated credentials. Resolve it from your local customer mapping. Must be the caller's own sub-user, even for superusers. Omit to generate for the authenticated account. For an independent top-level customer, authenticate as that customer rather than sending its ID with a global key.
      *
      * @return self
      */

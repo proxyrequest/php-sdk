@@ -7,11 +7,12 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
 | [**addData()**](UsersResource.md#addData) | **POST** /users/{id}/data/add | Add data to a sub-user order |
-| [**create()**](UsersResource.md#create) | **POST** /users | Create a sub-user |
+| [**create()**](UsersResource.md#create) | **POST** /users | Create a customer account |
 | [**delete()**](UsersResource.md#delete) | **DELETE** /users/{id} | Delete a user |
 | [**get()**](UsersResource.md#get) | **GET** /users/{id} | Get a user |
 | [**list()**](UsersResource.md#list) | **GET** /users | List users in the current account |
 | [**listOrders()**](UsersResource.md#listOrders) | **GET** /users/{id}/orders | List a sub-user&#39;s orders |
+| [**resetData()**](UsersResource.md#resetData) | **POST** /users/{id}/data/reset | Reset a user&#39;s remaining data |
 | [**resetPassword()**](UsersResource.md#resetPassword) | **POST** /users/{id}/password | Rotate a sub-user proxy password |
 | [**subtractData()**](UsersResource.md#subtractData) | **POST** /users/{id}/data/subtract | Subtract data from a sub-user order |
 | [**update()**](UsersResource.md#update) | **PATCH** /users/{id} | Update a user |
@@ -25,7 +26,7 @@ addData($id, $addDataRequest, $idempotencyKey, $acceptLanguage): \ProxyRequest\D
 
 Add data to a sub-user order
 
-Adds the requested number of bytes to the selected sub-user's order for the supplied package and returns the updated order.
+Adds data integer bytes to a managed sub-user's virtual quota for package_id and returns the updated order. Both fields are required. The caller must own a root order for this package and the target sub-user. Creates the child order if absent; an existing independently purchased order cannot be converted by this operation. The allocation does not reserve or debit the parent's ledger, and may exceed its remaining data. Actual traffic needs both personal quota and a usable parent pool. Use Idempotency-Key to avoid granting the same quota twice.
 
 ### Example
 
@@ -94,9 +95,9 @@ try {
 create($userCreateRequest, $idempotencyKey, $acceptLanguage): \ProxyRequest\Dto\User
 ```
 
-Create a sub-user
+Create a customer account
 
-Creates a user owned by the authenticated reseller and returns the new account. The caller must be allowed to manage sub-users.
+Creates a sub-user under the caller by default. A superuser can send is_top_level=true to create an independent customer account. A sub-user cannot create another generation of users. Omit package_id and data to create identity only, then provision the chosen accounting model separately. For shared-pool allocation, supply package_id and positive integer-byte data; the parent must already own a root order for that package. An independent paid purchase is provisioned through invoices, not a shared-pool quota.
 
 ### Example
 
@@ -383,7 +384,7 @@ listOrders($id, $email, $id2, $limit, $offset, $ordering, $username, $acceptLang
 
 List a sub-user's orders
 
-Returns active package orders allocated to the selected sub-user. This operation is available when package-based authentication is enabled.
+Returns the selected user's package orders, including inactive orders. A user may have a purchased root order with its own ledgers or a virtual child order whose quota uses its parent's pool. User ownership and order ownership are different: being a sub-user does not imply shared-pool accounting.
 
 ### Example
 
@@ -454,15 +455,15 @@ try {
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `resetPassword()`
+## `resetData()`
 
 ```php
-resetPassword($id, $acceptLanguage, $userPasswordResetRequest): \ProxyRequest\Dto\User
+resetData($id, $resetDataRequest, $idempotencyKey, $acceptLanguage): \ProxyRequest\Dto\Order
 ```
 
-Rotate a sub-user proxy password
+Reset a user's remaining data
 
-Rotates the proxy password for the selected user. When package-based authentication is enabled, send package_id to select the affected order.
+Atomically resets remaining data to zero for package_id, including zero or negative balances. Supply package_id only; data is not accepted. System administrators may reset any user; other accounts may reset only their direct children. Purchased root orders have their ledger balances cleared; virtual child orders have their quota set to usage without changing the parent's pool. Usage history and invoices are preserved. Unlimited packages are rejected. Use Idempotency-Key for safe retries so a repeated request cannot clear a subsequent top-up.
 
 ### Example
 
@@ -487,11 +488,82 @@ $apiInstance = new ProxyRequest\Api\UsersResource(
     $config
 );
 $id = 'id_example'; // string | A UUID string identifying this user.
+$resetDataRequest = {"package_id":"550e8400-e29b-41d4-a716-446655440002"}; // \ProxyRequest\Dto\ResetDataRequest
+$idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
-$userPasswordResetRequest = {"package_id":"550e8400-e29b-41d4-a716-446655440002"}; // \ProxyRequest\Dto\UserPasswordResetRequest
 
 try {
-    $result = $apiInstance->resetPassword($id, $acceptLanguage, $userPasswordResetRequest);
+    $result = $apiInstance->resetData($id, $resetDataRequest, $idempotencyKey, $acceptLanguage);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling UsersResource->resetData: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **id** | **string**| A UUID string identifying this user. | |
+| **resetDataRequest** | [**\ProxyRequest\Dto\ResetDataRequest**](../Model/ResetDataRequest.md)|  | |
+| **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+
+### Return type
+
+[**\ProxyRequest\Dto\Order**](../Model/Order.md)
+
+### Authorization
+
+[StaticAuth](../../README.md#StaticAuth), [BearerAuth](../../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `resetPassword()`
+
+```php
+resetPassword($id, $userPasswordResetRequest, $acceptLanguage): \ProxyRequest\Dto\User
+```
+
+Rotate a sub-user proxy password
+
+Rotates the proxy password for the selected user's package order. Send package_id to select the affected order.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: StaticAuth
+$config = ProxyRequest\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = ProxyRequest\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
+
+// Configure Bearer (JWT) authorization: BearerAuth
+$config = ProxyRequest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new ProxyRequest\Api\UsersResource(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$id = 'id_example'; // string | A UUID string identifying this user.
+$userPasswordResetRequest = {"package_id":"550e8400-e29b-41d4-a716-446655440002"}; // \ProxyRequest\Dto\UserPasswordResetRequest
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+
+try {
+    $result = $apiInstance->resetPassword($id, $userPasswordResetRequest, $acceptLanguage);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling UsersResource->resetPassword: ', $e->getMessage(), PHP_EOL;
@@ -503,8 +575,8 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**| A UUID string identifying this user. | |
+| **userPasswordResetRequest** | [**\ProxyRequest\Dto\UserPasswordResetRequest**](../Model/UserPasswordResetRequest.md)|  | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
-| **userPasswordResetRequest** | [**\ProxyRequest\Dto\UserPasswordResetRequest**](../Model/UserPasswordResetRequest.md)|  | [optional] |
 
 ### Return type
 
@@ -531,7 +603,7 @@ subtractData($id, $subtractDataRequest, $idempotencyKey, $acceptLanguage): \Prox
 
 Subtract data from a sub-user order
 
-Subtracts the requested number of bytes from the selected sub-user's order for the supplied package and returns the updated order.
+Subtracts data from the assigned quota of a managed virtual child order in integer bytes for package_id. Both fields are required. This is not a refund or a transfer back into the parent's ledger, and does not erase data_spent. The amount cannot exceed the total assigned data; reducing the quota below usage can stop the child's access. An independently purchased order is not managed through this allocation endpoint. Use Idempotency-Key for safe retries.
 
 ### Example
 

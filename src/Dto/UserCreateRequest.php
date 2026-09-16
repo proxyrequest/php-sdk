@@ -912,7 +912,7 @@ class UserCreateRequest extends \ProxyRequest\Support\AdditionalProperties imple
     /**
      * Sets isTopLevel
      *
-     * @param bool|null $isTopLevel Whether the user is a sub-user under the parent account.
+     * @param bool|null $isTopLevel Superuser only: true creates an independent account with no parent. False (default) creates a sub-user under the caller.
      *
      * @return self
      */
@@ -939,7 +939,7 @@ class UserCreateRequest extends \ProxyRequest\Support\AdditionalProperties imple
     /**
      * Sets data
      *
-     * @param int|null $data Initial data allocation for the user (traditional auth mode only).
+     * @param int|null $data Initial integer-byte data amount. With package_id, a normal sub-user receives a virtual quota from the caller's existing root order; is_top_level=true provisions a separate paid purchase. Omit both data and package_id to create identity without package access.
      *
      * @return self
      */
@@ -971,7 +971,7 @@ class UserCreateRequest extends \ProxyRequest\Support\AdditionalProperties imple
     /**
      * Sets packageId
      *
-     * @param string|null $packageId ProxyRequest package UUID to assign to the user (package-based auth mode only). Headless integrations resolve it from their local product mapping.
+     * @param string|null $packageId ProxyRequest package UUID to assign to the user. Headless integrations resolve it from their local product mapping.
      *
      * @return self
      */

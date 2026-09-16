@@ -21,7 +21,7 @@ delete($id, $idempotencyKey, $ifMatch, $acceptLanguage)
 
 Delete a sub-user order
 
-Removes an active order owned by a managed sub-user. Remaining data is returned to the reseller's matching order when possible.
+Removes an order in the caller's permitted scope. This is destructive, not a payment refund. Deleting a virtual child order does not credit its quota to the shared ledger. Independently purchased sub-user orders have a legacy parent-order data-counter adjustment; do not treat it as a guaranteed restoration of usable ledger balance.
 
 ### Example
 
@@ -91,7 +91,7 @@ get($id, $acceptLanguage): \ProxyRequest\Dto\OrderDetailed
 
 Get an order
 
-Returns one active order with package, usage, expiration, and proxy credential details.
+Returns one active order with package, usage, expiration, and proxy credential details. Virtual child data_remaining is a personal quota, not the parent's shared balance. The order's expires value is not a list of all purchased bucket deadlines; inspect each returned ledger's expires.
 
 ### Example
 
@@ -158,7 +158,7 @@ list($limit, $offset, $ordering, $packageAlias, $packageId, $packageType, $searc
 
 List active orders
 
-Returns active package orders owned by the authenticated account. Filters can narrow the result by package or user.
+Returns active package orders owned by the authenticated account. Superusers can inspect other accounts, including inactive orders; filters never expand a normal caller's ownership scope. Repeated purchases of one package reuse the same user/package order. Read data_remaining and ledgers for usable purchased data, not data minus data_spent. To inspect a managed customer, use /users/{id}/orders.
 
 ### Example
 

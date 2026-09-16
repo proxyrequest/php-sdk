@@ -21,7 +21,7 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 ## `getCity()`
 
 ```php
-getCity($id, $acceptLanguage): \ProxyRequest\Dto\City
+getCity($id, $packageId, $acceptLanguage): \ProxyRequest\Dto\City
 ```
 
 Get a city
@@ -51,10 +51,11 @@ $apiInstance = new ProxyRequest\Api\LocationsResource(
     $config
 );
 $id = 'id_example'; // string
+$packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $result = $apiInstance->getCity($id, $acceptLanguage);
+    $result = $apiInstance->getCity($id, $packageId, $acceptLanguage);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->getCity: ', $e->getMessage(), PHP_EOL;
@@ -66,6 +67,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**|  | |
+| **packageId** | **string**| Package whose targeting availability should be returned. | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
@@ -88,7 +90,7 @@ try {
 ## `getContinent()`
 
 ```php
-getContinent($id, $acceptLanguage): \ProxyRequest\Dto\Continent
+getContinent($id, $packageId, $acceptLanguage): \ProxyRequest\Dto\Continent
 ```
 
 Get a continent
@@ -118,10 +120,11 @@ $apiInstance = new ProxyRequest\Api\LocationsResource(
     $config
 );
 $id = 'id_example'; // string
+$packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $result = $apiInstance->getContinent($id, $acceptLanguage);
+    $result = $apiInstance->getContinent($id, $packageId, $acceptLanguage);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->getContinent: ', $e->getMessage(), PHP_EOL;
@@ -133,6 +136,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**|  | |
+| **packageId** | **string**| Package whose targeting availability should be returned. | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
@@ -155,7 +159,7 @@ try {
 ## `getCountry()`
 
 ```php
-getCountry($id, $acceptLanguage): \ProxyRequest\Dto\Country
+getCountry($id, $packageId, $acceptLanguage): \ProxyRequest\Dto\Country
 ```
 
 Get a country
@@ -185,10 +189,11 @@ $apiInstance = new ProxyRequest\Api\LocationsResource(
     $config
 );
 $id = 'id_example'; // string
+$packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $result = $apiInstance->getCountry($id, $acceptLanguage);
+    $result = $apiInstance->getCountry($id, $packageId, $acceptLanguage);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->getCountry: ', $e->getMessage(), PHP_EOL;
@@ -200,6 +205,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**|  | |
+| **packageId** | **string**| Package whose targeting availability should be returned. | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
@@ -222,7 +228,7 @@ try {
 ## `getRegion()`
 
 ```php
-getRegion($id, $acceptLanguage): \ProxyRequest\Dto\Region
+getRegion($id, $packageId, $acceptLanguage): \ProxyRequest\Dto\Region
 ```
 
 Get a region
@@ -252,10 +258,11 @@ $apiInstance = new ProxyRequest\Api\LocationsResource(
     $config
 );
 $id = 'id_example'; // string
+$packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $result = $apiInstance->getRegion($id, $acceptLanguage);
+    $result = $apiInstance->getRegion($id, $packageId, $acceptLanguage);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->getRegion: ', $e->getMessage(), PHP_EOL;
@@ -267,6 +274,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**|  | |
+| **packageId** | **string**| Package whose targeting availability should be returned. | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
@@ -289,7 +297,7 @@ try {
 ## `listAsns()`
 
 ```php
-listAsns($code, $countryCode, $global, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage): \ProxyRequest\Dto\PaginatedLocationASNRecordList
+listAsns($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage): \ProxyRequest\Dto\PaginatedLocationASNRecordList
 ```
 
 List available autonomous systems
@@ -318,6 +326,7 @@ $apiInstance = new ProxyRequest\Api\LocationsResource(
     new GuzzleHttp\Client(),
     $config
 );
+$packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned.
 $code = 'code_example'; // string
 $countryCode = 'countryCode_example'; // string
 $global = True; // bool | Set to true to return only globally targetable ASNs.
@@ -325,12 +334,11 @@ $limit = 56; // int | Number of results to return per page.
 $name = 'name_example'; // string
 $offset = 56; // int | The initial index from which to return the results.
 $ordering = 'ordering_example'; // string | Which field to use when ordering the results.
-$packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned. Required when package-based authentication is enabled.
 $search = 'search_example'; // string | Case-insensitive partial search across ASN fields: `code` and `name`. Separate multiple terms with spaces or commas; every term must match at least one listed field.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $result = $apiInstance->listAsns($code, $countryCode, $global, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage);
+    $result = $apiInstance->listAsns($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->listAsns: ', $e->getMessage(), PHP_EOL;
@@ -341,6 +349,7 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
+| **packageId** | **string**| Package whose targeting availability should be returned. | |
 | **code** | **string**|  | [optional] |
 | **countryCode** | **string**|  | [optional] |
 | **global** | **bool**| Set to true to return only globally targetable ASNs. | [optional] |
@@ -348,7 +357,6 @@ try {
 | **name** | **string**|  | [optional] |
 | **offset** | **int**| The initial index from which to return the results. | [optional] |
 | **ordering** | **string**| Which field to use when ordering the results. | [optional] |
-| **packageId** | **string**| Package whose targeting availability should be returned. Required when package-based authentication is enabled. | [optional] |
 | **search** | **string**| Case-insensitive partial search across ASN fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
@@ -372,7 +380,7 @@ try {
 ## `listCities()`
 
 ```php
-listCities($code, $countryCode, $limit, $name, $offset, $ordering, $packageId, $regionCode, $search, $acceptLanguage): \ProxyRequest\Dto\PaginatedCityList
+listCities($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage): \ProxyRequest\Dto\PaginatedCityList
 ```
 
 List available cities
@@ -401,19 +409,19 @@ $apiInstance = new ProxyRequest\Api\LocationsResource(
     new GuzzleHttp\Client(),
     $config
 );
+$packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned.
 $code = 'code_example'; // string
 $countryCode = 'countryCode_example'; // string
 $limit = 56; // int | Number of results to return per page.
 $name = 'name_example'; // string
 $offset = 56; // int | The initial index from which to return the results.
 $ordering = 'ordering_example'; // string | Which field to use when ordering the results.
-$packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned. Required when package-based authentication is enabled.
 $regionCode = 'regionCode_example'; // string
 $search = 'search_example'; // string | Case-insensitive partial search across City fields: `code` and `name`. Separate multiple terms with spaces or commas; every term must match at least one listed field.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $result = $apiInstance->listCities($code, $countryCode, $limit, $name, $offset, $ordering, $packageId, $regionCode, $search, $acceptLanguage);
+    $result = $apiInstance->listCities($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->listCities: ', $e->getMessage(), PHP_EOL;
@@ -424,13 +432,13 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
+| **packageId** | **string**| Package whose targeting availability should be returned. | |
 | **code** | **string**|  | [optional] |
 | **countryCode** | **string**|  | [optional] |
 | **limit** | **int**| Number of results to return per page. | [optional] |
 | **name** | **string**|  | [optional] |
 | **offset** | **int**| The initial index from which to return the results. | [optional] |
 | **ordering** | **string**| Which field to use when ordering the results. | [optional] |
-| **packageId** | **string**| Package whose targeting availability should be returned. Required when package-based authentication is enabled. | [optional] |
 | **regionCode** | **string**|  | [optional] |
 | **search** | **string**| Case-insensitive partial search across City fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
@@ -455,7 +463,7 @@ try {
 ## `listContinents()`
 
 ```php
-listContinents($code, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage): \ProxyRequest\Dto\PaginatedContinentList
+listContinents($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage): \ProxyRequest\Dto\PaginatedContinentList
 ```
 
 List available continents
@@ -484,17 +492,17 @@ $apiInstance = new ProxyRequest\Api\LocationsResource(
     new GuzzleHttp\Client(),
     $config
 );
+$packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned.
 $code = 'code_example'; // string
 $limit = 56; // int | Number of results to return per page.
 $name = 'name_example'; // string
 $offset = 56; // int | The initial index from which to return the results.
 $ordering = 'ordering_example'; // string | Which field to use when ordering the results.
-$packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned. Required when package-based authentication is enabled.
 $search = 'search_example'; // string | Case-insensitive partial search across Continent fields: `code` and `name`. Separate multiple terms with spaces or commas; every term must match at least one listed field.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $result = $apiInstance->listContinents($code, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage);
+    $result = $apiInstance->listContinents($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->listContinents: ', $e->getMessage(), PHP_EOL;
@@ -505,12 +513,12 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
+| **packageId** | **string**| Package whose targeting availability should be returned. | |
 | **code** | **string**|  | [optional] |
 | **limit** | **int**| Number of results to return per page. | [optional] |
 | **name** | **string**|  | [optional] |
 | **offset** | **int**| The initial index from which to return the results. | [optional] |
 | **ordering** | **string**| Which field to use when ordering the results. | [optional] |
-| **packageId** | **string**| Package whose targeting availability should be returned. Required when package-based authentication is enabled. | [optional] |
 | **search** | **string**| Case-insensitive partial search across Continent fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
@@ -534,7 +542,7 @@ try {
 ## `listCountries()`
 
 ```php
-listCountries($code, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage): \ProxyRequest\Dto\PaginatedCountryList
+listCountries($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage): \ProxyRequest\Dto\PaginatedCountryList
 ```
 
 List available countries
@@ -563,17 +571,17 @@ $apiInstance = new ProxyRequest\Api\LocationsResource(
     new GuzzleHttp\Client(),
     $config
 );
+$packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned.
 $code = 'code_example'; // string
 $limit = 56; // int | Number of results to return per page.
 $name = 'name_example'; // string
 $offset = 56; // int | The initial index from which to return the results.
 $ordering = 'ordering_example'; // string | Which field to use when ordering the results.
-$packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned. Required when package-based authentication is enabled.
 $search = 'search_example'; // string | Case-insensitive partial search across Country fields: `code` and `name`. Separate multiple terms with spaces or commas; every term must match at least one listed field.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $result = $apiInstance->listCountries($code, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage);
+    $result = $apiInstance->listCountries($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->listCountries: ', $e->getMessage(), PHP_EOL;
@@ -584,12 +592,12 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
+| **packageId** | **string**| Package whose targeting availability should be returned. | |
 | **code** | **string**|  | [optional] |
 | **limit** | **int**| Number of results to return per page. | [optional] |
 | **name** | **string**|  | [optional] |
 | **offset** | **int**| The initial index from which to return the results. | [optional] |
 | **ordering** | **string**| Which field to use when ordering the results. | [optional] |
-| **packageId** | **string**| Package whose targeting availability should be returned. Required when package-based authentication is enabled. | [optional] |
 | **search** | **string**| Case-insensitive partial search across Country fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
@@ -613,7 +621,7 @@ try {
 ## `listIsps()`
 
 ```php
-listIsps($code, $countryCode, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage): \ProxyRequest\Dto\PaginatedISPList
+listIsps($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage): \ProxyRequest\Dto\PaginatedISPList
 ```
 
 List available internet service providers
@@ -642,18 +650,18 @@ $apiInstance = new ProxyRequest\Api\LocationsResource(
     new GuzzleHttp\Client(),
     $config
 );
+$packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned.
 $code = 'code_example'; // string
 $countryCode = 'countryCode_example'; // string
 $limit = 56; // int | Number of results to return per page.
 $name = 'name_example'; // string
 $offset = 56; // int | The initial index from which to return the results.
 $ordering = 'ordering_example'; // string | Which field to use when ordering the results.
-$packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned. Required when package-based authentication is enabled.
 $search = 'search_example'; // string | Case-insensitive partial search across ISP fields: `code` and `name`. Separate multiple terms with spaces or commas; every term must match at least one listed field.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $result = $apiInstance->listIsps($code, $countryCode, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage);
+    $result = $apiInstance->listIsps($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->listIsps: ', $e->getMessage(), PHP_EOL;
@@ -664,13 +672,13 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
+| **packageId** | **string**| Package whose targeting availability should be returned. | |
 | **code** | **string**|  | [optional] |
 | **countryCode** | **string**|  | [optional] |
 | **limit** | **int**| Number of results to return per page. | [optional] |
 | **name** | **string**|  | [optional] |
 | **offset** | **int**| The initial index from which to return the results. | [optional] |
 | **ordering** | **string**| Which field to use when ordering the results. | [optional] |
-| **packageId** | **string**| Package whose targeting availability should be returned. Required when package-based authentication is enabled. | [optional] |
 | **search** | **string**| Case-insensitive partial search across ISP fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
@@ -694,7 +702,7 @@ try {
 ## `listRegions()`
 
 ```php
-listRegions($code, $countryCode, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage): \ProxyRequest\Dto\PaginatedRegionList
+listRegions($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage): \ProxyRequest\Dto\PaginatedRegionList
 ```
 
 List available regions
@@ -723,18 +731,18 @@ $apiInstance = new ProxyRequest\Api\LocationsResource(
     new GuzzleHttp\Client(),
     $config
 );
+$packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned.
 $code = 'code_example'; // string
 $countryCode = 'countryCode_example'; // string
 $limit = 56; // int | Number of results to return per page.
 $name = 'name_example'; // string
 $offset = 56; // int | The initial index from which to return the results.
 $ordering = 'ordering_example'; // string | Which field to use when ordering the results.
-$packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned. Required when package-based authentication is enabled.
 $search = 'search_example'; // string | Case-insensitive partial search across Region fields: `code` and `name`. Separate multiple terms with spaces or commas; every term must match at least one listed field.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $result = $apiInstance->listRegions($code, $countryCode, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage);
+    $result = $apiInstance->listRegions($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->listRegions: ', $e->getMessage(), PHP_EOL;
@@ -745,13 +753,13 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
+| **packageId** | **string**| Package whose targeting availability should be returned. | |
 | **code** | **string**|  | [optional] |
 | **countryCode** | **string**|  | [optional] |
 | **limit** | **int**| Number of results to return per page. | [optional] |
 | **name** | **string**|  | [optional] |
 | **offset** | **int**| The initial index from which to return the results. | [optional] |
 | **ordering** | **string**| Which field to use when ordering the results. | [optional] |
-| **packageId** | **string**| Package whose targeting availability should be returned. Required when package-based authentication is enabled. | [optional] |
 | **search** | **string**| Case-insensitive partial search across Region fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 

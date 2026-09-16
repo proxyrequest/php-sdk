@@ -319,7 +319,7 @@ class SubtractDataRequest extends \ProxyRequest\Support\AdditionalProperties imp
     /**
      * Sets packageId
      *
-     * @param string $packageId packageId
+     * @param string $packageId Package of the managed virtual child order.
      *
      * @return self
      */
@@ -346,7 +346,7 @@ class SubtractDataRequest extends \ProxyRequest\Support\AdditionalProperties imp
     /**
      * Sets data
      *
-     * @param int $data data
+     * @param int $data Positive integer bytes to remove from assigned quota, not from usage. Cannot exceed total assigned data. Does not credit the parent's pool.
      *
      * @return self
      */

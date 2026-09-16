@@ -46,6 +46,6 @@ Name | Type | Description | Notes
 **dataUpdated** | **\DateTime** | Present only when SITE_PACKAGE_BASED_AUTH is disabled. | [optional] [readonly]
 **proxyPassword** | **string** | Present only when SITE_PACKAGE_BASED_AUTH is disabled. | [optional] [readonly]
 **proxyPasswordReset** | **\DateTime** | Present only when SITE_PACKAGE_BASED_AUTH is disabled. | [optional] [readonly]
-**orders** | [**\ProxyRequest\Dto\Order[]**](Order.md) | Present only when SITE_PACKAGE_BASED_AUTH is enabled. | [optional] [readonly]
+**orders** | [**\ProxyRequest\Dto\Order[]**](Order.md) | The user&#39;s package orders, including inactive orders. Each order contains its own data allowance, usage, ledgers, and proxy credentials. An empty list means the user has no orders. | [optional] [readonly]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

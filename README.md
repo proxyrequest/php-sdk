@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 Official PHP 8.5 client for the [ProxyRequest public API](https://proxyrequest.com/docs/).
-The package covers 79 supported operations from the current OpenAPI
+The package covers 80 supported operations from the current OpenAPI
 contract, including users, orders, proxy generation, analytics, invoices,
 packages, locations, webhooks, API keys, and Telegram integration.
 
@@ -117,7 +117,7 @@ them to browser code.
 
 ## Resource API
 
-`Client` exposes 17 API groups. The pinned public schema contains 81 operations;
+`Client` exposes 17 API groups. The pinned public schema contains 82 operations;
 disabled `sessions_list` and `sessions_destroy` operations are intentionally
 excluded. Sticky session options in proxy generation remain supported.
 
@@ -298,3 +298,21 @@ and review the public API diff.
 ## License
 
 MIT
+
+## Reset remaining data (SDK 2.1.0+)
+
+```php
+use ProxyRequest\Dto\ResetDataRequest;
+
+$order = $client->users()->resetData(
+    $userId,
+    new ResetDataRequest(['packageId' => $packageId]),
+    $resetOperationId,
+);
+```
+
+Send only `package_id`, without `data`. A system administrator can reset any user; other accounts can reset only their direct children. The server atomically clears positive, zero, or negative remaining data for a finite package and returns the updated order. Unlimited packages are rejected. Root orders lose their remaining ledger balances; child orders lose their remaining quota without changing the parent pool. Usage history and invoices are preserved.
+
+Persist one operation ID and reuse it when retrying the same reset, including after a process restart. This prevents a repeated request from clearing a later top-up. Use subtraction when an explicit amount should be removed from a child quota. The backend must support the reset endpoint before calling it.
+
+Version 2.1 retains legacy user and invoice models from 2.0 for compatibility with older deployments. These compatibility types do not change the current public API contract.

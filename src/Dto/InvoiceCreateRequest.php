@@ -473,7 +473,7 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
     /**
      * Sets userId
      *
-     * @param string|null $userId Managed sub-user that should receive the purchase.
+     * @param string|null $userId Account receiving the purchase. Omit for your own account. Sending user_id requires is_reseller; a reseller can target its own sub-user, while a superuser with is_reseller can target another account. Do not send your own ID.
      *
      * @return self
      */
@@ -681,7 +681,7 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
     /**
      * Sets data
      *
-     * @param int|null $data Residential proxy data to purchase, in bytes.
+     * @param int|null $data Residential proxy data to purchase, in integer bytes (1 GiB = 1073741824). Required with package_id for a residential purchase. A paid purchase funds the recipient's order; it is not a virtual allocation from a parent pool.
      *
      * @return self
      */
@@ -735,7 +735,7 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
     /**
      * Sets amount
      *
-     * @param int|null $amount Account balance amount to purchase, in the smallest currency unit.
+     * @param int|null $amount Account balance amount to purchase, in the smallest currency unit. Use for a wallet top-up without package_id, not for buying proxy data.
      *
      * @return self
      */
@@ -794,7 +794,7 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
     /**
      * Sets expires
      *
-     * @param int|null $expires Optional expiration as a Unix timestamp in seconds.
+     * @param int|null $expires Optional future expiration as a Unix timestamp in seconds, not milliseconds. Otherwise a positive package billing cycle determines the purchased data's expiration from the payment date; a zero cycle has no automatic expiration. A later purchase does not extend earlier finite, expiring ledgers.
      *
      * @return self
      */

@@ -96,6 +96,11 @@ class UsersResource
         'listOrders' => [
             'application/json',
         ],
+        'resetData' => [
+            'application/json',
+            'application/x-www-form-urlencoded',
+            'multipart/form-data',
+        ],
         'resetPassword' => [
             'application/json',
             'application/x-www-form-urlencoded',
@@ -393,7 +398,7 @@ class UsersResource
     /**
      * Operation create
      *
-     * Create a sub-user
+     * Create a customer account
      *
      * @param  \ProxyRequest\Dto\UserCreateRequest $userCreateRequest userCreateRequest (required)
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
@@ -423,7 +428,7 @@ class UsersResource
     /**
      * Operation createWithHttpInfo
      *
-     * Create a sub-user
+     * Create a customer account
      *
      * @param  \ProxyRequest\Dto\UserCreateRequest $userCreateRequest (required)
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
@@ -445,7 +450,7 @@ class UsersResource
     /**
      * Operation createAsync
      *
-     * Create a sub-user
+     * Create a customer account
      *
      * @param  \ProxyRequest\Dto\UserCreateRequest $userCreateRequest (required)
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
@@ -468,7 +473,7 @@ class UsersResource
     /**
      * Operation createAsyncWithHttpInfo
      *
-     * Create a sub-user
+     * Create a customer account
      *
      * @param  \ProxyRequest\Dto\UserCreateRequest $userCreateRequest (required)
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
@@ -1610,22 +1615,253 @@ class UsersResource
     }
 
     /**
+     * Operation resetData
+     *
+     * Reset a user&#39;s remaining data
+     *
+     * @param  string $id A UUID string identifying this user. (required)
+     * @param  \ProxyRequest\Dto\ResetDataRequest $resetDataRequest resetDataRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetData'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\Order|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function resetData($id, $resetDataRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['resetData'][0])
+    {
+        list($response) = $this->resetDataWithHttpInfo($id, $resetDataRequest, $idempotencyKey, $acceptLanguage, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation resetDataWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function resetDataWithResponse($id, $resetDataRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['resetData'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->resetDataWithHttpInfo($id, $resetDataRequest, $idempotencyKey, $acceptLanguage, $contentType));
+    }
+
+    /**
+     * Operation resetDataWithHttpInfo
+     *
+     * Reset a user&#39;s remaining data
+     *
+     * @param  string $id A UUID string identifying this user. (required)
+     * @param  \ProxyRequest\Dto\ResetDataRequest $resetDataRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetData'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\Order|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function resetDataWithHttpInfo($id, $resetDataRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['resetData'][0])
+    {
+        $request = $this->resetDataRequest($id, $resetDataRequest, $idempotencyKey, $acceptLanguage, $contentType);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  202 => '\\ProxyRequest\\Dto\\Order',
+));
+    }
+
+    /**
+     * Operation resetDataAsync
+     *
+     * Reset a user&#39;s remaining data
+     *
+     * @param  string $id A UUID string identifying this user. (required)
+     * @param  \ProxyRequest\Dto\ResetDataRequest $resetDataRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetData'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function resetDataAsync($id, $resetDataRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['resetData'][0])
+    {
+        return $this->resetDataAsyncWithHttpInfo($id, $resetDataRequest, $idempotencyKey, $acceptLanguage, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation resetDataAsyncWithHttpInfo
+     *
+     * Reset a user&#39;s remaining data
+     *
+     * @param  string $id A UUID string identifying this user. (required)
+     * @param  \ProxyRequest\Dto\ResetDataRequest $resetDataRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetData'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function resetDataAsyncWithHttpInfo($id, $resetDataRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['resetData'][0])
+    {
+        $request = $this->resetDataRequest($id, $resetDataRequest, $idempotencyKey, $acceptLanguage, $contentType);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  202 => '\\ProxyRequest\\Dto\\Order',
+));
+    }
+
+    /**
+     * Create request for operation 'resetData'
+     *
+     * @param  string $id A UUID string identifying this user. (required)
+     * @param  \ProxyRequest\Dto\ResetDataRequest $resetDataRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetData'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function resetDataRequest($id, $resetDataRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['resetData'][0])
+    {
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling resetData'
+            );
+        }
+
+        // verify the required parameter 'resetDataRequest' is set
+        if ($resetDataRequest === null || (is_array($resetDataRequest) && count($resetDataRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $resetDataRequest when calling resetData'
+            );
+        }
+
+        if ($idempotencyKey !== null && strlen($idempotencyKey) > 255) {
+            throw new \InvalidArgumentException('invalid length for "$idempotencyKey" when calling UsersResource.resetData, must be smaller than or equal to 255.');
+        }
+
+
+
+        $resourcePath = '/users/{id}/data/reset';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // header params
+        if ($idempotencyKey !== null) {
+            $headerParams['Idempotency-Key'] = ObjectSerializer::toHeaderValue($idempotencyKey);
+        }
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($resetDataRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \ProxyRequest\Support\Json::encode(ObjectSerializer::sanitizeForSerialization($resetDataRequest));
+            } else {
+                $httpBody = $resetDataRequest;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation resetPassword
      *
      * Rotate a sub-user proxy password
      *
      * @param  string $id A UUID string identifying this user. (required)
+     * @param  \ProxyRequest\Dto\UserPasswordResetRequest $userPasswordResetRequest userPasswordResetRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
-     * @param  \ProxyRequest\Dto\UserPasswordResetRequest|null $userPasswordResetRequest userPasswordResetRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetPassword'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\User|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function resetPassword($id, $acceptLanguage = null, $userPasswordResetRequest = null, string $contentType = self::contentTypes['resetPassword'][0])
+    public function resetPassword($id, $userPasswordResetRequest, $acceptLanguage = null, string $contentType = self::contentTypes['resetPassword'][0])
     {
-        list($response) = $this->resetPasswordWithHttpInfo($id, $acceptLanguage, $userPasswordResetRequest, $contentType);
+        list($response) = $this->resetPasswordWithHttpInfo($id, $userPasswordResetRequest, $acceptLanguage, $contentType);
         return $response;
     }
 
@@ -1634,9 +1870,9 @@ class UsersResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function resetPasswordWithResponse($id, $acceptLanguage = null, $userPasswordResetRequest = null, string $contentType = self::contentTypes['resetPassword'][0]): \ProxyRequest\ApiResponse
+    public function resetPasswordWithResponse($id, $userPasswordResetRequest, $acceptLanguage = null, string $contentType = self::contentTypes['resetPassword'][0]): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->resetPasswordWithHttpInfo($id, $acceptLanguage, $userPasswordResetRequest, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->resetPasswordWithHttpInfo($id, $userPasswordResetRequest, $acceptLanguage, $contentType));
     }
 
     /**
@@ -1645,17 +1881,17 @@ class UsersResource
      * Rotate a sub-user proxy password
      *
      * @param  string $id A UUID string identifying this user. (required)
+     * @param  \ProxyRequest\Dto\UserPasswordResetRequest $userPasswordResetRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
-     * @param  \ProxyRequest\Dto\UserPasswordResetRequest|null $userPasswordResetRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetPassword'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\User|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function resetPasswordWithHttpInfo($id, $acceptLanguage = null, $userPasswordResetRequest = null, string $contentType = self::contentTypes['resetPassword'][0])
+    public function resetPasswordWithHttpInfo($id, $userPasswordResetRequest, $acceptLanguage = null, string $contentType = self::contentTypes['resetPassword'][0])
     {
-        $request = $this->resetPasswordRequest($id, $acceptLanguage, $userPasswordResetRequest, $contentType);
+        $request = $this->resetPasswordRequest($id, $userPasswordResetRequest, $acceptLanguage, $contentType);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   202 => '\\ProxyRequest\\Dto\\User',
 ));
@@ -1667,16 +1903,16 @@ class UsersResource
      * Rotate a sub-user proxy password
      *
      * @param  string $id A UUID string identifying this user. (required)
+     * @param  \ProxyRequest\Dto\UserPasswordResetRequest $userPasswordResetRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
-     * @param  \ProxyRequest\Dto\UserPasswordResetRequest|null $userPasswordResetRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetPassword'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function resetPasswordAsync($id, $acceptLanguage = null, $userPasswordResetRequest = null, string $contentType = self::contentTypes['resetPassword'][0])
+    public function resetPasswordAsync($id, $userPasswordResetRequest, $acceptLanguage = null, string $contentType = self::contentTypes['resetPassword'][0])
     {
-        return $this->resetPasswordAsyncWithHttpInfo($id, $acceptLanguage, $userPasswordResetRequest, $contentType)
+        return $this->resetPasswordAsyncWithHttpInfo($id, $userPasswordResetRequest, $acceptLanguage, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1690,16 +1926,16 @@ class UsersResource
      * Rotate a sub-user proxy password
      *
      * @param  string $id A UUID string identifying this user. (required)
+     * @param  \ProxyRequest\Dto\UserPasswordResetRequest $userPasswordResetRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
-     * @param  \ProxyRequest\Dto\UserPasswordResetRequest|null $userPasswordResetRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetPassword'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function resetPasswordAsyncWithHttpInfo($id, $acceptLanguage = null, $userPasswordResetRequest = null, string $contentType = self::contentTypes['resetPassword'][0])
+    public function resetPasswordAsyncWithHttpInfo($id, $userPasswordResetRequest, $acceptLanguage = null, string $contentType = self::contentTypes['resetPassword'][0])
     {
-        $request = $this->resetPasswordRequest($id, $acceptLanguage, $userPasswordResetRequest, $contentType);
+        $request = $this->resetPasswordRequest($id, $userPasswordResetRequest, $acceptLanguage, $contentType);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   202 => '\\ProxyRequest\\Dto\\User',
 ));
@@ -1709,14 +1945,14 @@ class UsersResource
      * Create request for operation 'resetPassword'
      *
      * @param  string $id A UUID string identifying this user. (required)
+     * @param  \ProxyRequest\Dto\UserPasswordResetRequest $userPasswordResetRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
-     * @param  \ProxyRequest\Dto\UserPasswordResetRequest|null $userPasswordResetRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetPassword'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function resetPasswordRequest($id, $acceptLanguage = null, $userPasswordResetRequest = null, string $contentType = self::contentTypes['resetPassword'][0])
+    public function resetPasswordRequest($id, $userPasswordResetRequest, $acceptLanguage = null, string $contentType = self::contentTypes['resetPassword'][0])
     {
 
         // verify the required parameter 'id' is set
@@ -1726,6 +1962,12 @@ class UsersResource
             );
         }
 
+        // verify the required parameter 'userPasswordResetRequest' is set
+        if ($userPasswordResetRequest === null || (is_array($userPasswordResetRequest) && count($userPasswordResetRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $userPasswordResetRequest when calling resetPassword'
+            );
+        }
 
 
 

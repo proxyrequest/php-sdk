@@ -88,6 +88,7 @@ operationIdNameMappings:
   users_destroy: delete
   users_data_add_create: addData
   users_data_subtract_create: subtractData
+  users_data_reset_create: resetData
   users_orders_list: listOrders
   users_password_create: resetPassword
   webhooks_list: list

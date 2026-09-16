@@ -1103,7 +1103,7 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
     /**
      * Sets isOneTime
      *
-     * @param bool|null $isOneTime Indicates whether this invoice is for a one-time purchase. Default is False, meaning it is a recurring invoice.
+     * @param bool|null $isOneTime Whether this pricing tier is restricted to a one-time purchase. False does not create a recurring subscription or a renewal schedule.
      *
      * @return self
      */
@@ -1188,7 +1188,7 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
     /**
      * Sets status
      *
-     * @param \ProxyRequest\Dto\InvoiceStatusEnum|null $status After changing invoice status to PAID, the invoice will be processed and user package created in case none exists. If you need to cancel the invoice, make sure to subtract data from the user package after changing the invoice status. Changing the status from PAID to any other will not affect the user package's data or proxies. * `pending` - Pending * `paid` - Paid * `unpaid` - Unpaid * `error` - Error
+     * @param \ProxyRequest\Dto\InvoiceStatusEnum|null $status Payment state. A paid package invoice funds an order; a paid balance invoice credits money. Confirm the resulting order before delivering access, because fulfillment can recover asynchronously. Creating an invoice with status=paid requires a superuser. This read field is not a public status-update or refund endpoint. * `pending` - Pending * `paid` - Paid * `unpaid` - Unpaid * `error` - Error
      *
      * @return self
      */

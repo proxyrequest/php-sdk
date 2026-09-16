@@ -823,7 +823,7 @@ class OrderDetailed extends \ProxyRequest\Support\AdditionalProperties implement
     /**
      * Sets dataRemaining
      *
-     * @param int $dataRemaining dataRemaining
+     * @param int $dataRemaining Integer bytes. Root order: sum of usable ledger balances. Virtual child order: max(data - data_spent, 0); access also needs a usable parent pool.
      *
      * @return self
      */
@@ -885,7 +885,7 @@ class OrderDetailed extends \ProxyRequest\Support\AdditionalProperties implement
     /**
      * Sets ledgers
      *
-     * @param array<string,mixed>[] $ledgers ledgers
+     * @param array<string,mixed>[] $ledgers Usable, non-expired purchased buckets; empty for virtual child orders. Not a complete history, and array position is not spending priority.
      *
      * @return self
      */

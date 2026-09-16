@@ -118,6 +118,7 @@ docs/Model/ProxyPasswordResetResponse.md
 docs/Model/ProxyTypeEnum.md
 docs/Model/RecoverPasswordRequest.md
 docs/Model/Region.md
+docs/Model/ResetDataRequest.md
 docs/Model/ResetPasswordRequest.md
 docs/Model/Reward.md
 docs/Model/RewardClaimRequest.md
@@ -253,6 +254,7 @@ src/Dto/ProxyPasswordResetResponse.php
 src/Dto/ProxyTypeEnum.php
 src/Dto/RecoverPasswordRequest.php
 src/Dto/Region.php
+src/Dto/ResetDataRequest.php
 src/Dto/ResetPasswordRequest.php
 src/Dto/Reward.php
 src/Dto/RewardClaimRequest.php

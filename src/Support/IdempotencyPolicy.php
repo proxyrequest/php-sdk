@@ -19,6 +19,7 @@ final class IdempotencyPolicy
         ['POST', '#^/users$#D'],
         ['DELETE', '#^/users/[^/]+$#D'],
         ['POST', '#^/users/[^/]+/data/add$#D'],
+        ['POST', '#^/users/[^/]+/data/reset$#D'],
         ['POST', '#^/users/[^/]+/data/subtract$#D'],
         ['POST', '#^/webhooks$#D'],
         ['DELETE', '#^/webhooks/[^/]+$#D'],

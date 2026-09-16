@@ -765,7 +765,7 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
     /**
      * Sets dataRemaining
      *
-     * @param int $dataRemaining dataRemaining
+     * @param int $dataRemaining Integer bytes. Root order: sum of usable ledger balances, not data minus data_spent. Virtual child order: max(data - data_spent, 0), a personal quota that does not guarantee the parent still has usable data.
      *
      * @return self
      */
@@ -827,7 +827,7 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
     /**
      * Sets ledgers
      *
-     * @param array<string,mixed>[] $ledgers ledgers
+     * @param array<string,mixed>[] $ledgers Usable, non-expired ledger balances for a purchased root order; empty for a virtual child order using its parent's pool. Not a complete history. Array position does not identify the active ledger or spending order.
      *
      * @return self
      */

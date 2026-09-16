@@ -1977,7 +1977,7 @@ class User extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
     /**
      * Sets orders
      *
-     * @param \ProxyRequest\Dto\Order[]|null $orders Present only when SITE_PACKAGE_BASED_AUTH is enabled.
+     * @param \ProxyRequest\Dto\Order[]|null $orders The user's package orders, including inactive orders. Each order contains its own data allowance, usage, ledgers, and proxy credentials. An empty list means the user has no orders.
      *
      * @return self
      */

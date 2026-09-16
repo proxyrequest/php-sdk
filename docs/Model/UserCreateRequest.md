@@ -18,9 +18,9 @@ Name | Type | Description | Notes
 **allowedIps** | **string[]** | List of source IP addresses allowed for this user. The maximum list size is configured per deployment. | [optional]
 **connectionLimit** | **int** | Maximum number of concurrent connections allowed for the user. | [optional]
 **isReseller** | **bool** | Whether the user should have reseller privileges. Only superusers can create resellers. | [optional] [default to false]
-**isTopLevel** | **bool** | Whether the user is a sub-user under the parent account. | [optional] [default to false]
-**data** | **int** | Initial data allocation for the user (traditional auth mode only). | [optional]
-**packageId** | **string** | ProxyRequest package UUID to assign to the user (package-based auth mode only). Headless integrations resolve it from their local product mapping. | [optional]
+**isTopLevel** | **bool** | Superuser only: true creates an independent account with no parent. False (default) creates a sub-user under the caller. | [optional] [default to false]
+**data** | **int** | Initial integer-byte data amount. With package_id, a normal sub-user receives a virtual quota from the caller&#39;s existing root order; is_top_level&#x3D;true provisions a separate paid purchase. Omit both data and package_id to create identity without package access. | [optional]
+**packageId** | **string** | ProxyRequest package UUID to assign to the user. Headless integrations resolve it from their local product mapping. | [optional]
 **meta** | **array<string,mixed>** | Additional metadata for the user. Maximum 50 fields. | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

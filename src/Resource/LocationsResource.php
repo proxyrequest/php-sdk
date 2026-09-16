@@ -158,6 +158,7 @@ class LocationsResource
      * Get a city
      *
      * @param  string $id id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCity'] to see the possible values for this operation
      *
@@ -165,9 +166,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\City|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function getCity($id, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0])
+    public function getCity($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0])
     {
-        list($response) = $this->getCityWithHttpInfo($id, $acceptLanguage, $contentType);
+        list($response) = $this->getCityWithHttpInfo($id, $packageId, $acceptLanguage, $contentType);
         return $response;
     }
 
@@ -176,9 +177,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getCityWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0]): \ProxyRequest\ApiResponse
+    public function getCityWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0]): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getCityWithHttpInfo($id, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getCityWithHttpInfo($id, $packageId, $acceptLanguage, $contentType));
     }
 
     /**
@@ -187,6 +188,7 @@ class LocationsResource
      * Get a city
      *
      * @param  string $id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCity'] to see the possible values for this operation
      *
@@ -194,9 +196,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\City|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getCityWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0])
+    public function getCityWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0])
     {
-        $request = $this->getCityRequest($id, $acceptLanguage, $contentType);
+        $request = $this->getCityRequest($id, $packageId, $acceptLanguage, $contentType);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\City',
 ));
@@ -208,15 +210,16 @@ class LocationsResource
      * Get a city
      *
      * @param  string $id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCity'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getCityAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0])
+    public function getCityAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0])
     {
-        return $this->getCityAsyncWithHttpInfo($id, $acceptLanguage, $contentType)
+        return $this->getCityAsyncWithHttpInfo($id, $packageId, $acceptLanguage, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -230,15 +233,16 @@ class LocationsResource
      * Get a city
      *
      * @param  string $id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCity'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getCityAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0])
+    public function getCityAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0])
     {
-        $request = $this->getCityRequest($id, $acceptLanguage, $contentType);
+        $request = $this->getCityRequest($id, $packageId, $acceptLanguage, $contentType);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\City',
 ));
@@ -248,19 +252,27 @@ class LocationsResource
      * Create request for operation 'getCity'
      *
      * @param  string $id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCity'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getCityRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0])
+    public function getCityRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $id when calling getCity'
+            );
+        }
+
+        // verify the required parameter 'packageId' is set
+        if ($packageId === null || (is_array($packageId) && count($packageId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $packageId when calling getCity'
             );
         }
 
@@ -273,6 +285,15 @@ class LocationsResource
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $packageId,
+            'package_id', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            true // required
+        ) ?? []);
 
         // header params
         if ($acceptLanguage !== null) {
@@ -357,6 +378,7 @@ class LocationsResource
      * Get a continent
      *
      * @param  string $id id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getContinent'] to see the possible values for this operation
      *
@@ -364,9 +386,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\Continent|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function getContinent($id, $acceptLanguage = null, string $contentType = self::contentTypes['getContinent'][0])
+    public function getContinent($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getContinent'][0])
     {
-        list($response) = $this->getContinentWithHttpInfo($id, $acceptLanguage, $contentType);
+        list($response) = $this->getContinentWithHttpInfo($id, $packageId, $acceptLanguage, $contentType);
         return $response;
     }
 
@@ -375,9 +397,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getContinentWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['getContinent'][0]): \ProxyRequest\ApiResponse
+    public function getContinentWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getContinent'][0]): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getContinentWithHttpInfo($id, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getContinentWithHttpInfo($id, $packageId, $acceptLanguage, $contentType));
     }
 
     /**
@@ -386,6 +408,7 @@ class LocationsResource
      * Get a continent
      *
      * @param  string $id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getContinent'] to see the possible values for this operation
      *
@@ -393,9 +416,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\Continent|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getContinentWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['getContinent'][0])
+    public function getContinentWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getContinent'][0])
     {
-        $request = $this->getContinentRequest($id, $acceptLanguage, $contentType);
+        $request = $this->getContinentRequest($id, $packageId, $acceptLanguage, $contentType);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\Continent',
 ));
@@ -407,15 +430,16 @@ class LocationsResource
      * Get a continent
      *
      * @param  string $id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getContinent'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getContinentAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['getContinent'][0])
+    public function getContinentAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getContinent'][0])
     {
-        return $this->getContinentAsyncWithHttpInfo($id, $acceptLanguage, $contentType)
+        return $this->getContinentAsyncWithHttpInfo($id, $packageId, $acceptLanguage, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -429,15 +453,16 @@ class LocationsResource
      * Get a continent
      *
      * @param  string $id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getContinent'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getContinentAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['getContinent'][0])
+    public function getContinentAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getContinent'][0])
     {
-        $request = $this->getContinentRequest($id, $acceptLanguage, $contentType);
+        $request = $this->getContinentRequest($id, $packageId, $acceptLanguage, $contentType);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\Continent',
 ));
@@ -447,19 +472,27 @@ class LocationsResource
      * Create request for operation 'getContinent'
      *
      * @param  string $id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getContinent'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getContinentRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['getContinent'][0])
+    public function getContinentRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getContinent'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $id when calling getContinent'
+            );
+        }
+
+        // verify the required parameter 'packageId' is set
+        if ($packageId === null || (is_array($packageId) && count($packageId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $packageId when calling getContinent'
             );
         }
 
@@ -472,6 +505,15 @@ class LocationsResource
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $packageId,
+            'package_id', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            true // required
+        ) ?? []);
 
         // header params
         if ($acceptLanguage !== null) {
@@ -556,6 +598,7 @@ class LocationsResource
      * Get a country
      *
      * @param  string $id id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCountry'] to see the possible values for this operation
      *
@@ -563,9 +606,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\Country|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function getCountry($id, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0])
+    public function getCountry($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0])
     {
-        list($response) = $this->getCountryWithHttpInfo($id, $acceptLanguage, $contentType);
+        list($response) = $this->getCountryWithHttpInfo($id, $packageId, $acceptLanguage, $contentType);
         return $response;
     }
 
@@ -574,9 +617,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getCountryWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0]): \ProxyRequest\ApiResponse
+    public function getCountryWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0]): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getCountryWithHttpInfo($id, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getCountryWithHttpInfo($id, $packageId, $acceptLanguage, $contentType));
     }
 
     /**
@@ -585,6 +628,7 @@ class LocationsResource
      * Get a country
      *
      * @param  string $id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCountry'] to see the possible values for this operation
      *
@@ -592,9 +636,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\Country|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getCountryWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0])
+    public function getCountryWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0])
     {
-        $request = $this->getCountryRequest($id, $acceptLanguage, $contentType);
+        $request = $this->getCountryRequest($id, $packageId, $acceptLanguage, $contentType);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\Country',
 ));
@@ -606,15 +650,16 @@ class LocationsResource
      * Get a country
      *
      * @param  string $id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCountry'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getCountryAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0])
+    public function getCountryAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0])
     {
-        return $this->getCountryAsyncWithHttpInfo($id, $acceptLanguage, $contentType)
+        return $this->getCountryAsyncWithHttpInfo($id, $packageId, $acceptLanguage, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -628,15 +673,16 @@ class LocationsResource
      * Get a country
      *
      * @param  string $id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCountry'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getCountryAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0])
+    public function getCountryAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0])
     {
-        $request = $this->getCountryRequest($id, $acceptLanguage, $contentType);
+        $request = $this->getCountryRequest($id, $packageId, $acceptLanguage, $contentType);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\Country',
 ));
@@ -646,19 +692,27 @@ class LocationsResource
      * Create request for operation 'getCountry'
      *
      * @param  string $id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCountry'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getCountryRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0])
+    public function getCountryRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $id when calling getCountry'
+            );
+        }
+
+        // verify the required parameter 'packageId' is set
+        if ($packageId === null || (is_array($packageId) && count($packageId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $packageId when calling getCountry'
             );
         }
 
@@ -671,6 +725,15 @@ class LocationsResource
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $packageId,
+            'package_id', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            true // required
+        ) ?? []);
 
         // header params
         if ($acceptLanguage !== null) {
@@ -755,6 +818,7 @@ class LocationsResource
      * Get a region
      *
      * @param  string $id id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRegion'] to see the possible values for this operation
      *
@@ -762,9 +826,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\Region|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function getRegion($id, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0])
+    public function getRegion($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0])
     {
-        list($response) = $this->getRegionWithHttpInfo($id, $acceptLanguage, $contentType);
+        list($response) = $this->getRegionWithHttpInfo($id, $packageId, $acceptLanguage, $contentType);
         return $response;
     }
 
@@ -773,9 +837,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getRegionWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0]): \ProxyRequest\ApiResponse
+    public function getRegionWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0]): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getRegionWithHttpInfo($id, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getRegionWithHttpInfo($id, $packageId, $acceptLanguage, $contentType));
     }
 
     /**
@@ -784,6 +848,7 @@ class LocationsResource
      * Get a region
      *
      * @param  string $id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRegion'] to see the possible values for this operation
      *
@@ -791,9 +856,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\Region|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getRegionWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0])
+    public function getRegionWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0])
     {
-        $request = $this->getRegionRequest($id, $acceptLanguage, $contentType);
+        $request = $this->getRegionRequest($id, $packageId, $acceptLanguage, $contentType);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\Region',
 ));
@@ -805,15 +870,16 @@ class LocationsResource
      * Get a region
      *
      * @param  string $id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRegion'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getRegionAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0])
+    public function getRegionAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0])
     {
-        return $this->getRegionAsyncWithHttpInfo($id, $acceptLanguage, $contentType)
+        return $this->getRegionAsyncWithHttpInfo($id, $packageId, $acceptLanguage, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -827,15 +893,16 @@ class LocationsResource
      * Get a region
      *
      * @param  string $id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRegion'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getRegionAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0])
+    public function getRegionAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0])
     {
-        $request = $this->getRegionRequest($id, $acceptLanguage, $contentType);
+        $request = $this->getRegionRequest($id, $packageId, $acceptLanguage, $contentType);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\Region',
 ));
@@ -845,19 +912,27 @@ class LocationsResource
      * Create request for operation 'getRegion'
      *
      * @param  string $id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRegion'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getRegionRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0])
+    public function getRegionRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0])
     {
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $id when calling getRegion'
+            );
+        }
+
+        // verify the required parameter 'packageId' is set
+        if ($packageId === null || (is_array($packageId) && count($packageId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $packageId when calling getRegion'
             );
         }
 
@@ -870,6 +945,15 @@ class LocationsResource
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $packageId,
+            'package_id', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            true // required
+        ) ?? []);
 
         // header params
         if ($acceptLanguage !== null) {
@@ -953,6 +1037,7 @@ class LocationsResource
      *
      * List available autonomous systems
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code code (optional)
      * @param  string|null $countryCode countryCode (optional)
      * @param  bool|null $global Set to true to return only globally targetable ASNs. (optional)
@@ -960,7 +1045,6 @@ class LocationsResource
      * @param  string|null $name name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across ASN fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listAsns'] to see the possible values for this operation
@@ -969,9 +1053,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\PaginatedLocationASNRecordList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listAsns($code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0])
+    public function listAsns($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0])
     {
-        list($response) = $this->listAsnsWithHttpInfo($code, $countryCode, $global, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType);
+        list($response) = $this->listAsnsWithHttpInfo($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType);
         return $response;
     }
 
@@ -980,9 +1064,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listAsnsWithResponse($code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0]): \ProxyRequest\ApiResponse
+    public function listAsnsWithResponse($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0]): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listAsnsWithHttpInfo($code, $countryCode, $global, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listAsnsWithHttpInfo($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType));
     }
 
     /**
@@ -990,6 +1074,7 @@ class LocationsResource
      *
      * List available autonomous systems
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
      * @param  bool|null $global Set to true to return only globally targetable ASNs. (optional)
@@ -997,7 +1082,6 @@ class LocationsResource
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across ASN fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listAsns'] to see the possible values for this operation
@@ -1006,9 +1090,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\PaginatedLocationASNRecordList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listAsnsWithHttpInfo($code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0])
+    public function listAsnsWithHttpInfo($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0])
     {
-        $request = $this->listAsnsRequest($code, $countryCode, $global, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType);
+        $request = $this->listAsnsRequest($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedLocationASNRecordList',
 ));
@@ -1019,6 +1103,7 @@ class LocationsResource
      *
      * List available autonomous systems
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
      * @param  bool|null $global Set to true to return only globally targetable ASNs. (optional)
@@ -1026,7 +1111,6 @@ class LocationsResource
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across ASN fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listAsns'] to see the possible values for this operation
@@ -1034,9 +1118,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listAsnsAsync($code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0])
+    public function listAsnsAsync($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0])
     {
-        return $this->listAsnsAsyncWithHttpInfo($code, $countryCode, $global, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType)
+        return $this->listAsnsAsyncWithHttpInfo($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1049,6 +1133,7 @@ class LocationsResource
      *
      * List available autonomous systems
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
      * @param  bool|null $global Set to true to return only globally targetable ASNs. (optional)
@@ -1056,7 +1141,6 @@ class LocationsResource
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across ASN fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listAsns'] to see the possible values for this operation
@@ -1064,9 +1148,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listAsnsAsyncWithHttpInfo($code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0])
+    public function listAsnsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0])
     {
-        $request = $this->listAsnsRequest($code, $countryCode, $global, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType);
+        $request = $this->listAsnsRequest($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedLocationASNRecordList',
 ));
@@ -1075,6 +1159,7 @@ class LocationsResource
     /**
      * Create request for operation 'listAsns'
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
      * @param  bool|null $global Set to true to return only globally targetable ASNs. (optional)
@@ -1082,7 +1167,6 @@ class LocationsResource
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across ASN fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listAsns'] to see the possible values for this operation
@@ -1090,9 +1174,15 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listAsnsRequest($code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0])
+    public function listAsnsRequest($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0])
     {
 
+        // verify the required parameter 'packageId' is set
+        if ($packageId === null || (is_array($packageId) && count($packageId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $packageId when calling listAsns'
+            );
+        }
 
 
 
@@ -1181,7 +1271,7 @@ class LocationsResource
             'string', // openApiType
             'form', // style
             true, // explode
-            false // required
+            true // required
         ) ?? []);
         // query params
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
@@ -1267,13 +1357,13 @@ class LocationsResource
      *
      * List available cities
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code code (optional)
      * @param  string|null $countryCode countryCode (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $regionCode regionCode (optional)
      * @param  string|null $search Case-insensitive partial search across City fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
@@ -1283,9 +1373,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\PaginatedCityList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listCities($code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0])
+    public function listCities($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0])
     {
-        list($response) = $this->listCitiesWithHttpInfo($code, $countryCode, $limit, $name, $offset, $ordering, $packageId, $regionCode, $search, $acceptLanguage, $contentType);
+        list($response) = $this->listCitiesWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType);
         return $response;
     }
 
@@ -1294,9 +1384,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listCitiesWithResponse($code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0]): \ProxyRequest\ApiResponse
+    public function listCitiesWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0]): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listCitiesWithHttpInfo($code, $countryCode, $limit, $name, $offset, $ordering, $packageId, $regionCode, $search, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listCitiesWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType));
     }
 
     /**
@@ -1304,13 +1394,13 @@ class LocationsResource
      *
      * List available cities
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $regionCode (optional)
      * @param  string|null $search Case-insensitive partial search across City fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
@@ -1320,9 +1410,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\PaginatedCityList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listCitiesWithHttpInfo($code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0])
+    public function listCitiesWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0])
     {
-        $request = $this->listCitiesRequest($code, $countryCode, $limit, $name, $offset, $ordering, $packageId, $regionCode, $search, $acceptLanguage, $contentType);
+        $request = $this->listCitiesRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedCityList',
 ));
@@ -1333,13 +1423,13 @@ class LocationsResource
      *
      * List available cities
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $regionCode (optional)
      * @param  string|null $search Case-insensitive partial search across City fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
@@ -1348,9 +1438,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listCitiesAsync($code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0])
+    public function listCitiesAsync($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0])
     {
-        return $this->listCitiesAsyncWithHttpInfo($code, $countryCode, $limit, $name, $offset, $ordering, $packageId, $regionCode, $search, $acceptLanguage, $contentType)
+        return $this->listCitiesAsyncWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1363,13 +1453,13 @@ class LocationsResource
      *
      * List available cities
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $regionCode (optional)
      * @param  string|null $search Case-insensitive partial search across City fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
@@ -1378,9 +1468,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listCitiesAsyncWithHttpInfo($code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0])
+    public function listCitiesAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0])
     {
-        $request = $this->listCitiesRequest($code, $countryCode, $limit, $name, $offset, $ordering, $packageId, $regionCode, $search, $acceptLanguage, $contentType);
+        $request = $this->listCitiesRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedCityList',
 ));
@@ -1389,13 +1479,13 @@ class LocationsResource
     /**
      * Create request for operation 'listCities'
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $regionCode (optional)
      * @param  string|null $search Case-insensitive partial search across City fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
@@ -1404,9 +1494,15 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listCitiesRequest($code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0])
+    public function listCitiesRequest($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0])
     {
 
+        // verify the required parameter 'packageId' is set
+        if ($packageId === null || (is_array($packageId) && count($packageId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $packageId when calling listCities'
+            );
+        }
 
 
 
@@ -1486,7 +1582,7 @@ class LocationsResource
             'string', // openApiType
             'form', // style
             true, // explode
-            false // required
+            true // required
         ) ?? []);
         // query params
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
@@ -1581,12 +1677,12 @@ class LocationsResource
      *
      * List available continents
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code code (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across Continent fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listContinents'] to see the possible values for this operation
@@ -1595,9 +1691,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\PaginatedContinentList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listContinents($code = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listContinents'][0])
+    public function listContinents($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listContinents'][0])
     {
-        list($response) = $this->listContinentsWithHttpInfo($code, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType);
+        list($response) = $this->listContinentsWithHttpInfo($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType);
         return $response;
     }
 
@@ -1606,9 +1702,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listContinentsWithResponse($code = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listContinents'][0]): \ProxyRequest\ApiResponse
+    public function listContinentsWithResponse($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listContinents'][0]): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listContinentsWithHttpInfo($code, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listContinentsWithHttpInfo($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType));
     }
 
     /**
@@ -1616,12 +1712,12 @@ class LocationsResource
      *
      * List available continents
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across Continent fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listContinents'] to see the possible values for this operation
@@ -1630,9 +1726,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\PaginatedContinentList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listContinentsWithHttpInfo($code = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listContinents'][0])
+    public function listContinentsWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listContinents'][0])
     {
-        $request = $this->listContinentsRequest($code, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType);
+        $request = $this->listContinentsRequest($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedContinentList',
 ));
@@ -1643,12 +1739,12 @@ class LocationsResource
      *
      * List available continents
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across Continent fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listContinents'] to see the possible values for this operation
@@ -1656,9 +1752,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listContinentsAsync($code = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listContinents'][0])
+    public function listContinentsAsync($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listContinents'][0])
     {
-        return $this->listContinentsAsyncWithHttpInfo($code, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType)
+        return $this->listContinentsAsyncWithHttpInfo($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1671,12 +1767,12 @@ class LocationsResource
      *
      * List available continents
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across Continent fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listContinents'] to see the possible values for this operation
@@ -1684,9 +1780,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listContinentsAsyncWithHttpInfo($code = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listContinents'][0])
+    public function listContinentsAsyncWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listContinents'][0])
     {
-        $request = $this->listContinentsRequest($code, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType);
+        $request = $this->listContinentsRequest($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedContinentList',
 ));
@@ -1695,12 +1791,12 @@ class LocationsResource
     /**
      * Create request for operation 'listContinents'
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across Continent fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listContinents'] to see the possible values for this operation
@@ -1708,9 +1804,15 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listContinentsRequest($code = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listContinents'][0])
+    public function listContinentsRequest($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listContinents'][0])
     {
 
+        // verify the required parameter 'packageId' is set
+        if ($packageId === null || (is_array($packageId) && count($packageId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $packageId when calling listContinents'
+            );
+        }
 
 
 
@@ -1779,7 +1881,7 @@ class LocationsResource
             'string', // openApiType
             'form', // style
             true, // explode
-            false // required
+            true // required
         ) ?? []);
         // query params
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
@@ -1865,12 +1967,12 @@ class LocationsResource
      *
      * List available countries
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code code (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across Country fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCountries'] to see the possible values for this operation
@@ -1879,9 +1981,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\PaginatedCountryList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listCountries($code = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0])
+    public function listCountries($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0])
     {
-        list($response) = $this->listCountriesWithHttpInfo($code, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType);
+        list($response) = $this->listCountriesWithHttpInfo($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType);
         return $response;
     }
 
@@ -1890,9 +1992,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listCountriesWithResponse($code = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0]): \ProxyRequest\ApiResponse
+    public function listCountriesWithResponse($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0]): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listCountriesWithHttpInfo($code, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listCountriesWithHttpInfo($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType));
     }
 
     /**
@@ -1900,12 +2002,12 @@ class LocationsResource
      *
      * List available countries
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across Country fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCountries'] to see the possible values for this operation
@@ -1914,9 +2016,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\PaginatedCountryList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listCountriesWithHttpInfo($code = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0])
+    public function listCountriesWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0])
     {
-        $request = $this->listCountriesRequest($code, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType);
+        $request = $this->listCountriesRequest($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedCountryList',
 ));
@@ -1927,12 +2029,12 @@ class LocationsResource
      *
      * List available countries
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across Country fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCountries'] to see the possible values for this operation
@@ -1940,9 +2042,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listCountriesAsync($code = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0])
+    public function listCountriesAsync($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0])
     {
-        return $this->listCountriesAsyncWithHttpInfo($code, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType)
+        return $this->listCountriesAsyncWithHttpInfo($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1955,12 +2057,12 @@ class LocationsResource
      *
      * List available countries
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across Country fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCountries'] to see the possible values for this operation
@@ -1968,9 +2070,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listCountriesAsyncWithHttpInfo($code = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0])
+    public function listCountriesAsyncWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0])
     {
-        $request = $this->listCountriesRequest($code, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType);
+        $request = $this->listCountriesRequest($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedCountryList',
 ));
@@ -1979,12 +2081,12 @@ class LocationsResource
     /**
      * Create request for operation 'listCountries'
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across Country fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCountries'] to see the possible values for this operation
@@ -1992,9 +2094,15 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listCountriesRequest($code = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0])
+    public function listCountriesRequest($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0])
     {
 
+        // verify the required parameter 'packageId' is set
+        if ($packageId === null || (is_array($packageId) && count($packageId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $packageId when calling listCountries'
+            );
+        }
 
 
 
@@ -2063,7 +2171,7 @@ class LocationsResource
             'string', // openApiType
             'form', // style
             true, // explode
-            false // required
+            true // required
         ) ?? []);
         // query params
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
@@ -2149,13 +2257,13 @@ class LocationsResource
      *
      * List available internet service providers
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code code (optional)
      * @param  string|null $countryCode countryCode (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across ISP fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listIsps'] to see the possible values for this operation
@@ -2164,9 +2272,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\PaginatedISPList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listIsps($code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0])
+    public function listIsps($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0])
     {
-        list($response) = $this->listIspsWithHttpInfo($code, $countryCode, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType);
+        list($response) = $this->listIspsWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType);
         return $response;
     }
 
@@ -2175,9 +2283,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listIspsWithResponse($code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0]): \ProxyRequest\ApiResponse
+    public function listIspsWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0]): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listIspsWithHttpInfo($code, $countryCode, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listIspsWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType));
     }
 
     /**
@@ -2185,13 +2293,13 @@ class LocationsResource
      *
      * List available internet service providers
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across ISP fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listIsps'] to see the possible values for this operation
@@ -2200,9 +2308,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\PaginatedISPList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listIspsWithHttpInfo($code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0])
+    public function listIspsWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0])
     {
-        $request = $this->listIspsRequest($code, $countryCode, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType);
+        $request = $this->listIspsRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedISPList',
 ));
@@ -2213,13 +2321,13 @@ class LocationsResource
      *
      * List available internet service providers
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across ISP fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listIsps'] to see the possible values for this operation
@@ -2227,9 +2335,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listIspsAsync($code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0])
+    public function listIspsAsync($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0])
     {
-        return $this->listIspsAsyncWithHttpInfo($code, $countryCode, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType)
+        return $this->listIspsAsyncWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2242,13 +2350,13 @@ class LocationsResource
      *
      * List available internet service providers
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across ISP fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listIsps'] to see the possible values for this operation
@@ -2256,9 +2364,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listIspsAsyncWithHttpInfo($code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0])
+    public function listIspsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0])
     {
-        $request = $this->listIspsRequest($code, $countryCode, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType);
+        $request = $this->listIspsRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedISPList',
 ));
@@ -2267,13 +2375,13 @@ class LocationsResource
     /**
      * Create request for operation 'listIsps'
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across ISP fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listIsps'] to see the possible values for this operation
@@ -2281,9 +2389,15 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listIspsRequest($code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0])
+    public function listIspsRequest($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0])
     {
 
+        // verify the required parameter 'packageId' is set
+        if ($packageId === null || (is_array($packageId) && count($packageId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $packageId when calling listIsps'
+            );
+        }
 
 
 
@@ -2362,7 +2476,7 @@ class LocationsResource
             'string', // openApiType
             'form', // style
             true, // explode
-            false // required
+            true // required
         ) ?? []);
         // query params
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
@@ -2448,13 +2562,13 @@ class LocationsResource
      *
      * List available regions
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code code (optional)
      * @param  string|null $countryCode countryCode (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across Region fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listRegions'] to see the possible values for this operation
@@ -2463,9 +2577,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\PaginatedRegionList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listRegions($code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0])
+    public function listRegions($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0])
     {
-        list($response) = $this->listRegionsWithHttpInfo($code, $countryCode, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType);
+        list($response) = $this->listRegionsWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType);
         return $response;
     }
 
@@ -2474,9 +2588,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listRegionsWithResponse($code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0]): \ProxyRequest\ApiResponse
+    public function listRegionsWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0]): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listRegionsWithHttpInfo($code, $countryCode, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listRegionsWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType));
     }
 
     /**
@@ -2484,13 +2598,13 @@ class LocationsResource
      *
      * List available regions
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across Region fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listRegions'] to see the possible values for this operation
@@ -2499,9 +2613,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\PaginatedRegionList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listRegionsWithHttpInfo($code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0])
+    public function listRegionsWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0])
     {
-        $request = $this->listRegionsRequest($code, $countryCode, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType);
+        $request = $this->listRegionsRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedRegionList',
 ));
@@ -2512,13 +2626,13 @@ class LocationsResource
      *
      * List available regions
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across Region fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listRegions'] to see the possible values for this operation
@@ -2526,9 +2640,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listRegionsAsync($code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0])
+    public function listRegionsAsync($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0])
     {
-        return $this->listRegionsAsyncWithHttpInfo($code, $countryCode, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType)
+        return $this->listRegionsAsyncWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2541,13 +2655,13 @@ class LocationsResource
      *
      * List available regions
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across Region fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listRegions'] to see the possible values for this operation
@@ -2555,9 +2669,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listRegionsAsyncWithHttpInfo($code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0])
+    public function listRegionsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0])
     {
-        $request = $this->listRegionsRequest($code, $countryCode, $limit, $name, $offset, $ordering, $packageId, $search, $acceptLanguage, $contentType);
+        $request = $this->listRegionsRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedRegionList',
 ));
@@ -2566,13 +2680,13 @@ class LocationsResource
     /**
      * Create request for operation 'listRegions'
      *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
-     * @param  string|null $packageId Package whose targeting availability should be returned. Required when package-based authentication is enabled. (optional)
      * @param  string|null $search Case-insensitive partial search across Region fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listRegions'] to see the possible values for this operation
@@ -2580,9 +2694,15 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listRegionsRequest($code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $packageId = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0])
+    public function listRegionsRequest($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0])
     {
 
+        // verify the required parameter 'packageId' is set
+        if ($packageId === null || (is_array($packageId) && count($packageId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $packageId when calling listRegions'
+            );
+        }
 
 
 
@@ -2661,7 +2781,7 @@ class LocationsResource
             'string', // openApiType
             'form', // style
             true, // explode
-            false // required
+            true // required
         ) ?? []);
         // query params
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(

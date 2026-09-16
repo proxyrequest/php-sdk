@@ -319,7 +319,7 @@ class AddDataRequest extends \ProxyRequest\Support\AdditionalProperties implemen
     /**
      * Sets packageId
      *
-     * @param string $packageId packageId
+     * @param string $packageId Package for which the caller owns a root order.
      *
      * @return self
      */
@@ -346,7 +346,7 @@ class AddDataRequest extends \ProxyRequest\Support\AdditionalProperties implemen
     /**
      * Sets data
      *
-     * @param int $data data
+     * @param int $data Positive integer bytes to add to the child's assigned quota. Does not reserve parent data; may exceed the parent's remaining pool.
      *
      * @return self
      */

@@ -7,6 +7,17 @@ use Symfony\Component\Yaml\Yaml;
 require \dirname(__DIR__) . '/vendor/autoload.php';
 
 $document = Yaml::parseFile(\dirname(__DIR__) . '/openapi/openapi.yaml', Yaml::PARSE_OBJECT_FOR_MAP);
+$compatibility = json_decode((string) file_get_contents(\dirname(__DIR__) . '/openapi/compatibility.json'), false, 512, JSON_THROW_ON_ERROR);
+foreach ($compatibility->schemas as $name => $legacy) {
+    $schemas = $document->components->schemas;
+    if (!isset($schemas->{$name}) || 'InvoiceRead' === $name) {
+        $schemas->{$name} = $legacy;
+        continue;
+    }
+    $current = $schemas->{$name};
+    $current->properties = (object) array_merge((array) ($legacy->properties ?? []), (array) ($current->properties ?? []));
+    $current->required = array_values(array_intersect($current->required ?? [], $legacy->required ?? []));
+}
 $excluded = ['sessions_destroy', 'sessions_list'];
 $methods = ['get', 'post', 'put', 'patch', 'delete', 'head', 'options', 'trace'];
 $seen = [];
