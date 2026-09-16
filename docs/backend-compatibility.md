@@ -71,9 +71,9 @@ invalidate JWTs; reauthenticate instead of automatically replaying security call
 - New payment fields are typed. Gateway strings tolerate future values. Unknown
   DTO fields survive deserialization/serialization through `getAdditionalProperties()`.
 - Sync and async use the same status-aware response parser. Invalid JSON and model
-  failures retain status, raw body, headers, actual idempotency key, and the original
-  exception in `ApiException`. Network errors are normalized without assuming every
-  Guzzle exception has a response. Do not retry an ambiguous create with a fresh key.
+  failures retain status, raw body, headers, and the original exception in
+  `ApiException`. Network errors are normalized without assuming every Guzzle
+  exception has a response. Inspect platform state before repeating an ambiguous create.
 - `*WithResponse` methods retain successful response metadata.
 - `withLanguage()` supplies the default for both built-in and injected transports;
   a per-request `acceptLanguage` argument takes precedence.

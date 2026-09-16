@@ -147,8 +147,7 @@ logs.
 - Persist your checkout ID, the ProxyRequest invoice ID, package ID, recipient
   user ID, expected byte amount, and current local state.
 - If invoice creation times out after the request was sent, inspect invoices
-  visible to the account before repeating the write. The API does not promise a
-  universal idempotency key for writes.
+  visible to the account before repeating the write.
 - Keep payment, invoice, order, allocation, and credential states separate in
   your database so a partially completed workflow can resume safely.
 - Use signed webhooks for prompt reactions, then reconcile against invoices,

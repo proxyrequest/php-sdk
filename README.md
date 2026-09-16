@@ -148,13 +148,14 @@ All operation parameters and return types are documented in the generated
 [API resource reference](docs/Api/) and [DTO model reference](docs/Model/).
 IDs are opaque strings and byte amounts use 64-bit integers.
 
-## Safe mutations and optimistic concurrency
+## Automatic retries and optimistic concurrency
 
-For operations that declare `Idempotency-Key`, the SDK generates a UUID by
-default. It reuses that key for up to three total attempts after a network
-failure, or after `409 Conflict` with a numeric `Retry-After` of at most five
-seconds. Other HTTP errors are returned immediately. Existing calls need no
-changes; supply a stable key when it must survive a process restart:
+The SDK automatically protects supported writes during up to three total
+attempts after a network failure, or after `409 Conflict` with a numeric
+`Retry-After` of at most five seconds. Other HTTP errors are returned
+immediately. This protection applies inside one running call. If the process
+stops before saving the result, inspect the affected resource before submitting
+another write:
 
 ```php
 $response = $client->webhooks()->createWithResponse(
@@ -162,16 +163,14 @@ $response = $client->webhooks()->createWithResponse(
         'type' => \ProxyRequest\Dto\WebhookScopeEnum::USER,
         'endpoint' => 'https://example.com/webhook',
     ]),
-    'webhook:customer-123',
 );
 
 echo $response->data->getEndpoint();
-var_dump($response->etag(), $response->idempotencyReplayed());
+var_dump($response->etag());
 ```
 
 Every generated method has a `WithResponse` variant exposing `data`,
-`statusCode`, `headers`, `etag()`, and `idempotencyReplayed()`. Disable automatic
-UUIDs with `Client::builder()->withIdempotency(false)`; explicit keys still work.
+`statusCode`, `headers`, and `etag()`.
 
 Operations that declare `If-Match` accept the latest strong ETag. A stale value
 throws `ApiException` with `ErrorKind::Precondition` and exposes the current
@@ -218,8 +217,8 @@ try {
 }
 ```
 
-Only ambiguous outcomes for operations carrying an idempotency key are retried
-automatically. JWTs are never refreshed automatically; applications may call
+Supported writes receive bounded automatic retries for transient failures.
+JWTs are never refreshed automatically; applications may call
 `$client->authorization()->refresh(...)` explicitly. A manual access token can
 be configured with `Client::withBearerToken()`.
 
@@ -254,11 +253,12 @@ use ProxyRequest\Webhook\WebhookVerifier;
 
 $payload = WebhookVerifier::decodeVerifiedJson(
     $rawBody,
-    $_SERVER['HTTP_X_WEBHOOK_SIGNATURE'] ?? '',
+    $_SERVER['HTTP_X_SIGNATURE'] ?? '',
     $_ENV['PROXYREQUEST_WEBHOOK_SECRET'],
-    timestampHeader: $_SERVER['HTTP_X_WEBHOOK_TIMESTAMP'] ?? null,
 );
 ```
+
+Deliveries use standard padded Base64 HMAC-SHA256 over the raw body, without a signed timestamp. Verification accepts only this current format. It authenticates the body, but does not prevent replay: deduplicate usage events in your application. These helpers require the upcoming SDK release; version 1.0.0 does not support the current delivery format. `WebhookVerifier::SIGNATURE_HEADER` is `X-Signature`.
 
 ## Platform documentation
 

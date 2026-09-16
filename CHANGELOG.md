@@ -7,6 +7,9 @@ the package uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- Replace the incorrect webhook verifier with the actual `X-Signature`
+  Base64 HMAC-SHA256 format over exact raw bytes.
+
 - Regenerated from the public backend contract (81 operations, 130 schemas),
   excluding the two disabled sessions-management operations from the SDK.
 - Added the optional `pending`/`paid` status to invoice creation requests.

@@ -9,57 +9,25 @@ use UnexpectedValueException;
 
 final class WebhookVerifier
 {
-    public const SIGNATURE_HEADER = 'X-Webhook-Signature';
-    public const TIMESTAMP_HEADER = 'X-Webhook-Timestamp';
+    public const SIGNATURE_HEADER = 'X-Signature';
 
-    public static function verify(
-        string $rawBody,
-        string $signature,
-        string $secret,
-        ?string $timestampHeader = null,
-        ?int $tolerance = 300,
-        ?int $now = null,
-    ): bool {
-        if ('' === $signature || '' === $secret || (null !== $tolerance && $tolerance < 0)) {
+    public static function verify(string $rawBody, string $signature, string $secret): bool
+    {
+        if ('' === $signature || '' === $secret || 1 !== preg_match('/^[A-Za-z0-9+\/]{43}=$/D', $signature)) {
             return false;
         }
 
-        $parsed = self::parseSignature($signature);
-        if (null === $parsed) {
+        $received = base64_decode($signature, true);
+        if (false === $received || 32 !== \strlen($received) || base64_encode($received) !== $signature) {
             return false;
         }
 
-        [$timestamp, $receivedSignatures] = $parsed;
-        if (null !== $timestampHeader) {
-            $timestampHeader = trim($timestampHeader);
-            if (!ctype_digit($timestampHeader) || (int) $timestampHeader !== $timestamp) {
-                return false;
-            }
-        }
-
-        if (null !== $tolerance && abs(($now ?? time()) - $timestamp) > $tolerance) {
-            return false;
-        }
-
-        $expected = hash_hmac('sha256', $timestamp . '.' . $rawBody, $secret);
-        foreach ($receivedSignatures as $received) {
-            if (hash_equals($expected, strtolower($received))) {
-                return true;
-            }
-        }
-
-        return false;
+        return hash_equals(hash_hmac('sha256', $rawBody, $secret, true), $received);
     }
 
-    public static function verifyOrFail(
-        string $rawBody,
-        string $signature,
-        string $secret,
-        ?string $timestampHeader = null,
-        ?int $tolerance = 300,
-        ?int $now = null,
-    ): void {
-        if (!self::verify($rawBody, $signature, $secret, $timestampHeader, $tolerance, $now)) {
+    public static function verifyOrFail(string $rawBody, string $signature, string $secret): void
+    {
+        if (!self::verify($rawBody, $signature, $secret)) {
             throw new InvalidSignatureException('The ProxyRequest webhook signature is invalid.');
         }
     }
@@ -69,11 +37,8 @@ final class WebhookVerifier
         string $rawBody,
         string $signature,
         string $secret,
-        ?string $timestampHeader = null,
-        ?int $tolerance = 300,
-        ?int $now = null,
     ): array {
-        self::verifyOrFail($rawBody, $signature, $secret, $timestampHeader, $tolerance, $now);
+        self::verifyOrFail($rawBody, $signature, $secret);
 
         try {
             $payload = json_decode($rawBody, true, 512, JSON_THROW_ON_ERROR);
@@ -81,51 +46,16 @@ final class WebhookVerifier
             throw new UnexpectedValueException('The verified webhook body is not valid JSON.', previous: $exception);
         }
 
-        if (!\is_array($payload)) {
+        if (!\is_array($payload) || !str_starts_with(ltrim($rawBody), '{')) {
             throw new UnexpectedValueException('The verified webhook payload must be a JSON object.');
         }
 
-        $object = [];
-        foreach ($payload as $key => $value) {
+        foreach ($payload as $key => $_value) {
             if (!\is_string($key)) {
                 throw new UnexpectedValueException('The verified webhook payload must be a JSON object.');
             }
-            $object[$key] = $value;
         }
 
-        return $object;
-    }
-
-    /** @return array{int, non-empty-list<string>}|null */
-    private static function parseSignature(string $signature): ?array
-    {
-        $timestamp = null;
-        $signatures = [];
-
-        foreach (explode(',', $signature) as $part) {
-            $pair = explode('=', trim($part), 2);
-            if (2 !== \count($pair)) {
-                return null;
-            }
-
-            [$key, $value] = $pair;
-            if ('t' === $key) {
-                if (null !== $timestamp || !ctype_digit($value) || \strlen($value) > 19) {
-                    return null;
-                }
-                $timestamp = (int) $value;
-                continue;
-            }
-
-            if ('v1' === $key && 1 === preg_match('/^[a-f0-9]{64}$/iD', $value)) {
-                $signatures[] = $value;
-            }
-        }
-
-        if (null === $timestamp || [] === $signatures) {
-            return null;
-        }
-
-        return [$timestamp, $signatures];
+        return $payload;
     }
 }
