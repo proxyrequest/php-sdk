@@ -5,6 +5,8 @@ the package uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-09-16
+
 ### Changed
 
 - Replace the incorrect webhook verifier with the actual `X-Signature`
