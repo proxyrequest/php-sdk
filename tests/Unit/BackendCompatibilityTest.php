@@ -16,6 +16,7 @@ use ProxyRequest\Client;
 use ProxyRequest\Dto\GoogleAuthRequest;
 use ProxyRequest\Dto\Invoice;
 use ProxyRequest\Dto\InvoiceCreateRequest;
+use ProxyRequest\Dto\InvoiceCreateRequestStatusEnum;
 use ProxyRequest\Dto\InvoiceRead;
 use ProxyRequest\Dto\InvoiceShort;
 use ProxyRequest\Dto\LoginRequest;
@@ -98,7 +99,12 @@ final class BackendCompatibilityTest extends TestCase
             ]);
             $resource = self::client($mock)->invoices();
             $method = $async ? 'createAsync' : 'create';
-            $invoice = $resource->{$method}(new InvoiceCreateRequest(['gateway' => 'whitepay', 'amount' => 500, 'paymentCurrency' => 'UAH']));
+            $invoice = $resource->{$method}(new InvoiceCreateRequest([
+                'gateway' => 'whitepay',
+                'amount' => 500,
+                'paymentCurrency' => 'UAH',
+                'status' => InvoiceCreateRequestStatusEnum::PAID,
+            ]));
             $invoice = $async ? $invoice->wait() : $invoice;
             self::assertInstanceOf(Invoice::class, $invoice);
             self::assertInstanceOf(InvoiceRead::class, $invoice);
@@ -109,7 +115,9 @@ final class BackendCompatibilityTest extends TestCase
             self::assertSame(500, $invoice->getPaymentAmount());
             self::assertEquals(['future_field' => (object) ['kept' => true]], $invoice->getAdditionalProperties());
             self::assertTrue(ObjectSerializer::sanitizeForSerialization($invoice)->future_field->kept);
-            self::assertSame('UAH', json_decode((string) $mock->getLastRequest()->getBody(), true)['payment_currency']);
+            $requestBody = json_decode((string) $mock->getLastRequest()->getBody(), true);
+            self::assertSame('UAH', $requestBody['payment_currency']);
+            self::assertSame('paid', $requestBody['status']);
             $method = $async ? 'getAsync' : 'get';
             $short = $resource->{$method}($fixtures['invoice_short']['id']);
             $short = $async ? $short->wait() : $short;

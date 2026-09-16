@@ -54,6 +54,7 @@ docs/Model/ISP.md
 docs/Model/Invoice.md
 docs/Model/InvoiceCreateRequest.md
 docs/Model/InvoiceCreateRequestGatewayEnum.md
+docs/Model/InvoiceCreateRequestStatusEnum.md
 docs/Model/InvoiceGatewayEnum.md
 docs/Model/InvoiceRead.md
 docs/Model/InvoiceShort.md
@@ -187,6 +188,7 @@ src/Dto/ISP.php
 src/Dto/Invoice.php
 src/Dto/InvoiceCreateRequest.php
 src/Dto/InvoiceCreateRequestGatewayEnum.php
+src/Dto/InvoiceCreateRequestStatusEnum.php
 src/Dto/InvoiceGatewayEnum.php
 src/Dto/InvoiceRead.php
 src/Dto/InvoiceShort.php

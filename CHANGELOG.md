@@ -7,8 +7,9 @@ the package uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
-- Regenerated from the public backend contract (81 operations, 129 schemas),
+- Regenerated from the public backend contract (81 operations, 130 schemas),
   excluding the two disabled sessions-management operations from the SDK.
+- Added the optional `pending`/`paid` status to invoice creation requests.
 - Corrected OTP login response selection, MFA bodies, nullable and variant models,
   payment fields, and forward-compatible payment gateway values.
 - Unified sync/async HTTP and JSON error handling, retaining raw response metadata,

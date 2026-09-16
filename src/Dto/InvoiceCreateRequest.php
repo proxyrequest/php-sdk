@@ -60,6 +60,7 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
         'packageId' => 'string',
         'userId' => 'string',
         'gateway' => '\ProxyRequest\Dto\InvoiceCreateRequestGatewayEnum',
+        'status' => '\ProxyRequest\Dto\InvoiceCreateRequestStatusEnum',
         'cryptoCurrency' => 'string',
         'paymentCurrency' => 'string',
         'couponCode' => 'string',
@@ -85,6 +86,7 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
         'packageId' => 'uuid',
         'userId' => 'uuid',
         'gateway' => null,
+        'status' => null,
         'cryptoCurrency' => null,
         'paymentCurrency' => null,
         'couponCode' => null,
@@ -108,6 +110,7 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
         'packageId' => false,
         'userId' => false,
         'gateway' => false,
+        'status' => false,
         'cryptoCurrency' => false,
         'paymentCurrency' => false,
         'couponCode' => false,
@@ -211,6 +214,7 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
         'packageId' => 'package_id',
         'userId' => 'user_id',
         'gateway' => 'gateway',
+        'status' => 'status',
         'cryptoCurrency' => 'crypto_currency',
         'paymentCurrency' => 'payment_currency',
         'couponCode' => 'coupon_code',
@@ -234,6 +238,7 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
         'packageId' => 'setPackageId',
         'userId' => 'setUserId',
         'gateway' => 'setGateway',
+        'status' => 'setStatus',
         'cryptoCurrency' => 'setCryptoCurrency',
         'paymentCurrency' => 'setPaymentCurrency',
         'couponCode' => 'setCouponCode',
@@ -257,6 +262,7 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
         'packageId' => 'getPackageId',
         'userId' => 'getUserId',
         'gateway' => 'getGateway',
+        'status' => 'getStatus',
         'cryptoCurrency' => 'getCryptoCurrency',
         'paymentCurrency' => 'getPaymentCurrency',
         'couponCode' => 'getCouponCode',
@@ -331,6 +337,7 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
         $this->setIfExists('packageId', $data ?? [], null);
         $this->setIfExists('userId', $data ?? [], null);
         $this->setIfExists('gateway', $data ?? [], null);
+        $this->setIfExists('status', $data ?? [], InvoiceCreateRequestStatusEnum::PENDING);
         $this->setIfExists('cryptoCurrency', $data ?? [], null);
         $this->setIfExists('paymentCurrency', $data ?? [], null);
         $this->setIfExists('couponCode', $data ?? [], null);
@@ -503,6 +510,33 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
             throw new \InvalidArgumentException('non-nullable gateway cannot be null');
         }
         $this->container['gateway'] = $gateway;
+
+        return $this;
+    }
+
+    /**
+     * Gets status
+     *
+     * @return \ProxyRequest\Dto\InvoiceCreateRequestStatusEnum|null
+     */
+    public function getStatus()
+    {
+        return $this->container['status'];
+    }
+
+    /**
+     * Sets status
+     *
+     * @param \ProxyRequest\Dto\InvoiceCreateRequestStatusEnum|null $status Initial invoice status. Defaults to pending. Only superusers may set paid; other authenticated users receive a 403 response. * `pending` - pending * `paid` - paid
+     *
+     * @return self
+     */
+    public function setStatus($status)
+    {
+        if (is_null($status)) {
+            throw new \InvalidArgumentException('non-nullable status cannot be null');
+        }
+        $this->container['status'] = $status;
 
         return $this;
     }

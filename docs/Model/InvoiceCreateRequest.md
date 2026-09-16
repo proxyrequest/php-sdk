@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **packageId** | **string** | Package to purchase. Required for package purchases. | [optional]
 **userId** | **string** | Managed sub-user that should receive the purchase. | [optional]
 **gateway** | [**\ProxyRequest\Dto\InvoiceCreateRequestGatewayEnum**](InvoiceCreateRequestGatewayEnum.md) |  |
+**status** | [**\ProxyRequest\Dto\InvoiceCreateRequestStatusEnum**](InvoiceCreateRequestStatusEnum.md) | Initial invoice status. Defaults to pending. Only superusers may set paid; other authenticated users receive a 403 response. * &#x60;pending&#x60; - pending * &#x60;paid&#x60; - paid | [optional] [default to InvoiceCreateRequestStatusEnum::PENDING]
 **cryptoCurrency** | **string** |  | [optional]
 **paymentCurrency** | **string** | ISO 4217 currency charged by a regional fiat provider. | [optional]
 **couponCode** | **string** |  | [optional]
