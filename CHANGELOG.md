@@ -5,6 +5,11 @@ the package uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Keep the client version and User-Agent synchronized with the package release.
+- Install dependencies before the generated-contract CI check.
+
 ## [2.0.0] - 2026-09-16
 
 ### Changed

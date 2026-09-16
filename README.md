@@ -75,7 +75,7 @@ and [provision a reseller customer](docs/Guides/ResellerProvisioning.md).
 ## Installation
 
 ```bash
-composer require proxyrequest/php-sdk:^1.0
+composer require proxyrequest/php-sdk:^2.0
 ```
 
 The SDK requires 64-bit PHP 8.5 or newer. It includes Guzzle as the ready-to-use
