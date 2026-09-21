@@ -7,8 +7,8 @@ Name | Type | Description | Notes
 **id** | **string** |  |
 **name** | **string** |  |
 **region** | **string** |  |
-**hostname** | **string** |  |
-**hostnames** | **string[]** |  |
+**hostname** | **string** | Cluster gateway domain, or a server IP when no domain is configured. |
+**hostnames** | **string[]** | The cluster domain, or unique server IPs when no domain is configured. |
 **portHttp** | **int** |  |
 **portSocks5** | **int** |  |
 **portAuto** | **int** |  |

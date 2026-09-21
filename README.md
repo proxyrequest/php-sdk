@@ -10,6 +10,9 @@ The package covers 80 supported operations from the current OpenAPI
 contract, including users, orders, proxy generation, analytics, invoices,
 packages, locations, webhooks, API keys, and Telegram integration.
 
+See [analytics formats and compatibility](docs/analytics.md) for Unix timestamps,
+reporting windows, and feed identifiers.
+
 ## What is ProxyRequest?
 
 ProxyRequest is a white-label proxy platform for operators and resellers that

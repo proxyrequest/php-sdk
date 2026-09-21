@@ -7,6 +7,19 @@ use Symfony\Component\Yaml\Yaml;
 require \dirname(__DIR__) . '/vendor/autoload.php';
 
 $document = Yaml::parseFile(\dirname(__DIR__) . '/openapi/openapi.yaml', Yaml::PARSE_OBJECT_FOR_MAP);
+$document->components->schemas->FeedRecord->properties->id = (object) [
+    'type' => 'string',
+    'description' => 'Exact decimal UInt64 identifier, normalized from the API JSON number.',
+];
+foreach ($document->paths as $item) {
+    if (($item->get->operationId ?? null) === 'analytics_logs_retrieve') {
+        $item->get->parameters[] = (object) [
+            'in' => 'query', 'name' => 'hostname', 'schema' => (object) ['type' => 'string'],
+            'deprecated' => true, 'description' => 'Compatibility parameter; ignored by the server.',
+        ];
+        usort($item->get->parameters, static fn(object $a, object $b): int => ('header' === $a->in) <=> ('header' === $b->in) ?: strcmp($a->name, $b->name));
+    }
+}
 $compatibility = json_decode((string) file_get_contents(\dirname(__DIR__) . '/openapi/compatibility.json'), false, 512, JSON_THROW_ON_ERROR);
 foreach ($compatibility->schemas as $name => $legacy) {
     $schemas = $document->components->schemas;

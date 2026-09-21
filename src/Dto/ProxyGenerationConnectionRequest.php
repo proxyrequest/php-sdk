@@ -366,7 +366,7 @@ class ProxyGenerationConnectionRequest extends \ProxyRequest\Support\AdditionalP
     /**
      * Sets host
      *
-     * @param string|null $host Gateway host. Leave empty to use the default gateway.
+     * @param string|null $host Gateway host. Leave empty to choose one available gateway for the entire request.
      *
      * @return self
      */

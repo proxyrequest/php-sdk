@@ -57,7 +57,7 @@ class FeedRecord extends \ProxyRequest\Support\AdditionalProperties implements M
      * @var string[]
      */
     protected static $openAPITypes = [
-        'id' => 'int',
+        'id' => 'string',
         'establishedConnections' => 'int',
         'resellerId' => 'string',
         'userId' => 'string',
@@ -485,7 +485,7 @@ class FeedRecord extends \ProxyRequest\Support\AdditionalProperties implements M
     /**
      * Gets id
      *
-     * @return int
+     * @return string
      */
     public function getId()
     {
@@ -495,7 +495,7 @@ class FeedRecord extends \ProxyRequest\Support\AdditionalProperties implements M
     /**
      * Sets id
      *
-     * @param int $id id
+     * @param string $id Exact decimal UInt64 identifier, normalized from the API JSON number.
      *
      * @return self
      */

@@ -34,6 +34,21 @@ foreach (glob($root . '/src/Resource/*Resource.php') ?: [] as $path) {
         continue;
     }
     $source = (string) file_get_contents($path);
+    if ('AnalyticsResource.php' === basename($path)) {
+        $source = str_replace(
+            '            $includeSubUsers,' . "\n            'include_sub_users', // param base name",
+            '            \\is_bool($includeSubUsers) ? ($includeSubUsers ? \'true\' : \'false\') : $includeSubUsers,' . "\n            'include_sub_users', // param base name",
+            $source,
+        );
+        foreach (['start', 'end'] as $dateParameter) {
+            $source = str_replace(
+                '            $' . $dateParameter . ",\n            '" . $dateParameter . "', // param base name",
+                '            \\ProxyRequest\\Support\\AnalyticsDate::serialize($' . $dateParameter . "),\n            '" . $dateParameter . "', // param base name",
+                $source,
+            );
+            $source = str_replace('string|null $' . $dateParameter . ' ', '\\DateTimeInterface|string|int|float|null $' . $dateParameter . ' ', $source);
+        }
+    }
     $pattern = '/^    public function (\w+)WithHttpInfo\(([^\n]*)\)\n    \{\n(.*?)^    \}/ms';
     preg_match_all($pattern, $source, $methods, PREG_SET_ORDER);
     $typesByMethod = [];
@@ -125,3 +140,11 @@ $source = str_replace('            return $instance;', <<<'PHP'
                 return $instance;
     PHP, $source);
 file_put_contents($path, $source);
+
+$analyticsDocs = $root . '/docs/Api/AnalyticsResource.md';
+$source = (string) file_get_contents($analyticsDocs);
+foreach (['start', 'end'] as $dateParameter) {
+    $source = str_replace('| **' . $dateParameter . '** | **string**|', '| **' . $dateParameter . '** | **DateTimeInterface / string / int / float**|', $source);
+}
+$source = preg_replace_callback('/\$(start|end) = ([^;\n]+); \/\/ string/', static fn(array $match): string => '$' . $match[1] . ' = ' . var_export($match[2], true) . '; // DateTimeInterface|string|int|float', $source);
+file_put_contents($analyticsDocs, $source);

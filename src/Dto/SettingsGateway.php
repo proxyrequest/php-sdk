@@ -466,7 +466,7 @@ class SettingsGateway extends \ProxyRequest\Support\AdditionalProperties impleme
     /**
      * Sets hostname
      *
-     * @param string $hostname hostname
+     * @param string $hostname Cluster gateway domain, or a server IP when no domain is configured.
      *
      * @return self
      */
@@ -493,7 +493,7 @@ class SettingsGateway extends \ProxyRequest\Support\AdditionalProperties impleme
     /**
      * Sets hostnames
      *
-     * @param string[] $hostnames hostnames
+     * @param string[] $hostnames The cluster domain, or unique server IPs when no domain is configured.
      *
      * @return self
      */

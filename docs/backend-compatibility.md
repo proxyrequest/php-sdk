@@ -80,3 +80,39 @@ invalidate JWTs; reauthenticate instead of automatically replaying security call
 
 Regression tests use backend serializer fixtures and mocked transports, including
 sync/async OTP and failure paths. See [audit and resolution status](SDK-AUDIT.md).
+
+## Analytics response decoding
+
+`listFeed()` returns a page with a total `count`; `listDomains()` uses pagination
+without a total count. Both use `limit`/`offset`. Feed records may contain empty
+identifier strings and `timestamp: null`; application-level validation should
+allow a present null timestamp.
+
+`Unable to decode the ProxyRequest HTTP 200 response.` means that the successful
+HTTP response could not be parsed as JSON or converted to its DTO. The underlying
+exception identifies the decoding failure:
+
+```php
+try {
+    $page = $client->analytics()->listFeed(limit: 20, offset: 0);
+} catch (\ProxyRequest\ApiException $error) {
+    $cause = $error->getPrevious();
+    error_log(json_encode([
+        'status' => $error->getStatusCode(),
+        'request_id' => $error->getRequestId(),
+        'decoder_type' => $cause === null ? null : $cause::class,
+        'decoder_message' => $cause?->getMessage(),
+    ], JSON_THROW_ON_ERROR));
+    throw $error;
+}
+```
+
+`getResponseBody()` retains the original response for local inspection. For an
+application exception wrapping `ApiException`, traverse `getPrevious()` to reach
+the SDK exception and then its decoder cause. Do not forward the upstream 200
+status as the HTTP status of an application error; use an appropriate failure
+status such as 502 while preserving the original exception.
+
+The [analytics fixtures](../tests/fixtures/analytics-responses.md) use synthetic
+data rendered by the actual backend. Compatibility tests cover sync/async
+decoding, null timestamps, empty pages, timezone offsets, and pagination.

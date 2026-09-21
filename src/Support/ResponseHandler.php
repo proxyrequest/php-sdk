@@ -9,6 +9,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\PromiseInterface;
 use ProxyRequest\ApiException;
+use ProxyRequest\Dto\FeedResponse;
 use ProxyRequest\Dto\OTPChallenge;
 use ProxyRequest\Dto\TokenPairResponse;
 use ProxyRequest\ObjectSerializer;
@@ -80,7 +81,8 @@ final class ResponseHandler
             if ('void' === $type) {
                 $data = null;
             } else {
-                $content = '\\SplFileObject' === $type ? \GuzzleHttp\Psr7\Utils::streamFor($raw) : ('string' === $type ? $raw : json_decode($raw, false, 512, JSON_THROW_ON_ERROR));
+                $flags = JSON_THROW_ON_ERROR | (FeedResponse::class === ltrim($type, '\\') ? JSON_BIGINT_AS_STRING : 0);
+                $content = '\\SplFileObject' === $type ? \GuzzleHttp\Psr7\Utils::streamFor($raw) : ('string' === $type ? $raw : json_decode($raw, false, 512, $flags));
                 $serializedHeaders = array_map(static fn(array $values): string => implode(', ', $values), $headers);
                 $data = ObjectSerializer::deserialize($content, $type, $serializedHeaders);
                 if (($data instanceof TokenPairResponse || $data instanceof OTPChallenge) && !$data->valid()) {

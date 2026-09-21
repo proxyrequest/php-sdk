@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **int** |  |
+**id** | **string** | Exact decimal UInt64 identifier, normalized from the API JSON number. |
 **establishedConnections** | **int** |  |
 **resellerId** | **string** |  |
 **userId** | **string** |  |

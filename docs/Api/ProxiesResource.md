@@ -17,7 +17,7 @@ generate($generateProxyRequest, $acceptLanguage): \ProxyRequest\Dto\GenerateProx
 
 Generate proxy credentials
 
-Creates ready-to-use proxy credentials for a purchased package. Use targeting to choose a location or provider scope, connection to choose protocol and output format, and session to control sticky session lifetime.
+Creates ready-to-use proxy credentials for a purchased package. Use targeting to choose a location or provider scope, connection to choose protocol and output format, and session to control sticky session lifetime. Omit connection.host to choose one random eligible gateway for the entire request. The default port comes from that gateway's cluster. Targeting location does not select the entry gateway's region. Explicit host and port remain supported for custom endpoints.
 
 ### Example
 

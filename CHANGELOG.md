@@ -5,10 +5,17 @@ the package uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
-### Fixed
+## [3.0.0] - 2026-09-21
 
 - Keep the client version and User-Agent synchronized with the package release.
 - Install dependencies before the generated-contract CI check.
+
+- Synchronize the public OpenAPI contract from backend commit `2c4505a`.
+- Accept Unix seconds and all documented date strings while preserving existing date inputs.
+- Keep the legacy logs hostname argument and existing response contracts.
+- Cover feed/domains pagination, nullable feed timestamps, and UInt64 IDs with regression tests.
+- **Breaking:** return every feed ID as an exact decimal string; see [migration notes](docs/analytics.md).
+- Serialize analytics include_sub_users booleans as documented true/false values.
 
 ## [2.1.0] - 2026-09-17
 

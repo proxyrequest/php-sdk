@@ -13,6 +13,8 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use ProxyRequest\ApiException;
 use ProxyRequest\Client;
+use ProxyRequest\Dto\DomainsResponse;
+use ProxyRequest\Dto\FeedResponse;
 use ProxyRequest\Dto\GoogleAuthRequest;
 use ProxyRequest\Dto\Invoice;
 use ProxyRequest\Dto\InvoiceCreateRequest;
@@ -37,6 +39,62 @@ final class BackendCompatibilityTest extends TestCase
     private static function client(MockHandler $mock): Client
     {
         return Client::builder()->anonymous()->withHttpClient(new GuzzleClient(['handler' => HandlerStack::create($mock), 'http_errors' => false]))->build();
+    }
+
+    public function testRuntimeAnalyticsResponsesSyncAndAsync(): void
+    {
+        $fixtures = json_decode((string) file_get_contents(\dirname(__DIR__) . '/fixtures/analytics-responses.json'), true, 512, JSON_THROW_ON_ERROR);
+        foreach ([false, true] as $async) {
+            foreach (['feed', 'domains'] as $endpoint) {
+                foreach (['first', 'last', 'empty'] as $variant) {
+                    $payload = $fixtures[$endpoint . '_' . $variant];
+                    $mock = new MockHandler([new Response(200, [], json_encode($payload, JSON_THROW_ON_ERROR))]);
+                    $method = ('feed' === $endpoint ? 'listFeed' : 'listDomains') . ($async ? 'Async' : '');
+                    $page = self::client($mock)->analytics()->{$method}(limit: 1);
+                    $page = $async ? $page->wait() : $page;
+                    self::assertInstanceOf('feed' === $endpoint ? FeedResponse::class : DomainsResponse::class, $page);
+                    self::assertTrue($page->valid(), implode(', ', $page->listInvalidProperties()));
+                    self::assertSame($payload['next'], $page->getNext());
+                    self::assertSame($payload['previous'], $page->getPrevious());
+                    self::assertSame($payload['start'], $page->getStart()->format(DATE_ATOM));
+                    self::assertSame($payload['end'], $page->getEnd()->format(DATE_ATOM));
+                    self::assertSame('Europe/Kyiv', $page->getTimezone());
+                    self::assertCount(\count($payload['results']), $page->getResults());
+                    foreach ($page->getResults() as $index => $record) {
+                        self::assertTrue($record->valid(), implode(', ', $record->listInvalidProperties()));
+                        self::assertSame($payload['results'][$index]['hostname'], $record->getHostname());
+                        self::assertSame($payload['results'][$index]['data'], $record->getData());
+                        if ('feed' === $endpoint) {
+                            $expected = $payload['results'][$index];
+                            self::assertSame($expected['package_id'], $record->getPackageId());
+                            self::assertSame($expected['is_session'], $record->getIsSession());
+                            self::assertEquals(null === $expected['timestamp'] ? null : new \DateTime($expected['timestamp']), $record->getTimestamp());
+                        }
+                    }
+                    if ('feed' === $endpoint) {
+                        self::assertSame(2, $page->getCount());
+                    } else {
+                        self::assertObjectNotHasProperty('count', ObjectSerializer::sanitizeForSerialization($page));
+                    }
+                    self::assertSame('/api/v1/analytics/' . $endpoint, $mock->getLastRequest()->getUri()->getPath());
+                }
+            }
+        }
+    }
+
+    public function testRuntimeAnalyticsPagination(): void
+    {
+        $fixtures = json_decode((string) file_get_contents(\dirname(__DIR__) . '/fixtures/analytics-responses.json'), true, 512, JSON_THROW_ON_ERROR);
+        foreach (['feed', 'domains'] as $endpoint) {
+            $mock = new MockHandler(array_map(static fn(string $variant): Response => new Response(200, [], json_encode($fixtures[$endpoint . '_' . $variant], JSON_THROW_ON_ERROR)), ['first', 'last']));
+            $client = self::client($mock);
+            $method = 'feed' === $endpoint ? 'listFeed' : 'listDomains';
+            $pages = $client->paginate(fn(int $limit, int $offset): object => $client->analytics()->{$method}(limit: $limit, offset: $offset), limit: 1);
+            self::assertCount(2, iterator_to_array($pages));
+            parse_str($mock->getLastRequest()->getUri()->getQuery(), $query);
+            self::assertSame('1', $query['offset']);
+            self::assertCount(0, $mock);
+        }
     }
 
     public function testPasswordAndGoogleOtpFlowsSyncAndAsync(): void

@@ -3,7 +3,7 @@ apiPackage: Resource
 modelPackage: Dto
 packageName: ProxyRequest
 composerPackageName: proxyrequest/php-sdk
-artifactVersion: 1.0.0
+artifactVersion: 3.0.0
 artifactUrl: https://github.com/proxyrequest/php-sdk
 developerOrganization: ProxyRequest
 developerOrganizationUrl: https://proxyrequest.com
