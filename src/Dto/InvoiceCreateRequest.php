@@ -527,7 +527,7 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
     /**
      * Sets status
      *
-     * @param \ProxyRequest\Dto\InvoiceCreateRequestStatusEnum|null $status Initial invoice status. Defaults to pending. Only superusers may set paid; other authenticated users receive a 403 response. * `pending` - pending * `paid` - paid
+     * @param \ProxyRequest\Dto\InvoiceCreateRequestStatusEnum|null $status Initial invoice status. Defaults to pending. Setting paid requires a superuser or an active superuser's API key, including requests using X-Impersonate-User. Other authenticated users receive a 403 response. * `pending` - pending * `paid` - paid
      *
      * @return self
      */

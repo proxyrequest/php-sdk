@@ -39,8 +39,10 @@ docs/Model/CouponCreateRequest.md
 docs/Model/CouponPriceResponse.md
 docs/Model/CouponRedeem.md
 docs/Model/CouponShort.md
+docs/Model/CouponStats.md
 docs/Model/CouponTypeEnum.md
 docs/Model/CouponUpdateRequest.md
+docs/Model/DataLedger.md
 docs/Model/DomainRecord.md
 docs/Model/DomainsResponse.md
 docs/Model/EnabledResponse.md
@@ -143,6 +145,7 @@ docs/Model/TwoFactorSetupRequestRequest.md
 docs/Model/TwoFactorSetupResponse.md
 docs/Model/User.md
 docs/Model/UserCreateRequest.md
+docs/Model/UserCurrency.md
 docs/Model/UserPasswordResetRequest.md
 docs/Model/VerifyOTPRequest.md
 docs/Model/WebhookCreateRequest.md
@@ -174,8 +177,10 @@ src/Dto/CouponCreateRequest.php
 src/Dto/CouponPriceResponse.php
 src/Dto/CouponRedeem.php
 src/Dto/CouponShort.php
+src/Dto/CouponStats.php
 src/Dto/CouponTypeEnum.php
 src/Dto/CouponUpdateRequest.php
+src/Dto/DataLedger.php
 src/Dto/DomainRecord.php
 src/Dto/DomainsResponse.php
 src/Dto/EnabledResponse.php
@@ -279,6 +284,7 @@ src/Dto/TwoFactorSetupRequestRequest.php
 src/Dto/TwoFactorSetupResponse.php
 src/Dto/User.php
 src/Dto/UserCreateRequest.php
+src/Dto/UserCurrency.php
 src/Dto/UserPasswordResetRequest.php
 src/Dto/VerifyOTPRequest.php
 src/Dto/WebhookCreateRequest.php

@@ -61,14 +61,14 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
         'isAutoRenewal' => 'bool',
         'autoRenewalPercentage' => 'int',
         'autoRenewalData' => 'int',
-        'package' => 'array<string,mixed>',
+        'package' => '\ProxyRequest\Dto\PackageShort',
         'proxyPassword' => 'string',
         'proxyPasswordReset' => '\DateTime',
         'pools' => 'string[]',
         'data' => 'int',
         'dataRemaining' => 'int',
         'dataSpent' => 'int',
-        'ledgers' => 'array<string,mixed>[]',
+        'ledgers' => '\ProxyRequest\Dto\DataLedger[]',
         'latestDataTopUp' => 'int',
         'latestDataTopUpDate' => '\DateTime',
         'dataUpdated' => '\DateTime',
@@ -601,7 +601,7 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
     /**
      * Gets package
      *
-     * @return array<string,mixed>
+     * @return \ProxyRequest\Dto\PackageShort
      */
     public function getPackage()
     {
@@ -611,7 +611,7 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
     /**
      * Sets package
      *
-     * @param array<string,mixed> $package package
+     * @param \ProxyRequest\Dto\PackageShort $package package
      *
      * @return self
      */
@@ -817,7 +817,7 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
     /**
      * Gets ledgers
      *
-     * @return array<string,mixed>[]
+     * @return \ProxyRequest\Dto\DataLedger[]
      */
     public function getLedgers()
     {
@@ -827,7 +827,7 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
     /**
      * Sets ledgers
      *
-     * @param array<string,mixed>[] $ledgers Usable, non-expired ledger balances for a purchased root order; empty for a virtual child order using its parent's pool. Not a complete history. Array position does not identify the active ledger or spending order.
+     * @param \ProxyRequest\Dto\DataLedger[] $ledgers Usable, non-expired ledger balances for a purchased root order; empty for a virtual child order using its parent's pool. Not a complete history. Array position does not identify the active ledger or spending order.
      *
      * @return self
      */

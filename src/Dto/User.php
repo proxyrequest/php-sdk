@@ -93,8 +93,8 @@ class User extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
         'referralDataPending' => 'int',
         'referralBalancePending' => 'int',
         'referralBalanceEarned' => 'int',
-        'currency' => 'array<string,string>',
-        'coupons' => 'array<string,mixed>[]',
+        'currency' => '\ProxyRequest\Dto\UserCurrency',
+        'coupons' => '\ProxyRequest\Dto\CouponShort[]',
         'data' => 'int',
         'dataSpent' => 'int',
         'dataUpdated' => '\DateTime',
@@ -1743,7 +1743,7 @@ class User extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
     /**
      * Gets currency
      *
-     * @return array<string,string>
+     * @return \ProxyRequest\Dto\UserCurrency
      */
     public function getCurrency()
     {
@@ -1753,7 +1753,7 @@ class User extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
     /**
      * Sets currency
      *
-     * @param array<string,string> $currency Currency information for the user's transactions
+     * @param \ProxyRequest\Dto\UserCurrency $currency Currency information for the user's transactions
      *
      * @return self
      */
@@ -1770,7 +1770,7 @@ class User extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
     /**
      * Gets coupons
      *
-     * @return array<string,mixed>[]
+     * @return \ProxyRequest\Dto\CouponShort[]
      */
     public function getCoupons()
     {
@@ -1780,7 +1780,7 @@ class User extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
     /**
      * Sets coupons
      *
-     * @param array<string,mixed>[] $coupons Available coupons for this user
+     * @param \ProxyRequest\Dto\CouponShort[] $coupons Available coupons for this user
      *
      * @return self
      */

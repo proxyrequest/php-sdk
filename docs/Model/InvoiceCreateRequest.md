@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **packageId** | **string** | Package to purchase. Required for package purchases. | [optional]
 **userId** | **string** | Account receiving the purchase. Omit for your own account. Sending user_id requires is_reseller; a reseller can target its own sub-user, while a superuser with is_reseller can target another account. Do not send your own ID. | [optional]
 **gateway** | [**\ProxyRequest\Dto\InvoiceCreateRequestGatewayEnum**](InvoiceCreateRequestGatewayEnum.md) |  |
-**status** | [**\ProxyRequest\Dto\InvoiceCreateRequestStatusEnum**](InvoiceCreateRequestStatusEnum.md) | Initial invoice status. Defaults to pending. Only superusers may set paid; other authenticated users receive a 403 response. * &#x60;pending&#x60; - pending * &#x60;paid&#x60; - paid | [optional] [default to InvoiceCreateRequestStatusEnum::PENDING]
+**status** | [**\ProxyRequest\Dto\InvoiceCreateRequestStatusEnum**](InvoiceCreateRequestStatusEnum.md) | Initial invoice status. Defaults to pending. Setting paid requires a superuser or an active superuser&#39;s API key, including requests using X-Impersonate-User. Other authenticated users receive a 403 response. * &#x60;pending&#x60; - pending * &#x60;paid&#x60; - paid | [optional] [default to InvoiceCreateRequestStatusEnum::PENDING]
 **cryptoCurrency** | **string** |  | [optional]
 **paymentCurrency** | **string** | ISO 4217 currency charged by a regional fiat provider. | [optional]
 **couponCode** | **string** |  | [optional]

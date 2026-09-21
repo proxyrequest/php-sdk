@@ -62,7 +62,7 @@ class Coupon extends \ProxyRequest\Support\AdditionalProperties implements Model
         'isExpired' => 'bool',
         'isRedeemed' => 'bool',
         'packages' => '\ProxyRequest\Dto\PackageShort[]',
-        'stats' => 'array<string,mixed>',
+        'stats' => '\ProxyRequest\Dto\CouponStats',
         'created' => '\DateTime',
         'value' => 'int',
         'code' => 'string',
@@ -586,7 +586,7 @@ class Coupon extends \ProxyRequest\Support\AdditionalProperties implements Model
     /**
      * Gets stats
      *
-     * @return array<string,mixed>|null
+     * @return \ProxyRequest\Dto\CouponStats|null
      */
     public function getStats()
     {
@@ -596,7 +596,7 @@ class Coupon extends \ProxyRequest\Support\AdditionalProperties implements Model
     /**
      * Sets stats
      *
-     * @param array<string,mixed>|null $stats stats
+     * @param \ProxyRequest\Dto\CouponStats|null $stats stats
      *
      * @return self
      */

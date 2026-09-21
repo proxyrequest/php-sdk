@@ -60,7 +60,7 @@ class CouponShort extends \ProxyRequest\Support\AdditionalProperties implements 
         'id' => 'string',
         'isExpired' => 'bool',
         'isRedeemed' => 'bool',
-        'packages' => 'array<string,mixed>[]',
+        'packages' => '\ProxyRequest\Dto\PackageShort[]',
         'created' => '\DateTime',
         'value' => 'int',
         'code' => 'string',
@@ -512,7 +512,7 @@ class CouponShort extends \ProxyRequest\Support\AdditionalProperties implements 
     /**
      * Gets packages
      *
-     * @return array<string,mixed>[]
+     * @return \ProxyRequest\Dto\PackageShort[]
      */
     public function getPackages()
     {
@@ -522,7 +522,7 @@ class CouponShort extends \ProxyRequest\Support\AdditionalProperties implements 
     /**
      * Sets packages
      *
-     * @param array<string,mixed>[] $packages packages
+     * @param \ProxyRequest\Dto\PackageShort[] $packages packages
      *
      * @return self
      */

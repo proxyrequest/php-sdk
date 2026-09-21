@@ -9,16 +9,16 @@
         "runtime": "64-bit PHP 8.5 or later",
         "install": "composer require proxyrequest/php-sdk",
         "openapi": {
-            "commit": "2c4505aed434b7317098e48da673fc075d8ad85f",
+            "commit": "a2d72455d3b91a7d6be962f0e056f7d04fbd7f05",
             "excludedOperations": [
                 "sessions_destroy",
                 "sessions_list"
             ],
             "repository": "papaproxy/api",
-            "sha256": "12c616254465752eb13753a7cb9807307c9ff40f64608c355f129d4ef2d4365c",
+            "sha256": "9a20a33711a9291dcba57046b1d2b4cf14b3eec506383a3986b0ac7a15f14c6e",
             "source": "openapi.yml",
             "operations": 82,
-            "schemas": 130
+            "schemas": 133
         }
     },
     "setup": [
@@ -4427,7 +4427,7 @@
                     "operationId": "invoices_create",
                     "name": "create",
                     "summary": "Create an invoice",
-                    "description": "Calculates package pricing and initializes the selected payment provider when required. The status defaults to `pending`. Only superusers may create an already-paid invoice by setting `status` to `paid`; other authenticated users receive a 403 response. For wallet payments, omit `status`: the invoice is created as pending and becomes paid after the balance is debited successfully. For your own billing system, confirm payment on your backend before sending gateway=manual and status=paid with a superuser credential. Sending user_id also requires is_reseller; omit user_id for a purchase by the caller. Sub-users cannot create invoices themselves. A paid package purchase creates or tops up the recipient's order for that package. Repeated purchases reuse the order. Finite expiring purchases have separate data ledgers; compatible non-expiring purchases and unlimited packages may reuse a ledger. This is different from assigning a child quota with /users/{id}/data/add. An amount-only invoice tops up money, not data. Persist the invoice ID and use Idempotency-Key for retries. Before delivering access, read the paid invoice and the resulting order: fulfillment can be recovered asynchronously. Accounting webhooks do not include invoice.paid.",
+                    "description": "Calculates package pricing and initializes the selected payment provider when required. The status defaults to `pending`. Creating an already-paid invoice by setting `status` to `paid` requires a superuser or an active superuser's API key (Static or Bearer), including requests using `X-Impersonate-User`. Other authenticated users receive a 403 response. During API-key impersonation, the invoice recipient and user_id access rules are still determined by the impersonated user. For wallet payments, omit `status`: the invoice is created as pending and becomes paid after the balance is debited successfully. For your own billing system, confirm payment on your backend before sending gateway=manual and status=paid with a superuser credential. Sending user_id also requires is_reseller; omit user_id for a purchase by the caller. Sub-users cannot create invoices themselves. A paid package purchase creates or tops up the recipient's order for that package. Repeated purchases reuse the order. Finite expiring purchases have separate data ledgers; compatible non-expiring purchases and unlimited packages may reuse a ledger. This is different from assigning a child quota with /users/{id}/data/add. An amount-only invoice tops up money, not data. Persist the invoice ID and use Idempotency-Key for retries. Before delivering access, read the paid invoice and the resulting order: fulfillment can be recovered asynchronously. Accounting webhooks do not include invoice.paid.",
                     "httpMethod": "POST",
                     "path": "/invoices",
                     "signatures": [
@@ -13793,12 +13793,14 @@
                 {
                     "name": "stats",
                     "wireName": "stats",
-                    "type": "array<string,mixed>",
+                    "type": "CouponStats",
                     "required": true,
                     "default": null,
                     "description": "| [readonly]",
                     "enum": null,
-                    "modelRefs": []
+                    "modelRefs": [
+                        "CouponStats"
+                    ]
                 },
                 {
                     "name": "created",
@@ -14192,12 +14194,14 @@
                 {
                     "name": "packages",
                     "wireName": "packages",
-                    "type": "array<array<string,mixed>>",
+                    "type": "[PackageShort[]](PackageShort.md)",
                     "required": true,
                     "default": null,
                     "description": "| [readonly]",
                     "enum": null,
-                    "modelRefs": []
+                    "modelRefs": [
+                        "PackageShort"
+                    ]
                 },
                 {
                     "name": "created",
@@ -14304,6 +14308,63 @@
             ]
         },
         {
+            "name": "CouponStats",
+            "kind": "class",
+            "description": "",
+            "fields": [
+                {
+                    "name": "totalRedeems",
+                    "wireName": "totalRedeems",
+                    "type": "int",
+                    "required": true,
+                    "default": null,
+                    "description": "|",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "uniqueUsers",
+                    "wireName": "uniqueUsers",
+                    "type": "int",
+                    "required": true,
+                    "default": null,
+                    "description": "|",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "totalRevenue",
+                    "wireName": "totalRevenue",
+                    "type": "int",
+                    "required": true,
+                    "default": null,
+                    "description": "|",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "totalDiscountGiven",
+                    "wireName": "totalDiscountGiven",
+                    "type": "int",
+                    "required": true,
+                    "default": null,
+                    "description": "|",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "totalDataGiven",
+                    "wireName": "totalDataGiven",
+                    "type": "int",
+                    "required": true,
+                    "default": null,
+                    "description": "|",
+                    "enum": null,
+                    "modelRefs": []
+                }
+            ]
+        },
+        {
             "name": "CouponTypeEnum",
             "kind": "enum",
             "description": "* `free_data` - Free Data * `monetary` - Money * `percentage` - Percentage",
@@ -14403,6 +14464,73 @@
                     "required": false,
                     "default": null,
                     "description": "Select packages for which this coupon is available. If no packages are selected, the coupon is available to all packages.",
+                    "enum": null,
+                    "modelRefs": []
+                }
+            ]
+        },
+        {
+            "name": "DataLedger",
+            "kind": "class",
+            "description": "A purchased data bucket, not a complete transaction history. Finite purchases with an expiration have separate buckets. Compatible non-expiring top-ups and unlimited packages may reuse an existing bucket.",
+            "fields": [
+                {
+                    "name": "id",
+                    "wireName": "id",
+                    "type": "string",
+                    "required": true,
+                    "default": null,
+                    "description": "| [readonly]",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "data",
+                    "wireName": "data",
+                    "type": "int",
+                    "required": true,
+                    "default": null,
+                    "description": "Total data allocated to this ledger entry in bytes. 1073741824 = 1 GiB 10737418240 = 10 GiB",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "dataRemaining",
+                    "wireName": "dataRemaining",
+                    "type": "int",
+                    "required": true,
+                    "default": null,
+                    "description": "Bytes still available for consumption from this ledger entry. Decremented in FIFO order as the customer uses the proxy. When this reaches zero the entry is exhausted.",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "expires",
+                    "wireName": "expires",
+                    "type": "DateTime",
+                    "required": true,
+                    "default": null,
+                    "description": "Date and time when this ledger entry expires and any remaining data is forfeited. Leave blank for entries that do not expire.",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "updated",
+                    "wireName": "updated",
+                    "type": "DateTime",
+                    "required": true,
+                    "default": null,
+                    "description": "| [readonly]",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "created",
+                    "wireName": "created",
+                    "type": "DateTime",
+                    "required": true,
+                    "default": null,
+                    "description": "| [readonly]",
                     "enum": null,
                     "modelRefs": []
                 }
@@ -15514,7 +15642,7 @@
                     "type": "InvoiceCreateRequestStatusEnum",
                     "required": false,
                     "default": null,
-                    "description": "Initial invoice status. Defaults to pending. Only superusers may set paid; other authenticated users receive a 403 response. * `pending` - pending * `paid` - paid",
+                    "description": "Initial invoice status. Defaults to pending. Setting paid requires a superuser or an active superuser's API key, including requests using X-Impersonate-User. Other authenticated users receive a 403 response. * `pending` - pending * `paid` - paid",
                     "enum": null,
                     "modelRefs": [
                         "InvoiceCreateRequestStatusEnum"
@@ -17114,12 +17242,14 @@
                 {
                     "name": "package",
                     "wireName": "package",
-                    "type": "array<string,mixed>",
+                    "type": "PackageShort",
                     "required": true,
                     "default": null,
                     "description": "| [readonly]",
                     "enum": null,
-                    "modelRefs": []
+                    "modelRefs": [
+                        "PackageShort"
+                    ]
                 },
                 {
                     "name": "proxyPassword",
@@ -17184,12 +17314,14 @@
                 {
                     "name": "ledgers",
                     "wireName": "ledgers",
-                    "type": "array<array<string,mixed>>",
+                    "type": "[DataLedger[]](DataLedger.md)",
                     "required": true,
                     "default": null,
                     "description": "Usable, non-expired ledger balances for a purchased root order; empty for a virtual child order using its parent's pool. Not a complete history. Array position does not identify the active ledger or spending order.",
                     "enum": null,
-                    "modelRefs": []
+                    "modelRefs": [
+                        "DataLedger"
+                    ]
                 },
                 {
                     "name": "latestDataTopUp",
@@ -17383,12 +17515,14 @@
                 {
                     "name": "ledgers",
                     "wireName": "ledgers",
-                    "type": "array<array<string,mixed>>",
+                    "type": "[DataLedger[]](DataLedger.md)",
                     "required": true,
                     "default": null,
                     "description": "Usable, non-expired purchased buckets; empty for virtual child orders. Not a complete history, and array position is not spending priority.",
                     "enum": null,
-                    "modelRefs": []
+                    "modelRefs": [
+                        "DataLedger"
+                    ]
                 },
                 {
                     "name": "latestDataTopUp",
@@ -21477,22 +21611,26 @@
                 {
                     "name": "currency",
                     "wireName": "currency",
-                    "type": "array<string,string>",
+                    "type": "UserCurrency",
                     "required": true,
                     "default": null,
                     "description": "Currency information for the user's transactions",
                     "enum": null,
-                    "modelRefs": []
+                    "modelRefs": [
+                        "UserCurrency"
+                    ]
                 },
                 {
                     "name": "coupons",
                     "wireName": "coupons",
-                    "type": "array<array<string,mixed>>",
+                    "type": "[CouponShort[]](CouponShort.md)",
                     "required": true,
                     "default": null,
                     "description": "Available coupons for this user",
                     "enum": null,
-                    "modelRefs": []
+                    "modelRefs": [
+                        "CouponShort"
+                    ]
                 },
                 {
                     "name": "data",
@@ -21740,6 +21878,33 @@
                     "required": false,
                     "default": null,
                     "description": "Additional metadata for the user. Maximum 50 fields.",
+                    "enum": null,
+                    "modelRefs": []
+                }
+            ]
+        },
+        {
+            "name": "UserCurrency",
+            "kind": "class",
+            "description": "",
+            "fields": [
+                {
+                    "name": "code",
+                    "wireName": "code",
+                    "type": "string",
+                    "required": true,
+                    "default": null,
+                    "description": "|",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "symbol",
+                    "wireName": "symbol",
+                    "type": "string",
+                    "required": true,
+                    "default": null,
+                    "description": "|",
                     "enum": null,
                     "modelRefs": []
                 }

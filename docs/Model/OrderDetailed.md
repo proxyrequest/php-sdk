@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 **data** | **int** | Total data allowance for this order in bytes. 1073741824 &#x3D; 1 GiB 10737418240 &#x3D; 10 GiB | [optional]
 **dataRemaining** | **int** | Integer bytes. Root order: sum of usable ledger balances. Virtual child order: max(data - data_spent, 0); access also needs a usable parent pool. | [readonly]
 **dataSpent** | **int** | Total bytes consumed from this order&#39;s data allowance so far. Updated in real time as the customer uses the proxy. | [optional]
-**ledgers** | **array<string,mixed>[]** | Usable, non-expired purchased buckets; empty for virtual child orders. Not a complete history, and array position is not spending priority. | [readonly]
+**ledgers** | [**\ProxyRequest\Dto\DataLedger[]**](DataLedger.md) | Usable, non-expired purchased buckets; empty for virtual child orders. Not a complete history, and array position is not spending priority. | [readonly]
 **latestDataTopUp** | **int** | Amount of data added to this order in bytes during the most recent top-up. | [optional]
 **latestDataTopUpDate** | **\DateTime** | Timestamp of the most recent data top-up, set when an invoice is fulfilled. | [optional]
 **dataUpdated** | **\DateTime** |  | [readonly]

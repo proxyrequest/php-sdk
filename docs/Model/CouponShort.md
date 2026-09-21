@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **id** | **string** |  | [optional]
 **isExpired** | **bool** |  | [readonly]
 **isRedeemed** | **bool** |  | [readonly]
-**packages** | **array<string,mixed>[]** |  | [readonly]
+**packages** | [**\ProxyRequest\Dto\PackageShort[]**](PackageShort.md) |  | [readonly]
 **created** | **\DateTime** |  | [readonly]
 **value** | **int** | Arbitrary coupon value |
 **code** | **string** | Leaving this field empty will generate a random code. | [readonly]

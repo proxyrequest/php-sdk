@@ -70,7 +70,7 @@ class OrderDetailed extends \ProxyRequest\Support\AdditionalProperties implement
         'data' => 'int',
         'dataRemaining' => 'int',
         'dataSpent' => 'int',
-        'ledgers' => 'array<string,mixed>[]',
+        'ledgers' => '\ProxyRequest\Dto\DataLedger[]',
         'latestDataTopUp' => 'int',
         'latestDataTopUpDate' => '\DateTime',
         'dataUpdated' => '\DateTime',
@@ -875,7 +875,7 @@ class OrderDetailed extends \ProxyRequest\Support\AdditionalProperties implement
     /**
      * Gets ledgers
      *
-     * @return array<string,mixed>[]
+     * @return \ProxyRequest\Dto\DataLedger[]
      */
     public function getLedgers()
     {
@@ -885,7 +885,7 @@ class OrderDetailed extends \ProxyRequest\Support\AdditionalProperties implement
     /**
      * Sets ledgers
      *
-     * @param array<string,mixed>[] $ledgers Usable, non-expired purchased buckets; empty for virtual child orders. Not a complete history, and array position is not spending priority.
+     * @param \ProxyRequest\Dto\DataLedger[] $ledgers Usable, non-expired purchased buckets; empty for virtual child orders. Not a complete history, and array position is not spending priority.
      *
      * @return self
      */

@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **isExpired** | **bool** |  | [readonly]
 **isRedeemed** | **bool** |  | [readonly]
 **packages** | [**\ProxyRequest\Dto\PackageShort[]**](PackageShort.md) |  | [readonly]
-**stats** | **array<string,mixed>** |  | [readonly]
+**stats** | [**\ProxyRequest\Dto\CouponStats**](CouponStats.md) |  | [readonly]
 **created** | **\DateTime** |  | [readonly]
 **value** | **int** | Arbitrary coupon value |
 **code** | **string** | Leaving this field empty will generate a random code. | [readonly]
