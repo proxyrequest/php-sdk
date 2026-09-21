@@ -60,3 +60,5 @@ find "${SDK_ROOT}/src/Resource" -type f -name '*Resource.php' -exec \
 # Avoid whitespace-only drift from upstream templates.
 find "${SDK_ROOT}/src/Resource" -type f -name '*Resource.php' -exec \
   perl -pi -e 's/[ \t]+$//' {} +
+
+php "${SDK_ROOT}/scripts/generate-reference.php"
