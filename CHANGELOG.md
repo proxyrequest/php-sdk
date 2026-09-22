@@ -5,6 +5,13 @@ the package uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [4.0.0] - 2026-09-22
+
+- **Breaking:** deserialize nested response objects into the concrete DTOs used by the API contract.
+- Type order packages as `PackageShort`, order ledgers as `DataLedger[]`, coupon packages and stats as `PackageShort[]` and `CouponStats`, and user coupons and currency as `CouponShort[]` and `UserCurrency`.
+- Regenerate the SDK Reference from backend contract commit `a2d7245`, including expandable nested model fields.
+- Start the synchronized JavaScript, Python, and PHP SDK release train at version 4.0.0.
+
 ## [3.0.0] - 2026-09-21
 
 - Keep the client version and User-Agent synchronized with the package release.

@@ -27,7 +27,7 @@ final class ReferenceManifestTest extends TestCase
 
         $expected = $manifest['sdk']['openapi']['operations'] - \count($manifest['sdk']['openapi']['excludedOperations']);
         self::assertSame(3, $manifest['schemaVersion']);
-        self::assertSame('3.0.0', $manifest['sdk']['version']);
+        self::assertSame('4.0.0', $manifest['sdk']['version']);
         self::assertCount($expected, $methods);
         self::assertCount(\count($methods), array_unique(array_column($methods, 'operationId')));
         self::assertGreaterThan(100, \count($manifest['models']));
