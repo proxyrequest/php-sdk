@@ -29,11 +29,45 @@ foreach ($document['paths'] as $item) {
     }
 }
 
+// Append the new option after every existing argument, including contentType.
+// This also rewrites forwarding calls, preserving positional and named calls from 4.0.
+function preserveLocationArguments(string $source): string
+{
+    $methods = '(?:getCity|getCountry|getRegion|listCities|listCountries|listRegions)(?:WithHttpInfo|AsyncWithHttpInfo|Async|Request|WithResponse)?';
+    $pattern = '/(' . $methods . '\\()([^\\n()]*)(\\))/';
+    return preg_replace_callback($pattern, static function (array $match): string {
+        $parameters = explode(', ', $match[2]);
+        $option = null;
+        foreach ($parameters as $index => $parameter) {
+            if (preg_match('/^\\$includeAsns(?: = (?:false|null))?$/', $parameter)) {
+                $option = str_replace(' = false', ' = null', $parameter);
+                unset($parameters[$index]);
+                break;
+            }
+        }
+        if (null === $option) {
+            return $match[0];
+        }
+        $parameters[] = $option;
+        return $match[1] . implode(', ', $parameters) . $match[3];
+    }, $source) ?? throw new RuntimeException('Unable to preserve location arguments');
+}
+
 foreach (glob($root . '/src/Resource/*Resource.php') ?: [] as $path) {
     if ('SessionsResource.php' === basename($path)) {
         continue;
     }
     $source = (string) file_get_contents($path);
+    if ('LocationsResource.php' === basename($path)) {
+        $source = preserveLocationArguments($source);
+        $source = str_replace(
+            '            $includeAsns,' . "\n            'include_asns', // param base name",
+            '            \\is_bool($includeAsns) ? ($includeAsns ? \'true\' : \'false\') : $includeAsns,' . "\n            'include_asns', // param base name",
+            $source,
+        );
+        $docsPath = $root . '/docs/Api/LocationsResource.md';
+        file_put_contents($docsPath, str_replace(', $includeAsns)', ', includeAsns: $includeAsns)', preserveLocationArguments((string) file_get_contents($docsPath))));
+    }
     if ('AnalyticsResource.php' === basename($path)) {
         $source = str_replace(
             '            $includeSubUsers,' . "\n            'include_sub_users', // param base name",

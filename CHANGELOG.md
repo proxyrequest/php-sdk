@@ -5,6 +5,12 @@ the package uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [4.1.0] - 2026-09-25
+
+- Add provider data balances with typed pagination, byte strings, calculation status, and checkpoint history. Access requires a superuser JWT or a superuser-owned API key.
+- Add optional `include_asns` to country, region, and city methods. Request `true` to include nested ASNs; the current API returns empty nested ASN arrays by default.
+- Preserve existing public methods and argument compatibility, and regenerate SDK reference documentation from the latest public API contract.
+
 ## [4.0.0] - 2026-09-22
 
 - **Breaking:** deserialize nested response objects into the concrete DTOs used by the API contract.

@@ -3,7 +3,7 @@ apiPackage: Resource
 modelPackage: Dto
 packageName: ProxyRequest
 composerPackageName: proxyrequest/php-sdk
-artifactVersion: 4.0.0
+artifactVersion: 4.1.0
 artifactUrl: https://github.com/proxyrequest/php-sdk
 developerOrganization: ProxyRequest
 developerOrganizationUrl: https://proxyrequest.com
@@ -73,6 +73,7 @@ operationIdNameMappings:
   profile_2fa_setup_create: setupTwoFactor
   profile_2fa_status_retrieve: getTwoFactorStatus
   profile_change_password_create: changePassword
+  providers_data_balances_list: listDataBalances
   proxies_generate_create: generate
   recover_password_create: recoverPassword
   refresh_create: refresh

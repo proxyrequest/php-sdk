@@ -1,6 +1,6 @@
 <?php
 /**
- * City
+ * ProviderBalanceCheckpoint
  *
  * PHP version 8.1
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \ProxyRequest\ObjectSerializer;
 
 /**
- * City Class Doc Comment
+ * ProviderBalanceCheckpoint Class Doc Comment
  *
  * @category Class
  * @package  ProxyRequest
@@ -40,7 +40,7 @@ use \ProxyRequest\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class City extends \ProxyRequest\Support\AdditionalProperties implements ModelInterface, ArrayAccess, \JsonSerializable
+class ProviderBalanceCheckpoint extends \ProxyRequest\Support\AdditionalProperties implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class City extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
      *
      * @var string
      */
-    protected static $openAPIModelName = 'City';
+    protected static $openAPIModelName = 'ProviderBalanceCheckpoint';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -58,12 +58,10 @@ class City extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
      */
     protected static $openAPITypes = [
         'id' => 'string',
-        'code' => 'string',
-        'name' => 'string',
-        'country' => '\ProxyRequest\Dto\LocationCountrySummary',
-        'region' => '\ProxyRequest\Dto\LocationRegionSummary',
-        'isps' => '\ProxyRequest\Dto\LocationCodeName[]',
-        'asns' => '\ProxyRequest\Dto\LocationCodeName[]'
+        'availableBytes' => 'string',
+        'observedAt' => '\DateTime',
+        'created' => '\DateTime',
+        'createdBy' => 'string'
     ];
 
     /**
@@ -74,13 +72,11 @@ class City extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'id' => null,
-        'code' => null,
-        'name' => null,
-        'country' => null,
-        'region' => null,
-        'isps' => null,
-        'asns' => null
+        'id' => 'uuid',
+        'availableBytes' => null,
+        'observedAt' => 'date-time',
+        'created' => 'date-time',
+        'createdBy' => null
     ];
 
     /**
@@ -90,12 +86,10 @@ class City extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
      */
     protected static array $openAPINullables = [
         'id' => false,
-        'code' => false,
-        'name' => false,
-        'country' => false,
-        'region' => false,
-        'isps' => false,
-        'asns' => false
+        'availableBytes' => false,
+        'observedAt' => false,
+        'created' => false,
+        'createdBy' => true
     ];
 
     /**
@@ -185,12 +179,10 @@ class City extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
      */
     protected static $attributeMap = [
         'id' => 'id',
-        'code' => 'code',
-        'name' => 'name',
-        'country' => 'country',
-        'region' => 'region',
-        'isps' => 'isps',
-        'asns' => 'asns'
+        'availableBytes' => 'available_bytes',
+        'observedAt' => 'observed_at',
+        'created' => 'created',
+        'createdBy' => 'created_by'
     ];
 
     /**
@@ -200,12 +192,10 @@ class City extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
      */
     protected static $setters = [
         'id' => 'setId',
-        'code' => 'setCode',
-        'name' => 'setName',
-        'country' => 'setCountry',
-        'region' => 'setRegion',
-        'isps' => 'setIsps',
-        'asns' => 'setAsns'
+        'availableBytes' => 'setAvailableBytes',
+        'observedAt' => 'setObservedAt',
+        'created' => 'setCreated',
+        'createdBy' => 'setCreatedBy'
     ];
 
     /**
@@ -215,12 +205,10 @@ class City extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
      */
     protected static $getters = [
         'id' => 'getId',
-        'code' => 'getCode',
-        'name' => 'getName',
-        'country' => 'getCountry',
-        'region' => 'getRegion',
-        'isps' => 'getIsps',
-        'asns' => 'getAsns'
+        'availableBytes' => 'getAvailableBytes',
+        'observedAt' => 'getObservedAt',
+        'created' => 'getCreated',
+        'createdBy' => 'getCreatedBy'
     ];
 
     /**
@@ -281,12 +269,10 @@ class City extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
     public function __construct(?array $data = null)
     {
         $this->setIfExists('id', $data ?? [], null);
-        $this->setIfExists('code', $data ?? [], null);
-        $this->setIfExists('name', $data ?? [], null);
-        $this->setIfExists('country', $data ?? [], null);
-        $this->setIfExists('region', $data ?? [], null);
-        $this->setIfExists('isps', $data ?? [], null);
-        $this->setIfExists('asns', $data ?? [], null);
+        $this->setIfExists('availableBytes', $data ?? [], null);
+        $this->setIfExists('observedAt', $data ?? [], null);
+        $this->setIfExists('created', $data ?? [], null);
+        $this->setIfExists('createdBy', $data ?? [], null);
     }
 
     /**
@@ -316,35 +302,20 @@ class City extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
     {
         $invalidProperties = [];
 
-        if (!is_null($this->container['id']) && (mb_strlen($this->container['id']) > 36)) {
-            $invalidProperties[] = "invalid value for 'id', the character length must be smaller than or equal to 36.";
+        if ($this->container['id'] === null) {
+            $invalidProperties[] = "'id' can't be null";
         }
-
-        if ($this->container['code'] === null) {
-            $invalidProperties[] = "'code' can't be null";
+        if ($this->container['availableBytes'] === null) {
+            $invalidProperties[] = "'availableBytes' can't be null";
         }
-        if ((mb_strlen($this->container['code']) > 255)) {
-            $invalidProperties[] = "invalid value for 'code', the character length must be smaller than or equal to 255.";
+        if ($this->container['observedAt'] === null) {
+            $invalidProperties[] = "'observedAt' can't be null";
         }
-
-        if ($this->container['name'] === null) {
-            $invalidProperties[] = "'name' can't be null";
+        if ($this->container['created'] === null) {
+            $invalidProperties[] = "'created' can't be null";
         }
-        if ((mb_strlen($this->container['name']) > 255)) {
-            $invalidProperties[] = "invalid value for 'name', the character length must be smaller than or equal to 255.";
-        }
-
-        if ($this->container['country'] === null) {
-            $invalidProperties[] = "'country' can't be null";
-        }
-        if ($this->container['region'] === null) {
-            $invalidProperties[] = "'region' can't be null";
-        }
-        if ($this->container['isps'] === null) {
-            $invalidProperties[] = "'isps' can't be null";
-        }
-        if ($this->container['asns'] === null) {
-            $invalidProperties[] = "'asns' can't be null";
+        if ($this->container['createdBy'] === null && !$this->isNullableSetToNull('createdBy')) {
+            $invalidProperties[] = "'createdBy' is required";
         }
         return $invalidProperties;
     }
@@ -364,7 +335,7 @@ class City extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
     /**
      * Gets id
      *
-     * @return string|null
+     * @return string
      */
     public function getId()
     {
@@ -374,7 +345,7 @@ class City extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
     /**
      * Sets id
      *
-     * @param string|null $id id
+     * @param string $id id
      *
      * @return self
      */
@@ -383,181 +354,122 @@ class City extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
         if (is_null($id)) {
             throw new \InvalidArgumentException('non-nullable id cannot be null');
         }
-        if ((mb_strlen($id) > 36)) {
-            throw new \InvalidArgumentException('invalid length for $id when calling City., must be smaller than or equal to 36.');
-        }
-
         $this->container['id'] = $id;
 
         return $this;
     }
 
     /**
-     * Gets code
+     * Gets availableBytes
      *
      * @return string
      */
-    public function getCode()
+    public function getAvailableBytes()
     {
-        return $this->container['code'];
+        return $this->container['availableBytes'];
     }
 
     /**
-     * Sets code
+     * Sets availableBytes
      *
-     * @param string $code Raw city code as it appears in the source data. los_angeles paris
+     * @param string $availableBytes Observed balance in bytes, as a decimal string.
      *
      * @return self
      */
-    public function setCode($code)
+    public function setAvailableBytes($availableBytes)
     {
-        if (is_null($code)) {
-            throw new \InvalidArgumentException('non-nullable code cannot be null');
+        if (is_null($availableBytes)) {
+            throw new \InvalidArgumentException('non-nullable availableBytes cannot be null');
         }
-        if ((mb_strlen($code) > 255)) {
-            throw new \InvalidArgumentException('invalid length for $code when calling City., must be smaller than or equal to 255.');
-        }
-
-        $this->container['code'] = $code;
+        $this->container['availableBytes'] = $availableBytes;
 
         return $this;
     }
 
     /**
-     * Gets name
+     * Gets observedAt
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getName()
+    public function getObservedAt()
     {
-        return $this->container['name'];
+        return $this->container['observedAt'];
     }
 
     /**
-     * Sets name
+     * Sets observedAt
      *
-     * @param string $name English display name of the city used across the admin and API responses.
+     * @param \DateTime $observedAt observedAt
      *
      * @return self
      */
-    public function setName($name)
+    public function setObservedAt($observedAt)
     {
-        if (is_null($name)) {
-            throw new \InvalidArgumentException('non-nullable name cannot be null');
+        if (is_null($observedAt)) {
+            throw new \InvalidArgumentException('non-nullable observedAt cannot be null');
         }
-        if ((mb_strlen($name) > 255)) {
-            throw new \InvalidArgumentException('invalid length for $name when calling City., must be smaller than or equal to 255.');
-        }
-
-        $this->container['name'] = $name;
+        $this->container['observedAt'] = $observedAt;
 
         return $this;
     }
 
     /**
-     * Gets country
+     * Gets created
      *
-     * @return \ProxyRequest\Dto\LocationCountrySummary
+     * @return \DateTime
      */
-    public function getCountry()
+    public function getCreated()
     {
-        return $this->container['country'];
+        return $this->container['created'];
     }
 
     /**
-     * Sets country
+     * Sets created
      *
-     * @param \ProxyRequest\Dto\LocationCountrySummary $country country
+     * @param \DateTime $created created
      *
      * @return self
      */
-    public function setCountry($country)
+    public function setCreated($created)
     {
-        if (is_null($country)) {
-            throw new \InvalidArgumentException('non-nullable country cannot be null');
+        if (is_null($created)) {
+            throw new \InvalidArgumentException('non-nullable created cannot be null');
         }
-        $this->container['country'] = $country;
+        $this->container['created'] = $created;
 
         return $this;
     }
 
     /**
-     * Gets region
+     * Gets createdBy
      *
-     * @return \ProxyRequest\Dto\LocationRegionSummary
+     * @return string|null
      */
-    public function getRegion()
+    public function getCreatedBy()
     {
-        return $this->container['region'];
+        return $this->container['createdBy'];
     }
 
     /**
-     * Sets region
+     * Sets createdBy
      *
-     * @param \ProxyRequest\Dto\LocationRegionSummary $region region
+     * @param string|null $createdBy createdBy
      *
      * @return self
      */
-    public function setRegion($region)
+    public function setCreatedBy($createdBy)
     {
-        if (is_null($region)) {
-            throw new \InvalidArgumentException('non-nullable region cannot be null');
+        if (is_null($createdBy)) {
+            array_push($this->openAPINullablesSetToNull, 'createdBy');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('createdBy', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
         }
-        $this->container['region'] = $region;
-
-        return $this;
-    }
-
-    /**
-     * Gets isps
-     *
-     * @return \ProxyRequest\Dto\LocationCodeName[]
-     */
-    public function getIsps()
-    {
-        return $this->container['isps'];
-    }
-
-    /**
-     * Sets isps
-     *
-     * @param \ProxyRequest\Dto\LocationCodeName[] $isps isps
-     *
-     * @return self
-     */
-    public function setIsps($isps)
-    {
-        if (is_null($isps)) {
-            throw new \InvalidArgumentException('non-nullable isps cannot be null');
-        }
-        $this->container['isps'] = $isps;
-
-        return $this;
-    }
-
-    /**
-     * Gets asns
-     *
-     * @return \ProxyRequest\Dto\LocationCodeName[]
-     */
-    public function getAsns()
-    {
-        return $this->container['asns'];
-    }
-
-    /**
-     * Sets asns
-     *
-     * @param \ProxyRequest\Dto\LocationCodeName[] $asns The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.
-     *
-     * @return self
-     */
-    public function setAsns($asns)
-    {
-        if (is_null($asns)) {
-            throw new \InvalidArgumentException('non-nullable asns cannot be null');
-        }
-        $this->container['asns'] = $asns;
+        $this->container['createdBy'] = $createdBy;
 
         return $this;
     }

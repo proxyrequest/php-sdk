@@ -129,7 +129,7 @@ function placeholder(string $name, array $value)
         return 'en';
     }
     if ('data' === $lower || str_ends_with($lower, '_bytes')) {
-        return 1073741824;
+        return 'string' === ($value['type'] ?? null) ? '1073741824' : 1073741824;
     }
 
     return match ($value['type'] ?? null) {

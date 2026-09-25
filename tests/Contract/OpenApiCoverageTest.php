@@ -24,6 +24,7 @@ final class OpenApiCoverageTest extends TestCase
         'Orders' => \ProxyRequest\Resource\OrdersResource::class,
         'Packages' => \ProxyRequest\Resource\PackagesResource::class,
         'Profile' => \ProxyRequest\Resource\ProfileResource::class,
+        'Providers' => \ProxyRequest\Resource\ProvidersResource::class,
         'Proxies' => \ProxyRequest\Resource\ProxiesResource::class,
         'Rewards' => \ProxyRequest\Resource\RewardsResource::class,
         'Settings' => \ProxyRequest\Resource\SettingsResource::class,

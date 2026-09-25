@@ -159,6 +159,7 @@ class LocationsResource
      *
      * @param  string $id id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCity'] to see the possible values for this operation
      *
@@ -166,9 +167,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\City|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function getCity($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0])
+    public function getCity($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null)
     {
-        list($response) = $this->getCityWithHttpInfo($id, $packageId, $acceptLanguage, $contentType);
+        list($response) = $this->getCityWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns);
         return $response;
     }
 
@@ -177,9 +178,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getCityWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0]): \ProxyRequest\ApiResponse
+    public function getCityWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getCityWithHttpInfo($id, $packageId, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getCityWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns));
     }
 
     /**
@@ -189,6 +190,7 @@ class LocationsResource
      *
      * @param  string $id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCity'] to see the possible values for this operation
      *
@@ -196,9 +198,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\City|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getCityWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0])
+    public function getCityWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null)
     {
-        $request = $this->getCityRequest($id, $packageId, $acceptLanguage, $contentType);
+        $request = $this->getCityRequest($id, $packageId, $acceptLanguage, $contentType, $includeAsns);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\City',
 ));
@@ -211,15 +213,16 @@ class LocationsResource
      *
      * @param  string $id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCity'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getCityAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0])
+    public function getCityAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null)
     {
-        return $this->getCityAsyncWithHttpInfo($id, $packageId, $acceptLanguage, $contentType)
+        return $this->getCityAsyncWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -234,15 +237,16 @@ class LocationsResource
      *
      * @param  string $id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCity'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getCityAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0])
+    public function getCityAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null)
     {
-        $request = $this->getCityRequest($id, $packageId, $acceptLanguage, $contentType);
+        $request = $this->getCityRequest($id, $packageId, $acceptLanguage, $contentType, $includeAsns);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\City',
 ));
@@ -253,13 +257,14 @@ class LocationsResource
      *
      * @param  string $id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCity'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getCityRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0])
+    public function getCityRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null)
     {
 
         // verify the required parameter 'id' is set
@@ -278,6 +283,7 @@ class LocationsResource
 
 
 
+
         $resourcePath = '/locations/cities/{id}';
         $formParams = [];
         $queryParams = [];
@@ -285,6 +291,15 @@ class LocationsResource
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            \is_bool($includeAsns) ? ($includeAsns ? 'true' : 'false') : $includeAsns,
+            'include_asns', // param base name
+            'boolean', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
         // query params
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
             $packageId,
@@ -599,6 +614,7 @@ class LocationsResource
      *
      * @param  string $id id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCountry'] to see the possible values for this operation
      *
@@ -606,9 +622,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\Country|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function getCountry($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0])
+    public function getCountry($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null)
     {
-        list($response) = $this->getCountryWithHttpInfo($id, $packageId, $acceptLanguage, $contentType);
+        list($response) = $this->getCountryWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns);
         return $response;
     }
 
@@ -617,9 +633,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getCountryWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0]): \ProxyRequest\ApiResponse
+    public function getCountryWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getCountryWithHttpInfo($id, $packageId, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getCountryWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns));
     }
 
     /**
@@ -629,6 +645,7 @@ class LocationsResource
      *
      * @param  string $id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCountry'] to see the possible values for this operation
      *
@@ -636,9 +653,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\Country|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getCountryWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0])
+    public function getCountryWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null)
     {
-        $request = $this->getCountryRequest($id, $packageId, $acceptLanguage, $contentType);
+        $request = $this->getCountryRequest($id, $packageId, $acceptLanguage, $contentType, $includeAsns);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\Country',
 ));
@@ -651,15 +668,16 @@ class LocationsResource
      *
      * @param  string $id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCountry'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getCountryAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0])
+    public function getCountryAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null)
     {
-        return $this->getCountryAsyncWithHttpInfo($id, $packageId, $acceptLanguage, $contentType)
+        return $this->getCountryAsyncWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -674,15 +692,16 @@ class LocationsResource
      *
      * @param  string $id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCountry'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getCountryAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0])
+    public function getCountryAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null)
     {
-        $request = $this->getCountryRequest($id, $packageId, $acceptLanguage, $contentType);
+        $request = $this->getCountryRequest($id, $packageId, $acceptLanguage, $contentType, $includeAsns);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\Country',
 ));
@@ -693,13 +712,14 @@ class LocationsResource
      *
      * @param  string $id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCountry'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getCountryRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0])
+    public function getCountryRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null)
     {
 
         // verify the required parameter 'id' is set
@@ -718,6 +738,7 @@ class LocationsResource
 
 
 
+
         $resourcePath = '/locations/countries/{id}';
         $formParams = [];
         $queryParams = [];
@@ -725,6 +746,15 @@ class LocationsResource
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            \is_bool($includeAsns) ? ($includeAsns ? 'true' : 'false') : $includeAsns,
+            'include_asns', // param base name
+            'boolean', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
         // query params
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
             $packageId,
@@ -819,6 +849,7 @@ class LocationsResource
      *
      * @param  string $id id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRegion'] to see the possible values for this operation
      *
@@ -826,9 +857,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\Region|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function getRegion($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0])
+    public function getRegion($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null)
     {
-        list($response) = $this->getRegionWithHttpInfo($id, $packageId, $acceptLanguage, $contentType);
+        list($response) = $this->getRegionWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns);
         return $response;
     }
 
@@ -837,9 +868,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getRegionWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0]): \ProxyRequest\ApiResponse
+    public function getRegionWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getRegionWithHttpInfo($id, $packageId, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getRegionWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns));
     }
 
     /**
@@ -849,6 +880,7 @@ class LocationsResource
      *
      * @param  string $id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRegion'] to see the possible values for this operation
      *
@@ -856,9 +888,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\Region|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getRegionWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0])
+    public function getRegionWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null)
     {
-        $request = $this->getRegionRequest($id, $packageId, $acceptLanguage, $contentType);
+        $request = $this->getRegionRequest($id, $packageId, $acceptLanguage, $contentType, $includeAsns);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\Region',
 ));
@@ -871,15 +903,16 @@ class LocationsResource
      *
      * @param  string $id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRegion'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getRegionAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0])
+    public function getRegionAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null)
     {
-        return $this->getRegionAsyncWithHttpInfo($id, $packageId, $acceptLanguage, $contentType)
+        return $this->getRegionAsyncWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -894,15 +927,16 @@ class LocationsResource
      *
      * @param  string $id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRegion'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getRegionAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0])
+    public function getRegionAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null)
     {
-        $request = $this->getRegionRequest($id, $packageId, $acceptLanguage, $contentType);
+        $request = $this->getRegionRequest($id, $packageId, $acceptLanguage, $contentType, $includeAsns);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\Region',
 ));
@@ -913,13 +947,14 @@ class LocationsResource
      *
      * @param  string $id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRegion'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getRegionRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0])
+    public function getRegionRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null)
     {
 
         // verify the required parameter 'id' is set
@@ -938,6 +973,7 @@ class LocationsResource
 
 
 
+
         $resourcePath = '/locations/regions/{id}';
         $formParams = [];
         $queryParams = [];
@@ -945,6 +981,15 @@ class LocationsResource
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            \is_bool($includeAsns) ? ($includeAsns ? 'true' : 'false') : $includeAsns,
+            'include_asns', // param base name
+            'boolean', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
         // query params
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
             $packageId,
@@ -1360,6 +1405,7 @@ class LocationsResource
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code code (optional)
      * @param  string|null $countryCode countryCode (optional)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -1373,9 +1419,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\PaginatedCityList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listCities($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0])
+    public function listCities($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null)
     {
-        list($response) = $this->listCitiesWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType);
+        list($response) = $this->listCitiesWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $includeAsns);
         return $response;
     }
 
@@ -1384,9 +1430,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listCitiesWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0]): \ProxyRequest\ApiResponse
+    public function listCitiesWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listCitiesWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listCitiesWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $includeAsns));
     }
 
     /**
@@ -1397,6 +1443,7 @@ class LocationsResource
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -1410,9 +1457,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\PaginatedCityList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listCitiesWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0])
+    public function listCitiesWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null)
     {
-        $request = $this->listCitiesRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType);
+        $request = $this->listCitiesRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $includeAsns);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedCityList',
 ));
@@ -1426,6 +1473,7 @@ class LocationsResource
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -1438,9 +1486,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listCitiesAsync($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0])
+    public function listCitiesAsync($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null)
     {
-        return $this->listCitiesAsyncWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType)
+        return $this->listCitiesAsyncWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $includeAsns)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1456,6 +1504,7 @@ class LocationsResource
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -1468,9 +1517,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listCitiesAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0])
+    public function listCitiesAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null)
     {
-        $request = $this->listCitiesRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType);
+        $request = $this->listCitiesRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $includeAsns);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedCityList',
 ));
@@ -1482,6 +1531,7 @@ class LocationsResource
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -1494,7 +1544,7 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listCitiesRequest($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0])
+    public function listCitiesRequest($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null)
     {
 
         // verify the required parameter 'packageId' is set
@@ -1503,6 +1553,7 @@ class LocationsResource
                 'Missing the required parameter $packageId when calling listCities'
             );
         }
+
 
 
 
@@ -1535,6 +1586,15 @@ class LocationsResource
             $countryCode,
             'country__code', // param base name
             'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            \is_bool($includeAsns) ? ($includeAsns ? 'true' : 'false') : $includeAsns,
+            'include_asns', // param base name
+            'boolean', // openApiType
             'form', // style
             true, // explode
             false // required
@@ -1969,6 +2029,7 @@ class LocationsResource
      *
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code code (optional)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -1981,9 +2042,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\PaginatedCountryList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listCountries($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0])
+    public function listCountries($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null)
     {
-        list($response) = $this->listCountriesWithHttpInfo($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType);
+        list($response) = $this->listCountriesWithHttpInfo($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns);
         return $response;
     }
 
@@ -1992,9 +2053,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listCountriesWithResponse($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0]): \ProxyRequest\ApiResponse
+    public function listCountriesWithResponse($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listCountriesWithHttpInfo($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listCountriesWithHttpInfo($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns));
     }
 
     /**
@@ -2004,6 +2065,7 @@ class LocationsResource
      *
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -2016,9 +2078,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\PaginatedCountryList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listCountriesWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0])
+    public function listCountriesWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null)
     {
-        $request = $this->listCountriesRequest($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType);
+        $request = $this->listCountriesRequest($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedCountryList',
 ));
@@ -2031,6 +2093,7 @@ class LocationsResource
      *
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -2042,9 +2105,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listCountriesAsync($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0])
+    public function listCountriesAsync($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null)
     {
-        return $this->listCountriesAsyncWithHttpInfo($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType)
+        return $this->listCountriesAsyncWithHttpInfo($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2059,6 +2122,7 @@ class LocationsResource
      *
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -2070,9 +2134,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listCountriesAsyncWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0])
+    public function listCountriesAsyncWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null)
     {
-        $request = $this->listCountriesRequest($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType);
+        $request = $this->listCountriesRequest($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedCountryList',
 ));
@@ -2083,6 +2147,7 @@ class LocationsResource
      *
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -2094,7 +2159,7 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listCountriesRequest($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0])
+    public function listCountriesRequest($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null)
     {
 
         // verify the required parameter 'packageId' is set
@@ -2103,6 +2168,7 @@ class LocationsResource
                 'Missing the required parameter $packageId when calling listCountries'
             );
         }
+
 
 
 
@@ -2124,6 +2190,15 @@ class LocationsResource
             $code,
             'code', // param base name
             'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            \is_bool($includeAsns) ? ($includeAsns ? 'true' : 'false') : $includeAsns,
+            'include_asns', // param base name
+            'boolean', // openApiType
             'form', // style
             true, // explode
             false // required
@@ -2565,6 +2640,7 @@ class LocationsResource
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code code (optional)
      * @param  string|null $countryCode countryCode (optional)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -2577,9 +2653,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\PaginatedRegionList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listRegions($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0])
+    public function listRegions($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null)
     {
-        list($response) = $this->listRegionsWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType);
+        list($response) = $this->listRegionsWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns);
         return $response;
     }
 
@@ -2588,9 +2664,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listRegionsWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0]): \ProxyRequest\ApiResponse
+    public function listRegionsWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listRegionsWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listRegionsWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns));
     }
 
     /**
@@ -2601,6 +2677,7 @@ class LocationsResource
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -2613,9 +2690,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\PaginatedRegionList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listRegionsWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0])
+    public function listRegionsWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null)
     {
-        $request = $this->listRegionsRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType);
+        $request = $this->listRegionsRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedRegionList',
 ));
@@ -2629,6 +2706,7 @@ class LocationsResource
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -2640,9 +2718,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listRegionsAsync($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0])
+    public function listRegionsAsync($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null)
     {
-        return $this->listRegionsAsyncWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType)
+        return $this->listRegionsAsyncWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2658,6 +2736,7 @@ class LocationsResource
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -2669,9 +2748,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listRegionsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0])
+    public function listRegionsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null)
     {
-        $request = $this->listRegionsRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType);
+        $request = $this->listRegionsRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedRegionList',
 ));
@@ -2683,6 +2762,7 @@ class LocationsResource
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
+     * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -2694,7 +2774,7 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listRegionsRequest($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0])
+    public function listRegionsRequest($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null)
     {
 
         // verify the required parameter 'packageId' is set
@@ -2703,6 +2783,7 @@ class LocationsResource
                 'Missing the required parameter $packageId when calling listRegions'
             );
         }
+
 
 
 
@@ -2734,6 +2815,15 @@ class LocationsResource
             $countryCode,
             'country__code', // param base name
             'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            \is_bool($includeAsns) ? ($includeAsns ? 'true' : 'false') : $includeAsns,
+            'include_asns', // param base name
+            'boolean', // openApiType
             'form', // style
             true, // explode
             false // required

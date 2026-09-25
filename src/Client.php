@@ -18,6 +18,7 @@ use ProxyRequest\Resource\NewsResource;
 use ProxyRequest\Resource\OrdersResource;
 use ProxyRequest\Resource\PackagesResource;
 use ProxyRequest\Resource\ProfileResource;
+use ProxyRequest\Resource\ProvidersResource;
 use ProxyRequest\Resource\ProxiesResource;
 use ProxyRequest\Resource\RewardsResource;
 use ProxyRequest\Resource\SettingsResource;
@@ -32,7 +33,7 @@ use UnexpectedValueException;
 
 final class Client
 {
-    public const VERSION = '4.0.0';
+    public const VERSION = '4.1.0';
     public const USER_AGENT = 'proxyrequest-php/' . self::VERSION;
 
     /** @var array<class-string, object> */
@@ -117,6 +118,11 @@ final class Client
     public function profile(): ProfileResource
     {
         return $this->resource(ProfileResource::class);
+    }
+
+    public function providers(): ProvidersResource
+    {
+        return $this->resource(ProvidersResource::class);
     }
 
     public function proxies(): ProxiesResource

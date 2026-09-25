@@ -21,12 +21,12 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 ## `getCity()`
 
 ```php
-getCity($id, $packageId, $acceptLanguage): \ProxyRequest\Dto\City
+getCity($id, $packageId, $acceptLanguage, includeAsns: $includeAsns): \ProxyRequest\Dto\City
 ```
 
 Get a city
 
-Returns one city and its available network targeting options.
+Returns one city and its available network targeting options. The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.
 
 ### Example
 
@@ -52,10 +52,11 @@ $apiInstance = new ProxyRequest\Api\LocationsResource(
 );
 $id = 'id_example'; // string
 $packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned.
+$includeAsns = true; // bool | The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $result = $apiInstance->getCity($id, $packageId, $acceptLanguage);
+    $result = $apiInstance->getCity($id, $packageId, $acceptLanguage, includeAsns: $includeAsns);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->getCity: ', $e->getMessage(), PHP_EOL;
@@ -68,6 +69,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**|  | |
 | **packageId** | **string**| Package whose targeting availability should be returned. | |
+| **includeAsns** | **bool**| The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. | [optional] [default to false] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
@@ -159,12 +161,12 @@ try {
 ## `getCountry()`
 
 ```php
-getCountry($id, $packageId, $acceptLanguage): \ProxyRequest\Dto\Country
+getCountry($id, $packageId, $acceptLanguage, includeAsns: $includeAsns): \ProxyRequest\Dto\Country
 ```
 
 Get a country
 
-Returns one country and its available network targeting options.
+Returns one country and its available network targeting options. The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.
 
 ### Example
 
@@ -190,10 +192,11 @@ $apiInstance = new ProxyRequest\Api\LocationsResource(
 );
 $id = 'id_example'; // string
 $packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned.
+$includeAsns = true; // bool | The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $result = $apiInstance->getCountry($id, $packageId, $acceptLanguage);
+    $result = $apiInstance->getCountry($id, $packageId, $acceptLanguage, includeAsns: $includeAsns);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->getCountry: ', $e->getMessage(), PHP_EOL;
@@ -206,6 +209,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**|  | |
 | **packageId** | **string**| Package whose targeting availability should be returned. | |
+| **includeAsns** | **bool**| The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. | [optional] [default to false] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
@@ -228,12 +232,12 @@ try {
 ## `getRegion()`
 
 ```php
-getRegion($id, $packageId, $acceptLanguage): \ProxyRequest\Dto\Region
+getRegion($id, $packageId, $acceptLanguage, includeAsns: $includeAsns): \ProxyRequest\Dto\Region
 ```
 
 Get a region
 
-Returns one region and its available network targeting options.
+Returns one region and its available network targeting options. The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.
 
 ### Example
 
@@ -259,10 +263,11 @@ $apiInstance = new ProxyRequest\Api\LocationsResource(
 );
 $id = 'id_example'; // string
 $packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned.
+$includeAsns = true; // bool | The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $result = $apiInstance->getRegion($id, $packageId, $acceptLanguage);
+    $result = $apiInstance->getRegion($id, $packageId, $acceptLanguage, includeAsns: $includeAsns);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->getRegion: ', $e->getMessage(), PHP_EOL;
@@ -275,6 +280,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**|  | |
 | **packageId** | **string**| Package whose targeting availability should be returned. | |
+| **includeAsns** | **bool**| The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. | [optional] [default to false] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
@@ -380,12 +386,12 @@ try {
 ## `listCities()`
 
 ```php
-listCities($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage): \ProxyRequest\Dto\PaginatedCityList
+listCities($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, includeAsns: $includeAsns): \ProxyRequest\Dto\PaginatedCityList
 ```
 
 List available cities
 
-Returns cities supported by the selected package, country, and region, including targetable ISPs and autonomous system numbers.
+Returns cities supported by the selected package, country, and region, including targetable ISPs. The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.
 
 ### Example
 
@@ -412,6 +418,7 @@ $apiInstance = new ProxyRequest\Api\LocationsResource(
 $packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned.
 $code = 'code_example'; // string
 $countryCode = 'countryCode_example'; // string
+$includeAsns = true; // bool | The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.
 $limit = 56; // int | Number of results to return per page.
 $name = 'name_example'; // string
 $offset = 56; // int | The initial index from which to return the results.
@@ -421,7 +428,7 @@ $search = 'search_example'; // string | Case-insensitive partial search across C
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $result = $apiInstance->listCities($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage);
+    $result = $apiInstance->listCities($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, includeAsns: $includeAsns);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->listCities: ', $e->getMessage(), PHP_EOL;
@@ -435,6 +442,7 @@ try {
 | **packageId** | **string**| Package whose targeting availability should be returned. | |
 | **code** | **string**|  | [optional] |
 | **countryCode** | **string**|  | [optional] |
+| **includeAsns** | **bool**| The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. | [optional] [default to false] |
 | **limit** | **int**| Number of results to return per page. | [optional] |
 | **name** | **string**|  | [optional] |
 | **offset** | **int**| The initial index from which to return the results. | [optional] |
@@ -542,12 +550,12 @@ try {
 ## `listCountries()`
 
 ```php
-listCountries($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage): \ProxyRequest\Dto\PaginatedCountryList
+listCountries($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, includeAsns: $includeAsns): \ProxyRequest\Dto\PaginatedCountryList
 ```
 
 List available countries
 
-Returns countries supported by the selected package, including targetable ISPs and autonomous system numbers when available.
+Returns countries supported by the selected package, including targetable ISPs. The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.
 
 ### Example
 
@@ -573,6 +581,7 @@ $apiInstance = new ProxyRequest\Api\LocationsResource(
 );
 $packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned.
 $code = 'code_example'; // string
+$includeAsns = true; // bool | The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.
 $limit = 56; // int | Number of results to return per page.
 $name = 'name_example'; // string
 $offset = 56; // int | The initial index from which to return the results.
@@ -581,7 +590,7 @@ $search = 'search_example'; // string | Case-insensitive partial search across C
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $result = $apiInstance->listCountries($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage);
+    $result = $apiInstance->listCountries($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, includeAsns: $includeAsns);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->listCountries: ', $e->getMessage(), PHP_EOL;
@@ -594,6 +603,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **packageId** | **string**| Package whose targeting availability should be returned. | |
 | **code** | **string**|  | [optional] |
+| **includeAsns** | **bool**| The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. | [optional] [default to false] |
 | **limit** | **int**| Number of results to return per page. | [optional] |
 | **name** | **string**|  | [optional] |
 | **offset** | **int**| The initial index from which to return the results. | [optional] |
@@ -702,12 +712,12 @@ try {
 ## `listRegions()`
 
 ```php
-listRegions($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage): \ProxyRequest\Dto\PaginatedRegionList
+listRegions($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, includeAsns: $includeAsns): \ProxyRequest\Dto\PaginatedRegionList
 ```
 
 List available regions
 
-Returns regions supported by the selected package and country, including targetable ISPs and autonomous system numbers.
+Returns regions supported by the selected package and country, including targetable ISPs. The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.
 
 ### Example
 
@@ -734,6 +744,7 @@ $apiInstance = new ProxyRequest\Api\LocationsResource(
 $packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned.
 $code = 'code_example'; // string
 $countryCode = 'countryCode_example'; // string
+$includeAsns = true; // bool | The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.
 $limit = 56; // int | Number of results to return per page.
 $name = 'name_example'; // string
 $offset = 56; // int | The initial index from which to return the results.
@@ -742,7 +753,7 @@ $search = 'search_example'; // string | Case-insensitive partial search across R
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $result = $apiInstance->listRegions($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage);
+    $result = $apiInstance->listRegions($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, includeAsns: $includeAsns);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->listRegions: ', $e->getMessage(), PHP_EOL;
@@ -756,6 +767,7 @@ try {
 | **packageId** | **string**| Package whose targeting availability should be returned. | |
 | **code** | **string**|  | [optional] |
 | **countryCode** | **string**|  | [optional] |
+| **includeAsns** | **bool**| The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. | [optional] [default to false] |
 | **limit** | **int**| Number of results to return per page. | [optional] |
 | **name** | **string**|  | [optional] |
 | **offset** | **int**| The initial index from which to return the results. | [optional] |

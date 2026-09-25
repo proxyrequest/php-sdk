@@ -516,7 +516,7 @@ class Country extends \ProxyRequest\Support\AdditionalProperties implements Mode
     /**
      * Sets asns
      *
-     * @param \ProxyRequest\Dto\LocationCodeName[] $asns asns
+     * @param \ProxyRequest\Dto\LocationCodeName[] $asns The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.
      *
      * @return self
      */

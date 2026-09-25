@@ -9,6 +9,7 @@ docs/Api/NewsResource.md
 docs/Api/OrdersResource.md
 docs/Api/PackagesResource.md
 docs/Api/ProfileResource.md
+docs/Api/ProvidersResource.md
 docs/Api/ProxiesResource.md
 docs/Api/RewardsResource.md
 docs/Api/SettingsResource.md
@@ -48,6 +49,7 @@ docs/Model/DomainsResponse.md
 docs/Model/EnabledResponse.md
 docs/Model/FeedRecord.md
 docs/Model/FeedResponse.md
+docs/Model/FreshnessEnum.md
 docs/Model/GenerateProxyRequest.md
 docs/Model/GenerateProxyResponse.md
 docs/Model/GeneratedProxy.md
@@ -75,6 +77,7 @@ docs/Model/LoginRequest.md
 docs/Model/LogsResponse.md
 docs/Model/MessageResponse.md
 docs/Model/News.md
+docs/Model/NullEnum.md
 docs/Model/OTPChallenge.md
 docs/Model/Order.md
 docs/Model/OrderDetailed.md
@@ -98,6 +101,7 @@ docs/Model/PaginatedNewsList.md
 docs/Model/PaginatedOrderList.md
 docs/Model/PaginatedPackageCommissionList.md
 docs/Model/PaginatedPackageList.md
+docs/Model/PaginatedProviderDataBalanceList.md
 docs/Model/PaginatedRegionList.md
 docs/Model/PaginatedRewardList.md
 docs/Model/PaginatedUserList.md
@@ -113,6 +117,8 @@ docs/Model/PaymentLinkResponse.md
 docs/Model/PricingEnum.md
 docs/Model/PricingUnitEnum.md
 docs/Model/ProtocolEnum.md
+docs/Model/ProviderBalanceCheckpoint.md
+docs/Model/ProviderDataBalance.md
 docs/Model/ProxyGenerationConnectionRequest.md
 docs/Model/ProxyGenerationSessionRequest.md
 docs/Model/ProxyGenerationTargetingRequest.md
@@ -129,6 +135,7 @@ docs/Model/SettingsCrypto.md
 docs/Model/SettingsGateway.md
 docs/Model/SettingsReferral.md
 docs/Model/SettingsResponse.md
+docs/Model/SeverityEnum.md
 docs/Model/SignUpRequest.md
 docs/Model/SubtractDataRequest.md
 docs/Model/TargetingOptions.md
@@ -186,6 +193,7 @@ src/Dto/DomainsResponse.php
 src/Dto/EnabledResponse.php
 src/Dto/FeedRecord.php
 src/Dto/FeedResponse.php
+src/Dto/FreshnessEnum.php
 src/Dto/GenerateProxyRequest.php
 src/Dto/GenerateProxyResponse.php
 src/Dto/GeneratedProxy.php
@@ -214,6 +222,7 @@ src/Dto/LogsResponse.php
 src/Dto/MessageResponse.php
 src/Dto/ModelInterface.php
 src/Dto/News.php
+src/Dto/NullEnum.php
 src/Dto/OTPChallenge.php
 src/Dto/Order.php
 src/Dto/OrderDetailed.php
@@ -237,6 +246,7 @@ src/Dto/PaginatedNewsList.php
 src/Dto/PaginatedOrderList.php
 src/Dto/PaginatedPackageCommissionList.php
 src/Dto/PaginatedPackageList.php
+src/Dto/PaginatedProviderDataBalanceList.php
 src/Dto/PaginatedRegionList.php
 src/Dto/PaginatedRewardList.php
 src/Dto/PaginatedUserList.php
@@ -252,6 +262,8 @@ src/Dto/PaymentLinkResponse.php
 src/Dto/PricingEnum.php
 src/Dto/PricingUnitEnum.php
 src/Dto/ProtocolEnum.php
+src/Dto/ProviderBalanceCheckpoint.php
+src/Dto/ProviderDataBalance.php
 src/Dto/ProxyGenerationConnectionRequest.php
 src/Dto/ProxyGenerationSessionRequest.php
 src/Dto/ProxyGenerationTargetingRequest.php
@@ -268,6 +280,7 @@ src/Dto/SettingsCrypto.php
 src/Dto/SettingsGateway.php
 src/Dto/SettingsReferral.php
 src/Dto/SettingsResponse.php
+src/Dto/SeverityEnum.php
 src/Dto/SignUpRequest.php
 src/Dto/SubtractDataRequest.php
 src/Dto/TargetingOptions.php
@@ -305,6 +318,7 @@ src/Resource/NewsResource.php
 src/Resource/OrdersResource.php
 src/Resource/PackagesResource.php
 src/Resource/ProfileResource.php
+src/Resource/ProvidersResource.php
 src/Resource/ProxiesResource.php
 src/Resource/RewardsResource.php
 src/Resource/SettingsResource.php

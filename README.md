@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 Official PHP 8.5 client for the [ProxyRequest public API](https://proxyrequest.com/docs/).
-The package covers 80 supported operations from the current OpenAPI
+The package covers 81 supported operations from the current OpenAPI
 contract, including users, orders, proxy generation, analytics, invoices,
 packages, locations, webhooks, API keys, and Telegram integration.
 
@@ -120,7 +120,7 @@ them to browser code.
 
 ## Resource API
 
-`Client` exposes 17 API groups. The pinned public schema contains 82 operations;
+`Client` exposes 18 API groups. The pinned public schema contains 83 operations;
 disabled `sessions_list` and `sessions_destroy` operations are intentionally
 excluded. Sticky session options in proxy generation remain supported.
 
@@ -132,6 +132,7 @@ $client->authorization();
 $client->users();
 $client->profile();
 $client->orders();
+$client->providers();
 $client->proxies();
 $client->analytics();
 $client->invoices();
@@ -149,7 +150,7 @@ $client->news();
 
 All operation parameters and return types are documented in the generated
 [API resource reference](docs/Api/) and [DTO model reference](docs/Model/).
-IDs are opaque strings and byte amounts use 64-bit integers.
+IDs are opaque strings and byte amounts follow the schema: provider balances use decimal strings; other byte amounts use 64-bit integers.
 
 ## Automatic retries and optimistic concurrency
 
@@ -319,3 +320,18 @@ Send only `package_id`, without `data`. A system administrator can reset any use
 Persist one operation ID and reuse it when retrying the same reset, including after a process restart. This prevents a repeated request from clearing a later top-up. Use subtraction when an explicit amount should be removed from a child quota. The backend must support the reset endpoint before calling it.
 
 Version 2.1 retains legacy user and invoice models from 2.0 for compatibility with older deployments. These compatibility types do not change the current public API contract.
+
+## Provider data balances
+
+Available since 4.1.0. Authenticate with a superuser JWT or an API key owned by an active superuser.
+
+```php
+$page = $client->providers()->listDataBalances(limit: 20);
+foreach ($page->getResults() as $balance) {
+    echo $balance->getProviderName(), ": ", $balance->getRemainingBytes() ?? "unavailable", PHP_EOL;
+}
+```
+
+Provider byte amounts are exact decimal **strings**, including history entries; calculated usage and remaining amounts can be `null`. The response includes observation and calculation times, freshness, errors, and recent checkpoint history. History is limited by the server's `PROVIDER_DATA_BALANCE_HISTORY_LIMIT` setting (default 10). Standard pagination applies to providers.
+
+Country, region, and city methods also support `includeAsns`. Set it to `true` to populate nested ASN arrays; omitted or false uses the API's empty-array default. Existing PHP positional arguments retain their positions; use the new option by name.

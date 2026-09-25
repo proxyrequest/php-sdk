@@ -4,21 +4,21 @@
         "id": "php",
         "label": "PHP",
         "language": "PHP",
-        "version": "4.0.0",
+        "version": "4.1.0",
         "package": "proxyrequest/php-sdk",
         "runtime": "64-bit PHP 8.5 or later",
         "install": "composer require proxyrequest/php-sdk",
         "openapi": {
-            "commit": "a2d72455d3b91a7d6be962f0e056f7d04fbd7f05",
+            "commit": "09dab1ad6f5ab4e879120074e55f817e58856a6f",
             "excludedOperations": [
                 "sessions_destroy",
                 "sessions_list"
             ],
             "repository": "papaproxy/api",
-            "sha256": "9a20a33711a9291dcba57046b1d2b4cf14b3eec506383a3986b0ac7a15f14c6e",
+            "sha256": "b9106a09b1fadc44722b22afec3b37fe1f9839298e3878ac366268627ce78741",
             "source": "openapi.yml",
-            "operations": 82,
-            "schemas": 133
+            "operations": 83,
+            "schemas": 139
         }
     },
     "setup": [
@@ -102,6 +102,11 @@
                 {
                     "name": "profile",
                     "signature": "profile(): ProfileResource",
+                    "description": ""
+                },
+                {
+                    "name": "providers",
+                    "signature": "providers(): ProvidersResource",
                     "description": ""
                 },
                 {
@@ -5387,39 +5392,39 @@
                     "operationId": "locations_cities_list",
                     "name": "listCities",
                     "summary": "List available cities",
-                    "description": "Returns cities supported by the selected package, country, and region, including targetable ISPs and autonomous system numbers.",
+                    "description": "Returns cities supported by the selected package, country, and region, including targetable ISPs. The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.",
                     "httpMethod": "GET",
                     "path": "/locations/cities",
                     "signatures": [
                         {
                             "label": "Sync",
-                            "signature": "$client->locations()->listCities($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0])"
+                            "signature": "$client->locations()->listCities($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null)"
                         }
                     ],
                     "variants": [
                         {
                             "name": "listCitiesWithResponse",
-                            "signature": "$client->locations()->listCitiesWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0]): \\ProxyRequest\\ApiResponse",
+                            "signature": "$client->locations()->listCitiesWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null): \\ProxyRequest\\ApiResponse",
                             "description": "Returns an ApiResponse with decoded data and HTTP metadata."
                         },
                         {
                             "name": "listCitiesWithHttpInfo",
-                            "signature": "$client->locations()->listCitiesWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0])",
+                            "signature": "$client->locations()->listCitiesWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null)",
                             "description": "Returns the OpenAPI Generator response tuple."
                         },
                         {
                             "name": "listCitiesAsync",
-                            "signature": "$client->locations()->listCitiesAsync($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0])",
+                            "signature": "$client->locations()->listCitiesAsync($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null)",
                             "description": "Returns a Guzzle promise for the decoded result."
                         },
                         {
                             "name": "listCitiesAsyncWithHttpInfo",
-                            "signature": "$client->locations()->listCitiesAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0])",
+                            "signature": "$client->locations()->listCitiesAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null)",
                             "description": "Returns a Guzzle promise for the response tuple."
                         },
                         {
                             "name": "listCitiesRequest",
-                            "signature": "$client->locations()->listCitiesRequest($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0])",
+                            "signature": "$client->locations()->listCitiesRequest($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null)",
                             "description": "Builds the PSR-7 request without sending it."
                         }
                     ],
@@ -5444,6 +5449,17 @@
                             "default": null,
                             "description": "",
                             "example": "{country__code}",
+                            "modelRefs": []
+                        },
+                        {
+                            "name": "includeAsns",
+                            "wireName": "include_asns",
+                            "in": "query",
+                            "required": false,
+                            "type": "bool",
+                            "default": false,
+                            "description": "The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.",
+                            "example": false,
                             "modelRefs": []
                         },
                         {
@@ -5604,39 +5620,39 @@
                     "operationId": "locations_cities_retrieve",
                     "name": "getCity",
                     "summary": "Get a city",
-                    "description": "Returns one city and its available network targeting options.",
+                    "description": "Returns one city and its available network targeting options. The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.",
                     "httpMethod": "GET",
                     "path": "/locations/cities/{id}",
                     "signatures": [
                         {
                             "label": "Sync",
-                            "signature": "$client->locations()->getCity($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0])"
+                            "signature": "$client->locations()->getCity($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null)"
                         }
                     ],
                     "variants": [
                         {
                             "name": "getCityWithResponse",
-                            "signature": "$client->locations()->getCityWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0]): \\ProxyRequest\\ApiResponse",
+                            "signature": "$client->locations()->getCityWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null): \\ProxyRequest\\ApiResponse",
                             "description": "Returns an ApiResponse with decoded data and HTTP metadata."
                         },
                         {
                             "name": "getCityWithHttpInfo",
-                            "signature": "$client->locations()->getCityWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0])",
+                            "signature": "$client->locations()->getCityWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null)",
                             "description": "Returns the OpenAPI Generator response tuple."
                         },
                         {
                             "name": "getCityAsync",
-                            "signature": "$client->locations()->getCityAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0])",
+                            "signature": "$client->locations()->getCityAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null)",
                             "description": "Returns a Guzzle promise for the decoded result."
                         },
                         {
                             "name": "getCityAsyncWithHttpInfo",
-                            "signature": "$client->locations()->getCityAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0])",
+                            "signature": "$client->locations()->getCityAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null)",
                             "description": "Returns a Guzzle promise for the response tuple."
                         },
                         {
                             "name": "getCityRequest",
-                            "signature": "$client->locations()->getCityRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0])",
+                            "signature": "$client->locations()->getCityRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null)",
                             "description": "Builds the PSR-7 request without sending it."
                         }
                     ],
@@ -5650,6 +5666,17 @@
                             "default": null,
                             "description": "",
                             "example": "550e8400-e29b-41d4-a716-446655440000",
+                            "modelRefs": []
+                        },
+                        {
+                            "name": "includeAsns",
+                            "wireName": "include_asns",
+                            "in": "query",
+                            "required": false,
+                            "type": "bool",
+                            "default": false,
+                            "description": "The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.",
+                            "example": false,
                             "modelRefs": []
                         },
                         {
@@ -6095,39 +6122,39 @@
                     "operationId": "locations_countries_list",
                     "name": "listCountries",
                     "summary": "List available countries",
-                    "description": "Returns countries supported by the selected package, including targetable ISPs and autonomous system numbers when available.",
+                    "description": "Returns countries supported by the selected package, including targetable ISPs. The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.",
                     "httpMethod": "GET",
                     "path": "/locations/countries",
                     "signatures": [
                         {
                             "label": "Sync",
-                            "signature": "$client->locations()->listCountries($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0])"
+                            "signature": "$client->locations()->listCountries($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null)"
                         }
                     ],
                     "variants": [
                         {
                             "name": "listCountriesWithResponse",
-                            "signature": "$client->locations()->listCountriesWithResponse($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0]): \\ProxyRequest\\ApiResponse",
+                            "signature": "$client->locations()->listCountriesWithResponse($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null): \\ProxyRequest\\ApiResponse",
                             "description": "Returns an ApiResponse with decoded data and HTTP metadata."
                         },
                         {
                             "name": "listCountriesWithHttpInfo",
-                            "signature": "$client->locations()->listCountriesWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0])",
+                            "signature": "$client->locations()->listCountriesWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null)",
                             "description": "Returns the OpenAPI Generator response tuple."
                         },
                         {
                             "name": "listCountriesAsync",
-                            "signature": "$client->locations()->listCountriesAsync($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0])",
+                            "signature": "$client->locations()->listCountriesAsync($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null)",
                             "description": "Returns a Guzzle promise for the decoded result."
                         },
                         {
                             "name": "listCountriesAsyncWithHttpInfo",
-                            "signature": "$client->locations()->listCountriesAsyncWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0])",
+                            "signature": "$client->locations()->listCountriesAsyncWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null)",
                             "description": "Returns a Guzzle promise for the response tuple."
                         },
                         {
                             "name": "listCountriesRequest",
-                            "signature": "$client->locations()->listCountriesRequest($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0])",
+                            "signature": "$client->locations()->listCountriesRequest($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null)",
                             "description": "Builds the PSR-7 request without sending it."
                         }
                     ],
@@ -6141,6 +6168,17 @@
                             "default": null,
                             "description": "",
                             "example": "{code}",
+                            "modelRefs": []
+                        },
+                        {
+                            "name": "includeAsns",
+                            "wireName": "include_asns",
+                            "in": "query",
+                            "required": false,
+                            "type": "bool",
+                            "default": false,
+                            "description": "The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.",
+                            "example": false,
                             "modelRefs": []
                         },
                         {
@@ -6290,39 +6328,39 @@
                     "operationId": "locations_countries_retrieve",
                     "name": "getCountry",
                     "summary": "Get a country",
-                    "description": "Returns one country and its available network targeting options.",
+                    "description": "Returns one country and its available network targeting options. The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.",
                     "httpMethod": "GET",
                     "path": "/locations/countries/{id}",
                     "signatures": [
                         {
                             "label": "Sync",
-                            "signature": "$client->locations()->getCountry($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0])"
+                            "signature": "$client->locations()->getCountry($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null)"
                         }
                     ],
                     "variants": [
                         {
                             "name": "getCountryWithResponse",
-                            "signature": "$client->locations()->getCountryWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0]): \\ProxyRequest\\ApiResponse",
+                            "signature": "$client->locations()->getCountryWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null): \\ProxyRequest\\ApiResponse",
                             "description": "Returns an ApiResponse with decoded data and HTTP metadata."
                         },
                         {
                             "name": "getCountryWithHttpInfo",
-                            "signature": "$client->locations()->getCountryWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0])",
+                            "signature": "$client->locations()->getCountryWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null)",
                             "description": "Returns the OpenAPI Generator response tuple."
                         },
                         {
                             "name": "getCountryAsync",
-                            "signature": "$client->locations()->getCountryAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0])",
+                            "signature": "$client->locations()->getCountryAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null)",
                             "description": "Returns a Guzzle promise for the decoded result."
                         },
                         {
                             "name": "getCountryAsyncWithHttpInfo",
-                            "signature": "$client->locations()->getCountryAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0])",
+                            "signature": "$client->locations()->getCountryAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null)",
                             "description": "Returns a Guzzle promise for the response tuple."
                         },
                         {
                             "name": "getCountryRequest",
-                            "signature": "$client->locations()->getCountryRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0])",
+                            "signature": "$client->locations()->getCountryRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null)",
                             "description": "Builds the PSR-7 request without sending it."
                         }
                     ],
@@ -6336,6 +6374,17 @@
                             "default": null,
                             "description": "",
                             "example": "550e8400-e29b-41d4-a716-446655440000",
+                            "modelRefs": []
+                        },
+                        {
+                            "name": "includeAsns",
+                            "wireName": "include_asns",
+                            "in": "query",
+                            "required": false,
+                            "type": "bool",
+                            "default": false,
+                            "description": "The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.",
+                            "example": false,
                             "modelRefs": []
                         },
                         {
@@ -6644,39 +6693,39 @@
                     "operationId": "locations_regions_list",
                     "name": "listRegions",
                     "summary": "List available regions",
-                    "description": "Returns regions supported by the selected package and country, including targetable ISPs and autonomous system numbers.",
+                    "description": "Returns regions supported by the selected package and country, including targetable ISPs. The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.",
                     "httpMethod": "GET",
                     "path": "/locations/regions",
                     "signatures": [
                         {
                             "label": "Sync",
-                            "signature": "$client->locations()->listRegions($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0])"
+                            "signature": "$client->locations()->listRegions($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null)"
                         }
                     ],
                     "variants": [
                         {
                             "name": "listRegionsWithResponse",
-                            "signature": "$client->locations()->listRegionsWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0]): \\ProxyRequest\\ApiResponse",
+                            "signature": "$client->locations()->listRegionsWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null): \\ProxyRequest\\ApiResponse",
                             "description": "Returns an ApiResponse with decoded data and HTTP metadata."
                         },
                         {
                             "name": "listRegionsWithHttpInfo",
-                            "signature": "$client->locations()->listRegionsWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0])",
+                            "signature": "$client->locations()->listRegionsWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null)",
                             "description": "Returns the OpenAPI Generator response tuple."
                         },
                         {
                             "name": "listRegionsAsync",
-                            "signature": "$client->locations()->listRegionsAsync($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0])",
+                            "signature": "$client->locations()->listRegionsAsync($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null)",
                             "description": "Returns a Guzzle promise for the decoded result."
                         },
                         {
                             "name": "listRegionsAsyncWithHttpInfo",
-                            "signature": "$client->locations()->listRegionsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0])",
+                            "signature": "$client->locations()->listRegionsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null)",
                             "description": "Returns a Guzzle promise for the response tuple."
                         },
                         {
                             "name": "listRegionsRequest",
-                            "signature": "$client->locations()->listRegionsRequest($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0])",
+                            "signature": "$client->locations()->listRegionsRequest($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null)",
                             "description": "Builds the PSR-7 request without sending it."
                         }
                     ],
@@ -6701,6 +6750,17 @@
                             "default": null,
                             "description": "",
                             "example": "{country__code}",
+                            "modelRefs": []
+                        },
+                        {
+                            "name": "includeAsns",
+                            "wireName": "include_asns",
+                            "in": "query",
+                            "required": false,
+                            "type": "bool",
+                            "default": false,
+                            "description": "The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.",
+                            "example": false,
                             "modelRefs": []
                         },
                         {
@@ -6850,39 +6910,39 @@
                     "operationId": "locations_regions_retrieve",
                     "name": "getRegion",
                     "summary": "Get a region",
-                    "description": "Returns one region and its available network targeting options.",
+                    "description": "Returns one region and its available network targeting options. The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.",
                     "httpMethod": "GET",
                     "path": "/locations/regions/{id}",
                     "signatures": [
                         {
                             "label": "Sync",
-                            "signature": "$client->locations()->getRegion($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0])"
+                            "signature": "$client->locations()->getRegion($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null)"
                         }
                     ],
                     "variants": [
                         {
                             "name": "getRegionWithResponse",
-                            "signature": "$client->locations()->getRegionWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0]): \\ProxyRequest\\ApiResponse",
+                            "signature": "$client->locations()->getRegionWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null): \\ProxyRequest\\ApiResponse",
                             "description": "Returns an ApiResponse with decoded data and HTTP metadata."
                         },
                         {
                             "name": "getRegionWithHttpInfo",
-                            "signature": "$client->locations()->getRegionWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0])",
+                            "signature": "$client->locations()->getRegionWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null)",
                             "description": "Returns the OpenAPI Generator response tuple."
                         },
                         {
                             "name": "getRegionAsync",
-                            "signature": "$client->locations()->getRegionAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0])",
+                            "signature": "$client->locations()->getRegionAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null)",
                             "description": "Returns a Guzzle promise for the decoded result."
                         },
                         {
                             "name": "getRegionAsyncWithHttpInfo",
-                            "signature": "$client->locations()->getRegionAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0])",
+                            "signature": "$client->locations()->getRegionAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null)",
                             "description": "Returns a Guzzle promise for the response tuple."
                         },
                         {
                             "name": "getRegionRequest",
-                            "signature": "$client->locations()->getRegionRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0])",
+                            "signature": "$client->locations()->getRegionRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null)",
                             "description": "Builds the PSR-7 request without sending it."
                         }
                     ],
@@ -6896,6 +6956,17 @@
                             "default": null,
                             "description": "",
                             "example": "550e8400-e29b-41d4-a716-446655440000",
+                            "modelRefs": []
+                        },
+                        {
+                            "name": "includeAsns",
+                            "wireName": "include_asns",
+                            "in": "query",
+                            "required": false,
+                            "type": "bool",
+                            "default": false,
+                            "description": "The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.",
+                            "example": false,
                             "modelRefs": []
                         },
                         {
@@ -10086,6 +10157,154 @@
                     "example": {
                         "language": "php",
                         "code": "$result = $client->profile()->changePassword(\n    changePasswordRequest: new Dto\\ChangePasswordRequest([\n        'old_password' => 'Correct-Horse-Battery-Staple-42',\n        'new_password1' => 'Correct-Horse-Battery-Staple-42',\n        'new_password2' => 'Correct-Horse-Battery-Staple-42',\n    ]),\n);"
+                    }
+                }
+            ]
+        },
+        {
+            "tag": "Providers",
+            "accessor": "providers",
+            "className": "ProvidersResource",
+            "description": "Read provider data balances and observation history. Superuser credentials required.",
+            "methods": [
+                {
+                    "operationId": "providers_data_balances_list",
+                    "name": "listDataBalances",
+                    "summary": "List provider data balances",
+                    "description": "Requires a JWT belonging to an active superuser or an API key owned by an active superuser, including requests using X-Impersonate-User. Returns one result per provider with recorded balances. The latest observation by observed_at is the baseline; available_bytes is that observation's balance, not a sum of purchased data. All byte amounts are decimal strings. Calculations are saved asynchronously; inspect freshness, error and calculated_at before using them. History is ordered by creation time descending and limited by PROVIDER_DATA_BALANCE_HISTORY_LIMIT (default 10). Pagination counts providers, not history entries.",
+                    "httpMethod": "GET",
+                    "path": "/providers/data-balances",
+                    "signatures": [
+                        {
+                            "label": "Sync",
+                            "signature": "$client->providers()->listDataBalances($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDataBalances'][0])"
+                        }
+                    ],
+                    "variants": [
+                        {
+                            "name": "listDataBalancesWithResponse",
+                            "signature": "$client->providers()->listDataBalancesWithResponse($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDataBalances'][0]): \\ProxyRequest\\ApiResponse",
+                            "description": "Returns an ApiResponse with decoded data and HTTP metadata."
+                        },
+                        {
+                            "name": "listDataBalancesWithHttpInfo",
+                            "signature": "$client->providers()->listDataBalancesWithHttpInfo($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDataBalances'][0])",
+                            "description": "Returns the OpenAPI Generator response tuple."
+                        },
+                        {
+                            "name": "listDataBalancesAsync",
+                            "signature": "$client->providers()->listDataBalancesAsync($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDataBalances'][0])",
+                            "description": "Returns a Guzzle promise for the decoded result."
+                        },
+                        {
+                            "name": "listDataBalancesAsyncWithHttpInfo",
+                            "signature": "$client->providers()->listDataBalancesAsyncWithHttpInfo($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDataBalances'][0])",
+                            "description": "Returns a Guzzle promise for the response tuple."
+                        },
+                        {
+                            "name": "listDataBalancesRequest",
+                            "signature": "$client->providers()->listDataBalancesRequest($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDataBalances'][0])",
+                            "description": "Builds the PSR-7 request without sending it."
+                        }
+                    ],
+                    "parameters": [
+                        {
+                            "name": "limit",
+                            "wireName": "limit",
+                            "in": "query",
+                            "required": false,
+                            "type": "int",
+                            "default": null,
+                            "description": "Number of results to return per page.",
+                            "example": 1,
+                            "modelRefs": []
+                        },
+                        {
+                            "name": "offset",
+                            "wireName": "offset",
+                            "in": "query",
+                            "required": false,
+                            "type": "int",
+                            "default": null,
+                            "description": "The initial index from which to return the results.",
+                            "example": 1,
+                            "modelRefs": []
+                        },
+                        {
+                            "name": "acceptLanguage",
+                            "wireName": "Accept-Language",
+                            "in": "header",
+                            "required": false,
+                            "type": "string",
+                            "default": "en",
+                            "description": "Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.",
+                            "example": "en",
+                            "modelRefs": []
+                        }
+                    ],
+                    "body": null,
+                    "returns": {
+                        "type": "PaginatedProviderDataBalanceList",
+                        "description": "The operation completed successfully.",
+                        "modelRefs": [
+                            "PaginatedProviderDataBalanceList"
+                        ]
+                    },
+                    "errors": [
+                        {
+                            "status": "401",
+                            "description": "Authentication credentials are missing, expired, or invalid."
+                        },
+                        {
+                            "status": "403",
+                            "description": "The authenticated account cannot perform this operation."
+                        },
+                        {
+                            "status": "400",
+                            "description": "The request is malformed or violates a business rule."
+                        }
+                    ],
+                    "throws": [
+                        {
+                            "type": "ApiException",
+                            "description": "Normalized API, transport, and response processing failure.",
+                            "conditions": [
+                                {
+                                    "kind": "ErrorKind::Authentication",
+                                    "description": "Authentication credentials are missing, expired, or invalid."
+                                },
+                                {
+                                    "kind": "ErrorKind::Permission",
+                                    "description": "The authenticated account cannot perform this operation."
+                                },
+                                {
+                                    "kind": "ErrorKind::Validation",
+                                    "description": "The request arguments or business rules are invalid."
+                                },
+                                {
+                                    "kind": "ErrorKind::Network",
+                                    "description": "The request could not reach ProxyRequest."
+                                },
+                                {
+                                    "kind": "ErrorKind::Unexpected",
+                                    "description": "The response could not be decoded or did not match the SDK contract."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "InvalidArgumentException",
+                            "description": "A required argument is missing or violates a local SDK constraint.",
+                            "conditions": [
+                                {
+                                    "kind": "local validation",
+                                    "description": "The request was rejected before it was sent."
+                                }
+                            ]
+                        }
+                    ],
+                    "example": {
+                        "language": "php",
+                        "code": "$result = $client->providers()->listDataBalances();"
                     }
                 }
             ]
@@ -13515,7 +13734,7 @@
                     "type": "[LocationCodeName[]](LocationCodeName.md)",
                     "required": true,
                     "default": null,
-                    "description": "| [readonly]",
+                    "description": "The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.",
                     "enum": null,
                     "modelRefs": [
                         "LocationCodeName"
@@ -13725,7 +13944,7 @@
                     "type": "[LocationCodeName[]](LocationCodeName.md)",
                     "required": true,
                     "default": null,
-                    "description": "| [readonly]",
+                    "description": "The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.",
                     "enum": null,
                     "modelRefs": [
                         "LocationCodeName"
@@ -14944,6 +15163,12 @@
                     ]
                 }
             ]
+        },
+        {
+            "name": "FreshnessEnum",
+            "kind": "enum",
+            "description": "* `fresh` - fresh * `stale` - stale * `unavailable` - unavailable",
+            "fields": []
         },
         {
             "name": "GenerateProxyRequest",
@@ -17158,6 +17383,12 @@
             ]
         },
         {
+            "name": "NullEnum",
+            "kind": "enum",
+            "description": "",
+            "fields": []
+        },
+        {
             "name": "OTPChallenge",
             "kind": "class",
             "description": "",
@@ -18820,6 +19051,55 @@
             ]
         },
         {
+            "name": "PaginatedProviderDataBalanceList",
+            "kind": "class",
+            "description": "",
+            "fields": [
+                {
+                    "name": "count",
+                    "wireName": "count",
+                    "type": "int",
+                    "required": true,
+                    "default": null,
+                    "description": "|",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "next",
+                    "wireName": "next",
+                    "type": "string",
+                    "required": true,
+                    "default": null,
+                    "description": "| [optional]",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "previous",
+                    "wireName": "previous",
+                    "type": "string",
+                    "required": true,
+                    "default": null,
+                    "description": "| [optional]",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "results",
+                    "wireName": "results",
+                    "type": "[ProviderDataBalance[]](ProviderDataBalance.md)",
+                    "required": true,
+                    "default": null,
+                    "description": "|",
+                    "enum": null,
+                    "modelRefs": [
+                        "ProviderDataBalance"
+                    ]
+                }
+            ]
+        },
+        {
             "name": "PaginatedRegionList",
             "kind": "class",
             "description": "",
@@ -19692,6 +19972,204 @@
             "fields": []
         },
         {
+            "name": "ProviderBalanceCheckpoint",
+            "kind": "class",
+            "description": "",
+            "fields": [
+                {
+                    "name": "id",
+                    "wireName": "id",
+                    "type": "string",
+                    "required": true,
+                    "default": null,
+                    "description": "| [readonly]",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "availableBytes",
+                    "wireName": "availableBytes",
+                    "type": "string",
+                    "required": true,
+                    "default": null,
+                    "description": "Observed balance in bytes, as a decimal string. |",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "observedAt",
+                    "wireName": "observedAt",
+                    "type": "DateTime",
+                    "required": true,
+                    "default": null,
+                    "description": "|",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "created",
+                    "wireName": "created",
+                    "type": "DateTime",
+                    "required": true,
+                    "default": null,
+                    "description": "| [readonly]",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "createdBy",
+                    "wireName": "createdBy",
+                    "type": "string",
+                    "required": true,
+                    "default": null,
+                    "description": "| [readonly]",
+                    "enum": null,
+                    "modelRefs": []
+                }
+            ]
+        },
+        {
+            "name": "ProviderDataBalance",
+            "kind": "class",
+            "description": "",
+            "fields": [
+                {
+                    "name": "checkpointId",
+                    "wireName": "checkpointId",
+                    "type": "string",
+                    "required": true,
+                    "default": null,
+                    "description": "|",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "providerId",
+                    "wireName": "providerId",
+                    "type": "string",
+                    "required": true,
+                    "default": null,
+                    "description": "|",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "providerName",
+                    "wireName": "providerName",
+                    "type": "string",
+                    "required": true,
+                    "default": null,
+                    "description": "|",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "observedAt",
+                    "wireName": "observedAt",
+                    "type": "DateTime",
+                    "required": true,
+                    "default": null,
+                    "description": "Time the available balance was observed. |",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "availableBytes",
+                    "wireName": "availableBytes",
+                    "type": "string",
+                    "required": true,
+                    "default": null,
+                    "description": "Observed balance in bytes, as a decimal string. |",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "usedBytes",
+                    "wireName": "usedBytes",
+                    "type": "string",
+                    "required": true,
+                    "default": null,
+                    "description": "Calculated usage since the observation, in bytes. |",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "remainingBytes",
+                    "wireName": "remainingBytes",
+                    "type": "string",
+                    "required": true,
+                    "default": null,
+                    "description": "Remaining bytes at calculated_at, as a decimal string. |",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "remainingPercent",
+                    "wireName": "remainingPercent",
+                    "type": "float",
+                    "required": true,
+                    "default": null,
+                    "description": "|",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "severity",
+                    "wireName": "severity",
+                    "type": "string",
+                    "required": true,
+                    "default": null,
+                    "description": "|",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "freshness",
+                    "wireName": "freshness",
+                    "type": "FreshnessEnum",
+                    "required": true,
+                    "default": null,
+                    "description": "|",
+                    "enum": null,
+                    "modelRefs": [
+                        "FreshnessEnum"
+                    ]
+                },
+                {
+                    "name": "error",
+                    "wireName": "error",
+                    "type": "string",
+                    "required": true,
+                    "default": null,
+                    "description": "|",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "calculatedAt",
+                    "wireName": "calculatedAt",
+                    "type": "DateTime",
+                    "required": true,
+                    "default": null,
+                    "description": "Time of the last successful calculation. |",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "history",
+                    "wireName": "history",
+                    "type": "[ProviderBalanceCheckpoint[]](ProviderBalanceCheckpoint.md)",
+                    "required": true,
+                    "default": null,
+                    "description": "Latest entries by creation time, limited by PROVIDER_DATA_BALANCE_HISTORY_LIMIT (default 10). |",
+                    "enum": null,
+                    "modelRefs": [
+                        "ProviderBalanceCheckpoint"
+                    ]
+                }
+            ]
+        },
+        {
             "name": "ProxyGenerationConnectionRequest",
             "kind": "class",
             "description": "",
@@ -19989,7 +20467,7 @@
                     "type": "[LocationCodeName[]](LocationCodeName.md)",
                     "required": true,
                     "default": null,
-                    "description": "| [readonly]",
+                    "description": "The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.",
                     "enum": null,
                     "modelRefs": [
                         "LocationCodeName"
@@ -20430,6 +20908,12 @@
                     ]
                 }
             ]
+        },
+        {
+            "name": "SeverityEnum",
+            "kind": "enum",
+            "description": "* `warning` - warning * `danger` - danger",
+            "fields": []
         },
         {
             "name": "SignUpRequest",
