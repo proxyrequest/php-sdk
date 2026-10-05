@@ -5,6 +5,11 @@ the package uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [4.2.1] - 2026-10-05
+
+- Allow an explicit zero invoice total for free product purchases; setting any explicit total requires superuser authorization.
+- Restore PostgreSQL integer bounds and int64 formats in the bundled OpenAPI contract and regenerate the SDK.
+
 ## [4.2.0] - 2026-10-05
 
 - Add priceTotal to invoice creation requests for an explicit final invoice total.

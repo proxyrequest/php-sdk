@@ -577,8 +577,16 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
             $invalidProperties[] = "invalid value for 'internalId', the character length must be smaller than or equal to 25.";
         }
 
+        if (!is_null($this->container['connectionLimit']) && ($this->container['connectionLimit'] > 2147483647)) {
+            $invalidProperties[] = "invalid value for 'connectionLimit', must be smaller than or equal to 2147483647.";
+        }
+
         if (!is_null($this->container['connectionLimit']) && ($this->container['connectionLimit'] < -1)) {
             $invalidProperties[] = "invalid value for 'connectionLimit', must be bigger than or equal to -1.";
+        }
+
+        if (!is_null($this->container['quantity']) && ($this->container['quantity'] > 2147483647)) {
+            $invalidProperties[] = "invalid value for 'quantity', must be smaller than or equal to 2147483647.";
         }
 
         if (!is_null($this->container['quantity']) && ($this->container['quantity'] < 0)) {
@@ -1244,6 +1252,9 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
             throw new \InvalidArgumentException('non-nullable connectionLimit cannot be null');
         }
 
+        if (($connectionLimit > 2147483647)) {
+            throw new \InvalidArgumentException('invalid value for $connectionLimit when calling Invoice., must be smaller than or equal to 2147483647.');
+        }
         if (($connectionLimit < -1)) {
             throw new \InvalidArgumentException('invalid value for $connectionLimit when calling Invoice., must be bigger than or equal to -1.');
         }
@@ -1276,6 +1287,9 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
             throw new \InvalidArgumentException('non-nullable quantity cannot be null');
         }
 
+        if (($quantity > 2147483647)) {
+            throw new \InvalidArgumentException('invalid value for $quantity when calling Invoice., must be smaller than or equal to 2147483647.');
+        }
         if (($quantity < 0)) {
             throw new \InvalidArgumentException('invalid value for $quantity when calling Invoice., must be bigger than or equal to 0.');
         }

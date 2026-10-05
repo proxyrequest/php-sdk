@@ -413,8 +413,8 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
             $invalidProperties[] = "invalid value for 'priceTotal', must be smaller than or equal to 10000000000.";
         }
 
-        if (!is_null($this->container['priceTotal']) && ($this->container['priceTotal'] < 1)) {
-            $invalidProperties[] = "invalid value for 'priceTotal', must be bigger than or equal to 1.";
+        if (!is_null($this->container['priceTotal']) && ($this->container['priceTotal'] < 0)) {
+            $invalidProperties[] = "invalid value for 'priceTotal', must be bigger than or equal to 0.";
         }
 
         if (!is_null($this->container['connectionLimit']) && ($this->container['connectionLimit'] < -1)) {
@@ -777,7 +777,7 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
     /**
      * Sets priceTotal
      *
-     * @param int|null $priceTotal Optional final invoice total in the smallest currency unit, including tax and discounts. For a balance invoice, this is also the balance credit and takes precedence over amount. Only superusers or active superuser API keys may supply it, including during API-key impersonation; coupon_code cannot be supplied with price_total.
+     * @param int|null $priceTotal Optional final invoice total in the smallest currency unit, including tax and discounts. Zero is allowed for a free product purchase. For a balance invoice, this is also the balance credit, must satisfy the balance top-up limits, and takes precedence over amount. Only superusers or active superuser API keys may supply it, including zero and during API-key impersonation; coupon_code cannot be supplied with price_total.
      *
      * @return self
      */
@@ -790,8 +790,8 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
         if (($priceTotal > 10000000000)) {
             throw new \InvalidArgumentException('invalid value for $priceTotal when calling InvoiceCreateRequest., must be smaller than or equal to 10000000000.');
         }
-        if (($priceTotal < 1)) {
-            throw new \InvalidArgumentException('invalid value for $priceTotal when calling InvoiceCreateRequest., must be bigger than or equal to 1.');
+        if (($priceTotal < 0)) {
+            throw new \InvalidArgumentException('invalid value for $priceTotal when calling InvoiceCreateRequest., must be bigger than or equal to 0.');
         }
 
         $this->container['priceTotal'] = $priceTotal;

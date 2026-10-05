@@ -451,6 +451,10 @@ class Package extends \ProxyRequest\Support\AdditionalProperties implements Mode
             $invalidProperties[] = "invalid value for 'alias', must be conform to the pattern /^[a-z0-9]+$/.";
         }
 
+        if (!is_null($this->container['order']) && ($this->container['order'] > 2147483647)) {
+            $invalidProperties[] = "invalid value for 'order', must be smaller than or equal to 2147483647.";
+        }
+
         if (!is_null($this->container['order']) && ($this->container['order'] < 0)) {
             $invalidProperties[] = "invalid value for 'order', must be bigger than or equal to 0.";
         }
@@ -472,6 +476,10 @@ class Package extends \ProxyRequest\Support\AdditionalProperties implements Mode
         if ($this->container['billingModel'] === null) {
             $invalidProperties[] = "'billingModel' can't be null";
         }
+        if (!is_null($this->container['billingUnlimited']) && ($this->container['billingUnlimited'] > 2147483647)) {
+            $invalidProperties[] = "invalid value for 'billingUnlimited', must be smaller than or equal to 2147483647.";
+        }
+
         if (!is_null($this->container['billingUnlimited']) && ($this->container['billingUnlimited'] < 0)) {
             $invalidProperties[] = "invalid value for 'billingUnlimited', must be bigger than or equal to 0.";
         }
@@ -653,6 +661,9 @@ class Package extends \ProxyRequest\Support\AdditionalProperties implements Mode
             throw new \InvalidArgumentException('non-nullable order cannot be null');
         }
 
+        if (($order > 2147483647)) {
+            throw new \InvalidArgumentException('invalid value for $order when calling Package., must be smaller than or equal to 2147483647.');
+        }
         if (($order < 0)) {
             throw new \InvalidArgumentException('invalid value for $order when calling Package., must be bigger than or equal to 0.');
         }
@@ -1017,6 +1028,9 @@ class Package extends \ProxyRequest\Support\AdditionalProperties implements Mode
             throw new \InvalidArgumentException('non-nullable billingUnlimited cannot be null');
         }
 
+        if (($billingUnlimited > 2147483647)) {
+            throw new \InvalidArgumentException('invalid value for $billingUnlimited when calling Package., must be smaller than or equal to 2147483647.');
+        }
         if (($billingUnlimited < 0)) {
             throw new \InvalidArgumentException('invalid value for $billingUnlimited when calling Package., must be bigger than or equal to 0.');
         }

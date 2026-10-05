@@ -99,7 +99,7 @@ class OrderDetailed extends \ProxyRequest\Support\AdditionalProperties implement
         'dataRemaining' => null,
         'dataSpent' => 'int64',
         'ledgers' => null,
-        'latestDataTopUp' => null,
+        'latestDataTopUp' => 'int64',
         'latestDataTopUpDate' => 'date-time',
         'dataUpdated' => 'date-time',
         'expires' => 'date-time'
@@ -443,6 +443,14 @@ class OrderDetailed extends \ProxyRequest\Support\AdditionalProperties implement
         if ($this->container['ledgers'] === null) {
             $invalidProperties[] = "'ledgers' can't be null";
         }
+        if (!is_null($this->container['latestDataTopUp']) && ($this->container['latestDataTopUp'] > 9223372036854775807)) {
+            $invalidProperties[] = "invalid value for 'latestDataTopUp', must be smaller than or equal to 9223372036854775807.";
+        }
+
+        if (!is_null($this->container['latestDataTopUp']) && ($this->container['latestDataTopUp'] < -9223372036854775808)) {
+            $invalidProperties[] = "invalid value for 'latestDataTopUp', must be bigger than or equal to -9223372036854775808.";
+        }
+
         if ($this->container['dataUpdated'] === null) {
             $invalidProperties[] = "'dataUpdated' can't be null";
         }
@@ -900,6 +908,14 @@ class OrderDetailed extends \ProxyRequest\Support\AdditionalProperties implement
         if (is_null($latestDataTopUp)) {
             throw new \InvalidArgumentException('non-nullable latestDataTopUp cannot be null');
         }
+
+        if (($latestDataTopUp > 9223372036854775807)) {
+            throw new \InvalidArgumentException('invalid value for $latestDataTopUp when calling OrderDetailed., must be smaller than or equal to 9223372036854775807.');
+        }
+        if (($latestDataTopUp < -9223372036854775808)) {
+            throw new \InvalidArgumentException('invalid value for $latestDataTopUp when calling OrderDetailed., must be bigger than or equal to -9223372036854775808.');
+        }
+
         $this->container['latestDataTopUp'] = $latestDataTopUp;
 
         return $this;

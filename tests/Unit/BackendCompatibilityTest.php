@@ -41,6 +41,41 @@ final class BackendCompatibilityTest extends TestCase
         return Client::builder()->anonymous()->withHttpClient(new GuzzleClient(['handler' => HandlerStack::create($mock), 'http_errors' => false]))->build();
     }
 
+    public function testExplicitInvoiceTotalsIncludingZeroArePreservedOnTheWire(): void
+    {
+        foreach ([false, true] as $async) {
+            foreach ([null, 0, 2375, 10000000000] as $total) {
+                $data = ['gateway' => 'manual', 'status' => 'paid', 'data' => 1073741824];
+                if (null !== $total) {
+                    $data['priceTotal'] = $total;
+                }
+                $body = new InvoiceCreateRequest($data);
+                self::assertTrue($body->valid(), implode(', ', $body->listInvalidProperties()));
+                $mock = new MockHandler([new Response(201, [], json_encode(self::fixtures()['invoice_full'], JSON_THROW_ON_ERROR))]);
+                $method = $async ? 'createAsync' : 'create';
+                $response = self::client($mock)->invoices()->{$method}($body);
+                if ($async) {
+                    $response->wait();
+                }
+                $sent = json_decode((string) $mock->getLastRequest()->getBody(), true, 512, JSON_THROW_ON_ERROR);
+                if (null === $total) {
+                    self::assertArrayNotHasKey('price_total', $sent);
+                } else {
+                    self::assertSame($total, $sent['price_total']);
+                }
+            }
+        }
+    }
+
+    public function testExplicitInvoiceTotalBoundsRejectNegativeAndExcessiveValues(): void
+    {
+        foreach ([-1, 10000000001] as $total) {
+            $body = new InvoiceCreateRequest(['gateway' => 'manual', 'priceTotal' => $total]);
+            self::assertFalse($body->valid());
+            self::assertStringContainsString('priceTotal', implode(', ', $body->listInvalidProperties()));
+        }
+    }
+
     public function testRuntimeAnalyticsResponsesSyncAndAsync(): void
     {
         $fixtures = json_decode((string) file_get_contents(\dirname(__DIR__) . '/fixtures/analytics-responses.json'), true, 512, JSON_THROW_ON_ERROR);

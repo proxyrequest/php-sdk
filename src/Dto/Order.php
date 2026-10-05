@@ -96,7 +96,7 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
         'dataRemaining' => null,
         'dataSpent' => 'int64',
         'ledgers' => null,
-        'latestDataTopUp' => null,
+        'latestDataTopUp' => 'int64',
         'latestDataTopUpDate' => 'date-time',
         'dataUpdated' => 'date-time',
         'updated' => 'date-time',
@@ -433,6 +433,14 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
         if ($this->container['ledgers'] === null) {
             $invalidProperties[] = "'ledgers' can't be null";
         }
+        if (!is_null($this->container['latestDataTopUp']) && ($this->container['latestDataTopUp'] > 9223372036854775807)) {
+            $invalidProperties[] = "invalid value for 'latestDataTopUp', must be smaller than or equal to 9223372036854775807.";
+        }
+
+        if (!is_null($this->container['latestDataTopUp']) && ($this->container['latestDataTopUp'] < -9223372036854775808)) {
+            $invalidProperties[] = "invalid value for 'latestDataTopUp', must be bigger than or equal to -9223372036854775808.";
+        }
+
         if ($this->container['dataUpdated'] === null) {
             $invalidProperties[] = "'dataUpdated' can't be null";
         }
@@ -842,6 +850,14 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
         if (is_null($latestDataTopUp)) {
             throw new \InvalidArgumentException('non-nullable latestDataTopUp cannot be null');
         }
+
+        if (($latestDataTopUp > 9223372036854775807)) {
+            throw new \InvalidArgumentException('invalid value for $latestDataTopUp when calling Order., must be smaller than or equal to 9223372036854775807.');
+        }
+        if (($latestDataTopUp < -9223372036854775808)) {
+            throw new \InvalidArgumentException('invalid value for $latestDataTopUp when calling Order., must be bigger than or equal to -9223372036854775808.');
+        }
+
         $this->container['latestDataTopUp'] = $latestDataTopUp;
 
         return $this;
