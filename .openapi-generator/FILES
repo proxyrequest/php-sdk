@@ -54,6 +54,7 @@ docs/Model/GenerateProxyRequest.md
 docs/Model/GenerateProxyResponse.md
 docs/Model/GeneratedProxy.md
 docs/Model/GoogleAuthRequest.md
+docs/Model/GoogleConnectRequestRequest.md
 docs/Model/ISP.md
 docs/Model/Invoice.md
 docs/Model/InvoiceCreateRequest.md
@@ -119,6 +120,7 @@ docs/Model/PricingUnitEnum.md
 docs/Model/ProtocolEnum.md
 docs/Model/ProviderBalanceCheckpoint.md
 docs/Model/ProviderDataBalance.md
+docs/Model/ProviderEnum.md
 docs/Model/ProxyGenerationConnectionRequest.md
 docs/Model/ProxyGenerationSessionRequest.md
 docs/Model/ProxyGenerationTargetingRequest.md
@@ -137,6 +139,7 @@ docs/Model/SettingsReferral.md
 docs/Model/SettingsResponse.md
 docs/Model/SeverityEnum.md
 docs/Model/SignUpRequest.md
+docs/Model/SocialAccountState.md
 docs/Model/SubtractDataRequest.md
 docs/Model/TargetingOptions.md
 docs/Model/TelegramConnectionResponse.md
@@ -198,6 +201,7 @@ src/Dto/GenerateProxyRequest.php
 src/Dto/GenerateProxyResponse.php
 src/Dto/GeneratedProxy.php
 src/Dto/GoogleAuthRequest.php
+src/Dto/GoogleConnectRequestRequest.php
 src/Dto/ISP.php
 src/Dto/Invoice.php
 src/Dto/InvoiceCreateRequest.php
@@ -264,6 +268,7 @@ src/Dto/PricingUnitEnum.php
 src/Dto/ProtocolEnum.php
 src/Dto/ProviderBalanceCheckpoint.php
 src/Dto/ProviderDataBalance.php
+src/Dto/ProviderEnum.php
 src/Dto/ProxyGenerationConnectionRequest.php
 src/Dto/ProxyGenerationSessionRequest.php
 src/Dto/ProxyGenerationTargetingRequest.php
@@ -282,6 +287,7 @@ src/Dto/SettingsReferral.php
 src/Dto/SettingsResponse.php
 src/Dto/SeverityEnum.php
 src/Dto/SignUpRequest.php
+src/Dto/SocialAccountState.php
 src/Dto/SubtractDataRequest.php
 src/Dto/TargetingOptions.php
 src/Dto/TelegramConnectionResponse.php

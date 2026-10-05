@@ -68,6 +68,7 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
         'data' => 'int',
         'quantity' => 'int',
         'amount' => 'int',
+        'priceTotal' => 'int',
         'connectionLimit' => 'int',
         'expires' => 'int',
         'companyName' => 'string',
@@ -94,6 +95,7 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
         'data' => null,
         'quantity' => null,
         'amount' => null,
+        'priceTotal' => 'int64',
         'connectionLimit' => null,
         'expires' => null,
         'companyName' => null,
@@ -118,6 +120,7 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
         'data' => false,
         'quantity' => false,
         'amount' => false,
+        'priceTotal' => false,
         'connectionLimit' => false,
         'expires' => false,
         'companyName' => false,
@@ -222,6 +225,7 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
         'data' => 'data',
         'quantity' => 'quantity',
         'amount' => 'amount',
+        'priceTotal' => 'price_total',
         'connectionLimit' => 'connection_limit',
         'expires' => 'expires',
         'companyName' => 'company_name',
@@ -246,6 +250,7 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
         'data' => 'setData',
         'quantity' => 'setQuantity',
         'amount' => 'setAmount',
+        'priceTotal' => 'setPriceTotal',
         'connectionLimit' => 'setConnectionLimit',
         'expires' => 'setExpires',
         'companyName' => 'setCompanyName',
@@ -270,6 +275,7 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
         'data' => 'getData',
         'quantity' => 'getQuantity',
         'amount' => 'getAmount',
+        'priceTotal' => 'getPriceTotal',
         'connectionLimit' => 'getConnectionLimit',
         'expires' => 'getExpires',
         'companyName' => 'getCompanyName',
@@ -345,6 +351,7 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
         $this->setIfExists('data', $data ?? [], null);
         $this->setIfExists('quantity', $data ?? [], null);
         $this->setIfExists('amount', $data ?? [], null);
+        $this->setIfExists('priceTotal', $data ?? [], null);
         $this->setIfExists('connectionLimit', $data ?? [], null);
         $this->setIfExists('expires', $data ?? [], null);
         $this->setIfExists('companyName', $data ?? [], null);
@@ -400,6 +407,14 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
 
         if (!is_null($this->container['countryCode']) && (mb_strlen($this->container['countryCode']) < 1)) {
             $invalidProperties[] = "invalid value for 'countryCode', the character length must be bigger than or equal to 1.";
+        }
+
+        if (!is_null($this->container['priceTotal']) && ($this->container['priceTotal'] > 10000000000)) {
+            $invalidProperties[] = "invalid value for 'priceTotal', must be smaller than or equal to 10000000000.";
+        }
+
+        if (!is_null($this->container['priceTotal']) && ($this->container['priceTotal'] < 1)) {
+            $invalidProperties[] = "invalid value for 'priceTotal', must be bigger than or equal to 1.";
         }
 
         if (!is_null($this->container['connectionLimit']) && ($this->container['connectionLimit'] < -1)) {
@@ -681,7 +696,7 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
     /**
      * Sets data
      *
-     * @param int|null $data Residential proxy data to purchase, in integer bytes (1 GiB = 1073741824). Required with package_id for a residential purchase. A paid purchase funds the recipient's order; it is not a virtual allocation from a parent pool.
+     * @param int|null $data Residential proxy data to purchase, in integer bytes (1 GiB = 1073741824). Use 0 for an unlimited Residential package; its fixed price is not multiplied by volume. Required with package_id for a residential purchase. A paid purchase funds the recipient's order; it is not a virtual allocation from a parent pool.
      *
      * @return self
      */
@@ -745,6 +760,41 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
             throw new \InvalidArgumentException('non-nullable amount cannot be null');
         }
         $this->container['amount'] = $amount;
+
+        return $this;
+    }
+
+    /**
+     * Gets priceTotal
+     *
+     * @return int|null
+     */
+    public function getPriceTotal()
+    {
+        return $this->container['priceTotal'];
+    }
+
+    /**
+     * Sets priceTotal
+     *
+     * @param int|null $priceTotal Optional final invoice total in the smallest currency unit, including tax and discounts. For a balance invoice, this is also the balance credit and takes precedence over amount. Only superusers or active superuser API keys may supply it, including during API-key impersonation; coupon_code cannot be supplied with price_total.
+     *
+     * @return self
+     */
+    public function setPriceTotal($priceTotal)
+    {
+        if (is_null($priceTotal)) {
+            throw new \InvalidArgumentException('non-nullable priceTotal cannot be null');
+        }
+
+        if (($priceTotal > 10000000000)) {
+            throw new \InvalidArgumentException('invalid value for $priceTotal when calling InvoiceCreateRequest., must be smaller than or equal to 10000000000.');
+        }
+        if (($priceTotal < 1)) {
+            throw new \InvalidArgumentException('invalid value for $priceTotal when calling InvoiceCreateRequest., must be bigger than or equal to 1.');
+        }
+
+        $this->container['priceTotal'] = $priceTotal;
 
         return $this;
     }

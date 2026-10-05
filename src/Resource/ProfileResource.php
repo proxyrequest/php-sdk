@@ -84,6 +84,11 @@ class ProfileResource
             'application/x-www-form-urlencoded',
             'multipart/form-data',
         ],
+        'connectGoogle' => [
+            'application/json',
+            'application/x-www-form-urlencoded',
+            'multipart/form-data',
+        ],
         'delete' => [
             'application/json',
         ],
@@ -96,6 +101,9 @@ class ProfileResource
             'application/json',
         ],
         'getTwoFactorStatus' => [
+            'application/json',
+        ],
+        'listSocialAccounts' => [
             'application/json',
         ],
         'setupTwoFactor' => [
@@ -162,7 +170,7 @@ class ProfileResource
      * Change the account password
      *
      * @param  \ProxyRequest\Dto\ChangePasswordRequest $changePasswordRequest changePasswordRequest (required)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['changePassword'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -191,7 +199,7 @@ class ProfileResource
      * Change the account password
      *
      * @param  \ProxyRequest\Dto\ChangePasswordRequest $changePasswordRequest (required)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['changePassword'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -212,7 +220,7 @@ class ProfileResource
      * Change the account password
      *
      * @param  \ProxyRequest\Dto\ChangePasswordRequest $changePasswordRequest (required)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['changePassword'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -234,7 +242,7 @@ class ProfileResource
      * Change the account password
      *
      * @param  \ProxyRequest\Dto\ChangePasswordRequest $changePasswordRequest (required)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['changePassword'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -252,7 +260,7 @@ class ProfileResource
      * Create request for operation 'changePassword'
      *
      * @param  \ProxyRequest\Dto\ChangePasswordRequest $changePasswordRequest (required)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['changePassword'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -360,7 +368,7 @@ class ProfileResource
      * Confirm two-factor authentication
      *
      * @param  \ProxyRequest\Dto\TwoFactorConfirmRequest $twoFactorConfirmRequest twoFactorConfirmRequest (required)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['confirmTwoFactor'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -389,7 +397,7 @@ class ProfileResource
      * Confirm two-factor authentication
      *
      * @param  \ProxyRequest\Dto\TwoFactorConfirmRequest $twoFactorConfirmRequest (required)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['confirmTwoFactor'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -410,7 +418,7 @@ class ProfileResource
      * Confirm two-factor authentication
      *
      * @param  \ProxyRequest\Dto\TwoFactorConfirmRequest $twoFactorConfirmRequest (required)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['confirmTwoFactor'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -432,7 +440,7 @@ class ProfileResource
      * Confirm two-factor authentication
      *
      * @param  \ProxyRequest\Dto\TwoFactorConfirmRequest $twoFactorConfirmRequest (required)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['confirmTwoFactor'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -450,7 +458,7 @@ class ProfileResource
      * Create request for operation 'confirmTwoFactor'
      *
      * @param  \ProxyRequest\Dto\TwoFactorConfirmRequest $twoFactorConfirmRequest (required)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['confirmTwoFactor'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -553,12 +561,205 @@ class ProfileResource
     }
 
     /**
+     * Operation connectGoogle
+     *
+     * Connect Google to the signed-in account
+     *
+     * @param  \ProxyRequest\Dto\GoogleConnectRequestRequest $googleConnectRequestRequest googleConnectRequestRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['connectGoogle'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\SocialAccountState[]|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function connectGoogle($googleConnectRequestRequest, $acceptLanguage = null, string $contentType = self::contentTypes['connectGoogle'][0])
+    {
+        list($response) = $this->connectGoogleWithHttpInfo($googleConnectRequestRequest, $acceptLanguage, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation connectGoogleWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function connectGoogleWithResponse($googleConnectRequestRequest, $acceptLanguage = null, string $contentType = self::contentTypes['connectGoogle'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->connectGoogleWithHttpInfo($googleConnectRequestRequest, $acceptLanguage, $contentType));
+    }
+
+    /**
+     * Operation connectGoogleWithHttpInfo
+     *
+     * Connect Google to the signed-in account
+     *
+     * @param  \ProxyRequest\Dto\GoogleConnectRequestRequest $googleConnectRequestRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['connectGoogle'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\SocialAccountState[]|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function connectGoogleWithHttpInfo($googleConnectRequestRequest, $acceptLanguage = null, string $contentType = self::contentTypes['connectGoogle'][0])
+    {
+        $request = $this->connectGoogleRequest($googleConnectRequestRequest, $acceptLanguage, $contentType);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\SocialAccountState[]',
+));
+    }
+
+    /**
+     * Operation connectGoogleAsync
+     *
+     * Connect Google to the signed-in account
+     *
+     * @param  \ProxyRequest\Dto\GoogleConnectRequestRequest $googleConnectRequestRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['connectGoogle'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function connectGoogleAsync($googleConnectRequestRequest, $acceptLanguage = null, string $contentType = self::contentTypes['connectGoogle'][0])
+    {
+        return $this->connectGoogleAsyncWithHttpInfo($googleConnectRequestRequest, $acceptLanguage, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation connectGoogleAsyncWithHttpInfo
+     *
+     * Connect Google to the signed-in account
+     *
+     * @param  \ProxyRequest\Dto\GoogleConnectRequestRequest $googleConnectRequestRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['connectGoogle'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function connectGoogleAsyncWithHttpInfo($googleConnectRequestRequest, $acceptLanguage = null, string $contentType = self::contentTypes['connectGoogle'][0])
+    {
+        $request = $this->connectGoogleRequest($googleConnectRequestRequest, $acceptLanguage, $contentType);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\SocialAccountState[]',
+));
+    }
+
+    /**
+     * Create request for operation 'connectGoogle'
+     *
+     * @param  \ProxyRequest\Dto\GoogleConnectRequestRequest $googleConnectRequestRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['connectGoogle'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function connectGoogleRequest($googleConnectRequestRequest, $acceptLanguage = null, string $contentType = self::contentTypes['connectGoogle'][0])
+    {
+
+        // verify the required parameter 'googleConnectRequestRequest' is set
+        if ($googleConnectRequestRequest === null || (is_array($googleConnectRequestRequest) && count($googleConnectRequestRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $googleConnectRequestRequest when calling connectGoogle'
+            );
+        }
+
+
+
+        $resourcePath = '/profile/social-accounts/google';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($googleConnectRequestRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \ProxyRequest\Support\Json::encode(ObjectSerializer::sanitizeForSerialization($googleConnectRequestRequest));
+            } else {
+                $httpBody = $googleConnectRequestRequest;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation delete
      *
      * Delete the current account
      *
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -586,7 +787,7 @@ class ProfileResource
      * Delete the current account
      *
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -607,7 +808,7 @@ class ProfileResource
      * Delete the current account
      *
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -629,7 +830,7 @@ class ProfileResource
      * Delete the current account
      *
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -647,7 +848,7 @@ class ProfileResource
      * Create request for operation 'delete'
      *
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -746,7 +947,7 @@ class ProfileResource
      * Disable two-factor authentication
      *
      * @param  \ProxyRequest\Dto\TwoFactorDisableRequest $twoFactorDisableRequest twoFactorDisableRequest (required)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['disableTwoFactor'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -775,7 +976,7 @@ class ProfileResource
      * Disable two-factor authentication
      *
      * @param  \ProxyRequest\Dto\TwoFactorDisableRequest $twoFactorDisableRequest (required)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['disableTwoFactor'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -796,7 +997,7 @@ class ProfileResource
      * Disable two-factor authentication
      *
      * @param  \ProxyRequest\Dto\TwoFactorDisableRequest $twoFactorDisableRequest (required)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['disableTwoFactor'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -818,7 +1019,7 @@ class ProfileResource
      * Disable two-factor authentication
      *
      * @param  \ProxyRequest\Dto\TwoFactorDisableRequest $twoFactorDisableRequest (required)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['disableTwoFactor'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -836,7 +1037,7 @@ class ProfileResource
      * Create request for operation 'disableTwoFactor'
      *
      * @param  \ProxyRequest\Dto\TwoFactorDisableRequest $twoFactorDisableRequest (required)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['disableTwoFactor'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -943,7 +1144,7 @@ class ProfileResource
      *
      * Get the current profile
      *
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -971,7 +1172,7 @@ class ProfileResource
      *
      * Get the current profile
      *
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -991,7 +1192,7 @@ class ProfileResource
      *
      * Get the current profile
      *
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1012,7 +1213,7 @@ class ProfileResource
      *
      * Get the current profile
      *
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1029,7 +1230,7 @@ class ProfileResource
     /**
      * Create request for operation 'get'
      *
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1122,7 +1323,7 @@ class ProfileResource
      *
      * Get two-factor status
      *
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTwoFactorStatus'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -1150,7 +1351,7 @@ class ProfileResource
      *
      * Get two-factor status
      *
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTwoFactorStatus'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -1170,7 +1371,7 @@ class ProfileResource
      *
      * Get two-factor status
      *
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTwoFactorStatus'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1191,7 +1392,7 @@ class ProfileResource
      *
      * Get two-factor status
      *
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTwoFactorStatus'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1208,7 +1409,7 @@ class ProfileResource
     /**
      * Create request for operation 'getTwoFactorStatus'
      *
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTwoFactorStatus'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1297,11 +1498,185 @@ class ProfileResource
     }
 
     /**
+     * Operation listSocialAccounts
+     *
+     * List social account connections
+     *
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listSocialAccounts'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\SocialAccountState[]|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function listSocialAccounts($acceptLanguage = null, string $contentType = self::contentTypes['listSocialAccounts'][0])
+    {
+        list($response) = $this->listSocialAccountsWithHttpInfo($acceptLanguage, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation listSocialAccountsWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function listSocialAccountsWithResponse($acceptLanguage = null, string $contentType = self::contentTypes['listSocialAccounts'][0]): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listSocialAccountsWithHttpInfo($acceptLanguage, $contentType));
+    }
+
+    /**
+     * Operation listSocialAccountsWithHttpInfo
+     *
+     * List social account connections
+     *
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listSocialAccounts'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\SocialAccountState[]|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function listSocialAccountsWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['listSocialAccounts'][0])
+    {
+        $request = $this->listSocialAccountsRequest($acceptLanguage, $contentType);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\SocialAccountState[]',
+));
+    }
+
+    /**
+     * Operation listSocialAccountsAsync
+     *
+     * List social account connections
+     *
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listSocialAccounts'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listSocialAccountsAsync($acceptLanguage = null, string $contentType = self::contentTypes['listSocialAccounts'][0])
+    {
+        return $this->listSocialAccountsAsyncWithHttpInfo($acceptLanguage, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation listSocialAccountsAsyncWithHttpInfo
+     *
+     * List social account connections
+     *
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listSocialAccounts'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listSocialAccountsAsyncWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['listSocialAccounts'][0])
+    {
+        $request = $this->listSocialAccountsRequest($acceptLanguage, $contentType);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\SocialAccountState[]',
+));
+    }
+
+    /**
+     * Create request for operation 'listSocialAccounts'
+     *
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listSocialAccounts'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function listSocialAccountsRequest($acceptLanguage = null, string $contentType = self::contentTypes['listSocialAccounts'][0])
+    {
+
+
+
+        $resourcePath = '/profile/social-accounts';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation setupTwoFactor
      *
      * Prepare two-factor authentication
      *
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  \ProxyRequest\Dto\TwoFactorSetupRequestRequest|null $twoFactorSetupRequestRequest twoFactorSetupRequestRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setupTwoFactor'] to see the possible values for this operation
      *
@@ -1330,7 +1705,7 @@ class ProfileResource
      *
      * Prepare two-factor authentication
      *
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  \ProxyRequest\Dto\TwoFactorSetupRequestRequest|null $twoFactorSetupRequestRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setupTwoFactor'] to see the possible values for this operation
      *
@@ -1351,7 +1726,7 @@ class ProfileResource
      *
      * Prepare two-factor authentication
      *
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  \ProxyRequest\Dto\TwoFactorSetupRequestRequest|null $twoFactorSetupRequestRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setupTwoFactor'] to see the possible values for this operation
      *
@@ -1373,7 +1748,7 @@ class ProfileResource
      *
      * Prepare two-factor authentication
      *
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  \ProxyRequest\Dto\TwoFactorSetupRequestRequest|null $twoFactorSetupRequestRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setupTwoFactor'] to see the possible values for this operation
      *
@@ -1391,7 +1766,7 @@ class ProfileResource
     /**
      * Create request for operation 'setupTwoFactor'
      *
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  \ProxyRequest\Dto\TwoFactorSetupRequestRequest|null $twoFactorSetupRequestRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setupTwoFactor'] to see the possible values for this operation
      *
@@ -1494,7 +1869,7 @@ class ProfileResource
      * Update the current profile
      *
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  \ProxyRequest\Dto\PatchedProfileUpdateRequest|null $patchedProfileUpdateRequest patchedProfileUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['update'] to see the possible values for this operation
      *
@@ -1524,7 +1899,7 @@ class ProfileResource
      * Update the current profile
      *
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  \ProxyRequest\Dto\PatchedProfileUpdateRequest|null $patchedProfileUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['update'] to see the possible values for this operation
      *
@@ -1546,7 +1921,7 @@ class ProfileResource
      * Update the current profile
      *
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  \ProxyRequest\Dto\PatchedProfileUpdateRequest|null $patchedProfileUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['update'] to see the possible values for this operation
      *
@@ -1569,7 +1944,7 @@ class ProfileResource
      * Update the current profile
      *
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  \ProxyRequest\Dto\PatchedProfileUpdateRequest|null $patchedProfileUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['update'] to see the possible values for this operation
      *
@@ -1588,7 +1963,7 @@ class ProfileResource
      * Create request for operation 'update'
      *
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  \ProxyRequest\Dto\PatchedProfileUpdateRequest|null $patchedProfileUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['update'] to see the possible values for this operation
      *

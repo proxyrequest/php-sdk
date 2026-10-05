@@ -333,10 +333,6 @@ class Reward extends \ProxyRequest\Support\AdditionalProperties implements Model
         if ($this->container['created'] === null) {
             $invalidProperties[] = "'created' can't be null";
         }
-        if (!is_null($this->container['balance']) && ($this->container['balance'] > 2147483647)) {
-            $invalidProperties[] = "invalid value for 'balance', must be smaller than or equal to 2147483647.";
-        }
-
         if (!is_null($this->container['balance']) && ($this->container['balance'] < 0)) {
             $invalidProperties[] = "invalid value for 'balance', must be bigger than or equal to 0.";
         }
@@ -472,9 +468,6 @@ class Reward extends \ProxyRequest\Support\AdditionalProperties implements Model
             throw new \InvalidArgumentException('non-nullable balance cannot be null');
         }
 
-        if (($balance > 2147483647)) {
-            throw new \InvalidArgumentException('invalid value for $balance when calling Reward., must be smaller than or equal to 2147483647.');
-        }
         if (($balance < 0)) {
             throw new \InvalidArgumentException('invalid value for $balance when calling Reward., must be bigger than or equal to 0.');
         }

@@ -134,7 +134,7 @@ class NewsResource
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
      * @param  string|null $search Case-insensitive partial search across News fields: &#x60;title&#x60; and &#x60;content&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -166,7 +166,7 @@ class NewsResource
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
      * @param  string|null $search Case-insensitive partial search across News fields: &#x60;title&#x60; and &#x60;content&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -190,7 +190,7 @@ class NewsResource
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
      * @param  string|null $search Case-insensitive partial search across News fields: &#x60;title&#x60; and &#x60;content&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -215,7 +215,7 @@ class NewsResource
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
      * @param  string|null $search Case-insensitive partial search across News fields: &#x60;title&#x60; and &#x60;content&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -236,7 +236,7 @@ class NewsResource
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
      * @param  string|null $search Case-insensitive partial search across News fields: &#x60;title&#x60; and &#x60;content&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException

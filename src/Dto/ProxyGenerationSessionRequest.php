@@ -244,7 +244,7 @@ class ProxyGenerationSessionRequest extends \ProxyRequest\Support\AdditionalProp
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('ttl', $data ?? [], 3600);
+        $this->setIfExists('ttl', $data ?? [], 600);
     }
 
     /**
@@ -278,8 +278,8 @@ class ProxyGenerationSessionRequest extends \ProxyRequest\Support\AdditionalProp
             $invalidProperties[] = "invalid value for 'ttl', must be smaller than or equal to 86400.";
         }
 
-        if (!is_null($this->container['ttl']) && ($this->container['ttl'] < 30)) {
-            $invalidProperties[] = "invalid value for 'ttl', must be bigger than or equal to 30.";
+        if (!is_null($this->container['ttl']) && ($this->container['ttl'] < 1)) {
+            $invalidProperties[] = "invalid value for 'ttl', must be bigger than or equal to 1.";
         }
 
         return $invalidProperties;
@@ -323,8 +323,8 @@ class ProxyGenerationSessionRequest extends \ProxyRequest\Support\AdditionalProp
         if (($ttl > 86400)) {
             throw new \InvalidArgumentException('invalid value for $ttl when calling ProxyGenerationSessionRequest., must be smaller than or equal to 86400.');
         }
-        if (($ttl < 30)) {
-            throw new \InvalidArgumentException('invalid value for $ttl when calling ProxyGenerationSessionRequest., must be bigger than or equal to 30.');
+        if (($ttl < 1)) {
+            throw new \InvalidArgumentException('invalid value for $ttl when calling ProxyGenerationSessionRequest., must be bigger than or equal to 1.');
         }
 
         $this->container['ttl'] = $ttl;

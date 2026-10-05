@@ -45,7 +45,7 @@ $limit = 56; // int | Number of results to return per page.
 $offset = 56; // int | The initial index from which to return the results.
 $ordering = 'ordering_example'; // string | Which field to use when ordering the results.
 $search = 'search_example'; // string | Case-insensitive partial search across News fields: `title` and `content`. Separate multiple terms with spaces or commas; every term must match at least one listed field.
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->list($limit, $offset, $ordering, $search, $acceptLanguage);
@@ -63,7 +63,7 @@ try {
 | **offset** | **int**| The initial index from which to return the results. | [optional] |
 | **ordering** | **string**| Which field to use when ordering the results. | [optional] |
 | **search** | **string**| Case-insensitive partial search across News fields: &#x60;title&#x60; and &#x60;content&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. | [optional] |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 

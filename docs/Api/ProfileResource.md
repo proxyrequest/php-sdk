@@ -8,10 +8,12 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 | ------------- | ------------- | ------------- |
 | [**changePassword()**](ProfileResource.md#changePassword) | **POST** /profile/change-password | Change the account password |
 | [**confirmTwoFactor()**](ProfileResource.md#confirmTwoFactor) | **POST** /profile/2fa/confirm | Confirm two-factor authentication |
+| [**connectGoogle()**](ProfileResource.md#connectGoogle) | **POST** /profile/social-accounts/google | Connect Google to the signed-in account |
 | [**delete()**](ProfileResource.md#delete) | **DELETE** /profile | Delete the current account |
 | [**disableTwoFactor()**](ProfileResource.md#disableTwoFactor) | **POST** /profile/2fa/disable | Disable two-factor authentication |
 | [**get()**](ProfileResource.md#get) | **GET** /profile | Get the current profile |
 | [**getTwoFactorStatus()**](ProfileResource.md#getTwoFactorStatus) | **GET** /profile/2fa/status | Get two-factor status |
+| [**listSocialAccounts()**](ProfileResource.md#listSocialAccounts) | **GET** /profile/social-accounts | List social account connections |
 | [**setupTwoFactor()**](ProfileResource.md#setupTwoFactor) | **POST** /profile/2fa/setup | Prepare two-factor authentication |
 | [**update()**](ProfileResource.md#update) | **PATCH** /profile | Update the current profile |
 
@@ -49,7 +51,7 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
     $config
 );
 $changePasswordRequest = {"old_password":"Previous-Password-42","new_password1":"New-Secure-Password-43","new_password2":"New-Secure-Password-43"}; // \ProxyRequest\Dto\ChangePasswordRequest
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->changePassword($changePasswordRequest, $acceptLanguage);
@@ -64,7 +66,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **changePasswordRequest** | [**\ProxyRequest\Dto\ChangePasswordRequest**](../Model/ChangePasswordRequest.md)|  | |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -116,7 +118,7 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
     $config
 );
 $twoFactorConfirmRequest = {"code":"492031"}; // \ProxyRequest\Dto\TwoFactorConfirmRequest
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->confirmTwoFactor($twoFactorConfirmRequest, $acceptLanguage);
@@ -131,7 +133,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **twoFactorConfirmRequest** | [**\ProxyRequest\Dto\TwoFactorConfirmRequest**](../Model/TwoFactorConfirmRequest.md)|  | |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -140,6 +142,68 @@ try {
 ### Authorization
 
 [StaticAuth](../../README.md#StaticAuth), [BearerAuth](../../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `connectGoogle()`
+
+```php
+connectGoogle($googleConnectRequestRequest, $acceptLanguage): \ProxyRequest\Dto\SocialAccountState[]
+```
+
+Connect Google to the signed-in account
+
+Connect a verified Google identity to the signed-in account after confirming its password.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure Bearer (JWT) authorization: BearerAuth
+$config = ProxyRequest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new ProxyRequest\Api\ProfileResource(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$googleConnectRequestRequest = {"credential":"credential","password":"Correct-Horse-Battery-Staple-42"}; // \ProxyRequest\Dto\GoogleConnectRequestRequest
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+
+try {
+    $result = $apiInstance->connectGoogle($googleConnectRequestRequest, $acceptLanguage);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling ProfileResource->connectGoogle: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **googleConnectRequestRequest** | [**\ProxyRequest\Dto\GoogleConnectRequestRequest**](../Model/GoogleConnectRequestRequest.md)|  | |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+
+### Return type
+
+[**\ProxyRequest\Dto\SocialAccountState[]**](../Model/SocialAccountState.md)
+
+### Authorization
+
+[BearerAuth](../../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -183,7 +247,7 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
     $config
 );
 $ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $apiInstance->delete($ifMatch, $acceptLanguage);
@@ -197,7 +261,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -249,7 +313,7 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
     $config
 );
 $twoFactorDisableRequest = {"password":"Correct-Horse-Battery-Staple-42","code":"492031"}; // \ProxyRequest\Dto\TwoFactorDisableRequest
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->disableTwoFactor($twoFactorDisableRequest, $acceptLanguage);
@@ -264,7 +328,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **twoFactorDisableRequest** | [**\ProxyRequest\Dto\TwoFactorDisableRequest**](../Model/TwoFactorDisableRequest.md)|  | |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -315,7 +379,7 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
     new GuzzleHttp\Client(),
     $config
 );
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->get($acceptLanguage);
@@ -329,7 +393,7 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -380,7 +444,7 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
     new GuzzleHttp\Client(),
     $config
 );
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->getTwoFactorStatus($acceptLanguage);
@@ -394,7 +458,7 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -403,6 +467,66 @@ try {
 ### Authorization
 
 [StaticAuth](../../README.md#StaticAuth), [BearerAuth](../../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `listSocialAccounts()`
+
+```php
+listSocialAccounts($acceptLanguage): \ProxyRequest\Dto\SocialAccountState[]
+```
+
+List social account connections
+
+Returns social sign-in connections and unlink restrictions for the signed-in account.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure Bearer (JWT) authorization: BearerAuth
+$config = ProxyRequest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new ProxyRequest\Api\ProfileResource(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+
+try {
+    $result = $apiInstance->listSocialAccounts($acceptLanguage);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling ProfileResource->listSocialAccounts: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+
+### Return type
+
+[**\ProxyRequest\Dto\SocialAccountState[]**](../Model/SocialAccountState.md)
+
+### Authorization
+
+[BearerAuth](../../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -445,7 +569,7 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
     new GuzzleHttp\Client(),
     $config
 );
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 $twoFactorSetupRequestRequest = {"password":"Correct-Horse-Battery-Staple-42"}; // \ProxyRequest\Dto\TwoFactorSetupRequestRequest
 
 try {
@@ -460,7 +584,7 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 | **twoFactorSetupRequestRequest** | [**\ProxyRequest\Dto\TwoFactorSetupRequestRequest**](../Model/TwoFactorSetupRequestRequest.md)|  | [optional] |
 
 ### Return type
@@ -513,7 +637,7 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
     $config
 );
 $ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 $patchedProfileUpdateRequest = {"first_name":"Dana","last_name":"Morgan"}; // \ProxyRequest\Dto\PatchedProfileUpdateRequest
 
 try {
@@ -529,7 +653,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 | **patchedProfileUpdateRequest** | [**\ProxyRequest\Dto\PatchedProfileUpdateRequest**](../Model/PatchedProfileUpdateRequest.md)|  | [optional] |
 
 ### Return type

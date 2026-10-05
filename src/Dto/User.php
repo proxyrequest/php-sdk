@@ -600,10 +600,6 @@ class User extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
             $invalidProperties[] = "invalid value for 'lastName', the character length must be smaller than or equal to 150.";
         }
 
-        if (!is_null($this->container['balance']) && ($this->container['balance'] > 2147483647)) {
-            $invalidProperties[] = "invalid value for 'balance', must be smaller than or equal to 2147483647.";
-        }
-
         if (!is_null($this->container['balance']) && ($this->container['balance'] < 0)) {
             $invalidProperties[] = "invalid value for 'balance', must be bigger than or equal to 0.";
         }
@@ -658,10 +654,6 @@ class User extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
         if ($this->container['blockedDomains'] === null) {
             $invalidProperties[] = "'blockedDomains' can't be null";
         }
-        if (!is_null($this->container['connectionLimit']) && ($this->container['connectionLimit'] > 2147483647)) {
-            $invalidProperties[] = "invalid value for 'connectionLimit', must be smaller than or equal to 2147483647.";
-        }
-
         if (!is_null($this->container['connectionLimit']) && ($this->container['connectionLimit'] < -1)) {
             $invalidProperties[] = "invalid value for 'connectionLimit', must be bigger than or equal to -1.";
         }
@@ -1024,9 +1016,6 @@ class User extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
             throw new \InvalidArgumentException('non-nullable balance cannot be null');
         }
 
-        if (($balance > 2147483647)) {
-            throw new \InvalidArgumentException('invalid value for $balance when calling User., must be smaller than or equal to 2147483647.');
-        }
         if (($balance < 0)) {
             throw new \InvalidArgumentException('invalid value for $balance when calling User., must be bigger than or equal to 0.');
         }
@@ -1481,9 +1470,6 @@ class User extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
             throw new \InvalidArgumentException('non-nullable connectionLimit cannot be null');
         }
 
-        if (($connectionLimit > 2147483647)) {
-            throw new \InvalidArgumentException('invalid value for $connectionLimit when calling User., must be smaller than or equal to 2147483647.');
-        }
         if (($connectionLimit < -1)) {
             throw new \InvalidArgumentException('invalid value for $connectionLimit when calling User., must be bigger than or equal to -1.');
         }

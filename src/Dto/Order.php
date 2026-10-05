@@ -96,7 +96,7 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
         'dataRemaining' => null,
         'dataSpent' => 'int64',
         'ledgers' => null,
-        'latestDataTopUp' => 'int64',
+        'latestDataTopUp' => null,
         'latestDataTopUpDate' => 'date-time',
         'dataUpdated' => 'date-time',
         'updated' => 'date-time',
@@ -427,25 +427,12 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
         if ($this->container['dataRemaining'] === null) {
             $invalidProperties[] = "'dataRemaining' can't be null";
         }
-        if (!is_null($this->container['dataSpent']) && ($this->container['dataSpent'] > 9223372036854775807)) {
-            $invalidProperties[] = "invalid value for 'dataSpent', must be smaller than or equal to 9223372036854775807.";
+        if ($this->container['dataSpent'] === null) {
+            $invalidProperties[] = "'dataSpent' can't be null";
         }
-
-        if (!is_null($this->container['dataSpent']) && ($this->container['dataSpent'] < -9223372036854775808)) {
-            $invalidProperties[] = "invalid value for 'dataSpent', must be bigger than or equal to -9223372036854775808.";
-        }
-
         if ($this->container['ledgers'] === null) {
             $invalidProperties[] = "'ledgers' can't be null";
         }
-        if (!is_null($this->container['latestDataTopUp']) && ($this->container['latestDataTopUp'] > 9223372036854775807)) {
-            $invalidProperties[] = "invalid value for 'latestDataTopUp', must be smaller than or equal to 9223372036854775807.";
-        }
-
-        if (!is_null($this->container['latestDataTopUp']) && ($this->container['latestDataTopUp'] < -9223372036854775808)) {
-            $invalidProperties[] = "invalid value for 'latestDataTopUp', must be bigger than or equal to -9223372036854775808.";
-        }
-
         if ($this->container['dataUpdated'] === null) {
             $invalidProperties[] = "'dataUpdated' can't be null";
         }
@@ -782,7 +769,7 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
     /**
      * Gets dataSpent
      *
-     * @return int|null
+     * @return int
      */
     public function getDataSpent()
     {
@@ -792,7 +779,7 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
     /**
      * Sets dataSpent
      *
-     * @param int|null $dataSpent Total bytes consumed from this order's data allowance so far. Updated in real time as the customer uses the proxy.
+     * @param int $dataSpent Integer bytes. Root order: its own usage plus usage of existing linked child orders, including inactive ones. Deleted child orders are excluded. Child order: its own usage.
      *
      * @return self
      */
@@ -801,14 +788,6 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
         if (is_null($dataSpent)) {
             throw new \InvalidArgumentException('non-nullable dataSpent cannot be null');
         }
-
-        if (($dataSpent > 9223372036854775807)) {
-            throw new \InvalidArgumentException('invalid value for $dataSpent when calling Order., must be smaller than or equal to 9223372036854775807.');
-        }
-        if (($dataSpent < -9223372036854775808)) {
-            throw new \InvalidArgumentException('invalid value for $dataSpent when calling Order., must be bigger than or equal to -9223372036854775808.');
-        }
-
         $this->container['dataSpent'] = $dataSpent;
 
         return $this;
@@ -863,14 +842,6 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
         if (is_null($latestDataTopUp)) {
             throw new \InvalidArgumentException('non-nullable latestDataTopUp cannot be null');
         }
-
-        if (($latestDataTopUp > 9223372036854775807)) {
-            throw new \InvalidArgumentException('invalid value for $latestDataTopUp when calling Order., must be smaller than or equal to 9223372036854775807.');
-        }
-        if (($latestDataTopUp < -9223372036854775808)) {
-            throw new \InvalidArgumentException('invalid value for $latestDataTopUp when calling Order., must be bigger than or equal to -9223372036854775808.');
-        }
-
         $this->container['latestDataTopUp'] = $latestDataTopUp;
 
         return $this;

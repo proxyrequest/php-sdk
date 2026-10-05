@@ -149,7 +149,7 @@ class AnalyticsResource
      * @param  int|null $offset Zero-based number of matching records to skip. (optional)
      * @param  string|null $packageId Restrict results to one purchased package. (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getConnections'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -181,7 +181,7 @@ class AnalyticsResource
      * @param  int|null $offset Zero-based number of matching records to skip. (optional)
      * @param  string|null $packageId Restrict results to one purchased package. (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getConnections'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -205,7 +205,7 @@ class AnalyticsResource
      * @param  int|null $offset Zero-based number of matching records to skip. (optional)
      * @param  string|null $packageId Restrict results to one purchased package. (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getConnections'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -230,7 +230,7 @@ class AnalyticsResource
      * @param  int|null $offset Zero-based number of matching records to skip. (optional)
      * @param  string|null $packageId Restrict results to one purchased package. (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getConnections'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -251,7 +251,7 @@ class AnalyticsResource
      * @param  int|null $offset Zero-based number of matching records to skip. (optional)
      * @param  string|null $packageId Restrict results to one purchased package. (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getConnections'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -392,7 +392,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOverall'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -428,7 +428,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOverall'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -456,7 +456,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOverall'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -485,7 +485,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOverall'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -510,7 +510,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOverall'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -692,7 +692,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  int|null $type Transaction type identifier. Defaults to data transactions. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTransactions'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -729,7 +729,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  int|null $type Transaction type identifier. Defaults to data transactions. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTransactions'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -758,7 +758,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  int|null $type Transaction type identifier. Defaults to data transactions. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTransactions'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -788,7 +788,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  int|null $type Transaction type identifier. Defaults to data transactions. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTransactions'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -814,7 +814,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  int|null $type Transaction type identifier. Defaults to data transactions. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTransactions'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1014,7 +1014,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDomains'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -1054,7 +1054,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDomains'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -1086,7 +1086,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDomains'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1119,7 +1119,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDomains'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1148,7 +1148,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDomains'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1375,7 +1375,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listFeed'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -1417,7 +1417,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listFeed'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -1451,7 +1451,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listFeed'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1486,7 +1486,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listFeed'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1517,7 +1517,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listFeed'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1764,7 +1764,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listLogs'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -1806,7 +1806,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listLogs'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
@@ -1840,7 +1840,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listLogs'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1875,7 +1875,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listLogs'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1906,7 +1906,7 @@ class AnalyticsResource
      * @param  \DateTimeInterface|string|int|float|null $start Inclusive start of the reporting window. Defaults to a recent window. Accepts ISO 8601 datetime strings with or without a timezone offset (including Z and fractional seconds), YYYY-MM-DD HH:MM:SS, DD-MM-YYYY HH:MM:SS, YYYY-MM-DD, DD-MM-YYYY, or a Unix timestamp in seconds (including fractional seconds, not milliseconds). Datetime strings without an offset and date-only strings use the requested timezone; explicit offsets are converted to that timezone. Date-only values start at midnight. Seconds and fractional seconds are discarded, rounding the reporting boundary down to the minute. Prefer ISO 8601 with an explicit offset for unambiguous timezone handling. (optional)
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
-     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listLogs'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException

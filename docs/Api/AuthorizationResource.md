@@ -38,7 +38,7 @@ $apiInstance = new ProxyRequest\Api\AuthorizationResource(
     new GuzzleHttp\Client()
 );
 $loginRequest = {"email":"developer@example.com","password":"Correct-Horse-Battery-Staple-42"}; // \ProxyRequest\Dto\LoginRequest
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->login($loginRequest, $acceptLanguage);
@@ -53,7 +53,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **loginRequest** | [**\ProxyRequest\Dto\LoginRequest**](../Model/LoginRequest.md)|  | |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -96,7 +96,7 @@ $apiInstance = new ProxyRequest\Api\AuthorizationResource(
     new GuzzleHttp\Client()
 );
 $googleAuthRequest = {"credential":"google-id-token"}; // \ProxyRequest\Dto\GoogleAuthRequest
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->loginWithGoogle($googleAuthRequest, $acceptLanguage);
@@ -111,7 +111,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **googleAuthRequest** | [**\ProxyRequest\Dto\GoogleAuthRequest**](../Model/GoogleAuthRequest.md)|  | |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -154,7 +154,7 @@ $apiInstance = new ProxyRequest\Api\AuthorizationResource(
     new GuzzleHttp\Client()
 );
 $recoverPasswordRequest = {"email":"developer@example.com","token":"turnstile-response-token"}; // \ProxyRequest\Dto\RecoverPasswordRequest
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->recoverPassword($recoverPasswordRequest, $acceptLanguage);
@@ -169,7 +169,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **recoverPasswordRequest** | [**\ProxyRequest\Dto\RecoverPasswordRequest**](../Model/RecoverPasswordRequest.md)|  | |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -212,7 +212,7 @@ $apiInstance = new ProxyRequest\Api\AuthorizationResource(
     new GuzzleHttp\Client()
 );
 $tokenRefreshRequest = {"refresh":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsInVzZXJfaWQiOiI1NTBlODQwMC1lMjliLTQxZDQtYTcxNi00NDY2NTU0NDAwMDEifQ.example-signature"}; // \ProxyRequest\Dto\TokenRefreshRequest
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->refresh($tokenRefreshRequest, $acceptLanguage);
@@ -227,7 +227,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **tokenRefreshRequest** | [**\ProxyRequest\Dto\TokenRefreshRequest**](../Model/TokenRefreshRequest.md)|  | |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -270,7 +270,7 @@ $apiInstance = new ProxyRequest\Api\AuthorizationResource(
     new GuzzleHttp\Client()
 );
 $signUpRequest = {"email":"developer@example.com","password":"Correct-Horse-Battery-Staple-42","token":"turnstile-response-token","referral_code":"FRIEND2026","affiliate_code":"DEVCOMMUNITY"}; // \ProxyRequest\Dto\SignUpRequest
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->signup($signUpRequest, $acceptLanguage);
@@ -285,7 +285,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **signUpRequest** | [**\ProxyRequest\Dto\SignUpRequest**](../Model/SignUpRequest.md)|  | |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -328,7 +328,7 @@ $apiInstance = new ProxyRequest\Api\AuthorizationResource(
     new GuzzleHttp\Client()
 );
 $verifyOTPRequest = {"challenge":"a-single-use-challenge-returned-by-login","code":"492031"}; // \ProxyRequest\Dto\VerifyOTPRequest
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->verifyOtp($verifyOTPRequest, $acceptLanguage);
@@ -343,7 +343,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **verifyOTPRequest** | [**\ProxyRequest\Dto\VerifyOTPRequest**](../Model/VerifyOTPRequest.md)|  | |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 

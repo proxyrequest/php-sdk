@@ -20,6 +20,9 @@ Name | Type | Description | Notes
 **pricingUnit** | [**\ProxyRequest\Dto\PricingUnitEnum**](PricingUnitEnum.md) | Unit customers purchase — determines how the billing model amounts are interpreted. * &#x60;data&#x60; - Data * &#x60;proxy&#x60; - Proxy | [optional]
 **billingCycle** | **int** | Number of days before purchased data expires. Set to -1 for data that never expires. 30 monthly -1 never expires |
 **billingModel** | **array<string,mixed>** |  | [readonly]
+**isUnlimitedData** | **bool** | When enabled, users on this package have no data cap. The proxy will not enforce any bandwidth limit. | [optional]
+**billingUnlimited** | **int** | Price charged for unlimited data access on this package. Set to 0 to disable unlimited option. | [optional]
+**priceRequiresConfiguration** | **bool** |  | [readonly]
 **commissionRate** | **float** | Reseller commission rate as a percentage of the sale price. Applies to all purchases of this package. 10.00 → 10 percent commission on every purchase | [optional]
 **commissionType** | [**\ProxyRequest\Dto\CommissionTypeEnum**](CommissionTypeEnum.md) | How the commission rate is applied to reseller sales. Fixed a fixed percentage regardless of sale amount Flexible rate may vary based on negotiated reseller terms * &#x60;flexible&#x60; - Flexible * &#x60;percentage&#x60; - Percentage * &#x60;fixed&#x60; - Fixed | [optional]
 **targetingOptions** | [**\ProxyRequest\Dto\TargetingOptions**](TargetingOptions.md) |  | [readonly]

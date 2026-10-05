@@ -48,7 +48,7 @@ $apiInstance = new ProxyRequest\Api\OrdersResource(
 $id = 'id_example'; // string | A unique value identifying this Order.
 $idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
 $ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $apiInstance->delete($id, $idempotencyKey, $ifMatch, $acceptLanguage);
@@ -64,7 +64,7 @@ try {
 | **id** | **string**| A unique value identifying this Order. | |
 | **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
 | **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -116,7 +116,7 @@ $apiInstance = new ProxyRequest\Api\OrdersResource(
     $config
 );
 $id = 'id_example'; // string | A unique value identifying this Order.
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->get($id, $acceptLanguage);
@@ -131,7 +131,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**| A unique value identifying this Order. | |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -191,7 +191,7 @@ $packageType = 'packageType_example'; // string | * `static` - Static * `residen
 $search = 'search_example'; // string | Case-insensitive partial search across Order fields: `id`, `alias`, `internal_id`, and `proxy_password`. Separate multiple terms with spaces or commas; every term must match at least one listed field.
 $userEmail = 'userEmail_example'; // string
 $userId = 'userId_example'; // string
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->list($limit, $offset, $ordering, $packageAlias, $packageId, $packageType, $search, $userEmail, $userId, $acceptLanguage);
@@ -214,7 +214,7 @@ try {
 | **search** | **string**| Case-insensitive partial search across Order fields: &#x60;id&#x60;, &#x60;alias&#x60;, &#x60;internal_id&#x60;, and &#x60;proxy_password&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. | [optional] |
 | **userEmail** | **string**|  | [optional] |
 | **userId** | **string**|  | [optional] |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -257,7 +257,7 @@ $apiInstance = new ProxyRequest\Api\OrdersResource(
     new GuzzleHttp\Client()
 );
 $resetPasswordRequest = {"order_id":"550e8400-e29b-41d4-a716-446655440003"}; // \ProxyRequest\Dto\ResetPasswordRequest
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->resetPassword($resetPasswordRequest, $acceptLanguage);
@@ -272,7 +272,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **resetPasswordRequest** | [**\ProxyRequest\Dto\ResetPasswordRequest**](../Model/ResetPasswordRequest.md)|  | |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -325,7 +325,7 @@ $apiInstance = new ProxyRequest\Api\OrdersResource(
 );
 $id = 'id_example'; // string | A unique value identifying this Order.
 $ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 $patchedOrderAutoRenewalRequest = {"auto_renewal_percentage":1,"auto_renewal_data":1}; // \ProxyRequest\Dto\PatchedOrderAutoRenewalRequest
 
 try {
@@ -342,7 +342,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**| A unique value identifying this Order. | |
 | **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 | **patchedOrderAutoRenewalRequest** | [**\ProxyRequest\Dto\PatchedOrderAutoRenewalRequest**](../Model/PatchedOrderAutoRenewalRequest.md)|  | [optional] |
 
 ### Return type

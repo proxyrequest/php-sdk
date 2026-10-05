@@ -1,6 +1,6 @@
 <?php
 /**
- * CouponCalculatePriceRequest
+ * GoogleConnectRequestRequest
  *
  * PHP version 8.1
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \ProxyRequest\ObjectSerializer;
 
 /**
- * CouponCalculatePriceRequest Class Doc Comment
+ * GoogleConnectRequestRequest Class Doc Comment
  *
  * @category Class
  * @package  ProxyRequest
@@ -40,7 +40,7 @@ use \ProxyRequest\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class CouponCalculatePriceRequest extends \ProxyRequest\Support\AdditionalProperties implements ModelInterface, ArrayAccess, \JsonSerializable
+class GoogleConnectRequestRequest extends \ProxyRequest\Support\AdditionalProperties implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class CouponCalculatePriceRequest extends \ProxyRequest\Support\AdditionalProper
      *
      * @var string
      */
-    protected static $openAPIModelName = 'CouponCalculatePriceRequest';
+    protected static $openAPIModelName = 'GoogleConnectRequestRequest';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -57,9 +57,8 @@ class CouponCalculatePriceRequest extends \ProxyRequest\Support\AdditionalProper
      * @var string[]
      */
     protected static $openAPITypes = [
-        'packageId' => 'string',
-        'couponCode' => 'string',
-        'data' => 'int'
+        'credential' => 'string',
+        'password' => 'string'
     ];
 
     /**
@@ -70,9 +69,8 @@ class CouponCalculatePriceRequest extends \ProxyRequest\Support\AdditionalProper
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'packageId' => 'uuid',
-        'couponCode' => null,
-        'data' => null
+        'credential' => null,
+        'password' => null
     ];
 
     /**
@@ -81,9 +79,8 @@ class CouponCalculatePriceRequest extends \ProxyRequest\Support\AdditionalProper
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'packageId' => false,
-        'couponCode' => false,
-        'data' => false
+        'credential' => false,
+        'password' => false
     ];
 
     /**
@@ -172,9 +169,8 @@ class CouponCalculatePriceRequest extends \ProxyRequest\Support\AdditionalProper
      * @var string[]
      */
     protected static $attributeMap = [
-        'packageId' => 'package_id',
-        'couponCode' => 'coupon_code',
-        'data' => 'data'
+        'credential' => 'credential',
+        'password' => 'password'
     ];
 
     /**
@@ -183,9 +179,8 @@ class CouponCalculatePriceRequest extends \ProxyRequest\Support\AdditionalProper
      * @var string[]
      */
     protected static $setters = [
-        'packageId' => 'setPackageId',
-        'couponCode' => 'setCouponCode',
-        'data' => 'setData'
+        'credential' => 'setCredential',
+        'password' => 'setPassword'
     ];
 
     /**
@@ -194,9 +189,8 @@ class CouponCalculatePriceRequest extends \ProxyRequest\Support\AdditionalProper
      * @var string[]
      */
     protected static $getters = [
-        'packageId' => 'getPackageId',
-        'couponCode' => 'getCouponCode',
-        'data' => 'getData'
+        'credential' => 'getCredential',
+        'password' => 'getPassword'
     ];
 
     /**
@@ -256,9 +250,8 @@ class CouponCalculatePriceRequest extends \ProxyRequest\Support\AdditionalProper
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('packageId', $data ?? [], null);
-        $this->setIfExists('couponCode', $data ?? [], null);
-        $this->setIfExists('data', $data ?? [], null);
+        $this->setIfExists('credential', $data ?? [], null);
+        $this->setIfExists('password', $data ?? [], null);
     }
 
     /**
@@ -288,22 +281,26 @@ class CouponCalculatePriceRequest extends \ProxyRequest\Support\AdditionalProper
     {
         $invalidProperties = [];
 
-        if ($this->container['couponCode'] === null) {
-            $invalidProperties[] = "'couponCode' can't be null";
+        if ($this->container['credential'] === null) {
+            $invalidProperties[] = "'credential' can't be null";
         }
-        if ((mb_strlen($this->container['couponCode']) > 64)) {
-            $invalidProperties[] = "invalid value for 'couponCode', the character length must be smaller than or equal to 64.";
-        }
-
-        if ((mb_strlen($this->container['couponCode']) < 1)) {
-            $invalidProperties[] = "invalid value for 'couponCode', the character length must be bigger than or equal to 1.";
+        if ((mb_strlen($this->container['credential']) > 16384)) {
+            $invalidProperties[] = "invalid value for 'credential', the character length must be smaller than or equal to 16384.";
         }
 
-        if ($this->container['data'] === null) {
-            $invalidProperties[] = "'data' can't be null";
+        if ((mb_strlen($this->container['credential']) < 1)) {
+            $invalidProperties[] = "invalid value for 'credential', the character length must be bigger than or equal to 1.";
         }
-        if (($this->container['data'] < 0)) {
-            $invalidProperties[] = "invalid value for 'data', must be bigger than or equal to 0.";
+
+        if ($this->container['password'] === null) {
+            $invalidProperties[] = "'password' can't be null";
+        }
+        if ((mb_strlen($this->container['password']) > 128)) {
+            $invalidProperties[] = "invalid value for 'password', the character length must be smaller than or equal to 128.";
+        }
+
+        if ((mb_strlen($this->container['password']) < 1)) {
+            $invalidProperties[] = "invalid value for 'password', the character length must be bigger than or equal to 1.";
         }
 
         return $invalidProperties;
@@ -322,94 +319,69 @@ class CouponCalculatePriceRequest extends \ProxyRequest\Support\AdditionalProper
 
 
     /**
-     * Gets packageId
-     *
-     * @return string|null
-     */
-    public function getPackageId()
-    {
-        return $this->container['packageId'];
-    }
-
-    /**
-     * Sets packageId
-     *
-     * @param string|null $packageId packageId
-     *
-     * @return self
-     */
-    public function setPackageId($packageId)
-    {
-        if (is_null($packageId)) {
-            throw new \InvalidArgumentException('non-nullable packageId cannot be null');
-        }
-        $this->container['packageId'] = $packageId;
-
-        return $this;
-    }
-
-    /**
-     * Gets couponCode
+     * Gets credential
      *
      * @return string
      */
-    public function getCouponCode()
+    public function getCredential()
     {
-        return $this->container['couponCode'];
+        return $this->container['credential'];
     }
 
     /**
-     * Sets couponCode
+     * Sets credential
      *
-     * @param string $couponCode couponCode
+     * @param string $credential credential
      *
      * @return self
      */
-    public function setCouponCode($couponCode)
+    public function setCredential($credential)
     {
-        if (is_null($couponCode)) {
-            throw new \InvalidArgumentException('non-nullable couponCode cannot be null');
+        if (is_null($credential)) {
+            throw new \InvalidArgumentException('non-nullable credential cannot be null');
         }
-        if ((mb_strlen($couponCode) > 64)) {
-            throw new \InvalidArgumentException('invalid length for $couponCode when calling CouponCalculatePriceRequest., must be smaller than or equal to 64.');
+        if ((mb_strlen($credential) > 16384)) {
+            throw new \InvalidArgumentException('invalid length for $credential when calling GoogleConnectRequestRequest., must be smaller than or equal to 16384.');
         }
-        if ((mb_strlen($couponCode) < 1)) {
-            throw new \InvalidArgumentException('invalid length for $couponCode when calling CouponCalculatePriceRequest., must be bigger than or equal to 1.');
+        if ((mb_strlen($credential) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $credential when calling GoogleConnectRequestRequest., must be bigger than or equal to 1.');
         }
 
-        $this->container['couponCode'] = $couponCode;
+        $this->container['credential'] = $credential;
 
         return $this;
     }
 
     /**
-     * Gets data
+     * Gets password
      *
-     * @return int
+     * @return string
      */
-    public function getData()
+    public function getPassword()
     {
-        return $this->container['data'];
+        return $this->container['password'];
     }
 
     /**
-     * Sets data
+     * Sets password
      *
-     * @param int $data Bytes; zero only for an unlimited Residential package.
+     * @param string $password password
      *
      * @return self
      */
-    public function setData($data)
+    public function setPassword($password)
     {
-        if (is_null($data)) {
-            throw new \InvalidArgumentException('non-nullable data cannot be null');
+        if (is_null($password)) {
+            throw new \InvalidArgumentException('non-nullable password cannot be null');
+        }
+        if ((mb_strlen($password) > 128)) {
+            throw new \InvalidArgumentException('invalid length for $password when calling GoogleConnectRequestRequest., must be smaller than or equal to 128.');
+        }
+        if ((mb_strlen($password) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $password when calling GoogleConnectRequestRequest., must be bigger than or equal to 1.');
         }
 
-        if (($data < 0)) {
-            throw new \InvalidArgumentException('invalid value for $data when calling CouponCalculatePriceRequest., must be bigger than or equal to 0.');
-        }
-
-        $this->container['data'] = $data;
+        $this->container['password'] = $password;
 
         return $this;
     }

@@ -1,6 +1,6 @@
 <?php
 /**
- * CouponCalculatePriceRequest
+ * SocialAccountState
  *
  * PHP version 8.1
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \ProxyRequest\ObjectSerializer;
 
 /**
- * CouponCalculatePriceRequest Class Doc Comment
+ * SocialAccountState Class Doc Comment
  *
  * @category Class
  * @package  ProxyRequest
@@ -40,7 +40,7 @@ use \ProxyRequest\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class CouponCalculatePriceRequest extends \ProxyRequest\Support\AdditionalProperties implements ModelInterface, ArrayAccess, \JsonSerializable
+class SocialAccountState extends \ProxyRequest\Support\AdditionalProperties implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class CouponCalculatePriceRequest extends \ProxyRequest\Support\AdditionalProper
      *
      * @var string
      */
-    protected static $openAPIModelName = 'CouponCalculatePriceRequest';
+    protected static $openAPIModelName = 'SocialAccountState';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -57,9 +57,10 @@ class CouponCalculatePriceRequest extends \ProxyRequest\Support\AdditionalProper
      * @var string[]
      */
     protected static $openAPITypes = [
-        'packageId' => 'string',
-        'couponCode' => 'string',
-        'data' => 'int'
+        'provider' => '\ProxyRequest\Dto\ProviderEnum',
+        'linked' => 'bool',
+        'canUnlink' => 'bool',
+        'unlinkBlockReason' => 'string'
     ];
 
     /**
@@ -70,9 +71,10 @@ class CouponCalculatePriceRequest extends \ProxyRequest\Support\AdditionalProper
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'packageId' => 'uuid',
-        'couponCode' => null,
-        'data' => null
+        'provider' => null,
+        'linked' => null,
+        'canUnlink' => null,
+        'unlinkBlockReason' => null
     ];
 
     /**
@@ -81,9 +83,10 @@ class CouponCalculatePriceRequest extends \ProxyRequest\Support\AdditionalProper
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'packageId' => false,
-        'couponCode' => false,
-        'data' => false
+        'provider' => false,
+        'linked' => false,
+        'canUnlink' => false,
+        'unlinkBlockReason' => false
     ];
 
     /**
@@ -172,9 +175,10 @@ class CouponCalculatePriceRequest extends \ProxyRequest\Support\AdditionalProper
      * @var string[]
      */
     protected static $attributeMap = [
-        'packageId' => 'package_id',
-        'couponCode' => 'coupon_code',
-        'data' => 'data'
+        'provider' => 'provider',
+        'linked' => 'linked',
+        'canUnlink' => 'can_unlink',
+        'unlinkBlockReason' => 'unlink_block_reason'
     ];
 
     /**
@@ -183,9 +187,10 @@ class CouponCalculatePriceRequest extends \ProxyRequest\Support\AdditionalProper
      * @var string[]
      */
     protected static $setters = [
-        'packageId' => 'setPackageId',
-        'couponCode' => 'setCouponCode',
-        'data' => 'setData'
+        'provider' => 'setProvider',
+        'linked' => 'setLinked',
+        'canUnlink' => 'setCanUnlink',
+        'unlinkBlockReason' => 'setUnlinkBlockReason'
     ];
 
     /**
@@ -194,9 +199,10 @@ class CouponCalculatePriceRequest extends \ProxyRequest\Support\AdditionalProper
      * @var string[]
      */
     protected static $getters = [
-        'packageId' => 'getPackageId',
-        'couponCode' => 'getCouponCode',
-        'data' => 'getData'
+        'provider' => 'getProvider',
+        'linked' => 'getLinked',
+        'canUnlink' => 'getCanUnlink',
+        'unlinkBlockReason' => 'getUnlinkBlockReason'
     ];
 
     /**
@@ -256,9 +262,10 @@ class CouponCalculatePriceRequest extends \ProxyRequest\Support\AdditionalProper
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('packageId', $data ?? [], null);
-        $this->setIfExists('couponCode', $data ?? [], null);
-        $this->setIfExists('data', $data ?? [], null);
+        $this->setIfExists('provider', $data ?? [], null);
+        $this->setIfExists('linked', $data ?? [], null);
+        $this->setIfExists('canUnlink', $data ?? [], null);
+        $this->setIfExists('unlinkBlockReason', $data ?? [], null);
     }
 
     /**
@@ -288,24 +295,18 @@ class CouponCalculatePriceRequest extends \ProxyRequest\Support\AdditionalProper
     {
         $invalidProperties = [];
 
-        if ($this->container['couponCode'] === null) {
-            $invalidProperties[] = "'couponCode' can't be null";
+        if ($this->container['provider'] === null) {
+            $invalidProperties[] = "'provider' can't be null";
         }
-        if ((mb_strlen($this->container['couponCode']) > 64)) {
-            $invalidProperties[] = "invalid value for 'couponCode', the character length must be smaller than or equal to 64.";
+        if ($this->container['linked'] === null) {
+            $invalidProperties[] = "'linked' can't be null";
         }
-
-        if ((mb_strlen($this->container['couponCode']) < 1)) {
-            $invalidProperties[] = "invalid value for 'couponCode', the character length must be bigger than or equal to 1.";
+        if ($this->container['canUnlink'] === null) {
+            $invalidProperties[] = "'canUnlink' can't be null";
         }
-
-        if ($this->container['data'] === null) {
-            $invalidProperties[] = "'data' can't be null";
+        if ($this->container['unlinkBlockReason'] === null) {
+            $invalidProperties[] = "'unlinkBlockReason' can't be null";
         }
-        if (($this->container['data'] < 0)) {
-            $invalidProperties[] = "invalid value for 'data', must be bigger than or equal to 0.";
-        }
-
         return $invalidProperties;
     }
 
@@ -322,94 +323,109 @@ class CouponCalculatePriceRequest extends \ProxyRequest\Support\AdditionalProper
 
 
     /**
-     * Gets packageId
+     * Gets provider
      *
-     * @return string|null
+     * @return \ProxyRequest\Dto\ProviderEnum
      */
-    public function getPackageId()
+    public function getProvider()
     {
-        return $this->container['packageId'];
+        return $this->container['provider'];
     }
 
     /**
-     * Sets packageId
+     * Sets provider
      *
-     * @param string|null $packageId packageId
+     * @param \ProxyRequest\Dto\ProviderEnum $provider provider
      *
      * @return self
      */
-    public function setPackageId($packageId)
+    public function setProvider($provider)
     {
-        if (is_null($packageId)) {
-            throw new \InvalidArgumentException('non-nullable packageId cannot be null');
+        if (is_null($provider)) {
+            throw new \InvalidArgumentException('non-nullable provider cannot be null');
         }
-        $this->container['packageId'] = $packageId;
+        $this->container['provider'] = $provider;
 
         return $this;
     }
 
     /**
-     * Gets couponCode
+     * Gets linked
+     *
+     * @return bool
+     */
+    public function getLinked()
+    {
+        return $this->container['linked'];
+    }
+
+    /**
+     * Sets linked
+     *
+     * @param bool $linked linked
+     *
+     * @return self
+     */
+    public function setLinked($linked)
+    {
+        if (is_null($linked)) {
+            throw new \InvalidArgumentException('non-nullable linked cannot be null');
+        }
+        $this->container['linked'] = $linked;
+
+        return $this;
+    }
+
+    /**
+     * Gets canUnlink
+     *
+     * @return bool
+     */
+    public function getCanUnlink()
+    {
+        return $this->container['canUnlink'];
+    }
+
+    /**
+     * Sets canUnlink
+     *
+     * @param bool $canUnlink canUnlink
+     *
+     * @return self
+     */
+    public function setCanUnlink($canUnlink)
+    {
+        if (is_null($canUnlink)) {
+            throw new \InvalidArgumentException('non-nullable canUnlink cannot be null');
+        }
+        $this->container['canUnlink'] = $canUnlink;
+
+        return $this;
+    }
+
+    /**
+     * Gets unlinkBlockReason
      *
      * @return string
      */
-    public function getCouponCode()
+    public function getUnlinkBlockReason()
     {
-        return $this->container['couponCode'];
+        return $this->container['unlinkBlockReason'];
     }
 
     /**
-     * Sets couponCode
+     * Sets unlinkBlockReason
      *
-     * @param string $couponCode couponCode
+     * @param string $unlinkBlockReason unlinkBlockReason
      *
      * @return self
      */
-    public function setCouponCode($couponCode)
+    public function setUnlinkBlockReason($unlinkBlockReason)
     {
-        if (is_null($couponCode)) {
-            throw new \InvalidArgumentException('non-nullable couponCode cannot be null');
+        if (is_null($unlinkBlockReason)) {
+            throw new \InvalidArgumentException('non-nullable unlinkBlockReason cannot be null');
         }
-        if ((mb_strlen($couponCode) > 64)) {
-            throw new \InvalidArgumentException('invalid length for $couponCode when calling CouponCalculatePriceRequest., must be smaller than or equal to 64.');
-        }
-        if ((mb_strlen($couponCode) < 1)) {
-            throw new \InvalidArgumentException('invalid length for $couponCode when calling CouponCalculatePriceRequest., must be bigger than or equal to 1.');
-        }
-
-        $this->container['couponCode'] = $couponCode;
-
-        return $this;
-    }
-
-    /**
-     * Gets data
-     *
-     * @return int
-     */
-    public function getData()
-    {
-        return $this->container['data'];
-    }
-
-    /**
-     * Sets data
-     *
-     * @param int $data Bytes; zero only for an unlimited Residential package.
-     *
-     * @return self
-     */
-    public function setData($data)
-    {
-        if (is_null($data)) {
-            throw new \InvalidArgumentException('non-nullable data cannot be null');
-        }
-
-        if (($data < 0)) {
-            throw new \InvalidArgumentException('invalid value for $data when calling CouponCalculatePriceRequest., must be bigger than or equal to 0.');
-        }
-
-        $this->container['data'] = $data;
+        $this->container['unlinkBlockReason'] = $unlinkBlockReason;
 
         return $this;
     }

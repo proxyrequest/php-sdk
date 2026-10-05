@@ -42,7 +42,7 @@ $apiInstance = new ProxyRequest\Api\ProxiesResource(
     $config
 );
 $generateProxyRequest = {"package_id":"550e8400-e29b-41d4-a716-446655440002","quantity":2,"targeting":{"country":"us","region":"california","city":"los_angeles","isp":"comcast"},"connection":{"protocol":"http","format":"{host}:{port}:{username}:{password}"},"session":{"ttl":60}}; // \ProxyRequest\Dto\GenerateProxyRequest
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->generate($generateProxyRequest, $acceptLanguage);
@@ -57,7 +57,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **generateProxyRequest** | [**\ProxyRequest\Dto\GenerateProxyRequest**](../Model/GenerateProxyRequest.md)|  | |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 

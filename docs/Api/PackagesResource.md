@@ -49,7 +49,7 @@ $ordering = 'ordering_example'; // string | Which field to use when ordering the
 $pricingUnit = 'pricingUnit_example'; // string | Unit customers purchase — determines how the billing model amounts are interpreted. * `data` - Data * `proxy` - Proxy
 $search = 'search_example'; // string | Case-insensitive partial search across Package fields: `name` and `alias`. Separate multiple terms with spaces or commas; every term must match at least one listed field.
 $type = 'type_example'; // string | * `static` - Static * `residential` - Residential
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->list($alias, $limit, $offset, $ordering, $pricingUnit, $search, $type, $acceptLanguage);
@@ -70,7 +70,7 @@ try {
 | **pricingUnit** | **string**| Unit customers purchase — determines how the billing model amounts are interpreted. * &#x60;data&#x60; - Data * &#x60;proxy&#x60; - Proxy | [optional] |
 | **search** | **string**| Case-insensitive partial search across Package fields: &#x60;name&#x60; and &#x60;alias&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. | [optional] |
 | **type** | **string**| * &#x60;static&#x60; - Static * &#x60;residential&#x60; - Residential | [optional] |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -127,7 +127,7 @@ $offset = 56; // int | The initial index from which to return the results.
 $ordering = 'ordering_example'; // string | Which field to use when ordering the results.
 $pricingUnit = 'pricingUnit_example'; // string | Unit customers purchase — determines how the billing model amounts are interpreted. * `data` - Data * `proxy` - Proxy
 $type = 'type_example'; // string | * `static` - Static * `residential` - Residential
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->listCommissions($alias, $limit, $offset, $ordering, $pricingUnit, $type, $acceptLanguage);
@@ -147,7 +147,7 @@ try {
 | **ordering** | **string**| Which field to use when ordering the results. | [optional] |
 | **pricingUnit** | **string**| Unit customers purchase — determines how the billing model amounts are interpreted. * &#x60;data&#x60; - Data * &#x60;proxy&#x60; - Proxy | [optional] |
 | **type** | **string**| * &#x60;static&#x60; - Static * &#x60;residential&#x60; - Residential | [optional] |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 

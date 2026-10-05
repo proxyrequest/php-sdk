@@ -53,7 +53,7 @@ $apiInstance = new ProxyRequest\Api\UsersResource(
 $id = 'id_example'; // string | A UUID string identifying this user.
 $addDataRequest = {"package_id":"550e8400-e29b-41d4-a716-446655440002","data":1073741824}; // \ProxyRequest\Dto\AddDataRequest
 $idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->addData($id, $addDataRequest, $idempotencyKey, $acceptLanguage);
@@ -70,7 +70,7 @@ try {
 | **id** | **string**| A UUID string identifying this user. | |
 | **addDataRequest** | [**\ProxyRequest\Dto\AddDataRequest**](../Model/AddDataRequest.md)|  | |
 | **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -123,7 +123,7 @@ $apiInstance = new ProxyRequest\Api\UsersResource(
 );
 $userCreateRequest = {"email":"developer@example.com","username":"developer","password":"Correct-Horse-Battery-Staple-42","first_name":"Dana","last_name":"Morgan","country":"us","state":"state","city":"los_angeles","address":"address","zip":"zip","blocked_domains":["blocked.example"],"allowed_ips":["198.51.100.25"],"connection_limit":1,"is_reseller":false,"is_top_level":false,"data":1073741824,"package_id":"550e8400-e29b-41d4-a716-446655440002","meta":{}}; // \ProxyRequest\Dto\UserCreateRequest
 $idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->create($userCreateRequest, $idempotencyKey, $acceptLanguage);
@@ -139,7 +139,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **userCreateRequest** | [**\ProxyRequest\Dto\UserCreateRequest**](../Model/UserCreateRequest.md)|  | |
 | **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -193,7 +193,7 @@ $apiInstance = new ProxyRequest\Api\UsersResource(
 $id = 'id_example'; // string | A UUID string identifying this user.
 $idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
 $ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $apiInstance->delete($id, $idempotencyKey, $ifMatch, $acceptLanguage);
@@ -209,7 +209,7 @@ try {
 | **id** | **string**| A UUID string identifying this user. | |
 | **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
 | **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -261,7 +261,7 @@ $apiInstance = new ProxyRequest\Api\UsersResource(
     $config
 );
 $id = 'id_example'; // string | A UUID string identifying this user.
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->get($id, $acceptLanguage);
@@ -276,7 +276,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**| A UUID string identifying this user. | |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -335,7 +335,7 @@ $ordering = 'ordering_example'; // string | Which field to use when ordering the
 $packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Filters the visible user list to accounts that have at least one stored order for this package UUID. Orders are matched regardless of whether they are active or expired; this filter never expands the caller's normal account scope.
 $search = 'search_example'; // string | Case-insensitive partial search across user fields: `email`, `username`, `first_name`, and `last_name`. Separate multiple terms with spaces or commas; every term must match at least one listed field.
 $username = 'username_example'; // string
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->list($email, $id, $limit, $offset, $ordering, $packageId, $search, $username, $acceptLanguage);
@@ -357,7 +357,7 @@ try {
 | **packageId** | **string**| Filters the visible user list to accounts that have at least one stored order for this package UUID. Orders are matched regardless of whether they are active or expired; this filter never expands the caller&#39;s normal account scope. | [optional] |
 | **search** | **string**| Case-insensitive partial search across user fields: &#x60;email&#x60;, &#x60;username&#x60;, &#x60;first_name&#x60;, and &#x60;last_name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. | [optional] |
 | **username** | **string**|  | [optional] |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -415,7 +415,7 @@ $limit = 56; // int | Number of results to return per page.
 $offset = 56; // int | The initial index from which to return the results.
 $ordering = 'ordering_example'; // string | Which field to use when ordering the results.
 $username = 'username_example'; // string
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->listOrders($id, $email, $id2, $limit, $offset, $ordering, $username, $acceptLanguage);
@@ -436,7 +436,7 @@ try {
 | **offset** | **int**| The initial index from which to return the results. | [optional] |
 | **ordering** | **string**| Which field to use when ordering the results. | [optional] |
 | **username** | **string**|  | [optional] |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -490,7 +490,7 @@ $apiInstance = new ProxyRequest\Api\UsersResource(
 $id = 'id_example'; // string | A UUID string identifying this user.
 $resetDataRequest = {"package_id":"550e8400-e29b-41d4-a716-446655440002"}; // \ProxyRequest\Dto\ResetDataRequest
 $idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->resetData($id, $resetDataRequest, $idempotencyKey, $acceptLanguage);
@@ -507,7 +507,7 @@ try {
 | **id** | **string**| A UUID string identifying this user. | |
 | **resetDataRequest** | [**\ProxyRequest\Dto\ResetDataRequest**](../Model/ResetDataRequest.md)|  | |
 | **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -560,7 +560,7 @@ $apiInstance = new ProxyRequest\Api\UsersResource(
 );
 $id = 'id_example'; // string | A UUID string identifying this user.
 $userPasswordResetRequest = {"package_id":"550e8400-e29b-41d4-a716-446655440002"}; // \ProxyRequest\Dto\UserPasswordResetRequest
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->resetPassword($id, $userPasswordResetRequest, $acceptLanguage);
@@ -576,7 +576,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**| A UUID string identifying this user. | |
 | **userPasswordResetRequest** | [**\ProxyRequest\Dto\UserPasswordResetRequest**](../Model/UserPasswordResetRequest.md)|  | |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -630,7 +630,7 @@ $apiInstance = new ProxyRequest\Api\UsersResource(
 $id = 'id_example'; // string | A UUID string identifying this user.
 $subtractDataRequest = {"package_id":"550e8400-e29b-41d4-a716-446655440002","data":1073741824}; // \ProxyRequest\Dto\SubtractDataRequest
 $idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->subtractData($id, $subtractDataRequest, $idempotencyKey, $acceptLanguage);
@@ -647,7 +647,7 @@ try {
 | **id** | **string**| A UUID string identifying this user. | |
 | **subtractDataRequest** | [**\ProxyRequest\Dto\SubtractDataRequest**](../Model/SubtractDataRequest.md)|  | |
 | **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -700,7 +700,7 @@ $apiInstance = new ProxyRequest\Api\UsersResource(
 );
 $id = 'id_example'; // string | A UUID string identifying this user.
 $ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 $patchedUserUpdateRequest = {"email":"developer@example.com","first_name":"Dana","last_name":"Morgan","country":"us","state":"state","city":"los_angeles","address":"address","zip":"zip","company_name":"company name","company_country":"company country","company_city":"company city","company_address":"company address","company_postal_code":"company postal code","company_vat_number":"company vat number","is_reseller":true,"blocked_domains":["blocked.example"],"allowed_ips":["198.51.100.25"],"connection_limit":1,"new_password":"New-Secure-Password-43","meta":{}}; // \ProxyRequest\Dto\PatchedUserUpdateRequest
 
 try {
@@ -717,7 +717,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**| A UUID string identifying this user. | |
 | **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 | **patchedUserUpdateRequest** | [**\ProxyRequest\Dto\PatchedUserUpdateRequest**](../Model/PatchedUserUpdateRequest.md)|  | [optional] |
 
 ### Return type

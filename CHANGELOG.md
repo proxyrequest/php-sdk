@@ -5,6 +5,11 @@ the package uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [4.2.0] - 2026-10-05
+
+- Add priceTotal to invoice creation requests for an explicit final invoice total.
+- Regenerate the PHP SDK from the current public API contract.
+
 ## [4.1.0] - 2026-09-25
 
 - Add provider data balances with typed pagination, byte strings, calculation status, and checkpoint history. Access requires a superuser JWT or a superuser-owned API key.

@@ -86,7 +86,7 @@ class CouponShort extends \ProxyRequest\Support\AdditionalProperties implements 
         'isRedeemed' => null,
         'packages' => null,
         'created' => 'date-time',
-        'value' => 'int64',
+        'value' => null,
         'code' => null,
         'isMultiUse' => null,
         'isAvailableToOneTime' => null,
@@ -384,28 +384,12 @@ class CouponShort extends \ProxyRequest\Support\AdditionalProperties implements 
         if ($this->container['value'] === null) {
             $invalidProperties[] = "'value' can't be null";
         }
-        if (($this->container['value'] > 9223372036854775807)) {
-            $invalidProperties[] = "invalid value for 'value', must be smaller than or equal to 9223372036854775807.";
-        }
-
-        if (($this->container['value'] < -9223372036854775808)) {
-            $invalidProperties[] = "invalid value for 'value', must be bigger than or equal to -9223372036854775808.";
-        }
-
         if ($this->container['code'] === null) {
             $invalidProperties[] = "'code' can't be null";
         }
         if ($this->container['type'] === null) {
             $invalidProperties[] = "'type' can't be null";
         }
-        if (!is_null($this->container['limit']) && ($this->container['limit'] > 2147483647)) {
-            $invalidProperties[] = "invalid value for 'limit', must be smaller than or equal to 2147483647.";
-        }
-
-        if (!is_null($this->container['limit']) && ($this->container['limit'] < -2147483648)) {
-            $invalidProperties[] = "invalid value for 'limit', must be bigger than or equal to -2147483648.";
-        }
-
         if ($this->container['user'] === null && !$this->isNullableSetToNull('user')) {
             $invalidProperties[] = "'user' is required";
         }
@@ -585,14 +569,6 @@ class CouponShort extends \ProxyRequest\Support\AdditionalProperties implements 
         if (is_null($value)) {
             throw new \InvalidArgumentException('non-nullable value cannot be null');
         }
-
-        if (($value > 9223372036854775807)) {
-            throw new \InvalidArgumentException('invalid value for $value when calling CouponShort., must be smaller than or equal to 9223372036854775807.');
-        }
-        if (($value < -9223372036854775808)) {
-            throw new \InvalidArgumentException('invalid value for $value when calling CouponShort., must be bigger than or equal to -9223372036854775808.');
-        }
-
         $this->container['value'] = $value;
 
         return $this;
@@ -728,14 +704,6 @@ class CouponShort extends \ProxyRequest\Support\AdditionalProperties implements 
         if (is_null($limit)) {
             throw new \InvalidArgumentException('non-nullable limit cannot be null');
         }
-
-        if (($limit > 2147483647)) {
-            throw new \InvalidArgumentException('invalid value for $limit when calling CouponShort., must be smaller than or equal to 2147483647.');
-        }
-        if (($limit < -2147483648)) {
-            throw new \InvalidArgumentException('invalid value for $limit when calling CouponShort., must be bigger than or equal to -2147483648.');
-        }
-
         $this->container['limit'] = $limit;
 
         return $this;

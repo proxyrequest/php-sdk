@@ -73,6 +73,9 @@ class Package extends \ProxyRequest\Support\AdditionalProperties implements Mode
         'pricingUnit' => '\ProxyRequest\Dto\PricingUnitEnum',
         'billingCycle' => 'int',
         'billingModel' => 'array<string,mixed>',
+        'isUnlimitedData' => 'bool',
+        'billingUnlimited' => 'int',
+        'priceRequiresConfiguration' => 'bool',
         'commissionRate' => 'float',
         'commissionType' => '\ProxyRequest\Dto\CommissionTypeEnum',
         'targetingOptions' => '\ProxyRequest\Dto\TargetingOptions'
@@ -102,6 +105,9 @@ class Package extends \ProxyRequest\Support\AdditionalProperties implements Mode
         'pricingUnit' => null,
         'billingCycle' => null,
         'billingModel' => null,
+        'isUnlimitedData' => null,
+        'billingUnlimited' => null,
+        'priceRequiresConfiguration' => null,
         'commissionRate' => 'decimal',
         'commissionType' => null,
         'targetingOptions' => null
@@ -129,6 +135,9 @@ class Package extends \ProxyRequest\Support\AdditionalProperties implements Mode
         'pricingUnit' => false,
         'billingCycle' => false,
         'billingModel' => false,
+        'isUnlimitedData' => false,
+        'billingUnlimited' => false,
+        'priceRequiresConfiguration' => false,
         'commissionRate' => false,
         'commissionType' => false,
         'targetingOptions' => false
@@ -236,6 +245,9 @@ class Package extends \ProxyRequest\Support\AdditionalProperties implements Mode
         'pricingUnit' => 'pricing_unit',
         'billingCycle' => 'billing_cycle',
         'billingModel' => 'billing_model',
+        'isUnlimitedData' => 'is_unlimited_data',
+        'billingUnlimited' => 'billing_unlimited',
+        'priceRequiresConfiguration' => 'price_requires_configuration',
         'commissionRate' => 'commission_rate',
         'commissionType' => 'commission_type',
         'targetingOptions' => 'targeting_options'
@@ -263,6 +275,9 @@ class Package extends \ProxyRequest\Support\AdditionalProperties implements Mode
         'pricingUnit' => 'setPricingUnit',
         'billingCycle' => 'setBillingCycle',
         'billingModel' => 'setBillingModel',
+        'isUnlimitedData' => 'setIsUnlimitedData',
+        'billingUnlimited' => 'setBillingUnlimited',
+        'priceRequiresConfiguration' => 'setPriceRequiresConfiguration',
         'commissionRate' => 'setCommissionRate',
         'commissionType' => 'setCommissionType',
         'targetingOptions' => 'setTargetingOptions'
@@ -290,6 +305,9 @@ class Package extends \ProxyRequest\Support\AdditionalProperties implements Mode
         'pricingUnit' => 'getPricingUnit',
         'billingCycle' => 'getBillingCycle',
         'billingModel' => 'getBillingModel',
+        'isUnlimitedData' => 'getIsUnlimitedData',
+        'billingUnlimited' => 'getBillingUnlimited',
+        'priceRequiresConfiguration' => 'getPriceRequiresConfiguration',
         'commissionRate' => 'getCommissionRate',
         'commissionType' => 'getCommissionType',
         'targetingOptions' => 'getTargetingOptions'
@@ -368,6 +386,9 @@ class Package extends \ProxyRequest\Support\AdditionalProperties implements Mode
         $this->setIfExists('pricingUnit', $data ?? [], null);
         $this->setIfExists('billingCycle', $data ?? [], null);
         $this->setIfExists('billingModel', $data ?? [], null);
+        $this->setIfExists('isUnlimitedData', $data ?? [], null);
+        $this->setIfExists('billingUnlimited', $data ?? [], null);
+        $this->setIfExists('priceRequiresConfiguration', $data ?? [], null);
         $this->setIfExists('commissionRate', $data ?? [], null);
         $this->setIfExists('commissionType', $data ?? [], null);
         $this->setIfExists('targetingOptions', $data ?? [], null);
@@ -430,10 +451,6 @@ class Package extends \ProxyRequest\Support\AdditionalProperties implements Mode
             $invalidProperties[] = "invalid value for 'alias', must be conform to the pattern /^[a-z0-9]+$/.";
         }
 
-        if (!is_null($this->container['order']) && ($this->container['order'] > 2147483647)) {
-            $invalidProperties[] = "invalid value for 'order', must be smaller than or equal to 2147483647.";
-        }
-
         if (!is_null($this->container['order']) && ($this->container['order'] < 0)) {
             $invalidProperties[] = "invalid value for 'order', must be bigger than or equal to 0.";
         }
@@ -454,6 +471,13 @@ class Package extends \ProxyRequest\Support\AdditionalProperties implements Mode
 
         if ($this->container['billingModel'] === null) {
             $invalidProperties[] = "'billingModel' can't be null";
+        }
+        if (!is_null($this->container['billingUnlimited']) && ($this->container['billingUnlimited'] < 0)) {
+            $invalidProperties[] = "invalid value for 'billingUnlimited', must be bigger than or equal to 0.";
+        }
+
+        if ($this->container['priceRequiresConfiguration'] === null) {
+            $invalidProperties[] = "'priceRequiresConfiguration' can't be null";
         }
         if (!is_null($this->container['commissionRate']) && !preg_match("/^-?\\d{0,3}(?:\\.\\d{0,2})?$/", $this->container['commissionRate'])) {
             $invalidProperties[] = "invalid value for 'commissionRate', must be conform to the pattern /^-?\\d{0,3}(?:\\.\\d{0,2})?$/.";
@@ -629,9 +653,6 @@ class Package extends \ProxyRequest\Support\AdditionalProperties implements Mode
             throw new \InvalidArgumentException('non-nullable order cannot be null');
         }
 
-        if (($order > 2147483647)) {
-            throw new \InvalidArgumentException('invalid value for $order when calling Package., must be smaller than or equal to 2147483647.');
-        }
         if (($order < 0)) {
             throw new \InvalidArgumentException('invalid value for $order when calling Package., must be bigger than or equal to 0.');
         }
@@ -942,6 +963,92 @@ class Package extends \ProxyRequest\Support\AdditionalProperties implements Mode
             throw new \InvalidArgumentException('non-nullable billingModel cannot be null');
         }
         $this->container['billingModel'] = $billingModel;
+
+        return $this;
+    }
+
+    /**
+     * Gets isUnlimitedData
+     *
+     * @return bool|null
+     */
+    public function getIsUnlimitedData()
+    {
+        return $this->container['isUnlimitedData'];
+    }
+
+    /**
+     * Sets isUnlimitedData
+     *
+     * @param bool|null $isUnlimitedData When enabled, users on this package have no data cap. The proxy will not enforce any bandwidth limit.
+     *
+     * @return self
+     */
+    public function setIsUnlimitedData($isUnlimitedData)
+    {
+        if (is_null($isUnlimitedData)) {
+            throw new \InvalidArgumentException('non-nullable isUnlimitedData cannot be null');
+        }
+        $this->container['isUnlimitedData'] = $isUnlimitedData;
+
+        return $this;
+    }
+
+    /**
+     * Gets billingUnlimited
+     *
+     * @return int|null
+     */
+    public function getBillingUnlimited()
+    {
+        return $this->container['billingUnlimited'];
+    }
+
+    /**
+     * Sets billingUnlimited
+     *
+     * @param int|null $billingUnlimited Price charged for unlimited data access on this package. Set to 0 to disable unlimited option.
+     *
+     * @return self
+     */
+    public function setBillingUnlimited($billingUnlimited)
+    {
+        if (is_null($billingUnlimited)) {
+            throw new \InvalidArgumentException('non-nullable billingUnlimited cannot be null');
+        }
+
+        if (($billingUnlimited < 0)) {
+            throw new \InvalidArgumentException('invalid value for $billingUnlimited when calling Package., must be bigger than or equal to 0.');
+        }
+
+        $this->container['billingUnlimited'] = $billingUnlimited;
+
+        return $this;
+    }
+
+    /**
+     * Gets priceRequiresConfiguration
+     *
+     * @return bool
+     */
+    public function getPriceRequiresConfiguration()
+    {
+        return $this->container['priceRequiresConfiguration'];
+    }
+
+    /**
+     * Sets priceRequiresConfiguration
+     *
+     * @param bool $priceRequiresConfiguration priceRequiresConfiguration
+     *
+     * @return self
+     */
+    public function setPriceRequiresConfiguration($priceRequiresConfiguration)
+    {
+        if (is_null($priceRequiresConfiguration)) {
+            throw new \InvalidArgumentException('non-nullable priceRequiresConfiguration cannot be null');
+        }
+        $this->container['priceRequiresConfiguration'] = $priceRequiresConfiguration;
 
         return $this;
     }

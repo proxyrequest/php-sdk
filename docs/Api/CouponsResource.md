@@ -49,7 +49,7 @@ $apiInstance = new ProxyRequest\Api\CouponsResource(
     $config
 );
 $couponCalculatePriceRequest = {"package_id":"550e8400-e29b-41d4-a716-446655440002","coupon_code":"WELCOME20","data":10737418240}; // \ProxyRequest\Dto\CouponCalculatePriceRequest
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->calculatePrice($couponCalculatePriceRequest, $acceptLanguage);
@@ -64,7 +64,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **couponCalculatePriceRequest** | [**\ProxyRequest\Dto\CouponCalculatePriceRequest**](../Model/CouponCalculatePriceRequest.md)|  | |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -117,7 +117,7 @@ $apiInstance = new ProxyRequest\Api\CouponsResource(
 );
 $couponCreateRequest = {"value":1,"code":"us","is_multi_use":true,"is_available_to_one_time":true,"marketer":"550e8400-e29b-41d4-a716-446655440001","type":"free_data","limit":100,"valid_until":"2026-07-01T12:30:00Z","packages":["package"]}; // \ProxyRequest\Dto\CouponCreateRequest
 $idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->create($couponCreateRequest, $idempotencyKey, $acceptLanguage);
@@ -133,7 +133,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **couponCreateRequest** | [**\ProxyRequest\Dto\CouponCreateRequest**](../Model/CouponCreateRequest.md)|  | |
 | **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -187,7 +187,7 @@ $apiInstance = new ProxyRequest\Api\CouponsResource(
 $id = 'id_example'; // string | A unique value identifying this Coupon.
 $idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
 $ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $apiInstance->delete($id, $idempotencyKey, $ifMatch, $acceptLanguage);
@@ -203,7 +203,7 @@ try {
 | **id** | **string**| A unique value identifying this Coupon. | |
 | **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
 | **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -255,7 +255,7 @@ $apiInstance = new ProxyRequest\Api\CouponsResource(
     $config
 );
 $id = 'id_example'; // string | A unique value identifying this Coupon.
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->get($id, $acceptLanguage);
@@ -270,7 +270,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**| A unique value identifying this Coupon. | |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -327,7 +327,7 @@ $offset = 56; // int | The initial index from which to return the results.
 $ordering = 'ordering_example'; // string | Which field to use when ordering the results.
 $search = 'search_example'; // string | Case-insensitive partial search across Coupon fields: `title` and `content`. Separate multiple terms with spaces or commas; every term must match at least one listed field.
 $type = 'type_example'; // string | * `free_data` - Free Data * `monetary` - Money * `percentage` - Percentage
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->list($code, $limit, $offset, $ordering, $search, $type, $acceptLanguage);
@@ -347,7 +347,7 @@ try {
 | **ordering** | **string**| Which field to use when ordering the results. | [optional] |
 | **search** | **string**| Case-insensitive partial search across Coupon fields: &#x60;title&#x60; and &#x60;content&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. | [optional] |
 | **type** | **string**| * &#x60;free_data&#x60; - Free Data * &#x60;monetary&#x60; - Money * &#x60;percentage&#x60; - Percentage | [optional] |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -404,7 +404,7 @@ $limit = 56; // int | Number of results to return per page.
 $offset = 56; // int | The initial index from which to return the results.
 $ordering = 'ordering_example'; // string | Which field to use when ordering the results.
 $type = 'type_example'; // string | * `free_data` - Free Data * `monetary` - Money * `percentage` - Percentage
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->listRedeems($id, $code, $limit, $offset, $ordering, $type, $acceptLanguage);
@@ -424,7 +424,7 @@ try {
 | **offset** | **int**| The initial index from which to return the results. | [optional] |
 | **ordering** | **string**| Which field to use when ordering the results. | [optional] |
 | **type** | **string**| * &#x60;free_data&#x60; - Free Data * &#x60;monetary&#x60; - Money * &#x60;percentage&#x60; - Percentage | [optional] |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -478,7 +478,7 @@ $apiInstance = new ProxyRequest\Api\CouponsResource(
 $id = 'id_example'; // string | A unique value identifying this Coupon.
 $couponUpdateRequest = {"value":1,"code":"us","is_multi_use":true,"is_available_to_one_time":true,"marketer":"550e8400-e29b-41d4-a716-446655440001","type":"free_data","limit":100,"valid_until":"2026-07-01T12:30:00Z","packages":["package"]}; // \ProxyRequest\Dto\CouponUpdateRequest
 $ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
     $result = $apiInstance->replace($id, $couponUpdateRequest, $ifMatch, $acceptLanguage);
@@ -495,7 +495,7 @@ try {
 | **id** | **string**| A unique value identifying this Coupon. | |
 | **couponUpdateRequest** | [**\ProxyRequest\Dto\CouponUpdateRequest**](../Model/CouponUpdateRequest.md)|  | |
 | **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 
 ### Return type
 
@@ -548,7 +548,7 @@ $apiInstance = new ProxyRequest\Api\CouponsResource(
 );
 $id = 'id_example'; // string | A unique value identifying this Coupon.
 $ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
-$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 $patchedCouponUpdateRequest = {"value":1,"code":"us","is_multi_use":true,"is_available_to_one_time":true,"marketer":"550e8400-e29b-41d4-a716-446655440001","type":"free_data","limit":100,"valid_until":"2026-07-01T12:30:00Z","packages":["package"]}; // \ProxyRequest\Dto\PatchedCouponUpdateRequest
 
 try {
@@ -565,7 +565,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**| A unique value identifying this Coupon. | |
 | **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
-| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es, zh-hans, ja. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 | **patchedCouponUpdateRequest** | [**\ProxyRequest\Dto\PatchedCouponUpdateRequest**](../Model/PatchedCouponUpdateRequest.md)|  | [optional] |
 
 ### Return type
