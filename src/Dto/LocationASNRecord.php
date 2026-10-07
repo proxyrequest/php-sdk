@@ -59,6 +59,7 @@ class LocationASNRecord extends \ProxyRequest\Support\AdditionalProperties imple
     protected static $openAPITypes = [
         'code' => 'string',
         'name' => 'string',
+        'countryCodes' => 'string[]',
         'geo' => '\ProxyRequest\Dto\LocationASNGeoItem[]'
     ];
 
@@ -72,6 +73,7 @@ class LocationASNRecord extends \ProxyRequest\Support\AdditionalProperties imple
     protected static $openAPIFormats = [
         'code' => null,
         'name' => null,
+        'countryCodes' => null,
         'geo' => null
     ];
 
@@ -83,6 +85,7 @@ class LocationASNRecord extends \ProxyRequest\Support\AdditionalProperties imple
     protected static array $openAPINullables = [
         'code' => false,
         'name' => false,
+        'countryCodes' => false,
         'geo' => false
     ];
 
@@ -174,6 +177,7 @@ class LocationASNRecord extends \ProxyRequest\Support\AdditionalProperties imple
     protected static $attributeMap = [
         'code' => 'code',
         'name' => 'name',
+        'countryCodes' => 'country_codes',
         'geo' => 'geo'
     ];
 
@@ -185,6 +189,7 @@ class LocationASNRecord extends \ProxyRequest\Support\AdditionalProperties imple
     protected static $setters = [
         'code' => 'setCode',
         'name' => 'setName',
+        'countryCodes' => 'setCountryCodes',
         'geo' => 'setGeo'
     ];
 
@@ -196,6 +201,7 @@ class LocationASNRecord extends \ProxyRequest\Support\AdditionalProperties imple
     protected static $getters = [
         'code' => 'getCode',
         'name' => 'getName',
+        'countryCodes' => 'getCountryCodes',
         'geo' => 'getGeo'
     ];
 
@@ -258,6 +264,7 @@ class LocationASNRecord extends \ProxyRequest\Support\AdditionalProperties imple
     {
         $this->setIfExists('code', $data ?? [], null);
         $this->setIfExists('name', $data ?? [], null);
+        $this->setIfExists('countryCodes', $data ?? [], null);
         $this->setIfExists('geo', $data ?? [], null);
     }
 
@@ -293,6 +300,12 @@ class LocationASNRecord extends \ProxyRequest\Support\AdditionalProperties imple
         }
         if ($this->container['name'] === null) {
             $invalidProperties[] = "'name' can't be null";
+        }
+        if ($this->container['countryCodes'] === null) {
+            $invalidProperties[] = "'countryCodes' can't be null";
+        }
+        if ($this->container['geo'] === null) {
+            $invalidProperties[] = "'geo' can't be null";
         }
         return $invalidProperties;
     }
@@ -364,9 +377,36 @@ class LocationASNRecord extends \ProxyRequest\Support\AdditionalProperties imple
     }
 
     /**
+     * Gets countryCodes
+     *
+     * @return string[]
+     */
+    public function getCountryCodes()
+    {
+        return $this->container['countryCodes'];
+    }
+
+    /**
+     * Sets countryCodes
+     *
+     * @param string[] $countryCodes countryCodes
+     *
+     * @return self
+     */
+    public function setCountryCodes($countryCodes)
+    {
+        if (is_null($countryCodes)) {
+            throw new \InvalidArgumentException('non-nullable countryCodes cannot be null');
+        }
+        $this->container['countryCodes'] = $countryCodes;
+
+        return $this;
+    }
+
+    /**
      * Gets geo
      *
-     * @return \ProxyRequest\Dto\LocationASNGeoItem[]|null
+     * @return \ProxyRequest\Dto\LocationASNGeoItem[]
      */
     public function getGeo()
     {
@@ -376,7 +416,7 @@ class LocationASNRecord extends \ProxyRequest\Support\AdditionalProperties imple
     /**
      * Sets geo
      *
-     * @param \ProxyRequest\Dto\LocationASNGeoItem[]|null $geo geo
+     * @param \ProxyRequest\Dto\LocationASNGeoItem[] $geo geo
      *
      * @return self
      */

@@ -1086,6 +1086,7 @@ class LocationsResource
      * @param  string|null $code code (optional)
      * @param  string|null $countryCode countryCode (optional)
      * @param  bool|null $global Set to true to return only globally targetable ASNs. (optional)
+     * @param  bool|null $includeGeo Include geographic scopes for each ASN. By default geo is an empty list. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -1098,9 +1099,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\PaginatedLocationASNRecordList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listAsns($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0])
+    public function listAsns($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null)
     {
-        list($response) = $this->listAsnsWithHttpInfo($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType);
+        list($response) = $this->listAsnsWithHttpInfo($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeGeo);
         return $response;
     }
 
@@ -1109,9 +1110,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listAsnsWithResponse($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0]): \ProxyRequest\ApiResponse
+    public function listAsnsWithResponse($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listAsnsWithHttpInfo($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listAsnsWithHttpInfo($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeGeo));
     }
 
     /**
@@ -1123,6 +1124,7 @@ class LocationsResource
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
      * @param  bool|null $global Set to true to return only globally targetable ASNs. (optional)
+     * @param  bool|null $includeGeo Include geographic scopes for each ASN. By default geo is an empty list. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -1135,9 +1137,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\PaginatedLocationASNRecordList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listAsnsWithHttpInfo($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0])
+    public function listAsnsWithHttpInfo($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null)
     {
-        $request = $this->listAsnsRequest($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType);
+        $request = $this->listAsnsRequest($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeGeo);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedLocationASNRecordList',
 ));
@@ -1152,6 +1154,7 @@ class LocationsResource
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
      * @param  bool|null $global Set to true to return only globally targetable ASNs. (optional)
+     * @param  bool|null $includeGeo Include geographic scopes for each ASN. By default geo is an empty list. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -1163,9 +1166,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listAsnsAsync($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0])
+    public function listAsnsAsync($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null)
     {
-        return $this->listAsnsAsyncWithHttpInfo($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType)
+        return $this->listAsnsAsyncWithHttpInfo($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeGeo)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1182,6 +1185,7 @@ class LocationsResource
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
      * @param  bool|null $global Set to true to return only globally targetable ASNs. (optional)
+     * @param  bool|null $includeGeo Include geographic scopes for each ASN. By default geo is an empty list. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -1193,9 +1197,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listAsnsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0])
+    public function listAsnsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null)
     {
-        $request = $this->listAsnsRequest($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType);
+        $request = $this->listAsnsRequest($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeGeo);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedLocationASNRecordList',
 ));
@@ -1208,6 +1212,7 @@ class LocationsResource
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
      * @param  bool|null $global Set to true to return only globally targetable ASNs. (optional)
+     * @param  bool|null $includeGeo Include geographic scopes for each ASN. By default geo is an empty list. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -1219,7 +1224,7 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listAsnsRequest($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0])
+    public function listAsnsRequest($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null)
     {
 
         // verify the required parameter 'packageId' is set
@@ -1228,6 +1233,7 @@ class LocationsResource
                 'Missing the required parameter $packageId when calling listAsns'
             );
         }
+
 
 
 
@@ -1268,6 +1274,15 @@ class LocationsResource
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
             $global,
             'global', // param base name
+            'boolean', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            \is_bool($includeGeo) ? ($includeGeo ? 'true' : 'false') : $includeGeo,
+            'include_geo', // param base name
             'boolean', // openApiType
             'form', // style
             true, // explode

@@ -4,18 +4,18 @@
         "id": "php",
         "label": "PHP",
         "language": "PHP",
-        "version": "4.2.1",
+        "version": "4.3.0",
         "package": "proxyrequest/php-sdk",
         "runtime": "64-bit PHP 8.5 or later",
         "install": "composer require proxyrequest/php-sdk",
         "openapi": {
-            "commit": "3bd7c30b6727264a0eae42f6d536e1cce34b3b5b",
+            "commit": "19f5f67335bbd888e9454914eca4a59acfce270c",
             "excludedOperations": [
                 "sessions_destroy",
                 "sessions_list"
             ],
             "repository": "papaproxy/api",
-            "sha256": "44538b2e5f651dc95ff0883b62239bb06b8803caf537d78e5a815e289a6545e5",
+            "sha256": "b787e51bd6b990ad492a97c3ff09d823a6d3269855fb46ddc82a02a2becaac9d",
             "source": "openapi.yml",
             "operations": 85,
             "schemas": 142
@@ -5175,39 +5175,39 @@
                     "operationId": "locations_asn_list",
                     "name": "listAsns",
                     "summary": "List available autonomous systems",
-                    "description": "Returns targetable ASNs for the selected package. Geo-scoped records include the country, region, or city where the ASN can be selected.",
+                    "description": "Returns targetable ASNs for the selected package. The geo field is empty unless include_geo=true; then it contains targetable geographic scopes.",
                     "httpMethod": "GET",
                     "path": "/locations/asn",
                     "signatures": [
                         {
                             "label": "Sync",
-                            "signature": "$client->locations()->listAsns($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0])"
+                            "signature": "$client->locations()->listAsns($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null)"
                         }
                     ],
                     "variants": [
                         {
                             "name": "listAsnsWithResponse",
-                            "signature": "$client->locations()->listAsnsWithResponse($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0]): \\ProxyRequest\\ApiResponse",
+                            "signature": "$client->locations()->listAsnsWithResponse($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null): \\ProxyRequest\\ApiResponse",
                             "description": "Returns an ApiResponse with decoded data and HTTP metadata."
                         },
                         {
                             "name": "listAsnsWithHttpInfo",
-                            "signature": "$client->locations()->listAsnsWithHttpInfo($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0])",
+                            "signature": "$client->locations()->listAsnsWithHttpInfo($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null)",
                             "description": "Returns the OpenAPI Generator response tuple."
                         },
                         {
                             "name": "listAsnsAsync",
-                            "signature": "$client->locations()->listAsnsAsync($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0])",
+                            "signature": "$client->locations()->listAsnsAsync($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null)",
                             "description": "Returns a Guzzle promise for the decoded result."
                         },
                         {
                             "name": "listAsnsAsyncWithHttpInfo",
-                            "signature": "$client->locations()->listAsnsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0])",
+                            "signature": "$client->locations()->listAsnsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null)",
                             "description": "Returns a Guzzle promise for the response tuple."
                         },
                         {
                             "name": "listAsnsRequest",
-                            "signature": "$client->locations()->listAsnsRequest($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0])",
+                            "signature": "$client->locations()->listAsnsRequest($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null)",
                             "description": "Builds the PSR-7 request without sending it."
                         }
                     ],
@@ -5242,6 +5242,17 @@
                             "type": "bool",
                             "default": null,
                             "description": "Set to true to return only globally targetable ASNs.",
+                            "example": false,
+                            "modelRefs": []
+                        },
+                        {
+                            "name": "includeGeo",
+                            "wireName": "include_geo",
+                            "in": "query",
+                            "required": false,
+                            "type": "bool",
+                            "default": false,
+                            "description": "Include geographic scopes for each ASN. By default geo is an empty list.",
                             "example": false,
                             "modelRefs": []
                         },
@@ -17142,12 +17153,22 @@
                     "modelRefs": []
                 },
                 {
+                    "name": "countryCodes",
+                    "wireName": "countryCodes",
+                    "type": "array<string>",
+                    "required": true,
+                    "default": null,
+                    "description": "|",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
                     "name": "geo",
                     "wireName": "geo",
                     "type": "[LocationASNGeoItem[]](LocationASNGeoItem.md)",
                     "required": true,
                     "default": null,
-                    "description": "| [optional]",
+                    "description": "|",
                     "enum": null,
                     "modelRefs": [
                         "LocationASNGeoItem"

@@ -33,13 +33,13 @@ foreach ($document['paths'] as $item) {
 // This also rewrites forwarding calls, preserving positional and named calls from 4.0.
 function preserveLocationArguments(string $source): string
 {
-    $methods = '(?:getCity|getCountry|getRegion|listCities|listCountries|listRegions)(?:WithHttpInfo|AsyncWithHttpInfo|Async|Request|WithResponse)?';
+    $methods = '(?:getCity|getCountry|getRegion|listAsns|listCities|listCountries|listRegions)(?:WithHttpInfo|AsyncWithHttpInfo|Async|Request|WithResponse)?';
     $pattern = '/(' . $methods . '\\()([^\\n()]*)(\\))/';
     return preg_replace_callback($pattern, static function (array $match): string {
         $parameters = explode(', ', $match[2]);
         $option = null;
         foreach ($parameters as $index => $parameter) {
-            if (preg_match('/^\\$includeAsns(?: = (?:false|null))?$/', $parameter)) {
+            if (preg_match('/^\\$include(?:Asns|Geo)(?: = (?:false|null))?$/', $parameter)) {
                 $option = str_replace(' = false', ' = null', $parameter);
                 unset($parameters[$index]);
                 break;
@@ -65,8 +65,16 @@ foreach (glob($root . '/src/Resource/*Resource.php') ?: [] as $path) {
             '            \\is_bool($includeAsns) ? ($includeAsns ? \'true\' : \'false\') : $includeAsns,' . "\n            'include_asns', // param base name",
             $source,
         );
+        $source = str_replace(
+            '            $includeGeo,' . "\n            'include_geo', // param base name",
+            '            \\is_bool($includeGeo) ? ($includeGeo ? \'true\' : \'false\') : $includeGeo,' . "\n            'include_geo', // param base name",
+            $source,
+        );
         $docsPath = $root . '/docs/Api/LocationsResource.md';
-        file_put_contents($docsPath, str_replace(', $includeAsns)', ', includeAsns: $includeAsns)', preserveLocationArguments((string) file_get_contents($docsPath))));
+        $docs = preserveLocationArguments((string) file_get_contents($docsPath));
+        $docs = str_replace(', $includeAsns)', ', includeAsns: $includeAsns)', $docs);
+        $docs = str_replace(', $includeGeo)', ', includeGeo: $includeGeo)', $docs);
+        file_put_contents($docsPath, $docs);
     }
     if ('AnalyticsResource.php' === basename($path)) {
         $source = str_replace(

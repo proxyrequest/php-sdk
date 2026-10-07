@@ -303,12 +303,12 @@ try {
 ## `listAsns()`
 
 ```php
-listAsns($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage): \ProxyRequest\Dto\PaginatedLocationASNRecordList
+listAsns($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, includeGeo: $includeGeo): \ProxyRequest\Dto\PaginatedLocationASNRecordList
 ```
 
 List available autonomous systems
 
-Returns targetable ASNs for the selected package. Geo-scoped records include the country, region, or city where the ASN can be selected.
+Returns targetable ASNs for the selected package. The geo field is empty unless include_geo=true; then it contains targetable geographic scopes.
 
 ### Example
 
@@ -336,6 +336,7 @@ $packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose tar
 $code = 'code_example'; // string
 $countryCode = 'countryCode_example'; // string
 $global = True; // bool | Set to true to return only globally targetable ASNs.
+$includeGeo = true; // bool | Include geographic scopes for each ASN. By default geo is an empty list.
 $limit = 56; // int | Number of results to return per page.
 $name = 'name_example'; // string
 $offset = 56; // int | The initial index from which to return the results.
@@ -344,7 +345,7 @@ $search = 'search_example'; // string | Case-insensitive partial search across A
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 
 try {
-    $result = $apiInstance->listAsns($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage);
+    $result = $apiInstance->listAsns($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, includeGeo: $includeGeo);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->listAsns: ', $e->getMessage(), PHP_EOL;
@@ -359,6 +360,7 @@ try {
 | **code** | **string**|  | [optional] |
 | **countryCode** | **string**|  | [optional] |
 | **global** | **bool**| Set to true to return only globally targetable ASNs. | [optional] |
+| **includeGeo** | **bool**| Include geographic scopes for each ASN. By default geo is an empty list. | [optional] [default to false] |
 | **limit** | **int**| Number of results to return per page. | [optional] |
 | **name** | **string**|  | [optional] |
 | **offset** | **int**| The initial index from which to return the results. | [optional] |

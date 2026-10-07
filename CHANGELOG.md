@@ -5,6 +5,12 @@ the package uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [4.3.0] - 2026-10-07
+
+- Add the optional `includeGeo` argument to `locations()->listAsns()`. Set it to `true` to request country, region, and city scopes in each ASN's `geo` list; the API returns an empty list by default.
+- Expose the always-present `country_codes` summary through `LocationASNRecord::getCountryCodes()`.
+- Regenerate the SDK and reference from the latest public API contract. Existing positional arguments retain their positions; pass `includeGeo` by name.
+
 ## [4.2.1] - 2026-10-05
 
 - Allow an explicit zero invoice total for free product purchases; setting any explicit total requires superuser authorization.

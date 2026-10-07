@@ -335,3 +335,5 @@ foreach ($page->getResults() as $balance) {
 Provider byte amounts are exact decimal **strings**, including history entries; calculated usage and remaining amounts can be `null`. The response includes observation and calculation times, freshness, errors, and recent checkpoint history. History is limited by the server's `PROVIDER_DATA_BALANCE_HISTORY_LIMIT` setting (default 10). Standard pagination applies to providers.
 
 Country, region, and city methods also support `includeAsns`. Set it to `true` to populate nested ASN arrays; omitted or false uses the API's empty-array default. Existing PHP positional arguments retain their positions; use the new option by name.
+
+`$client->locations()->listAsns(packageId: $packageId, includeGeo: true)` includes country, region, and city scopes in each ASN's `geo` list. Without `includeGeo`, `geo` is empty; `getCountryCodes()` still returns the available country codes. Existing positional arguments retain their positions.
