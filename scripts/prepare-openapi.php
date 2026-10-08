@@ -46,7 +46,15 @@ foreach ($document->paths as $path => $item) {
         $seen[$id] = true;
         if (\in_array($id, $excluded, true)) {
             unset($item->{$method});
+            continue;
         }
+        $item->{$method}->parameters[] = (object) [
+            'name' => 'X-Impersonate-User',
+            'in' => 'header',
+            'required' => false,
+            'description' => 'Act as this reseller for this request only. Requires a superuser Static API key.',
+            'schema' => (object) ['type' => 'string', 'format' => 'uuid'],
+        ];
     }
     if ([] === array_intersect($methods, array_keys(get_object_vars($item)))) {
         unset($document->paths->{$path});

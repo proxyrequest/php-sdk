@@ -16,7 +16,7 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 ## `delete()`
 
 ```php
-delete($id, $idempotencyKey, $ifMatch, $acceptLanguage)
+delete($id, $idempotencyKey, $ifMatch, $acceptLanguage, $xImpersonateUser)
 ```
 
 Delete a sub-user order
@@ -49,9 +49,10 @@ $id = 'id_example'; // string | A unique value identifying this Order.
 $idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
 $ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $apiInstance->delete($id, $idempotencyKey, $ifMatch, $acceptLanguage);
+    $apiInstance->delete($id, $idempotencyKey, $ifMatch, $acceptLanguage, $xImpersonateUser);
 } catch (Exception $e) {
     echo 'Exception when calling OrdersResource->delete: ', $e->getMessage(), PHP_EOL;
 }
@@ -65,6 +66,7 @@ try {
 | **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
 | **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -86,7 +88,7 @@ void (empty response body)
 ## `get()`
 
 ```php
-get($id, $acceptLanguage): \ProxyRequest\Dto\OrderDetailed
+get($id, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\OrderDetailed
 ```
 
 Get an order
@@ -117,9 +119,10 @@ $apiInstance = new ProxyRequest\Api\OrdersResource(
 );
 $id = 'id_example'; // string | A unique value identifying this Order.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->get($id, $acceptLanguage);
+    $result = $apiInstance->get($id, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling OrdersResource->get: ', $e->getMessage(), PHP_EOL;
@@ -132,6 +135,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**| A unique value identifying this Order. | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -153,7 +157,7 @@ try {
 ## `list()`
 
 ```php
-list($limit, $offset, $ordering, $packageAlias, $packageId, $packageType, $search, $userEmail, $userId, $acceptLanguage): \ProxyRequest\Dto\PaginatedOrderList
+list($limit, $offset, $ordering, $packageAlias, $packageId, $packageType, $search, $userEmail, $userId, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\PaginatedOrderList
 ```
 
 List active orders
@@ -192,9 +196,10 @@ $search = 'search_example'; // string | Case-insensitive partial search across O
 $userEmail = 'userEmail_example'; // string
 $userId = 'userId_example'; // string
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->list($limit, $offset, $ordering, $packageAlias, $packageId, $packageType, $search, $userEmail, $userId, $acceptLanguage);
+    $result = $apiInstance->list($limit, $offset, $ordering, $packageAlias, $packageId, $packageType, $search, $userEmail, $userId, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling OrdersResource->list: ', $e->getMessage(), PHP_EOL;
@@ -215,6 +220,7 @@ try {
 | **userEmail** | **string**|  | [optional] |
 | **userId** | **string**|  | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -236,7 +242,7 @@ try {
 ## `resetPassword()`
 
 ```php
-resetPassword($resetPasswordRequest, $acceptLanguage): \ProxyRequest\Dto\ProxyPasswordResetResponse
+resetPassword($resetPasswordRequest, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\ProxyPasswordResetResponse
 ```
 
 Reset an order's proxy password
@@ -258,9 +264,10 @@ $apiInstance = new ProxyRequest\Api\OrdersResource(
 );
 $resetPasswordRequest = {"order_id":"550e8400-e29b-41d4-a716-446655440003"}; // \ProxyRequest\Dto\ResetPasswordRequest
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->resetPassword($resetPasswordRequest, $acceptLanguage);
+    $result = $apiInstance->resetPassword($resetPasswordRequest, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling OrdersResource->resetPassword: ', $e->getMessage(), PHP_EOL;
@@ -273,6 +280,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **resetPasswordRequest** | [**\ProxyRequest\Dto\ResetPasswordRequest**](../Model/ResetPasswordRequest.md)|  | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -294,7 +302,7 @@ No authorization required
 ## `updateAutoRenewal()`
 
 ```php
-updateAutoRenewal($id, $ifMatch, $acceptLanguage, $patchedOrderAutoRenewalRequest): \ProxyRequest\Dto\Order
+updateAutoRenewal($id, $ifMatch, $acceptLanguage, $xImpersonateUser, $patchedOrderAutoRenewalRequest): \ProxyRequest\Dto\Order
 ```
 
 Update order auto-renewal
@@ -326,10 +334,11 @@ $apiInstance = new ProxyRequest\Api\OrdersResource(
 $id = 'id_example'; // string | A unique value identifying this Order.
 $ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 $patchedOrderAutoRenewalRequest = {"auto_renewal_percentage":1,"auto_renewal_data":1}; // \ProxyRequest\Dto\PatchedOrderAutoRenewalRequest
 
 try {
-    $result = $apiInstance->updateAutoRenewal($id, $ifMatch, $acceptLanguage, $patchedOrderAutoRenewalRequest);
+    $result = $apiInstance->updateAutoRenewal($id, $ifMatch, $acceptLanguage, $xImpersonateUser, $patchedOrderAutoRenewalRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling OrdersResource->updateAutoRenewal: ', $e->getMessage(), PHP_EOL;
@@ -343,6 +352,7 @@ try {
 | **id** | **string**| A unique value identifying this Order. | |
 | **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 | **patchedOrderAutoRenewalRequest** | [**\ProxyRequest\Dto\PatchedOrderAutoRenewalRequest**](../Model/PatchedOrderAutoRenewalRequest.md)|  | [optional] |
 
 ### Return type

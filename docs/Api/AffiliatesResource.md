@@ -14,7 +14,7 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 ## `getRewardsOverall()`
 
 ```php
-getRewardsOverall($acceptLanguage): \ProxyRequest\Dto\AffiliateStatsResponse
+getRewardsOverall($acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\AffiliateStatsResponse
 ```
 
 Get affiliate earnings over time
@@ -44,9 +44,10 @@ $apiInstance = new ProxyRequest\Api\AffiliatesResource(
     $config
 );
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->getRewardsOverall($acceptLanguage);
+    $result = $apiInstance->getRewardsOverall($acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AffiliatesResource->getRewardsOverall: ', $e->getMessage(), PHP_EOL;
@@ -58,6 +59,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -79,7 +81,7 @@ try {
 ## `list()`
 
 ```php
-list($limit, $offset, $acceptLanguage): \ProxyRequest\Dto\PaginatedAffiliateList
+list($limit, $offset, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\PaginatedAffiliateList
 ```
 
 List referred customers
@@ -111,9 +113,10 @@ $apiInstance = new ProxyRequest\Api\AffiliatesResource(
 $limit = 56; // int | Number of results to return per page.
 $offset = 56; // int | The initial index from which to return the results.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->list($limit, $offset, $acceptLanguage);
+    $result = $apiInstance->list($limit, $offset, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AffiliatesResource->list: ', $e->getMessage(), PHP_EOL;
@@ -127,6 +130,7 @@ try {
 | **limit** | **int**| Number of results to return per page. | [optional] |
 | **offset** | **int**| The initial index from which to return the results. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -148,7 +152,7 @@ try {
 ## `listRewards()`
 
 ```php
-listRewards($limit, $offset, $acceptLanguage): \ProxyRequest\Dto\PaginatedAffiliateRewardList
+listRewards($limit, $offset, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\PaginatedAffiliateRewardList
 ```
 
 List affiliate reward entries
@@ -180,9 +184,10 @@ $apiInstance = new ProxyRequest\Api\AffiliatesResource(
 $limit = 56; // int | Number of results to return per page.
 $offset = 56; // int | The initial index from which to return the results.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->listRewards($limit, $offset, $acceptLanguage);
+    $result = $apiInstance->listRewards($limit, $offset, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AffiliatesResource->listRewards: ', $e->getMessage(), PHP_EOL;
@@ -196,6 +201,7 @@ try {
 | **limit** | **int**| Number of results to return per page. | [optional] |
 | **offset** | **int**| The initial index from which to return the results. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 

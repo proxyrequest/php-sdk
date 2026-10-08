@@ -150,15 +150,16 @@ class AnalyticsResource
      * @param  string|null $packageId Restrict results to one purchased package. (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getConnections'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\ConnectionsResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function getConnections($limit = null, $offset = null, $packageId = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getConnections'][0])
+    public function getConnections($limit = null, $offset = null, $packageId = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getConnections'][0], $impersonateUserId = null)
     {
-        list($response) = $this->getConnectionsWithHttpInfo($limit, $offset, $packageId, $userId, $acceptLanguage, $contentType);
+        list($response) = $this->getConnectionsWithHttpInfo($limit, $offset, $packageId, $userId, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -167,9 +168,9 @@ class AnalyticsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getConnectionsWithResponse($limit = null, $offset = null, $packageId = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getConnections'][0]): \ProxyRequest\ApiResponse
+    public function getConnectionsWithResponse($limit = null, $offset = null, $packageId = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getConnections'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getConnectionsWithHttpInfo($limit, $offset, $packageId, $userId, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getConnectionsWithHttpInfo($limit, $offset, $packageId, $userId, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -182,15 +183,16 @@ class AnalyticsResource
      * @param  string|null $packageId Restrict results to one purchased package. (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getConnections'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\ConnectionsResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getConnectionsWithHttpInfo($limit = null, $offset = null, $packageId = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getConnections'][0])
+    public function getConnectionsWithHttpInfo($limit = null, $offset = null, $packageId = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getConnections'][0], $impersonateUserId = null)
     {
-        $request = $this->getConnectionsRequest($limit, $offset, $packageId, $userId, $acceptLanguage, $contentType);
+        $request = $this->getConnectionsRequest($limit, $offset, $packageId, $userId, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\ConnectionsResponse',
 ));
@@ -206,14 +208,15 @@ class AnalyticsResource
      * @param  string|null $packageId Restrict results to one purchased package. (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getConnections'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getConnectionsAsync($limit = null, $offset = null, $packageId = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getConnections'][0])
+    public function getConnectionsAsync($limit = null, $offset = null, $packageId = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getConnections'][0], $impersonateUserId = null)
     {
-        return $this->getConnectionsAsyncWithHttpInfo($limit, $offset, $packageId, $userId, $acceptLanguage, $contentType)
+        return $this->getConnectionsAsyncWithHttpInfo($limit, $offset, $packageId, $userId, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -231,14 +234,15 @@ class AnalyticsResource
      * @param  string|null $packageId Restrict results to one purchased package. (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getConnections'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getConnectionsAsyncWithHttpInfo($limit = null, $offset = null, $packageId = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getConnections'][0])
+    public function getConnectionsAsyncWithHttpInfo($limit = null, $offset = null, $packageId = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getConnections'][0], $impersonateUserId = null)
     {
-        $request = $this->getConnectionsRequest($limit, $offset, $packageId, $userId, $acceptLanguage, $contentType);
+        $request = $this->getConnectionsRequest($limit, $offset, $packageId, $userId, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\ConnectionsResponse',
 ));
@@ -252,13 +256,15 @@ class AnalyticsResource
      * @param  string|null $packageId Restrict results to one purchased package. (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getConnections'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getConnectionsRequest($limit = null, $offset = null, $packageId = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getConnections'][0])
+    public function getConnectionsRequest($limit = null, $offset = null, $packageId = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getConnections'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -313,6 +319,10 @@ class AnalyticsResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 
@@ -393,15 +403,16 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOverall'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\OverallResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function getOverall($end = null, $includeSubUsers = false, $limit = null, $offset = null, $packageId = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getOverall'][0])
+    public function getOverall($end = null, $includeSubUsers = false, $limit = null, $offset = null, $packageId = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getOverall'][0], $impersonateUserId = null)
     {
-        list($response) = $this->getOverallWithHttpInfo($end, $includeSubUsers, $limit, $offset, $packageId, $start, $timezone, $userId, $acceptLanguage, $contentType);
+        list($response) = $this->getOverallWithHttpInfo($end, $includeSubUsers, $limit, $offset, $packageId, $start, $timezone, $userId, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -410,9 +421,9 @@ class AnalyticsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getOverallWithResponse($end = null, $includeSubUsers = false, $limit = null, $offset = null, $packageId = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getOverall'][0]): \ProxyRequest\ApiResponse
+    public function getOverallWithResponse($end = null, $includeSubUsers = false, $limit = null, $offset = null, $packageId = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getOverall'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getOverallWithHttpInfo($end, $includeSubUsers, $limit, $offset, $packageId, $start, $timezone, $userId, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getOverallWithHttpInfo($end, $includeSubUsers, $limit, $offset, $packageId, $start, $timezone, $userId, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -429,15 +440,16 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOverall'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\OverallResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getOverallWithHttpInfo($end = null, $includeSubUsers = false, $limit = null, $offset = null, $packageId = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getOverall'][0])
+    public function getOverallWithHttpInfo($end = null, $includeSubUsers = false, $limit = null, $offset = null, $packageId = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getOverall'][0], $impersonateUserId = null)
     {
-        $request = $this->getOverallRequest($end, $includeSubUsers, $limit, $offset, $packageId, $start, $timezone, $userId, $acceptLanguage, $contentType);
+        $request = $this->getOverallRequest($end, $includeSubUsers, $limit, $offset, $packageId, $start, $timezone, $userId, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\OverallResponse',
 ));
@@ -457,14 +469,15 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOverall'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getOverallAsync($end = null, $includeSubUsers = false, $limit = null, $offset = null, $packageId = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getOverall'][0])
+    public function getOverallAsync($end = null, $includeSubUsers = false, $limit = null, $offset = null, $packageId = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getOverall'][0], $impersonateUserId = null)
     {
-        return $this->getOverallAsyncWithHttpInfo($end, $includeSubUsers, $limit, $offset, $packageId, $start, $timezone, $userId, $acceptLanguage, $contentType)
+        return $this->getOverallAsyncWithHttpInfo($end, $includeSubUsers, $limit, $offset, $packageId, $start, $timezone, $userId, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -486,14 +499,15 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOverall'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getOverallAsyncWithHttpInfo($end = null, $includeSubUsers = false, $limit = null, $offset = null, $packageId = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getOverall'][0])
+    public function getOverallAsyncWithHttpInfo($end = null, $includeSubUsers = false, $limit = null, $offset = null, $packageId = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getOverall'][0], $impersonateUserId = null)
     {
-        $request = $this->getOverallRequest($end, $includeSubUsers, $limit, $offset, $packageId, $start, $timezone, $userId, $acceptLanguage, $contentType);
+        $request = $this->getOverallRequest($end, $includeSubUsers, $limit, $offset, $packageId, $start, $timezone, $userId, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\OverallResponse',
 ));
@@ -511,13 +525,15 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOverall'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getOverallRequest($end = null, $includeSubUsers = false, $limit = null, $offset = null, $packageId = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getOverall'][0])
+    public function getOverallRequest($end = null, $includeSubUsers = false, $limit = null, $offset = null, $packageId = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getOverall'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -613,6 +629,10 @@ class AnalyticsResource
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
         }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
 
 
 
@@ -693,15 +713,16 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  int|null $type Transaction type identifier. Defaults to data transactions. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTransactions'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\TransactionsResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function getTransactions($id, $end = null, $limit = null, $offset = null, $recipientId = null, $senderId = null, $start = null, $timezone = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['getTransactions'][0])
+    public function getTransactions($id, $end = null, $limit = null, $offset = null, $recipientId = null, $senderId = null, $start = null, $timezone = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['getTransactions'][0], $impersonateUserId = null)
     {
-        list($response) = $this->getTransactionsWithHttpInfo($id, $end, $limit, $offset, $recipientId, $senderId, $start, $timezone, $type, $acceptLanguage, $contentType);
+        list($response) = $this->getTransactionsWithHttpInfo($id, $end, $limit, $offset, $recipientId, $senderId, $start, $timezone, $type, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -710,9 +731,9 @@ class AnalyticsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getTransactionsWithResponse($id, $end = null, $limit = null, $offset = null, $recipientId = null, $senderId = null, $start = null, $timezone = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['getTransactions'][0]): \ProxyRequest\ApiResponse
+    public function getTransactionsWithResponse($id, $end = null, $limit = null, $offset = null, $recipientId = null, $senderId = null, $start = null, $timezone = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['getTransactions'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getTransactionsWithHttpInfo($id, $end, $limit, $offset, $recipientId, $senderId, $start, $timezone, $type, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getTransactionsWithHttpInfo($id, $end, $limit, $offset, $recipientId, $senderId, $start, $timezone, $type, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -730,15 +751,16 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  int|null $type Transaction type identifier. Defaults to data transactions. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTransactions'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\TransactionsResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getTransactionsWithHttpInfo($id, $end = null, $limit = null, $offset = null, $recipientId = null, $senderId = null, $start = null, $timezone = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['getTransactions'][0])
+    public function getTransactionsWithHttpInfo($id, $end = null, $limit = null, $offset = null, $recipientId = null, $senderId = null, $start = null, $timezone = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['getTransactions'][0], $impersonateUserId = null)
     {
-        $request = $this->getTransactionsRequest($id, $end, $limit, $offset, $recipientId, $senderId, $start, $timezone, $type, $acceptLanguage, $contentType);
+        $request = $this->getTransactionsRequest($id, $end, $limit, $offset, $recipientId, $senderId, $start, $timezone, $type, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\TransactionsResponse',
 ));
@@ -759,14 +781,15 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  int|null $type Transaction type identifier. Defaults to data transactions. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTransactions'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getTransactionsAsync($id, $end = null, $limit = null, $offset = null, $recipientId = null, $senderId = null, $start = null, $timezone = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['getTransactions'][0])
+    public function getTransactionsAsync($id, $end = null, $limit = null, $offset = null, $recipientId = null, $senderId = null, $start = null, $timezone = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['getTransactions'][0], $impersonateUserId = null)
     {
-        return $this->getTransactionsAsyncWithHttpInfo($id, $end, $limit, $offset, $recipientId, $senderId, $start, $timezone, $type, $acceptLanguage, $contentType)
+        return $this->getTransactionsAsyncWithHttpInfo($id, $end, $limit, $offset, $recipientId, $senderId, $start, $timezone, $type, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -789,14 +812,15 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  int|null $type Transaction type identifier. Defaults to data transactions. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTransactions'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getTransactionsAsyncWithHttpInfo($id, $end = null, $limit = null, $offset = null, $recipientId = null, $senderId = null, $start = null, $timezone = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['getTransactions'][0])
+    public function getTransactionsAsyncWithHttpInfo($id, $end = null, $limit = null, $offset = null, $recipientId = null, $senderId = null, $start = null, $timezone = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['getTransactions'][0], $impersonateUserId = null)
     {
-        $request = $this->getTransactionsRequest($id, $end, $limit, $offset, $recipientId, $senderId, $start, $timezone, $type, $acceptLanguage, $contentType);
+        $request = $this->getTransactionsRequest($id, $end, $limit, $offset, $recipientId, $senderId, $start, $timezone, $type, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\TransactionsResponse',
 ));
@@ -815,12 +839,13 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  int|null $type Transaction type identifier. Defaults to data transactions. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTransactions'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getTransactionsRequest($id, $end = null, $limit = null, $offset = null, $recipientId = null, $senderId = null, $start = null, $timezone = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['getTransactions'][0])
+    public function getTransactionsRequest($id, $end = null, $limit = null, $offset = null, $recipientId = null, $senderId = null, $start = null, $timezone = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['getTransactions'][0], $impersonateUserId = null)
     {
 
         // verify the required parameter 'id' is set
@@ -829,6 +854,7 @@ class AnalyticsResource
                 'Missing the required parameter $id when calling getTransactions'
             );
         }
+
 
 
 
@@ -924,6 +950,10 @@ class AnalyticsResource
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
         }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
 
         // path params
         if ($id !== null) {
@@ -1015,15 +1045,16 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDomains'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\DomainsResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listDomains($end = null, $hostname = null, $includeSubUsers = false, $ledgerId = null, $limit = null, $offset = null, $ordering = '-data', $packageId = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDomains'][0])
+    public function listDomains($end = null, $hostname = null, $includeSubUsers = false, $ledgerId = null, $limit = null, $offset = null, $ordering = '-data', $packageId = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDomains'][0], $impersonateUserId = null)
     {
-        list($response) = $this->listDomainsWithHttpInfo($end, $hostname, $includeSubUsers, $ledgerId, $limit, $offset, $ordering, $packageId, $search, $start, $timezone, $userId, $acceptLanguage, $contentType);
+        list($response) = $this->listDomainsWithHttpInfo($end, $hostname, $includeSubUsers, $ledgerId, $limit, $offset, $ordering, $packageId, $search, $start, $timezone, $userId, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -1032,9 +1063,9 @@ class AnalyticsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listDomainsWithResponse($end = null, $hostname = null, $includeSubUsers = false, $ledgerId = null, $limit = null, $offset = null, $ordering = '-data', $packageId = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDomains'][0]): \ProxyRequest\ApiResponse
+    public function listDomainsWithResponse($end = null, $hostname = null, $includeSubUsers = false, $ledgerId = null, $limit = null, $offset = null, $ordering = '-data', $packageId = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDomains'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listDomainsWithHttpInfo($end, $hostname, $includeSubUsers, $ledgerId, $limit, $offset, $ordering, $packageId, $search, $start, $timezone, $userId, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listDomainsWithHttpInfo($end, $hostname, $includeSubUsers, $ledgerId, $limit, $offset, $ordering, $packageId, $search, $start, $timezone, $userId, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -1055,15 +1086,16 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDomains'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\DomainsResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listDomainsWithHttpInfo($end = null, $hostname = null, $includeSubUsers = false, $ledgerId = null, $limit = null, $offset = null, $ordering = '-data', $packageId = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDomains'][0])
+    public function listDomainsWithHttpInfo($end = null, $hostname = null, $includeSubUsers = false, $ledgerId = null, $limit = null, $offset = null, $ordering = '-data', $packageId = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDomains'][0], $impersonateUserId = null)
     {
-        $request = $this->listDomainsRequest($end, $hostname, $includeSubUsers, $ledgerId, $limit, $offset, $ordering, $packageId, $search, $start, $timezone, $userId, $acceptLanguage, $contentType);
+        $request = $this->listDomainsRequest($end, $hostname, $includeSubUsers, $ledgerId, $limit, $offset, $ordering, $packageId, $search, $start, $timezone, $userId, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\DomainsResponse',
 ));
@@ -1087,14 +1119,15 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDomains'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listDomainsAsync($end = null, $hostname = null, $includeSubUsers = false, $ledgerId = null, $limit = null, $offset = null, $ordering = '-data', $packageId = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDomains'][0])
+    public function listDomainsAsync($end = null, $hostname = null, $includeSubUsers = false, $ledgerId = null, $limit = null, $offset = null, $ordering = '-data', $packageId = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDomains'][0], $impersonateUserId = null)
     {
-        return $this->listDomainsAsyncWithHttpInfo($end, $hostname, $includeSubUsers, $ledgerId, $limit, $offset, $ordering, $packageId, $search, $start, $timezone, $userId, $acceptLanguage, $contentType)
+        return $this->listDomainsAsyncWithHttpInfo($end, $hostname, $includeSubUsers, $ledgerId, $limit, $offset, $ordering, $packageId, $search, $start, $timezone, $userId, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1120,14 +1153,15 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDomains'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listDomainsAsyncWithHttpInfo($end = null, $hostname = null, $includeSubUsers = false, $ledgerId = null, $limit = null, $offset = null, $ordering = '-data', $packageId = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDomains'][0])
+    public function listDomainsAsyncWithHttpInfo($end = null, $hostname = null, $includeSubUsers = false, $ledgerId = null, $limit = null, $offset = null, $ordering = '-data', $packageId = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDomains'][0], $impersonateUserId = null)
     {
-        $request = $this->listDomainsRequest($end, $hostname, $includeSubUsers, $ledgerId, $limit, $offset, $ordering, $packageId, $search, $start, $timezone, $userId, $acceptLanguage, $contentType);
+        $request = $this->listDomainsRequest($end, $hostname, $includeSubUsers, $ledgerId, $limit, $offset, $ordering, $packageId, $search, $start, $timezone, $userId, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\DomainsResponse',
 ));
@@ -1149,13 +1183,15 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDomains'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listDomainsRequest($end = null, $hostname = null, $includeSubUsers = false, $ledgerId = null, $limit = null, $offset = null, $ordering = '-data', $packageId = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDomains'][0])
+    public function listDomainsRequest($end = null, $hostname = null, $includeSubUsers = false, $ledgerId = null, $limit = null, $offset = null, $ordering = '-data', $packageId = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDomains'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -1291,6 +1327,10 @@ class AnalyticsResource
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
         }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
 
 
 
@@ -1376,15 +1416,16 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listFeed'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\FeedResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listFeed($city = null, $country = null, $end = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listFeed'][0])
+    public function listFeed($city = null, $country = null, $end = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listFeed'][0], $impersonateUserId = null)
     {
-        list($response) = $this->listFeedWithHttpInfo($city, $country, $end, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $search, $start, $timezone, $userId, $acceptLanguage, $contentType);
+        list($response) = $this->listFeedWithHttpInfo($city, $country, $end, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $search, $start, $timezone, $userId, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -1393,9 +1434,9 @@ class AnalyticsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listFeedWithResponse($city = null, $country = null, $end = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listFeed'][0]): \ProxyRequest\ApiResponse
+    public function listFeedWithResponse($city = null, $country = null, $end = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listFeed'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listFeedWithHttpInfo($city, $country, $end, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $search, $start, $timezone, $userId, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listFeedWithHttpInfo($city, $country, $end, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $search, $start, $timezone, $userId, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -1418,15 +1459,16 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listFeed'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\FeedResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listFeedWithHttpInfo($city = null, $country = null, $end = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listFeed'][0])
+    public function listFeedWithHttpInfo($city = null, $country = null, $end = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listFeed'][0], $impersonateUserId = null)
     {
-        $request = $this->listFeedRequest($city, $country, $end, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $search, $start, $timezone, $userId, $acceptLanguage, $contentType);
+        $request = $this->listFeedRequest($city, $country, $end, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $search, $start, $timezone, $userId, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\FeedResponse',
 ));
@@ -1452,14 +1494,15 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listFeed'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listFeedAsync($city = null, $country = null, $end = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listFeed'][0])
+    public function listFeedAsync($city = null, $country = null, $end = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listFeed'][0], $impersonateUserId = null)
     {
-        return $this->listFeedAsyncWithHttpInfo($city, $country, $end, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $search, $start, $timezone, $userId, $acceptLanguage, $contentType)
+        return $this->listFeedAsyncWithHttpInfo($city, $country, $end, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $search, $start, $timezone, $userId, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1487,14 +1530,15 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listFeed'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listFeedAsyncWithHttpInfo($city = null, $country = null, $end = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listFeed'][0])
+    public function listFeedAsyncWithHttpInfo($city = null, $country = null, $end = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listFeed'][0], $impersonateUserId = null)
     {
-        $request = $this->listFeedRequest($city, $country, $end, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $search, $start, $timezone, $userId, $acceptLanguage, $contentType);
+        $request = $this->listFeedRequest($city, $country, $end, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $search, $start, $timezone, $userId, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\FeedResponse',
 ));
@@ -1518,13 +1562,15 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listFeed'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listFeedRequest($city = null, $country = null, $end = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listFeed'][0])
+    public function listFeedRequest($city = null, $country = null, $end = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $search = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listFeed'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -1680,6 +1726,10 @@ class AnalyticsResource
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
         }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
 
 
 
@@ -1765,15 +1815,16 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listLogs'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\LogsResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listLogs($city = null, $country = null, $end = null, $errorCode = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listLogs'][0])
+    public function listLogs($city = null, $country = null, $end = null, $errorCode = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listLogs'][0], $impersonateUserId = null)
     {
-        list($response) = $this->listLogsWithHttpInfo($city, $country, $end, $errorCode, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $start, $timezone, $userId, $acceptLanguage, $contentType);
+        list($response) = $this->listLogsWithHttpInfo($city, $country, $end, $errorCode, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $start, $timezone, $userId, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -1782,9 +1833,9 @@ class AnalyticsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listLogsWithResponse($city = null, $country = null, $end = null, $errorCode = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listLogs'][0]): \ProxyRequest\ApiResponse
+    public function listLogsWithResponse($city = null, $country = null, $end = null, $errorCode = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listLogs'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listLogsWithHttpInfo($city, $country, $end, $errorCode, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $start, $timezone, $userId, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listLogsWithHttpInfo($city, $country, $end, $errorCode, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $start, $timezone, $userId, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -1807,15 +1858,16 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listLogs'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\LogsResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listLogsWithHttpInfo($city = null, $country = null, $end = null, $errorCode = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listLogs'][0])
+    public function listLogsWithHttpInfo($city = null, $country = null, $end = null, $errorCode = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listLogs'][0], $impersonateUserId = null)
     {
-        $request = $this->listLogsRequest($city, $country, $end, $errorCode, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $start, $timezone, $userId, $acceptLanguage, $contentType);
+        $request = $this->listLogsRequest($city, $country, $end, $errorCode, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $start, $timezone, $userId, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\LogsResponse',
 ));
@@ -1841,14 +1893,15 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listLogs'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listLogsAsync($city = null, $country = null, $end = null, $errorCode = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listLogs'][0])
+    public function listLogsAsync($city = null, $country = null, $end = null, $errorCode = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listLogs'][0], $impersonateUserId = null)
     {
-        return $this->listLogsAsyncWithHttpInfo($city, $country, $end, $errorCode, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $start, $timezone, $userId, $acceptLanguage, $contentType)
+        return $this->listLogsAsyncWithHttpInfo($city, $country, $end, $errorCode, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $start, $timezone, $userId, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1876,14 +1929,15 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listLogs'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listLogsAsyncWithHttpInfo($city = null, $country = null, $end = null, $errorCode = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listLogs'][0])
+    public function listLogsAsyncWithHttpInfo($city = null, $country = null, $end = null, $errorCode = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listLogs'][0], $impersonateUserId = null)
     {
-        $request = $this->listLogsRequest($city, $country, $end, $errorCode, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $start, $timezone, $userId, $acceptLanguage, $contentType);
+        $request = $this->listLogsRequest($city, $country, $end, $errorCode, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $start, $timezone, $userId, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\LogsResponse',
 ));
@@ -1907,13 +1961,15 @@ class AnalyticsResource
      * @param  string|null $timezone IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). (optional)
      * @param  string|null $userId Restrict results to the current account or an accessible sub-user. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listLogs'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listLogsRequest($city = null, $country = null, $end = null, $errorCode = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listLogs'][0])
+    public function listLogsRequest($city = null, $country = null, $end = null, $errorCode = null, $hostname = null, $ledgerId = null, $limit = null, $offset = null, $packageId = null, $protocol = null, $region = null, $start = null, $timezone = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['listLogs'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -2068,6 +2124,10 @@ class AnalyticsResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 

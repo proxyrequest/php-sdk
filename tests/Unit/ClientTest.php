@@ -23,6 +23,19 @@ use ProxyRequest\Exception\ErrorKind;
 
 final class ClientTest extends TestCase
 {
+    public function testImpersonationIsScopedToOneCallOnTheSameClient(): void
+    {
+        $client = Client::withApiKey('superuser-key');
+        $resource = $client->users();
+
+        $impersonated = $resource->getRequest('child-id', impersonateUserId: 'reseller-id');
+        $ordinary = $resource->getRequest('child-id');
+
+        self::assertSame('reseller-id', $impersonated->getHeaderLine('X-Impersonate-User'));
+        self::assertSame('', $ordinary->getHeaderLine('X-Impersonate-User'));
+        self::assertSame('Static superuser-key', $impersonated->getHeaderLine('Authorization'));
+    }
+
     public function testStaticApiKeyIsAddedToAuthenticatedRequests(): void
     {
         $request = Client::withApiKey('sdk-secret')->users()->getRequest('user/id', 'uk');

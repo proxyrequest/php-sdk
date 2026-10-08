@@ -15,7 +15,7 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 ## `createLink()`
 
 ```php
-createLink($acceptLanguage): \ProxyRequest\Dto\TelegramLinkResponse
+createLink($acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\TelegramLinkResponse
 ```
 
 Create a Telegram account link
@@ -45,9 +45,10 @@ $apiInstance = new ProxyRequest\Api\TelegramDashboardResource(
     $config
 );
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->createLink($acceptLanguage);
+    $result = $apiInstance->createLink($acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling TelegramDashboardResource->createLink: ', $e->getMessage(), PHP_EOL;
@@ -59,6 +60,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -80,7 +82,7 @@ try {
 ## `deleteConnection()`
 
 ```php
-deleteConnection($acceptLanguage)
+deleteConnection($acceptLanguage, $xImpersonateUser)
 ```
 
 Disconnect the Telegram dashboard
@@ -110,9 +112,10 @@ $apiInstance = new ProxyRequest\Api\TelegramDashboardResource(
     $config
 );
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $apiInstance->deleteConnection($acceptLanguage);
+    $apiInstance->deleteConnection($acceptLanguage, $xImpersonateUser);
 } catch (Exception $e) {
     echo 'Exception when calling TelegramDashboardResource->deleteConnection: ', $e->getMessage(), PHP_EOL;
 }
@@ -123,6 +126,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -144,7 +148,7 @@ void (empty response body)
 ## `getConnection()`
 
 ```php
-getConnection($acceptLanguage): \ProxyRequest\Dto\TelegramConnectionResponse
+getConnection($acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\TelegramConnectionResponse
 ```
 
 Get the Telegram dashboard connection
@@ -174,9 +178,10 @@ $apiInstance = new ProxyRequest\Api\TelegramDashboardResource(
     $config
 );
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->getConnection($acceptLanguage);
+    $result = $apiInstance->getConnection($acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling TelegramDashboardResource->getConnection: ', $e->getMessage(), PHP_EOL;
@@ -188,6 +193,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -209,7 +215,7 @@ try {
 ## `updateConnection()`
 
 ```php
-updateConnection($acceptLanguage, $patchedTelegramConnectionUpdateRequest): \ProxyRequest\Dto\TelegramConnectionResponse
+updateConnection($acceptLanguage, $xImpersonateUser, $patchedTelegramConnectionUpdateRequest): \ProxyRequest\Dto\TelegramConnectionResponse
 ```
 
 Update Telegram dashboard preferences
@@ -239,10 +245,11 @@ $apiInstance = new ProxyRequest\Api\TelegramDashboardResource(
     $config
 );
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 $patchedTelegramConnectionUpdateRequest = {"locale":"locale","timezone":"UTC"}; // \ProxyRequest\Dto\PatchedTelegramConnectionUpdateRequest
 
 try {
-    $result = $apiInstance->updateConnection($acceptLanguage, $patchedTelegramConnectionUpdateRequest);
+    $result = $apiInstance->updateConnection($acceptLanguage, $xImpersonateUser, $patchedTelegramConnectionUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling TelegramDashboardResource->updateConnection: ', $e->getMessage(), PHP_EOL;
@@ -254,6 +261,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 | **patchedTelegramConnectionUpdateRequest** | [**\ProxyRequest\Dto\PatchedTelegramConnectionUpdateRequest**](../Model/PatchedTelegramConnectionUpdateRequest.md)|  | [optional] |
 
 ### Return type

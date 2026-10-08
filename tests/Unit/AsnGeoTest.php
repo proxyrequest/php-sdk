@@ -19,7 +19,7 @@ final class AsnGeoTest extends TestCase
         $legacy = ['packageId', 'code', 'countryCode', 'global', 'limit', 'name', 'offset', 'ordering', 'search', 'acceptLanguage', 'contentType'];
         foreach (['', 'WithResponse', 'WithHttpInfo', 'Async', 'AsyncWithHttpInfo', 'Request'] as $suffix) {
             $parameters = new \ReflectionMethod($resource, 'listAsns' . $suffix)->getParameters();
-            self::assertSame([...$legacy, 'includeGeo'], array_map(static fn(\ReflectionParameter $parameter): string => $parameter->getName(), $parameters));
+            self::assertSame([...$legacy, 'includeGeo', 'impersonateUserId'], array_map(static fn(\ReflectionParameter $parameter): string => $parameter->getName(), $parameters));
         }
 
         $previousCall = $resource->listAsnsRequest('package', null, null, null, 5, null, null, null, null, 'uk', 'application/json');

@@ -12,7 +12,7 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 ## `list()`
 
 ```php
-list($limit, $offset, $ordering, $search, $acceptLanguage): \ProxyRequest\Dto\PaginatedNewsList
+list($limit, $offset, $ordering, $search, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\PaginatedNewsList
 ```
 
 List product announcements
@@ -46,9 +46,10 @@ $offset = 56; // int | The initial index from which to return the results.
 $ordering = 'ordering_example'; // string | Which field to use when ordering the results.
 $search = 'search_example'; // string | Case-insensitive partial search across News fields: `title` and `content`. Separate multiple terms with spaces or commas; every term must match at least one listed field.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->list($limit, $offset, $ordering, $search, $acceptLanguage);
+    $result = $apiInstance->list($limit, $offset, $ordering, $search, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling NewsResource->list: ', $e->getMessage(), PHP_EOL;
@@ -64,6 +65,7 @@ try {
 | **ordering** | **string**| Which field to use when ordering the results. | [optional] |
 | **search** | **string**| Case-insensitive partial search across News fields: &#x60;title&#x60; and &#x60;content&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 

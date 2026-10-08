@@ -141,15 +141,16 @@ class PackagesResource
      * @param  string|null $search Case-insensitive partial search across Package fields: &#x60;name&#x60; and &#x60;alias&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $type * &#x60;static&#x60; - Static * &#x60;residential&#x60; - Residential (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\PaginatedPackageList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function list($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function list($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
-        list($response) = $this->listWithHttpInfo($alias, $limit, $offset, $ordering, $pricingUnit, $search, $type, $acceptLanguage, $contentType);
+        list($response) = $this->listWithHttpInfo($alias, $limit, $offset, $ordering, $pricingUnit, $search, $type, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -158,9 +159,9 @@ class PackagesResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listWithResponse($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0]): \ProxyRequest\ApiResponse
+    public function listWithResponse($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listWithHttpInfo($alias, $limit, $offset, $ordering, $pricingUnit, $search, $type, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listWithHttpInfo($alias, $limit, $offset, $ordering, $pricingUnit, $search, $type, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -176,15 +177,16 @@ class PackagesResource
      * @param  string|null $search Case-insensitive partial search across Package fields: &#x60;name&#x60; and &#x60;alias&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $type * &#x60;static&#x60; - Static * &#x60;residential&#x60; - Residential (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\PaginatedPackageList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listWithHttpInfo($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function listWithHttpInfo($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
-        $request = $this->listRequest($alias, $limit, $offset, $ordering, $pricingUnit, $search, $type, $acceptLanguage, $contentType);
+        $request = $this->listRequest($alias, $limit, $offset, $ordering, $pricingUnit, $search, $type, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedPackageList',
 ));
@@ -203,14 +205,15 @@ class PackagesResource
      * @param  string|null $search Case-insensitive partial search across Package fields: &#x60;name&#x60; and &#x60;alias&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $type * &#x60;static&#x60; - Static * &#x60;residential&#x60; - Residential (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listAsync($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function listAsync($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
-        return $this->listAsyncWithHttpInfo($alias, $limit, $offset, $ordering, $pricingUnit, $search, $type, $acceptLanguage, $contentType)
+        return $this->listAsyncWithHttpInfo($alias, $limit, $offset, $ordering, $pricingUnit, $search, $type, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -231,14 +234,15 @@ class PackagesResource
      * @param  string|null $search Case-insensitive partial search across Package fields: &#x60;name&#x60; and &#x60;alias&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $type * &#x60;static&#x60; - Static * &#x60;residential&#x60; - Residential (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listAsyncWithHttpInfo($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function listAsyncWithHttpInfo($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
-        $request = $this->listRequest($alias, $limit, $offset, $ordering, $pricingUnit, $search, $type, $acceptLanguage, $contentType);
+        $request = $this->listRequest($alias, $limit, $offset, $ordering, $pricingUnit, $search, $type, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedPackageList',
 ));
@@ -255,13 +259,15 @@ class PackagesResource
      * @param  string|null $search Case-insensitive partial search across Package fields: &#x60;name&#x60; and &#x60;alias&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $type * &#x60;static&#x60; - Static * &#x60;residential&#x60; - Residential (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listRequest($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function listRequest($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -347,6 +353,10 @@ class PackagesResource
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
         }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
 
 
 
@@ -424,15 +434,16 @@ class PackagesResource
      * @param  string|null $pricingUnit Unit customers purchase — determines how the billing model amounts are interpreted. * &#x60;data&#x60; - Data * &#x60;proxy&#x60; - Proxy (optional)
      * @param  string|null $type * &#x60;static&#x60; - Static * &#x60;residential&#x60; - Residential (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCommissions'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\PaginatedPackageCommissionList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listCommissions($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCommissions'][0])
+    public function listCommissions($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCommissions'][0], $impersonateUserId = null)
     {
-        list($response) = $this->listCommissionsWithHttpInfo($alias, $limit, $offset, $ordering, $pricingUnit, $type, $acceptLanguage, $contentType);
+        list($response) = $this->listCommissionsWithHttpInfo($alias, $limit, $offset, $ordering, $pricingUnit, $type, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -441,9 +452,9 @@ class PackagesResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listCommissionsWithResponse($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCommissions'][0]): \ProxyRequest\ApiResponse
+    public function listCommissionsWithResponse($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCommissions'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listCommissionsWithHttpInfo($alias, $limit, $offset, $ordering, $pricingUnit, $type, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listCommissionsWithHttpInfo($alias, $limit, $offset, $ordering, $pricingUnit, $type, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -458,15 +469,16 @@ class PackagesResource
      * @param  string|null $pricingUnit Unit customers purchase — determines how the billing model amounts are interpreted. * &#x60;data&#x60; - Data * &#x60;proxy&#x60; - Proxy (optional)
      * @param  string|null $type * &#x60;static&#x60; - Static * &#x60;residential&#x60; - Residential (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCommissions'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\PaginatedPackageCommissionList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listCommissionsWithHttpInfo($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCommissions'][0])
+    public function listCommissionsWithHttpInfo($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCommissions'][0], $impersonateUserId = null)
     {
-        $request = $this->listCommissionsRequest($alias, $limit, $offset, $ordering, $pricingUnit, $type, $acceptLanguage, $contentType);
+        $request = $this->listCommissionsRequest($alias, $limit, $offset, $ordering, $pricingUnit, $type, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedPackageCommissionList',
 ));
@@ -484,14 +496,15 @@ class PackagesResource
      * @param  string|null $pricingUnit Unit customers purchase — determines how the billing model amounts are interpreted. * &#x60;data&#x60; - Data * &#x60;proxy&#x60; - Proxy (optional)
      * @param  string|null $type * &#x60;static&#x60; - Static * &#x60;residential&#x60; - Residential (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCommissions'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listCommissionsAsync($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCommissions'][0])
+    public function listCommissionsAsync($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCommissions'][0], $impersonateUserId = null)
     {
-        return $this->listCommissionsAsyncWithHttpInfo($alias, $limit, $offset, $ordering, $pricingUnit, $type, $acceptLanguage, $contentType)
+        return $this->listCommissionsAsyncWithHttpInfo($alias, $limit, $offset, $ordering, $pricingUnit, $type, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -511,14 +524,15 @@ class PackagesResource
      * @param  string|null $pricingUnit Unit customers purchase — determines how the billing model amounts are interpreted. * &#x60;data&#x60; - Data * &#x60;proxy&#x60; - Proxy (optional)
      * @param  string|null $type * &#x60;static&#x60; - Static * &#x60;residential&#x60; - Residential (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCommissions'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listCommissionsAsyncWithHttpInfo($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCommissions'][0])
+    public function listCommissionsAsyncWithHttpInfo($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCommissions'][0], $impersonateUserId = null)
     {
-        $request = $this->listCommissionsRequest($alias, $limit, $offset, $ordering, $pricingUnit, $type, $acceptLanguage, $contentType);
+        $request = $this->listCommissionsRequest($alias, $limit, $offset, $ordering, $pricingUnit, $type, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedPackageCommissionList',
 ));
@@ -534,13 +548,15 @@ class PackagesResource
      * @param  string|null $pricingUnit Unit customers purchase — determines how the billing model amounts are interpreted. * &#x60;data&#x60; - Data * &#x60;proxy&#x60; - Proxy (optional)
      * @param  string|null $type * &#x60;static&#x60; - Static * &#x60;residential&#x60; - Residential (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCommissions'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listCommissionsRequest($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCommissions'][0])
+    public function listCommissionsRequest($alias = null, $limit = null, $offset = null, $ordering = null, $pricingUnit = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCommissions'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -615,6 +631,10 @@ class PackagesResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 

@@ -53,6 +53,27 @@ function preserveLocationArguments(string $source): string
     }, $source) ?? throw new RuntimeException('Unable to preserve location arguments');
 }
 
+// Keep existing positional calls compatible when the optional impersonation
+// header is added to the generated methods. In particular, contentType stays
+// in its original position.
+function preserveImpersonationArguments(string $source): string
+{
+    return preg_replace_callback('/(\b\w+\()([^\n()]*)(\))/', static function (array $match): string {
+        if (!str_contains($match[2], '$xImpersonateUser')) {
+            return $match[0];
+        }
+        $parameters = explode(', ', $match[2]);
+        foreach ($parameters as $index => $parameter) {
+            if (preg_match('/^\$xImpersonateUser(?: = null)?$/', $parameter)) {
+                unset($parameters[$index]);
+                $parameters[] = $parameter;
+                return $match[1] . implode(', ', $parameters) . $match[3];
+            }
+        }
+        return $match[0];
+    }, $source) ?? throw new RuntimeException('Unable to preserve impersonation arguments');
+}
+
 foreach (glob($root . '/src/Resource/*Resource.php') ?: [] as $path) {
     if ('SessionsResource.php' === basename($path)) {
         continue;
@@ -76,6 +97,10 @@ foreach (glob($root . '/src/Resource/*Resource.php') ?: [] as $path) {
         $docs = str_replace(', $includeGeo)', ', includeGeo: $includeGeo)', $docs);
         file_put_contents($docsPath, $docs);
     }
+    // The existing location options must be ordered first so impersonation
+    // remains the final argument on those methods as well.
+    $source = preserveImpersonationArguments($source);
+    $source = str_replace('$xImpersonateUser', '$impersonateUserId', $source);
     if ('AnalyticsResource.php' === basename($path)) {
         $source = str_replace(
             '            $includeSubUsers,' . "\n            'include_sub_users', // param base name",

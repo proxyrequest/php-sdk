@@ -13,7 +13,7 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 ## `claim()`
 
 ```php
-claim($rewardClaimRequest, $acceptLanguage)
+claim($rewardClaimRequest, $acceptLanguage, $xImpersonateUser)
 ```
 
 Claim available rewards
@@ -44,9 +44,10 @@ $apiInstance = new ProxyRequest\Api\RewardsResource(
 );
 $rewardClaimRequest = {"type":"data","description":"Transfer referral data reward"}; // \ProxyRequest\Dto\RewardClaimRequest
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $apiInstance->claim($rewardClaimRequest, $acceptLanguage);
+    $apiInstance->claim($rewardClaimRequest, $acceptLanguage, $xImpersonateUser);
 } catch (Exception $e) {
     echo 'Exception when calling RewardsResource->claim: ', $e->getMessage(), PHP_EOL;
 }
@@ -58,6 +59,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **rewardClaimRequest** | [**\ProxyRequest\Dto\RewardClaimRequest**](../Model/RewardClaimRequest.md)|  | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -79,7 +81,7 @@ void (empty response body)
 ## `list()`
 
 ```php
-list($level, $limit, $offset, $ordering, $userEmail, $userId, $acceptLanguage): \ProxyRequest\Dto\PaginatedRewardList
+list($level, $limit, $offset, $ordering, $userEmail, $userId, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\PaginatedRewardList
 ```
 
 List account rewards
@@ -115,9 +117,10 @@ $ordering = 'ordering_example'; // string | Which field to use when ordering the
 $userEmail = 'userEmail_example'; // string
 $userId = 'userId_example'; // string
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->list($level, $limit, $offset, $ordering, $userEmail, $userId, $acceptLanguage);
+    $result = $apiInstance->list($level, $limit, $offset, $ordering, $userEmail, $userId, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling RewardsResource->list: ', $e->getMessage(), PHP_EOL;
@@ -135,6 +138,7 @@ try {
 | **userEmail** | **string**|  | [optional] |
 | **userId** | **string**|  | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 

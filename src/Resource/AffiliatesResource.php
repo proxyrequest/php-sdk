@@ -137,15 +137,16 @@ class AffiliatesResource
      * Get affiliate earnings over time
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRewardsOverall'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\AffiliateStatsResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function getRewardsOverall($acceptLanguage = null, string $contentType = self::contentTypes['getRewardsOverall'][0])
+    public function getRewardsOverall($acceptLanguage = null, string $contentType = self::contentTypes['getRewardsOverall'][0], $impersonateUserId = null)
     {
-        list($response) = $this->getRewardsOverallWithHttpInfo($acceptLanguage, $contentType);
+        list($response) = $this->getRewardsOverallWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -154,9 +155,9 @@ class AffiliatesResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getRewardsOverallWithResponse($acceptLanguage = null, string $contentType = self::contentTypes['getRewardsOverall'][0]): \ProxyRequest\ApiResponse
+    public function getRewardsOverallWithResponse($acceptLanguage = null, string $contentType = self::contentTypes['getRewardsOverall'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getRewardsOverallWithHttpInfo($acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getRewardsOverallWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -165,15 +166,16 @@ class AffiliatesResource
      * Get affiliate earnings over time
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRewardsOverall'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\AffiliateStatsResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getRewardsOverallWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['getRewardsOverall'][0])
+    public function getRewardsOverallWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['getRewardsOverall'][0], $impersonateUserId = null)
     {
-        $request = $this->getRewardsOverallRequest($acceptLanguage, $contentType);
+        $request = $this->getRewardsOverallRequest($acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\AffiliateStatsResponse',
 ));
@@ -185,14 +187,15 @@ class AffiliatesResource
      * Get affiliate earnings over time
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRewardsOverall'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getRewardsOverallAsync($acceptLanguage = null, string $contentType = self::contentTypes['getRewardsOverall'][0])
+    public function getRewardsOverallAsync($acceptLanguage = null, string $contentType = self::contentTypes['getRewardsOverall'][0], $impersonateUserId = null)
     {
-        return $this->getRewardsOverallAsyncWithHttpInfo($acceptLanguage, $contentType)
+        return $this->getRewardsOverallAsyncWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -206,14 +209,15 @@ class AffiliatesResource
      * Get affiliate earnings over time
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRewardsOverall'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getRewardsOverallAsyncWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['getRewardsOverall'][0])
+    public function getRewardsOverallAsyncWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['getRewardsOverall'][0], $impersonateUserId = null)
     {
-        $request = $this->getRewardsOverallRequest($acceptLanguage, $contentType);
+        $request = $this->getRewardsOverallRequest($acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\AffiliateStatsResponse',
 ));
@@ -223,13 +227,15 @@ class AffiliatesResource
      * Create request for operation 'getRewardsOverall'
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRewardsOverall'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getRewardsOverallRequest($acceptLanguage = null, string $contentType = self::contentTypes['getRewardsOverall'][0])
+    public function getRewardsOverallRequest($acceptLanguage = null, string $contentType = self::contentTypes['getRewardsOverall'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -244,6 +250,10 @@ class AffiliatesResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 
@@ -318,15 +328,16 @@ class AffiliatesResource
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\PaginatedAffiliateList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function list($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function list($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
-        list($response) = $this->listWithHttpInfo($limit, $offset, $acceptLanguage, $contentType);
+        list($response) = $this->listWithHttpInfo($limit, $offset, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -335,9 +346,9 @@ class AffiliatesResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listWithResponse($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0]): \ProxyRequest\ApiResponse
+    public function listWithResponse($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listWithHttpInfo($limit, $offset, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listWithHttpInfo($limit, $offset, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -348,15 +359,16 @@ class AffiliatesResource
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\PaginatedAffiliateList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listWithHttpInfo($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function listWithHttpInfo($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
-        $request = $this->listRequest($limit, $offset, $acceptLanguage, $contentType);
+        $request = $this->listRequest($limit, $offset, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedAffiliateList',
 ));
@@ -370,14 +382,15 @@ class AffiliatesResource
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listAsync($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function listAsync($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
-        return $this->listAsyncWithHttpInfo($limit, $offset, $acceptLanguage, $contentType)
+        return $this->listAsyncWithHttpInfo($limit, $offset, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -393,14 +406,15 @@ class AffiliatesResource
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listAsyncWithHttpInfo($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function listAsyncWithHttpInfo($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
-        $request = $this->listRequest($limit, $offset, $acceptLanguage, $contentType);
+        $request = $this->listRequest($limit, $offset, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedAffiliateList',
 ));
@@ -412,13 +426,15 @@ class AffiliatesResource
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listRequest($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function listRequest($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -453,6 +469,10 @@ class AffiliatesResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 
@@ -527,15 +547,16 @@ class AffiliatesResource
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listRewards'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\PaginatedAffiliateRewardList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listRewards($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRewards'][0])
+    public function listRewards($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRewards'][0], $impersonateUserId = null)
     {
-        list($response) = $this->listRewardsWithHttpInfo($limit, $offset, $acceptLanguage, $contentType);
+        list($response) = $this->listRewardsWithHttpInfo($limit, $offset, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -544,9 +565,9 @@ class AffiliatesResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listRewardsWithResponse($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRewards'][0]): \ProxyRequest\ApiResponse
+    public function listRewardsWithResponse($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRewards'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listRewardsWithHttpInfo($limit, $offset, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listRewardsWithHttpInfo($limit, $offset, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -557,15 +578,16 @@ class AffiliatesResource
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listRewards'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\PaginatedAffiliateRewardList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listRewardsWithHttpInfo($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRewards'][0])
+    public function listRewardsWithHttpInfo($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRewards'][0], $impersonateUserId = null)
     {
-        $request = $this->listRewardsRequest($limit, $offset, $acceptLanguage, $contentType);
+        $request = $this->listRewardsRequest($limit, $offset, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedAffiliateRewardList',
 ));
@@ -579,14 +601,15 @@ class AffiliatesResource
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listRewards'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listRewardsAsync($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRewards'][0])
+    public function listRewardsAsync($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRewards'][0], $impersonateUserId = null)
     {
-        return $this->listRewardsAsyncWithHttpInfo($limit, $offset, $acceptLanguage, $contentType)
+        return $this->listRewardsAsyncWithHttpInfo($limit, $offset, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -602,14 +625,15 @@ class AffiliatesResource
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listRewards'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listRewardsAsyncWithHttpInfo($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRewards'][0])
+    public function listRewardsAsyncWithHttpInfo($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRewards'][0], $impersonateUserId = null)
     {
-        $request = $this->listRewardsRequest($limit, $offset, $acceptLanguage, $contentType);
+        $request = $this->listRewardsRequest($limit, $offset, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedAffiliateRewardList',
 ));
@@ -621,13 +645,15 @@ class AffiliatesResource
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listRewards'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listRewardsRequest($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRewards'][0])
+    public function listRewardsRequest($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRewards'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -662,6 +688,10 @@ class AffiliatesResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 

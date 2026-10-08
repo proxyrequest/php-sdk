@@ -14,7 +14,7 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 ## `create()`
 
 ```php
-create($acceptLanguage, $aPIKeyCreateRequest): \ProxyRequest\Dto\APIKeyCreate
+create($acceptLanguage, $xImpersonateUser, $aPIKeyCreateRequest): \ProxyRequest\Dto\APIKeyCreate
 ```
 
 Create an API key
@@ -44,10 +44,11 @@ $apiInstance = new ProxyRequest\Api\APIKeysResource(
     $config
 );
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 $aPIKeyCreateRequest = {"allowed_ips":["198.51.100.25","203.0.113.10"]}; // \ProxyRequest\Dto\APIKeyCreateRequest
 
 try {
-    $result = $apiInstance->create($acceptLanguage, $aPIKeyCreateRequest);
+    $result = $apiInstance->create($acceptLanguage, $xImpersonateUser, $aPIKeyCreateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling APIKeysResource->create: ', $e->getMessage(), PHP_EOL;
@@ -59,6 +60,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 | **aPIKeyCreateRequest** | [**\ProxyRequest\Dto\APIKeyCreateRequest**](../Model/APIKeyCreateRequest.md)|  | [optional] |
 
 ### Return type
@@ -81,7 +83,7 @@ try {
 ## `delete()`
 
 ```php
-delete($id, $idempotencyKey, $acceptLanguage)
+delete($id, $idempotencyKey, $acceptLanguage, $xImpersonateUser)
 ```
 
 Revoke an API key
@@ -113,9 +115,10 @@ $apiInstance = new ProxyRequest\Api\APIKeysResource(
 $id = 'id_example'; // string | A unique value identifying this API Key.
 $idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $apiInstance->delete($id, $idempotencyKey, $acceptLanguage);
+    $apiInstance->delete($id, $idempotencyKey, $acceptLanguage, $xImpersonateUser);
 } catch (Exception $e) {
     echo 'Exception when calling APIKeysResource->delete: ', $e->getMessage(), PHP_EOL;
 }
@@ -128,6 +131,7 @@ try {
 | **id** | **string**| A unique value identifying this API Key. | |
 | **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -149,7 +153,7 @@ void (empty response body)
 ## `list()`
 
 ```php
-list($limit, $offset, $acceptLanguage): \ProxyRequest\Dto\PaginatedAPIKeyList
+list($limit, $offset, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\PaginatedAPIKeyList
 ```
 
 List API keys
@@ -181,9 +185,10 @@ $apiInstance = new ProxyRequest\Api\APIKeysResource(
 $limit = 56; // int | Number of results to return per page.
 $offset = 56; // int | The initial index from which to return the results.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->list($limit, $offset, $acceptLanguage);
+    $result = $apiInstance->list($limit, $offset, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling APIKeysResource->list: ', $e->getMessage(), PHP_EOL;
@@ -197,6 +202,7 @@ try {
 | **limit** | **int**| Number of results to return per page. | [optional] |
 | **offset** | **int**| The initial index from which to return the results. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 

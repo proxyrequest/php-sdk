@@ -131,15 +131,16 @@ class SettingsResource
      * Get account settings
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\SettingsResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function get($acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function get($acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
-        list($response) = $this->getWithHttpInfo($acceptLanguage, $contentType);
+        list($response) = $this->getWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -148,9 +149,9 @@ class SettingsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getWithResponse($acceptLanguage = null, string $contentType = self::contentTypes['get'][0]): \ProxyRequest\ApiResponse
+    public function getWithResponse($acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getWithHttpInfo($acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -159,15 +160,16 @@ class SettingsResource
      * Get account settings
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\SettingsResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function getWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
-        $request = $this->getRequest($acceptLanguage, $contentType);
+        $request = $this->getRequest($acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\SettingsResponse',
 ));
@@ -179,14 +181,15 @@ class SettingsResource
      * Get account settings
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getAsync($acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function getAsync($acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
-        return $this->getAsyncWithHttpInfo($acceptLanguage, $contentType)
+        return $this->getAsyncWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -200,14 +203,15 @@ class SettingsResource
      * Get account settings
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getAsyncWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function getAsyncWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
-        $request = $this->getRequest($acceptLanguage, $contentType);
+        $request = $this->getRequest($acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\SettingsResponse',
 ));
@@ -217,13 +221,15 @@ class SettingsResource
      * Create request for operation 'get'
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getRequest($acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function getRequest($acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -238,6 +244,10 @@ class SettingsResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 

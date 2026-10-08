@@ -15,7 +15,7 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 ## `create()`
 
 ```php
-create($webhookCreateRequest, $idempotencyKey, $acceptLanguage): \ProxyRequest\Dto\WebhookCreated
+create($webhookCreateRequest, $idempotencyKey, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\WebhookCreated
 ```
 
 Create a customer webhook
@@ -47,9 +47,10 @@ $apiInstance = new ProxyRequest\Api\WebhooksResource(
 $webhookCreateRequest = {"type":"user","endpoint":"https://developer.example.com/webhooks/proxy-events","read_timeout":5,"write_timeout":5,"retries":3,"retry_timeout":10}; // \ProxyRequest\Dto\WebhookCreateRequest
 $idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->create($webhookCreateRequest, $idempotencyKey, $acceptLanguage);
+    $result = $apiInstance->create($webhookCreateRequest, $idempotencyKey, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling WebhooksResource->create: ', $e->getMessage(), PHP_EOL;
@@ -63,6 +64,7 @@ try {
 | **webhookCreateRequest** | [**\ProxyRequest\Dto\WebhookCreateRequest**](../Model/WebhookCreateRequest.md)|  | |
 | **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -84,7 +86,7 @@ try {
 ## `delete()`
 
 ```php
-delete($id, $idempotencyKey, $ifMatch, $acceptLanguage)
+delete($id, $idempotencyKey, $ifMatch, $acceptLanguage, $xImpersonateUser)
 ```
 
 Delete a customer webhook
@@ -117,9 +119,10 @@ $id = 'id_example'; // string | A unique value identifying this Webhook.
 $idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
 $ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $apiInstance->delete($id, $idempotencyKey, $ifMatch, $acceptLanguage);
+    $apiInstance->delete($id, $idempotencyKey, $ifMatch, $acceptLanguage, $xImpersonateUser);
 } catch (Exception $e) {
     echo 'Exception when calling WebhooksResource->delete: ', $e->getMessage(), PHP_EOL;
 }
@@ -133,6 +136,7 @@ try {
 | **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
 | **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -154,7 +158,7 @@ void (empty response body)
 ## `get()`
 
 ```php
-get($id, $acceptLanguage): \ProxyRequest\Dto\WebhookList
+get($id, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\WebhookList
 ```
 
 Get a customer webhook
@@ -185,9 +189,10 @@ $apiInstance = new ProxyRequest\Api\WebhooksResource(
 );
 $id = 'id_example'; // string | A unique value identifying this Webhook.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->get($id, $acceptLanguage);
+    $result = $apiInstance->get($id, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling WebhooksResource->get: ', $e->getMessage(), PHP_EOL;
@@ -200,6 +205,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**| A unique value identifying this Webhook. | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -221,7 +227,7 @@ try {
 ## `list()`
 
 ```php
-list($limit, $offset, $acceptLanguage): \ProxyRequest\Dto\PaginatedWebhookList
+list($limit, $offset, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\PaginatedWebhookList
 ```
 
 List customer webhooks
@@ -253,9 +259,10 @@ $apiInstance = new ProxyRequest\Api\WebhooksResource(
 $limit = 56; // int | Number of results to return per page.
 $offset = 56; // int | The initial index from which to return the results.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->list($limit, $offset, $acceptLanguage);
+    $result = $apiInstance->list($limit, $offset, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling WebhooksResource->list: ', $e->getMessage(), PHP_EOL;
@@ -269,6 +276,7 @@ try {
 | **limit** | **int**| Number of results to return per page. | [optional] |
 | **offset** | **int**| The initial index from which to return the results. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 

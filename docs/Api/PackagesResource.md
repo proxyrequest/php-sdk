@@ -13,7 +13,7 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 ## `list()`
 
 ```php
-list($alias, $limit, $offset, $ordering, $pricingUnit, $search, $type, $acceptLanguage): \ProxyRequest\Dto\PaginatedPackageList
+list($alias, $limit, $offset, $ordering, $pricingUnit, $search, $type, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\PaginatedPackageList
 ```
 
 List available proxy packages
@@ -50,9 +50,10 @@ $pricingUnit = 'pricingUnit_example'; // string | Unit customers purchase — de
 $search = 'search_example'; // string | Case-insensitive partial search across Package fields: `name` and `alias`. Separate multiple terms with spaces or commas; every term must match at least one listed field.
 $type = 'type_example'; // string | * `static` - Static * `residential` - Residential
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->list($alias, $limit, $offset, $ordering, $pricingUnit, $search, $type, $acceptLanguage);
+    $result = $apiInstance->list($alias, $limit, $offset, $ordering, $pricingUnit, $search, $type, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling PackagesResource->list: ', $e->getMessage(), PHP_EOL;
@@ -71,6 +72,7 @@ try {
 | **search** | **string**| Case-insensitive partial search across Package fields: &#x60;name&#x60; and &#x60;alias&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. | [optional] |
 | **type** | **string**| * &#x60;static&#x60; - Static * &#x60;residential&#x60; - Residential | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -92,7 +94,7 @@ try {
 ## `listCommissions()`
 
 ```php
-listCommissions($alias, $limit, $offset, $ordering, $pricingUnit, $type, $acceptLanguage): \ProxyRequest\Dto\PaginatedPackageCommissionList
+listCommissions($alias, $limit, $offset, $ordering, $pricingUnit, $type, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\PaginatedPackageCommissionList
 ```
 
 List affiliate package commissions
@@ -128,9 +130,10 @@ $ordering = 'ordering_example'; // string | Which field to use when ordering the
 $pricingUnit = 'pricingUnit_example'; // string | Unit customers purchase — determines how the billing model amounts are interpreted. * `data` - Data * `proxy` - Proxy
 $type = 'type_example'; // string | * `static` - Static * `residential` - Residential
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->listCommissions($alias, $limit, $offset, $ordering, $pricingUnit, $type, $acceptLanguage);
+    $result = $apiInstance->listCommissions($alias, $limit, $offset, $ordering, $pricingUnit, $type, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling PackagesResource->listCommissions: ', $e->getMessage(), PHP_EOL;
@@ -148,6 +151,7 @@ try {
 | **pricingUnit** | **string**| Unit customers purchase — determines how the billing model amounts are interpreted. * &#x60;data&#x60; - Data * &#x60;proxy&#x60; - Proxy | [optional] |
 | **type** | **string**| * &#x60;static&#x60; - Static * &#x60;residential&#x60; - Residential | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
