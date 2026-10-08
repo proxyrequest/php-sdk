@@ -142,15 +142,16 @@ class TelegramDashboardResource
      * Create a Telegram account link
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createLink'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\TelegramLinkResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function createLink($acceptLanguage = null, string $contentType = self::contentTypes['createLink'][0])
+    public function createLink($acceptLanguage = null, string $contentType = self::contentTypes['createLink'][0], $impersonateUserId = null)
     {
-        list($response) = $this->createLinkWithHttpInfo($acceptLanguage, $contentType);
+        list($response) = $this->createLinkWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -159,9 +160,9 @@ class TelegramDashboardResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function createLinkWithResponse($acceptLanguage = null, string $contentType = self::contentTypes['createLink'][0]): \ProxyRequest\ApiResponse
+    public function createLinkWithResponse($acceptLanguage = null, string $contentType = self::contentTypes['createLink'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->createLinkWithHttpInfo($acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->createLinkWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -170,15 +171,16 @@ class TelegramDashboardResource
      * Create a Telegram account link
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createLink'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\TelegramLinkResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function createLinkWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['createLink'][0])
+    public function createLinkWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['createLink'][0], $impersonateUserId = null)
     {
-        $request = $this->createLinkRequest($acceptLanguage, $contentType);
+        $request = $this->createLinkRequest($acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   201 => '\\ProxyRequest\\Dto\\TelegramLinkResponse',
 ));
@@ -190,14 +192,15 @@ class TelegramDashboardResource
      * Create a Telegram account link
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createLink'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createLinkAsync($acceptLanguage = null, string $contentType = self::contentTypes['createLink'][0])
+    public function createLinkAsync($acceptLanguage = null, string $contentType = self::contentTypes['createLink'][0], $impersonateUserId = null)
     {
-        return $this->createLinkAsyncWithHttpInfo($acceptLanguage, $contentType)
+        return $this->createLinkAsyncWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -211,14 +214,15 @@ class TelegramDashboardResource
      * Create a Telegram account link
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createLink'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createLinkAsyncWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['createLink'][0])
+    public function createLinkAsyncWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['createLink'][0], $impersonateUserId = null)
     {
-        $request = $this->createLinkRequest($acceptLanguage, $contentType);
+        $request = $this->createLinkRequest($acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   201 => '\\ProxyRequest\\Dto\\TelegramLinkResponse',
 ));
@@ -228,13 +232,15 @@ class TelegramDashboardResource
      * Create request for operation 'createLink'
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createLink'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function createLinkRequest($acceptLanguage = null, string $contentType = self::contentTypes['createLink'][0])
+    public function createLinkRequest($acceptLanguage = null, string $contentType = self::contentTypes['createLink'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -249,6 +255,10 @@ class TelegramDashboardResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 
@@ -321,15 +331,16 @@ class TelegramDashboardResource
      * Disconnect the Telegram dashboard
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteConnection'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function deleteConnection($acceptLanguage = null, string $contentType = self::contentTypes['deleteConnection'][0])
+    public function deleteConnection($acceptLanguage = null, string $contentType = self::contentTypes['deleteConnection'][0], $impersonateUserId = null)
     {
-        $this->deleteConnectionWithHttpInfo($acceptLanguage, $contentType);
+        $this->deleteConnectionWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId);
     }
 
     /**
@@ -337,9 +348,9 @@ class TelegramDashboardResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function deleteConnectionWithResponse($acceptLanguage = null, string $contentType = self::contentTypes['deleteConnection'][0]): \ProxyRequest\ApiResponse
+    public function deleteConnectionWithResponse($acceptLanguage = null, string $contentType = self::contentTypes['deleteConnection'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->deleteConnectionWithHttpInfo($acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->deleteConnectionWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -348,15 +359,16 @@ class TelegramDashboardResource
      * Disconnect the Telegram dashboard
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteConnection'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deleteConnectionWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['deleteConnection'][0])
+    public function deleteConnectionWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['deleteConnection'][0], $impersonateUserId = null)
     {
-        $request = $this->deleteConnectionRequest($acceptLanguage, $contentType);
+        $request = $this->deleteConnectionRequest($acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   204 => 'void',
 ));
@@ -368,14 +380,15 @@ class TelegramDashboardResource
      * Disconnect the Telegram dashboard
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteConnection'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteConnectionAsync($acceptLanguage = null, string $contentType = self::contentTypes['deleteConnection'][0])
+    public function deleteConnectionAsync($acceptLanguage = null, string $contentType = self::contentTypes['deleteConnection'][0], $impersonateUserId = null)
     {
-        return $this->deleteConnectionAsyncWithHttpInfo($acceptLanguage, $contentType)
+        return $this->deleteConnectionAsyncWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -389,14 +402,15 @@ class TelegramDashboardResource
      * Disconnect the Telegram dashboard
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteConnection'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteConnectionAsyncWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['deleteConnection'][0])
+    public function deleteConnectionAsyncWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['deleteConnection'][0], $impersonateUserId = null)
     {
-        $request = $this->deleteConnectionRequest($acceptLanguage, $contentType);
+        $request = $this->deleteConnectionRequest($acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   204 => 'void',
 ));
@@ -406,13 +420,15 @@ class TelegramDashboardResource
      * Create request for operation 'deleteConnection'
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteConnection'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function deleteConnectionRequest($acceptLanguage = null, string $contentType = self::contentTypes['deleteConnection'][0])
+    public function deleteConnectionRequest($acceptLanguage = null, string $contentType = self::contentTypes['deleteConnection'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -427,6 +443,10 @@ class TelegramDashboardResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 
@@ -499,15 +519,16 @@ class TelegramDashboardResource
      * Get the Telegram dashboard connection
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getConnection'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\TelegramConnectionResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function getConnection($acceptLanguage = null, string $contentType = self::contentTypes['getConnection'][0])
+    public function getConnection($acceptLanguage = null, string $contentType = self::contentTypes['getConnection'][0], $impersonateUserId = null)
     {
-        list($response) = $this->getConnectionWithHttpInfo($acceptLanguage, $contentType);
+        list($response) = $this->getConnectionWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -516,9 +537,9 @@ class TelegramDashboardResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getConnectionWithResponse($acceptLanguage = null, string $contentType = self::contentTypes['getConnection'][0]): \ProxyRequest\ApiResponse
+    public function getConnectionWithResponse($acceptLanguage = null, string $contentType = self::contentTypes['getConnection'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getConnectionWithHttpInfo($acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getConnectionWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -527,15 +548,16 @@ class TelegramDashboardResource
      * Get the Telegram dashboard connection
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getConnection'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\TelegramConnectionResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getConnectionWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['getConnection'][0])
+    public function getConnectionWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['getConnection'][0], $impersonateUserId = null)
     {
-        $request = $this->getConnectionRequest($acceptLanguage, $contentType);
+        $request = $this->getConnectionRequest($acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\TelegramConnectionResponse',
 ));
@@ -547,14 +569,15 @@ class TelegramDashboardResource
      * Get the Telegram dashboard connection
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getConnection'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getConnectionAsync($acceptLanguage = null, string $contentType = self::contentTypes['getConnection'][0])
+    public function getConnectionAsync($acceptLanguage = null, string $contentType = self::contentTypes['getConnection'][0], $impersonateUserId = null)
     {
-        return $this->getConnectionAsyncWithHttpInfo($acceptLanguage, $contentType)
+        return $this->getConnectionAsyncWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -568,14 +591,15 @@ class TelegramDashboardResource
      * Get the Telegram dashboard connection
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getConnection'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getConnectionAsyncWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['getConnection'][0])
+    public function getConnectionAsyncWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['getConnection'][0], $impersonateUserId = null)
     {
-        $request = $this->getConnectionRequest($acceptLanguage, $contentType);
+        $request = $this->getConnectionRequest($acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\TelegramConnectionResponse',
 ));
@@ -585,13 +609,15 @@ class TelegramDashboardResource
      * Create request for operation 'getConnection'
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getConnection'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getConnectionRequest($acceptLanguage = null, string $contentType = self::contentTypes['getConnection'][0])
+    public function getConnectionRequest($acceptLanguage = null, string $contentType = self::contentTypes['getConnection'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -606,6 +632,10 @@ class TelegramDashboardResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 
@@ -678,6 +708,7 @@ class TelegramDashboardResource
      * Update Telegram dashboard preferences
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\PatchedTelegramConnectionUpdateRequest|null $patchedTelegramConnectionUpdateRequest patchedTelegramConnectionUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateConnection'] to see the possible values for this operation
      *
@@ -685,9 +716,9 @@ class TelegramDashboardResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\TelegramConnectionResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function updateConnection($acceptLanguage = null, $patchedTelegramConnectionUpdateRequest = null, string $contentType = self::contentTypes['updateConnection'][0])
+    public function updateConnection($acceptLanguage = null, $patchedTelegramConnectionUpdateRequest = null, string $contentType = self::contentTypes['updateConnection'][0], $impersonateUserId = null)
     {
-        list($response) = $this->updateConnectionWithHttpInfo($acceptLanguage, $patchedTelegramConnectionUpdateRequest, $contentType);
+        list($response) = $this->updateConnectionWithHttpInfo($acceptLanguage, $patchedTelegramConnectionUpdateRequest, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -696,9 +727,9 @@ class TelegramDashboardResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function updateConnectionWithResponse($acceptLanguage = null, $patchedTelegramConnectionUpdateRequest = null, string $contentType = self::contentTypes['updateConnection'][0]): \ProxyRequest\ApiResponse
+    public function updateConnectionWithResponse($acceptLanguage = null, $patchedTelegramConnectionUpdateRequest = null, string $contentType = self::contentTypes['updateConnection'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->updateConnectionWithHttpInfo($acceptLanguage, $patchedTelegramConnectionUpdateRequest, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->updateConnectionWithHttpInfo($acceptLanguage, $patchedTelegramConnectionUpdateRequest, $contentType, $impersonateUserId));
     }
 
     /**
@@ -707,6 +738,7 @@ class TelegramDashboardResource
      * Update Telegram dashboard preferences
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\PatchedTelegramConnectionUpdateRequest|null $patchedTelegramConnectionUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateConnection'] to see the possible values for this operation
      *
@@ -714,9 +746,9 @@ class TelegramDashboardResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\TelegramConnectionResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function updateConnectionWithHttpInfo($acceptLanguage = null, $patchedTelegramConnectionUpdateRequest = null, string $contentType = self::contentTypes['updateConnection'][0])
+    public function updateConnectionWithHttpInfo($acceptLanguage = null, $patchedTelegramConnectionUpdateRequest = null, string $contentType = self::contentTypes['updateConnection'][0], $impersonateUserId = null)
     {
-        $request = $this->updateConnectionRequest($acceptLanguage, $patchedTelegramConnectionUpdateRequest, $contentType);
+        $request = $this->updateConnectionRequest($acceptLanguage, $patchedTelegramConnectionUpdateRequest, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\TelegramConnectionResponse',
 ));
@@ -728,15 +760,16 @@ class TelegramDashboardResource
      * Update Telegram dashboard preferences
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\PatchedTelegramConnectionUpdateRequest|null $patchedTelegramConnectionUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateConnection'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function updateConnectionAsync($acceptLanguage = null, $patchedTelegramConnectionUpdateRequest = null, string $contentType = self::contentTypes['updateConnection'][0])
+    public function updateConnectionAsync($acceptLanguage = null, $patchedTelegramConnectionUpdateRequest = null, string $contentType = self::contentTypes['updateConnection'][0], $impersonateUserId = null)
     {
-        return $this->updateConnectionAsyncWithHttpInfo($acceptLanguage, $patchedTelegramConnectionUpdateRequest, $contentType)
+        return $this->updateConnectionAsyncWithHttpInfo($acceptLanguage, $patchedTelegramConnectionUpdateRequest, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -750,15 +783,16 @@ class TelegramDashboardResource
      * Update Telegram dashboard preferences
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\PatchedTelegramConnectionUpdateRequest|null $patchedTelegramConnectionUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateConnection'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function updateConnectionAsyncWithHttpInfo($acceptLanguage = null, $patchedTelegramConnectionUpdateRequest = null, string $contentType = self::contentTypes['updateConnection'][0])
+    public function updateConnectionAsyncWithHttpInfo($acceptLanguage = null, $patchedTelegramConnectionUpdateRequest = null, string $contentType = self::contentTypes['updateConnection'][0], $impersonateUserId = null)
     {
-        $request = $this->updateConnectionRequest($acceptLanguage, $patchedTelegramConnectionUpdateRequest, $contentType);
+        $request = $this->updateConnectionRequest($acceptLanguage, $patchedTelegramConnectionUpdateRequest, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\TelegramConnectionResponse',
 ));
@@ -768,14 +802,16 @@ class TelegramDashboardResource
      * Create request for operation 'updateConnection'
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\PatchedTelegramConnectionUpdateRequest|null $patchedTelegramConnectionUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateConnection'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function updateConnectionRequest($acceptLanguage = null, $patchedTelegramConnectionUpdateRequest = null, string $contentType = self::contentTypes['updateConnection'][0])
+    public function updateConnectionRequest($acceptLanguage = null, $patchedTelegramConnectionUpdateRequest = null, string $contentType = self::contentTypes['updateConnection'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -791,6 +827,10 @@ class TelegramDashboardResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 

@@ -19,7 +19,7 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 ## `calculatePrice()`
 
 ```php
-calculatePrice($couponCalculatePriceRequest, $acceptLanguage): \ProxyRequest\Dto\CouponPriceResponse
+calculatePrice($couponCalculatePriceRequest, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\CouponPriceResponse
 ```
 
 Calculate a discounted price
@@ -50,9 +50,10 @@ $apiInstance = new ProxyRequest\Api\CouponsResource(
 );
 $couponCalculatePriceRequest = {"package_id":"550e8400-e29b-41d4-a716-446655440002","coupon_code":"WELCOME20","data":10737418240}; // \ProxyRequest\Dto\CouponCalculatePriceRequest
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->calculatePrice($couponCalculatePriceRequest, $acceptLanguage);
+    $result = $apiInstance->calculatePrice($couponCalculatePriceRequest, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling CouponsResource->calculatePrice: ', $e->getMessage(), PHP_EOL;
@@ -65,6 +66,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **couponCalculatePriceRequest** | [**\ProxyRequest\Dto\CouponCalculatePriceRequest**](../Model/CouponCalculatePriceRequest.md)|  | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -86,7 +88,7 @@ try {
 ## `create()`
 
 ```php
-create($couponCreateRequest, $idempotencyKey, $acceptLanguage): \ProxyRequest\Dto\Coupon
+create($couponCreateRequest, $idempotencyKey, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\Coupon
 ```
 
 Create a coupon
@@ -118,9 +120,10 @@ $apiInstance = new ProxyRequest\Api\CouponsResource(
 $couponCreateRequest = {"value":1,"code":"us","is_multi_use":true,"is_available_to_one_time":true,"marketer":"550e8400-e29b-41d4-a716-446655440001","type":"free_data","limit":100,"valid_until":"2026-07-01T12:30:00Z","packages":["package"]}; // \ProxyRequest\Dto\CouponCreateRequest
 $idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->create($couponCreateRequest, $idempotencyKey, $acceptLanguage);
+    $result = $apiInstance->create($couponCreateRequest, $idempotencyKey, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling CouponsResource->create: ', $e->getMessage(), PHP_EOL;
@@ -134,6 +137,7 @@ try {
 | **couponCreateRequest** | [**\ProxyRequest\Dto\CouponCreateRequest**](../Model/CouponCreateRequest.md)|  | |
 | **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -155,7 +159,7 @@ try {
 ## `delete()`
 
 ```php
-delete($id, $idempotencyKey, $ifMatch, $acceptLanguage)
+delete($id, $idempotencyKey, $ifMatch, $acceptLanguage, $xImpersonateUser)
 ```
 
 Delete a coupon
@@ -188,9 +192,10 @@ $id = 'id_example'; // string | A unique value identifying this Coupon.
 $idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
 $ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $apiInstance->delete($id, $idempotencyKey, $ifMatch, $acceptLanguage);
+    $apiInstance->delete($id, $idempotencyKey, $ifMatch, $acceptLanguage, $xImpersonateUser);
 } catch (Exception $e) {
     echo 'Exception when calling CouponsResource->delete: ', $e->getMessage(), PHP_EOL;
 }
@@ -204,6 +209,7 @@ try {
 | **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
 | **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -225,7 +231,7 @@ void (empty response body)
 ## `get()`
 
 ```php
-get($id, $acceptLanguage): \ProxyRequest\Dto\CouponShort
+get($id, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\CouponShort
 ```
 
 Get a coupon
@@ -256,9 +262,10 @@ $apiInstance = new ProxyRequest\Api\CouponsResource(
 );
 $id = 'id_example'; // string | A unique value identifying this Coupon.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->get($id, $acceptLanguage);
+    $result = $apiInstance->get($id, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling CouponsResource->get: ', $e->getMessage(), PHP_EOL;
@@ -271,6 +278,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**| A unique value identifying this Coupon. | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -292,7 +300,7 @@ try {
 ## `list()`
 
 ```php
-list($code, $limit, $offset, $ordering, $search, $type, $acceptLanguage): \ProxyRequest\Dto\PaginatedCouponShortList
+list($code, $limit, $offset, $ordering, $search, $type, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\PaginatedCouponShortList
 ```
 
 List available coupons
@@ -328,9 +336,10 @@ $ordering = 'ordering_example'; // string | Which field to use when ordering the
 $search = 'search_example'; // string | Case-insensitive partial search across Coupon fields: `title` and `content`. Separate multiple terms with spaces or commas; every term must match at least one listed field.
 $type = 'type_example'; // string | * `free_data` - Free Data * `monetary` - Money * `percentage` - Percentage
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->list($code, $limit, $offset, $ordering, $search, $type, $acceptLanguage);
+    $result = $apiInstance->list($code, $limit, $offset, $ordering, $search, $type, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling CouponsResource->list: ', $e->getMessage(), PHP_EOL;
@@ -348,6 +357,7 @@ try {
 | **search** | **string**| Case-insensitive partial search across Coupon fields: &#x60;title&#x60; and &#x60;content&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. | [optional] |
 | **type** | **string**| * &#x60;free_data&#x60; - Free Data * &#x60;monetary&#x60; - Money * &#x60;percentage&#x60; - Percentage | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -369,7 +379,7 @@ try {
 ## `listRedeems()`
 
 ```php
-listRedeems($id, $code, $limit, $offset, $ordering, $type, $acceptLanguage): \ProxyRequest\Dto\PaginatedCouponRedeemList
+listRedeems($id, $code, $limit, $offset, $ordering, $type, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\PaginatedCouponRedeemList
 ```
 
 List coupon redemptions
@@ -405,9 +415,10 @@ $offset = 56; // int | The initial index from which to return the results.
 $ordering = 'ordering_example'; // string | Which field to use when ordering the results.
 $type = 'type_example'; // string | * `free_data` - Free Data * `monetary` - Money * `percentage` - Percentage
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->listRedeems($id, $code, $limit, $offset, $ordering, $type, $acceptLanguage);
+    $result = $apiInstance->listRedeems($id, $code, $limit, $offset, $ordering, $type, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling CouponsResource->listRedeems: ', $e->getMessage(), PHP_EOL;
@@ -425,6 +436,7 @@ try {
 | **ordering** | **string**| Which field to use when ordering the results. | [optional] |
 | **type** | **string**| * &#x60;free_data&#x60; - Free Data * &#x60;monetary&#x60; - Money * &#x60;percentage&#x60; - Percentage | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -446,7 +458,7 @@ try {
 ## `replace()`
 
 ```php
-replace($id, $couponUpdateRequest, $ifMatch, $acceptLanguage): \ProxyRequest\Dto\Coupon
+replace($id, $couponUpdateRequest, $ifMatch, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\Coupon
 ```
 
 Replace a coupon
@@ -479,9 +491,10 @@ $id = 'id_example'; // string | A unique value identifying this Coupon.
 $couponUpdateRequest = {"value":1,"code":"us","is_multi_use":true,"is_available_to_one_time":true,"marketer":"550e8400-e29b-41d4-a716-446655440001","type":"free_data","limit":100,"valid_until":"2026-07-01T12:30:00Z","packages":["package"]}; // \ProxyRequest\Dto\CouponUpdateRequest
 $ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->replace($id, $couponUpdateRequest, $ifMatch, $acceptLanguage);
+    $result = $apiInstance->replace($id, $couponUpdateRequest, $ifMatch, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling CouponsResource->replace: ', $e->getMessage(), PHP_EOL;
@@ -496,6 +509,7 @@ try {
 | **couponUpdateRequest** | [**\ProxyRequest\Dto\CouponUpdateRequest**](../Model/CouponUpdateRequest.md)|  | |
 | **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -517,7 +531,7 @@ try {
 ## `update()`
 
 ```php
-update($id, $ifMatch, $acceptLanguage, $patchedCouponUpdateRequest): \ProxyRequest\Dto\Coupon
+update($id, $ifMatch, $acceptLanguage, $xImpersonateUser, $patchedCouponUpdateRequest): \ProxyRequest\Dto\Coupon
 ```
 
 Update a coupon
@@ -549,10 +563,11 @@ $apiInstance = new ProxyRequest\Api\CouponsResource(
 $id = 'id_example'; // string | A unique value identifying this Coupon.
 $ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 $patchedCouponUpdateRequest = {"value":1,"code":"us","is_multi_use":true,"is_available_to_one_time":true,"marketer":"550e8400-e29b-41d4-a716-446655440001","type":"free_data","limit":100,"valid_until":"2026-07-01T12:30:00Z","packages":["package"]}; // \ProxyRequest\Dto\PatchedCouponUpdateRequest
 
 try {
-    $result = $apiInstance->update($id, $ifMatch, $acceptLanguage, $patchedCouponUpdateRequest);
+    $result = $apiInstance->update($id, $ifMatch, $acceptLanguage, $xImpersonateUser, $patchedCouponUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling CouponsResource->update: ', $e->getMessage(), PHP_EOL;
@@ -566,6 +581,7 @@ try {
 | **id** | **string**| A unique value identifying this Coupon. | |
 | **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 | **patchedCouponUpdateRequest** | [**\ProxyRequest\Dto\PatchedCouponUpdateRequest**](../Model/PatchedCouponUpdateRequest.md)|  | [optional] |
 
 ### Return type

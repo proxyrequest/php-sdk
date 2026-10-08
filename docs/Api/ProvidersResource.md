@@ -12,7 +12,7 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 ## `listDataBalances()`
 
 ```php
-listDataBalances($limit, $offset, $acceptLanguage): \ProxyRequest\Dto\PaginatedProviderDataBalanceList
+listDataBalances($limit, $offset, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\PaginatedProviderDataBalanceList
 ```
 
 List provider data balances
@@ -44,9 +44,10 @@ $apiInstance = new ProxyRequest\Api\ProvidersResource(
 $limit = 56; // int | Number of results to return per page.
 $offset = 56; // int | The initial index from which to return the results.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->listDataBalances($limit, $offset, $acceptLanguage);
+    $result = $apiInstance->listDataBalances($limit, $offset, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ProvidersResource->listDataBalances: ', $e->getMessage(), PHP_EOL;
@@ -60,6 +61,7 @@ try {
 | **limit** | **int**| Number of results to return per page. | [optional] |
 | **offset** | **int**| The initial index from which to return the results. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 

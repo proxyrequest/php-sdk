@@ -17,7 +17,7 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 ## `login()`
 
 ```php
-login($loginRequest, $acceptLanguage): \ProxyRequest\Dto\TokenPairResponse
+login($loginRequest, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\TokenPairResponse
 ```
 
 Sign in with email or username
@@ -39,9 +39,10 @@ $apiInstance = new ProxyRequest\Api\AuthorizationResource(
 );
 $loginRequest = {"email":"developer@example.com","password":"Correct-Horse-Battery-Staple-42"}; // \ProxyRequest\Dto\LoginRequest
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->login($loginRequest, $acceptLanguage);
+    $result = $apiInstance->login($loginRequest, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AuthorizationResource->login: ', $e->getMessage(), PHP_EOL;
@@ -54,6 +55,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **loginRequest** | [**\ProxyRequest\Dto\LoginRequest**](../Model/LoginRequest.md)|  | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -75,7 +77,7 @@ No authorization required
 ## `loginWithGoogle()`
 
 ```php
-loginWithGoogle($googleAuthRequest, $acceptLanguage): \ProxyRequest\Dto\TokenPairResponse
+loginWithGoogle($googleAuthRequest, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\TokenPairResponse
 ```
 
 Sign in with Google
@@ -97,9 +99,10 @@ $apiInstance = new ProxyRequest\Api\AuthorizationResource(
 );
 $googleAuthRequest = {"credential":"google-id-token"}; // \ProxyRequest\Dto\GoogleAuthRequest
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->loginWithGoogle($googleAuthRequest, $acceptLanguage);
+    $result = $apiInstance->loginWithGoogle($googleAuthRequest, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AuthorizationResource->loginWithGoogle: ', $e->getMessage(), PHP_EOL;
@@ -112,6 +115,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **googleAuthRequest** | [**\ProxyRequest\Dto\GoogleAuthRequest**](../Model/GoogleAuthRequest.md)|  | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -133,7 +137,7 @@ No authorization required
 ## `recoverPassword()`
 
 ```php
-recoverPassword($recoverPasswordRequest, $acceptLanguage): \ProxyRequest\Dto\PasswordRecoveryResponse
+recoverPassword($recoverPasswordRequest, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\PasswordRecoveryResponse
 ```
 
 Send a password recovery email
@@ -155,9 +159,10 @@ $apiInstance = new ProxyRequest\Api\AuthorizationResource(
 );
 $recoverPasswordRequest = {"email":"developer@example.com","token":"turnstile-response-token"}; // \ProxyRequest\Dto\RecoverPasswordRequest
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->recoverPassword($recoverPasswordRequest, $acceptLanguage);
+    $result = $apiInstance->recoverPassword($recoverPasswordRequest, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AuthorizationResource->recoverPassword: ', $e->getMessage(), PHP_EOL;
@@ -170,6 +175,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **recoverPasswordRequest** | [**\ProxyRequest\Dto\RecoverPasswordRequest**](../Model/RecoverPasswordRequest.md)|  | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -191,7 +197,7 @@ No authorization required
 ## `refresh()`
 
 ```php
-refresh($tokenRefreshRequest, $acceptLanguage): \ProxyRequest\Dto\TokenRefreshResponse
+refresh($tokenRefreshRequest, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\TokenRefreshResponse
 ```
 
 Refresh an access token
@@ -213,9 +219,10 @@ $apiInstance = new ProxyRequest\Api\AuthorizationResource(
 );
 $tokenRefreshRequest = {"refresh":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsInVzZXJfaWQiOiI1NTBlODQwMC1lMjliLTQxZDQtYTcxNi00NDY2NTU0NDAwMDEifQ.example-signature"}; // \ProxyRequest\Dto\TokenRefreshRequest
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->refresh($tokenRefreshRequest, $acceptLanguage);
+    $result = $apiInstance->refresh($tokenRefreshRequest, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AuthorizationResource->refresh: ', $e->getMessage(), PHP_EOL;
@@ -228,6 +235,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **tokenRefreshRequest** | [**\ProxyRequest\Dto\TokenRefreshRequest**](../Model/TokenRefreshRequest.md)|  | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -249,7 +257,7 @@ No authorization required
 ## `signup()`
 
 ```php
-signup($signUpRequest, $acceptLanguage): \ProxyRequest\Dto\TokenPairResponse
+signup($signUpRequest, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\TokenPairResponse
 ```
 
 Create a customer account
@@ -271,9 +279,10 @@ $apiInstance = new ProxyRequest\Api\AuthorizationResource(
 );
 $signUpRequest = {"email":"developer@example.com","password":"Correct-Horse-Battery-Staple-42","token":"turnstile-response-token","referral_code":"FRIEND2026","affiliate_code":"DEVCOMMUNITY"}; // \ProxyRequest\Dto\SignUpRequest
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->signup($signUpRequest, $acceptLanguage);
+    $result = $apiInstance->signup($signUpRequest, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AuthorizationResource->signup: ', $e->getMessage(), PHP_EOL;
@@ -286,6 +295,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **signUpRequest** | [**\ProxyRequest\Dto\SignUpRequest**](../Model/SignUpRequest.md)|  | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -307,7 +317,7 @@ No authorization required
 ## `verifyOtp()`
 
 ```php
-verifyOtp($verifyOTPRequest, $acceptLanguage): \ProxyRequest\Dto\TokenPairResponse
+verifyOtp($verifyOTPRequest, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\TokenPairResponse
 ```
 
 Complete two-factor sign-in
@@ -329,9 +339,10 @@ $apiInstance = new ProxyRequest\Api\AuthorizationResource(
 );
 $verifyOTPRequest = {"challenge":"a-single-use-challenge-returned-by-login","code":"492031"}; // \ProxyRequest\Dto\VerifyOTPRequest
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->verifyOtp($verifyOTPRequest, $acceptLanguage);
+    $result = $apiInstance->verifyOtp($verifyOTPRequest, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AuthorizationResource->verifyOtp: ', $e->getMessage(), PHP_EOL;
@@ -344,6 +355,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **verifyOTPRequest** | [**\ProxyRequest\Dto\VerifyOTPRequest**](../Model/VerifyOTPRequest.md)|  | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 

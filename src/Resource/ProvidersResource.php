@@ -133,15 +133,16 @@ class ProvidersResource
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDataBalances'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\PaginatedProviderDataBalanceList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listDataBalances($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDataBalances'][0])
+    public function listDataBalances($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDataBalances'][0], $impersonateUserId = null)
     {
-        list($response) = $this->listDataBalancesWithHttpInfo($limit, $offset, $acceptLanguage, $contentType);
+        list($response) = $this->listDataBalancesWithHttpInfo($limit, $offset, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -150,9 +151,9 @@ class ProvidersResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listDataBalancesWithResponse($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDataBalances'][0]): \ProxyRequest\ApiResponse
+    public function listDataBalancesWithResponse($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDataBalances'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listDataBalancesWithHttpInfo($limit, $offset, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listDataBalancesWithHttpInfo($limit, $offset, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -163,15 +164,16 @@ class ProvidersResource
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDataBalances'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\PaginatedProviderDataBalanceList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listDataBalancesWithHttpInfo($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDataBalances'][0])
+    public function listDataBalancesWithHttpInfo($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDataBalances'][0], $impersonateUserId = null)
     {
-        $request = $this->listDataBalancesRequest($limit, $offset, $acceptLanguage, $contentType);
+        $request = $this->listDataBalancesRequest($limit, $offset, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedProviderDataBalanceList',
 ));
@@ -185,14 +187,15 @@ class ProvidersResource
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDataBalances'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listDataBalancesAsync($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDataBalances'][0])
+    public function listDataBalancesAsync($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDataBalances'][0], $impersonateUserId = null)
     {
-        return $this->listDataBalancesAsyncWithHttpInfo($limit, $offset, $acceptLanguage, $contentType)
+        return $this->listDataBalancesAsyncWithHttpInfo($limit, $offset, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -208,14 +211,15 @@ class ProvidersResource
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDataBalances'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listDataBalancesAsyncWithHttpInfo($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDataBalances'][0])
+    public function listDataBalancesAsyncWithHttpInfo($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDataBalances'][0], $impersonateUserId = null)
     {
-        $request = $this->listDataBalancesRequest($limit, $offset, $acceptLanguage, $contentType);
+        $request = $this->listDataBalancesRequest($limit, $offset, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedProviderDataBalanceList',
 ));
@@ -227,13 +231,15 @@ class ProvidersResource
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listDataBalances'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listDataBalancesRequest($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDataBalances'][0])
+    public function listDataBalancesRequest($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listDataBalances'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -268,6 +274,10 @@ class ProvidersResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 

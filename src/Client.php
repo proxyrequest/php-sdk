@@ -164,9 +164,9 @@ final class Client
         return new Paginator($pageFetcher, $limit, $offset);
     }
 
-    public function downloadInvoicePdf(string $invoiceId, ?string $acceptLanguage = null): FileDownload
+    public function downloadInvoicePdf(string $invoiceId, ?string $acceptLanguage = null, ?string $impersonateUserId = null): FileDownload
     {
-        $file = $this->invoices()->downloadPdf($invoiceId, $acceptLanguage ?? $this->language);
+        $file = $this->invoices()->downloadPdf($invoiceId, $acceptLanguage ?? $this->language, impersonateUserId: $impersonateUserId);
 
         if (!$file instanceof SplFileObject) {
             throw new UnexpectedValueException('The invoice endpoint did not return a PDF file.');
@@ -188,6 +188,7 @@ final class Client
         array $query = [],
         ?array $json = null,
         array $headers = [],
+        ?string $impersonateUserId = null,
     ): ResponseInterface {
         $uri = rtrim($this->configuration->getHost(), '/') . '/' . ltrim($path, '/');
         $filteredQuery = array_filter($query, static fn(mixed $value): bool => null !== $value);
@@ -208,6 +209,12 @@ final class Client
         }
         if (null !== $authorization) {
             $headers['Authorization'] = $authorization;
+        }
+        if (null !== $impersonateUserId) {
+            if ('' === trim($impersonateUserId)) {
+                throw new \InvalidArgumentException('impersonateUserId must be a non-empty user ID.');
+            }
+            $headers['X-Impersonate-User'] = $impersonateUserId;
         }
 
         $body = null;

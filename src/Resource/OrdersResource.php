@@ -150,15 +150,16 @@ class OrdersResource
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function delete($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function delete($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null)
     {
-        $this->deleteWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType);
+        $this->deleteWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId);
     }
 
     /**
@@ -166,9 +167,9 @@ class OrdersResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function deleteWithResponse($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0]): \ProxyRequest\ApiResponse
+    public function deleteWithResponse($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->deleteWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->deleteWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -180,15 +181,16 @@ class OrdersResource
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deleteWithHttpInfo($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteWithHttpInfo($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null)
     {
-        $request = $this->deleteRequest($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType);
+        $request = $this->deleteRequest($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   204 => 'void',
 ));
@@ -203,14 +205,15 @@ class OrdersResource
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteAsync($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteAsync($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null)
     {
-        return $this->deleteAsyncWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType)
+        return $this->deleteAsyncWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -227,14 +230,15 @@ class OrdersResource
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteAsyncWithHttpInfo($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteAsyncWithHttpInfo($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null)
     {
-        $request = $this->deleteRequest($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType);
+        $request = $this->deleteRequest($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   204 => 'void',
 ));
@@ -247,12 +251,13 @@ class OrdersResource
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function deleteRequest($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteRequest($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null)
     {
 
         // verify the required parameter 'id' is set
@@ -265,6 +270,7 @@ class OrdersResource
         if ($idempotencyKey !== null && strlen($idempotencyKey) > 255) {
             throw new \InvalidArgumentException('invalid length for "$idempotencyKey" when calling OrdersResource.delete, must be smaller than or equal to 255.');
         }
+
 
 
 
@@ -288,6 +294,10 @@ class OrdersResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
         // path params
@@ -369,15 +379,16 @@ class OrdersResource
      *
      * @param  string $id A unique value identifying this Order. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\OrderDetailed|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function get($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function get($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
-        list($response) = $this->getWithHttpInfo($id, $acceptLanguage, $contentType);
+        list($response) = $this->getWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -386,9 +397,9 @@ class OrdersResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0]): \ProxyRequest\ApiResponse
+    public function getWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getWithHttpInfo($id, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -398,15 +409,16 @@ class OrdersResource
      *
      * @param  string $id A unique value identifying this Order. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\OrderDetailed|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function getWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
-        $request = $this->getRequest($id, $acceptLanguage, $contentType);
+        $request = $this->getRequest($id, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\OrderDetailed',
 ));
@@ -419,14 +431,15 @@ class OrdersResource
      *
      * @param  string $id A unique value identifying this Order. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function getAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
-        return $this->getAsyncWithHttpInfo($id, $acceptLanguage, $contentType)
+        return $this->getAsyncWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -441,14 +454,15 @@ class OrdersResource
      *
      * @param  string $id A unique value identifying this Order. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function getAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
-        $request = $this->getRequest($id, $acceptLanguage, $contentType);
+        $request = $this->getRequest($id, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\OrderDetailed',
 ));
@@ -459,12 +473,13 @@ class OrdersResource
      *
      * @param  string $id A unique value identifying this Order. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function getRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
 
         // verify the required parameter 'id' is set
@@ -473,6 +488,7 @@ class OrdersResource
                 'Missing the required parameter $id when calling get'
             );
         }
+
 
 
 
@@ -487,6 +503,10 @@ class OrdersResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
         // path params
@@ -576,15 +596,16 @@ class OrdersResource
      * @param  string|null $userEmail userEmail (optional)
      * @param  string|null $userId userId (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\PaginatedOrderList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function list($limit = null, $offset = null, $ordering = null, $packageAlias = null, $packageId = null, $packageType = null, $search = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function list($limit = null, $offset = null, $ordering = null, $packageAlias = null, $packageId = null, $packageType = null, $search = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
-        list($response) = $this->listWithHttpInfo($limit, $offset, $ordering, $packageAlias, $packageId, $packageType, $search, $userEmail, $userId, $acceptLanguage, $contentType);
+        list($response) = $this->listWithHttpInfo($limit, $offset, $ordering, $packageAlias, $packageId, $packageType, $search, $userEmail, $userId, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -593,9 +614,9 @@ class OrdersResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listWithResponse($limit = null, $offset = null, $ordering = null, $packageAlias = null, $packageId = null, $packageType = null, $search = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0]): \ProxyRequest\ApiResponse
+    public function listWithResponse($limit = null, $offset = null, $ordering = null, $packageAlias = null, $packageId = null, $packageType = null, $search = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listWithHttpInfo($limit, $offset, $ordering, $packageAlias, $packageId, $packageType, $search, $userEmail, $userId, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listWithHttpInfo($limit, $offset, $ordering, $packageAlias, $packageId, $packageType, $search, $userEmail, $userId, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -613,15 +634,16 @@ class OrdersResource
      * @param  string|null $userEmail (optional)
      * @param  string|null $userId (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\PaginatedOrderList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listWithHttpInfo($limit = null, $offset = null, $ordering = null, $packageAlias = null, $packageId = null, $packageType = null, $search = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function listWithHttpInfo($limit = null, $offset = null, $ordering = null, $packageAlias = null, $packageId = null, $packageType = null, $search = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
-        $request = $this->listRequest($limit, $offset, $ordering, $packageAlias, $packageId, $packageType, $search, $userEmail, $userId, $acceptLanguage, $contentType);
+        $request = $this->listRequest($limit, $offset, $ordering, $packageAlias, $packageId, $packageType, $search, $userEmail, $userId, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedOrderList',
 ));
@@ -642,14 +664,15 @@ class OrdersResource
      * @param  string|null $userEmail (optional)
      * @param  string|null $userId (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listAsync($limit = null, $offset = null, $ordering = null, $packageAlias = null, $packageId = null, $packageType = null, $search = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function listAsync($limit = null, $offset = null, $ordering = null, $packageAlias = null, $packageId = null, $packageType = null, $search = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
-        return $this->listAsyncWithHttpInfo($limit, $offset, $ordering, $packageAlias, $packageId, $packageType, $search, $userEmail, $userId, $acceptLanguage, $contentType)
+        return $this->listAsyncWithHttpInfo($limit, $offset, $ordering, $packageAlias, $packageId, $packageType, $search, $userEmail, $userId, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -672,14 +695,15 @@ class OrdersResource
      * @param  string|null $userEmail (optional)
      * @param  string|null $userId (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listAsyncWithHttpInfo($limit = null, $offset = null, $ordering = null, $packageAlias = null, $packageId = null, $packageType = null, $search = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function listAsyncWithHttpInfo($limit = null, $offset = null, $ordering = null, $packageAlias = null, $packageId = null, $packageType = null, $search = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
-        $request = $this->listRequest($limit, $offset, $ordering, $packageAlias, $packageId, $packageType, $search, $userEmail, $userId, $acceptLanguage, $contentType);
+        $request = $this->listRequest($limit, $offset, $ordering, $packageAlias, $packageId, $packageType, $search, $userEmail, $userId, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedOrderList',
 ));
@@ -698,13 +722,15 @@ class OrdersResource
      * @param  string|null $userEmail (optional)
      * @param  string|null $userId (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listRequest($limit = null, $offset = null, $ordering = null, $packageAlias = null, $packageId = null, $packageType = null, $search = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function listRequest($limit = null, $offset = null, $ordering = null, $packageAlias = null, $packageId = null, $packageType = null, $search = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -810,6 +836,10 @@ class OrdersResource
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
         }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
 
 
 
@@ -882,15 +912,16 @@ class OrdersResource
      *
      * @param  \ProxyRequest\Dto\ResetPasswordRequest $resetPasswordRequest resetPasswordRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetPassword'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\ProxyPasswordResetResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function resetPassword($resetPasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['resetPassword'][0])
+    public function resetPassword($resetPasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['resetPassword'][0], $impersonateUserId = null)
     {
-        list($response) = $this->resetPasswordWithHttpInfo($resetPasswordRequest, $acceptLanguage, $contentType);
+        list($response) = $this->resetPasswordWithHttpInfo($resetPasswordRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -899,9 +930,9 @@ class OrdersResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function resetPasswordWithResponse($resetPasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['resetPassword'][0]): \ProxyRequest\ApiResponse
+    public function resetPasswordWithResponse($resetPasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['resetPassword'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->resetPasswordWithHttpInfo($resetPasswordRequest, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->resetPasswordWithHttpInfo($resetPasswordRequest, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -911,15 +942,16 @@ class OrdersResource
      *
      * @param  \ProxyRequest\Dto\ResetPasswordRequest $resetPasswordRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetPassword'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\ProxyPasswordResetResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function resetPasswordWithHttpInfo($resetPasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['resetPassword'][0])
+    public function resetPasswordWithHttpInfo($resetPasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['resetPassword'][0], $impersonateUserId = null)
     {
-        $request = $this->resetPasswordRequest($resetPasswordRequest, $acceptLanguage, $contentType);
+        $request = $this->resetPasswordRequest($resetPasswordRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\ProxyPasswordResetResponse',
 ));
@@ -932,14 +964,15 @@ class OrdersResource
      *
      * @param  \ProxyRequest\Dto\ResetPasswordRequest $resetPasswordRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetPassword'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function resetPasswordAsync($resetPasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['resetPassword'][0])
+    public function resetPasswordAsync($resetPasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['resetPassword'][0], $impersonateUserId = null)
     {
-        return $this->resetPasswordAsyncWithHttpInfo($resetPasswordRequest, $acceptLanguage, $contentType)
+        return $this->resetPasswordAsyncWithHttpInfo($resetPasswordRequest, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -954,14 +987,15 @@ class OrdersResource
      *
      * @param  \ProxyRequest\Dto\ResetPasswordRequest $resetPasswordRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetPassword'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function resetPasswordAsyncWithHttpInfo($resetPasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['resetPassword'][0])
+    public function resetPasswordAsyncWithHttpInfo($resetPasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['resetPassword'][0], $impersonateUserId = null)
     {
-        $request = $this->resetPasswordRequest($resetPasswordRequest, $acceptLanguage, $contentType);
+        $request = $this->resetPasswordRequest($resetPasswordRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\ProxyPasswordResetResponse',
 ));
@@ -972,12 +1006,13 @@ class OrdersResource
      *
      * @param  \ProxyRequest\Dto\ResetPasswordRequest $resetPasswordRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetPassword'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function resetPasswordRequest($resetPasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['resetPassword'][0])
+    public function resetPasswordRequest($resetPasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['resetPassword'][0], $impersonateUserId = null)
     {
 
         // verify the required parameter 'resetPasswordRequest' is set
@@ -986,6 +1021,7 @@ class OrdersResource
                 'Missing the required parameter $resetPasswordRequest when calling resetPassword'
             );
         }
+
 
 
 
@@ -1000,6 +1036,10 @@ class OrdersResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 
@@ -1072,6 +1112,7 @@ class OrdersResource
      * @param  string $id A unique value identifying this Order. (required)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\PatchedOrderAutoRenewalRequest|null $patchedOrderAutoRenewalRequest patchedOrderAutoRenewalRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateAutoRenewal'] to see the possible values for this operation
      *
@@ -1079,9 +1120,9 @@ class OrdersResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\Order|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function updateAutoRenewal($id, $ifMatch = null, $acceptLanguage = null, $patchedOrderAutoRenewalRequest = null, string $contentType = self::contentTypes['updateAutoRenewal'][0])
+    public function updateAutoRenewal($id, $ifMatch = null, $acceptLanguage = null, $patchedOrderAutoRenewalRequest = null, string $contentType = self::contentTypes['updateAutoRenewal'][0], $impersonateUserId = null)
     {
-        list($response) = $this->updateAutoRenewalWithHttpInfo($id, $ifMatch, $acceptLanguage, $patchedOrderAutoRenewalRequest, $contentType);
+        list($response) = $this->updateAutoRenewalWithHttpInfo($id, $ifMatch, $acceptLanguage, $patchedOrderAutoRenewalRequest, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -1090,9 +1131,9 @@ class OrdersResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function updateAutoRenewalWithResponse($id, $ifMatch = null, $acceptLanguage = null, $patchedOrderAutoRenewalRequest = null, string $contentType = self::contentTypes['updateAutoRenewal'][0]): \ProxyRequest\ApiResponse
+    public function updateAutoRenewalWithResponse($id, $ifMatch = null, $acceptLanguage = null, $patchedOrderAutoRenewalRequest = null, string $contentType = self::contentTypes['updateAutoRenewal'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->updateAutoRenewalWithHttpInfo($id, $ifMatch, $acceptLanguage, $patchedOrderAutoRenewalRequest, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->updateAutoRenewalWithHttpInfo($id, $ifMatch, $acceptLanguage, $patchedOrderAutoRenewalRequest, $contentType, $impersonateUserId));
     }
 
     /**
@@ -1103,6 +1144,7 @@ class OrdersResource
      * @param  string $id A unique value identifying this Order. (required)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\PatchedOrderAutoRenewalRequest|null $patchedOrderAutoRenewalRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateAutoRenewal'] to see the possible values for this operation
      *
@@ -1110,9 +1152,9 @@ class OrdersResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\Order|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function updateAutoRenewalWithHttpInfo($id, $ifMatch = null, $acceptLanguage = null, $patchedOrderAutoRenewalRequest = null, string $contentType = self::contentTypes['updateAutoRenewal'][0])
+    public function updateAutoRenewalWithHttpInfo($id, $ifMatch = null, $acceptLanguage = null, $patchedOrderAutoRenewalRequest = null, string $contentType = self::contentTypes['updateAutoRenewal'][0], $impersonateUserId = null)
     {
-        $request = $this->updateAutoRenewalRequest($id, $ifMatch, $acceptLanguage, $patchedOrderAutoRenewalRequest, $contentType);
+        $request = $this->updateAutoRenewalRequest($id, $ifMatch, $acceptLanguage, $patchedOrderAutoRenewalRequest, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\Order',
 ));
@@ -1126,15 +1168,16 @@ class OrdersResource
      * @param  string $id A unique value identifying this Order. (required)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\PatchedOrderAutoRenewalRequest|null $patchedOrderAutoRenewalRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateAutoRenewal'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function updateAutoRenewalAsync($id, $ifMatch = null, $acceptLanguage = null, $patchedOrderAutoRenewalRequest = null, string $contentType = self::contentTypes['updateAutoRenewal'][0])
+    public function updateAutoRenewalAsync($id, $ifMatch = null, $acceptLanguage = null, $patchedOrderAutoRenewalRequest = null, string $contentType = self::contentTypes['updateAutoRenewal'][0], $impersonateUserId = null)
     {
-        return $this->updateAutoRenewalAsyncWithHttpInfo($id, $ifMatch, $acceptLanguage, $patchedOrderAutoRenewalRequest, $contentType)
+        return $this->updateAutoRenewalAsyncWithHttpInfo($id, $ifMatch, $acceptLanguage, $patchedOrderAutoRenewalRequest, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1150,15 +1193,16 @@ class OrdersResource
      * @param  string $id A unique value identifying this Order. (required)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\PatchedOrderAutoRenewalRequest|null $patchedOrderAutoRenewalRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateAutoRenewal'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function updateAutoRenewalAsyncWithHttpInfo($id, $ifMatch = null, $acceptLanguage = null, $patchedOrderAutoRenewalRequest = null, string $contentType = self::contentTypes['updateAutoRenewal'][0])
+    public function updateAutoRenewalAsyncWithHttpInfo($id, $ifMatch = null, $acceptLanguage = null, $patchedOrderAutoRenewalRequest = null, string $contentType = self::contentTypes['updateAutoRenewal'][0], $impersonateUserId = null)
     {
-        $request = $this->updateAutoRenewalRequest($id, $ifMatch, $acceptLanguage, $patchedOrderAutoRenewalRequest, $contentType);
+        $request = $this->updateAutoRenewalRequest($id, $ifMatch, $acceptLanguage, $patchedOrderAutoRenewalRequest, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\Order',
 ));
@@ -1170,13 +1214,14 @@ class OrdersResource
      * @param  string $id A unique value identifying this Order. (required)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\PatchedOrderAutoRenewalRequest|null $patchedOrderAutoRenewalRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateAutoRenewal'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function updateAutoRenewalRequest($id, $ifMatch = null, $acceptLanguage = null, $patchedOrderAutoRenewalRequest = null, string $contentType = self::contentTypes['updateAutoRenewal'][0])
+    public function updateAutoRenewalRequest($id, $ifMatch = null, $acceptLanguage = null, $patchedOrderAutoRenewalRequest = null, string $contentType = self::contentTypes['updateAutoRenewal'][0], $impersonateUserId = null)
     {
 
         // verify the required parameter 'id' is set
@@ -1185,6 +1230,7 @@ class OrdersResource
                 'Missing the required parameter $id when calling updateAutoRenewal'
             );
         }
+
 
 
 
@@ -1205,6 +1251,10 @@ class OrdersResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
         // path params

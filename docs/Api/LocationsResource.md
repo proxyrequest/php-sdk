@@ -21,7 +21,7 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 ## `getCity()`
 
 ```php
-getCity($id, $packageId, $acceptLanguage, includeAsns: $includeAsns): \ProxyRequest\Dto\City
+getCity($id, $packageId, $acceptLanguage, $xImpersonateUser, includeAsns: $includeAsns): \ProxyRequest\Dto\City
 ```
 
 Get a city
@@ -54,9 +54,10 @@ $id = 'id_example'; // string
 $packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned.
 $includeAsns = true; // bool | The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->getCity($id, $packageId, $acceptLanguage, includeAsns: $includeAsns);
+    $result = $apiInstance->getCity($id, $packageId, $acceptLanguage, $xImpersonateUser, includeAsns: $includeAsns);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->getCity: ', $e->getMessage(), PHP_EOL;
@@ -71,6 +72,7 @@ try {
 | **packageId** | **string**| Package whose targeting availability should be returned. | |
 | **includeAsns** | **bool**| The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. | [optional] [default to false] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -92,7 +94,7 @@ try {
 ## `getContinent()`
 
 ```php
-getContinent($id, $packageId, $acceptLanguage): \ProxyRequest\Dto\Continent
+getContinent($id, $packageId, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\Continent
 ```
 
 Get a continent
@@ -124,9 +126,10 @@ $apiInstance = new ProxyRequest\Api\LocationsResource(
 $id = 'id_example'; // string
 $packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->getContinent($id, $packageId, $acceptLanguage);
+    $result = $apiInstance->getContinent($id, $packageId, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->getContinent: ', $e->getMessage(), PHP_EOL;
@@ -140,6 +143,7 @@ try {
 | **id** | **string**|  | |
 | **packageId** | **string**| Package whose targeting availability should be returned. | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -161,7 +165,7 @@ try {
 ## `getCountry()`
 
 ```php
-getCountry($id, $packageId, $acceptLanguage, includeAsns: $includeAsns): \ProxyRequest\Dto\Country
+getCountry($id, $packageId, $acceptLanguage, $xImpersonateUser, includeAsns: $includeAsns): \ProxyRequest\Dto\Country
 ```
 
 Get a country
@@ -194,9 +198,10 @@ $id = 'id_example'; // string
 $packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned.
 $includeAsns = true; // bool | The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->getCountry($id, $packageId, $acceptLanguage, includeAsns: $includeAsns);
+    $result = $apiInstance->getCountry($id, $packageId, $acceptLanguage, $xImpersonateUser, includeAsns: $includeAsns);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->getCountry: ', $e->getMessage(), PHP_EOL;
@@ -211,6 +216,7 @@ try {
 | **packageId** | **string**| Package whose targeting availability should be returned. | |
 | **includeAsns** | **bool**| The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. | [optional] [default to false] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -232,7 +238,7 @@ try {
 ## `getRegion()`
 
 ```php
-getRegion($id, $packageId, $acceptLanguage, includeAsns: $includeAsns): \ProxyRequest\Dto\Region
+getRegion($id, $packageId, $acceptLanguage, $xImpersonateUser, includeAsns: $includeAsns): \ProxyRequest\Dto\Region
 ```
 
 Get a region
@@ -265,9 +271,10 @@ $id = 'id_example'; // string
 $packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Package whose targeting availability should be returned.
 $includeAsns = true; // bool | The asns field is always present and defaults to an empty array. Pass include_asns=true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->getRegion($id, $packageId, $acceptLanguage, includeAsns: $includeAsns);
+    $result = $apiInstance->getRegion($id, $packageId, $acceptLanguage, $xImpersonateUser, includeAsns: $includeAsns);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->getRegion: ', $e->getMessage(), PHP_EOL;
@@ -282,6 +289,7 @@ try {
 | **packageId** | **string**| Package whose targeting availability should be returned. | |
 | **includeAsns** | **bool**| The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. | [optional] [default to false] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -303,7 +311,7 @@ try {
 ## `listAsns()`
 
 ```php
-listAsns($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, includeGeo: $includeGeo): \ProxyRequest\Dto\PaginatedLocationASNRecordList
+listAsns($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $xImpersonateUser, includeGeo: $includeGeo): \ProxyRequest\Dto\PaginatedLocationASNRecordList
 ```
 
 List available autonomous systems
@@ -343,9 +351,10 @@ $offset = 56; // int | The initial index from which to return the results.
 $ordering = 'ordering_example'; // string | Which field to use when ordering the results.
 $search = 'search_example'; // string | Case-insensitive partial search across ASN fields: `code` and `name`. Separate multiple terms with spaces or commas; every term must match at least one listed field.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->listAsns($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, includeGeo: $includeGeo);
+    $result = $apiInstance->listAsns($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $xImpersonateUser, includeGeo: $includeGeo);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->listAsns: ', $e->getMessage(), PHP_EOL;
@@ -367,6 +376,7 @@ try {
 | **ordering** | **string**| Which field to use when ordering the results. | [optional] |
 | **search** | **string**| Case-insensitive partial search across ASN fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -388,7 +398,7 @@ try {
 ## `listCities()`
 
 ```php
-listCities($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, includeAsns: $includeAsns): \ProxyRequest\Dto\PaginatedCityList
+listCities($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $xImpersonateUser, includeAsns: $includeAsns): \ProxyRequest\Dto\PaginatedCityList
 ```
 
 List available cities
@@ -428,9 +438,10 @@ $ordering = 'ordering_example'; // string | Which field to use when ordering the
 $regionCode = 'regionCode_example'; // string
 $search = 'search_example'; // string | Case-insensitive partial search across City fields: `code` and `name`. Separate multiple terms with spaces or commas; every term must match at least one listed field.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->listCities($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, includeAsns: $includeAsns);
+    $result = $apiInstance->listCities($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $xImpersonateUser, includeAsns: $includeAsns);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->listCities: ', $e->getMessage(), PHP_EOL;
@@ -452,6 +463,7 @@ try {
 | **regionCode** | **string**|  | [optional] |
 | **search** | **string**| Case-insensitive partial search across City fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -473,7 +485,7 @@ try {
 ## `listContinents()`
 
 ```php
-listContinents($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage): \ProxyRequest\Dto\PaginatedContinentList
+listContinents($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\PaginatedContinentList
 ```
 
 List available continents
@@ -510,9 +522,10 @@ $offset = 56; // int | The initial index from which to return the results.
 $ordering = 'ordering_example'; // string | Which field to use when ordering the results.
 $search = 'search_example'; // string | Case-insensitive partial search across Continent fields: `code` and `name`. Separate multiple terms with spaces or commas; every term must match at least one listed field.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->listContinents($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage);
+    $result = $apiInstance->listContinents($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->listContinents: ', $e->getMessage(), PHP_EOL;
@@ -531,6 +544,7 @@ try {
 | **ordering** | **string**| Which field to use when ordering the results. | [optional] |
 | **search** | **string**| Case-insensitive partial search across Continent fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -552,7 +566,7 @@ try {
 ## `listCountries()`
 
 ```php
-listCountries($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, includeAsns: $includeAsns): \ProxyRequest\Dto\PaginatedCountryList
+listCountries($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $xImpersonateUser, includeAsns: $includeAsns): \ProxyRequest\Dto\PaginatedCountryList
 ```
 
 List available countries
@@ -590,9 +604,10 @@ $offset = 56; // int | The initial index from which to return the results.
 $ordering = 'ordering_example'; // string | Which field to use when ordering the results.
 $search = 'search_example'; // string | Case-insensitive partial search across Country fields: `code` and `name`. Separate multiple terms with spaces or commas; every term must match at least one listed field.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->listCountries($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, includeAsns: $includeAsns);
+    $result = $apiInstance->listCountries($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $xImpersonateUser, includeAsns: $includeAsns);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->listCountries: ', $e->getMessage(), PHP_EOL;
@@ -612,6 +627,7 @@ try {
 | **ordering** | **string**| Which field to use when ordering the results. | [optional] |
 | **search** | **string**| Case-insensitive partial search across Country fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -633,7 +649,7 @@ try {
 ## `listIsps()`
 
 ```php
-listIsps($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage): \ProxyRequest\Dto\PaginatedISPList
+listIsps($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\PaginatedISPList
 ```
 
 List available internet service providers
@@ -671,9 +687,10 @@ $offset = 56; // int | The initial index from which to return the results.
 $ordering = 'ordering_example'; // string | Which field to use when ordering the results.
 $search = 'search_example'; // string | Case-insensitive partial search across ISP fields: `code` and `name`. Separate multiple terms with spaces or commas; every term must match at least one listed field.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->listIsps($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage);
+    $result = $apiInstance->listIsps($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->listIsps: ', $e->getMessage(), PHP_EOL;
@@ -693,6 +710,7 @@ try {
 | **ordering** | **string**| Which field to use when ordering the results. | [optional] |
 | **search** | **string**| Case-insensitive partial search across ISP fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -714,7 +732,7 @@ try {
 ## `listRegions()`
 
 ```php
-listRegions($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, includeAsns: $includeAsns): \ProxyRequest\Dto\PaginatedRegionList
+listRegions($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $xImpersonateUser, includeAsns: $includeAsns): \ProxyRequest\Dto\PaginatedRegionList
 ```
 
 List available regions
@@ -753,9 +771,10 @@ $offset = 56; // int | The initial index from which to return the results.
 $ordering = 'ordering_example'; // string | Which field to use when ordering the results.
 $search = 'search_example'; // string | Case-insensitive partial search across Region fields: `code` and `name`. Separate multiple terms with spaces or commas; every term must match at least one listed field.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->listRegions($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, includeAsns: $includeAsns);
+    $result = $apiInstance->listRegions($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $xImpersonateUser, includeAsns: $includeAsns);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsResource->listRegions: ', $e->getMessage(), PHP_EOL;
@@ -776,6 +795,7 @@ try {
 | **ordering** | **string**| Which field to use when ordering the results. | [optional] |
 | **search** | **string**| Case-insensitive partial search across Region fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 

@@ -17,7 +17,7 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 ## `getConnections()`
 
 ```php
-getConnections($limit, $offset, $packageId, $userId, $acceptLanguage): \ProxyRequest\Dto\ConnectionsResponse
+getConnections($limit, $offset, $packageId, $userId, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\ConnectionsResponse
 ```
 
 List active proxy connections
@@ -51,9 +51,10 @@ $offset = 56; // int | Zero-based number of matching records to skip.
 $packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Restrict results to one purchased package.
 $userId = 550e8400-e29b-41d4-a716-446655440001; // string | Restrict results to the current account or an accessible sub-user.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->getConnections($limit, $offset, $packageId, $userId, $acceptLanguage);
+    $result = $apiInstance->getConnections($limit, $offset, $packageId, $userId, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AnalyticsResource->getConnections: ', $e->getMessage(), PHP_EOL;
@@ -69,6 +70,7 @@ try {
 | **packageId** | **string**| Restrict results to one purchased package. | [optional] |
 | **userId** | **string**| Restrict results to the current account or an accessible sub-user. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -90,7 +92,7 @@ try {
 ## `getOverall()`
 
 ```php
-getOverall($end, $includeSubUsers, $limit, $offset, $packageId, $start, $timezone, $userId, $acceptLanguage): \ProxyRequest\Dto\OverallResponse
+getOverall($end, $includeSubUsers, $limit, $offset, $packageId, $start, $timezone, $userId, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\OverallResponse
 ```
 
 Get traffic totals over time
@@ -128,9 +130,10 @@ $start = '2026-07-01T00:00:00Z'; // DateTimeInterface|string|int|float | Inclusi
 $timezone = UTC; // string | IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default).
 $userId = 550e8400-e29b-41d4-a716-446655440001; // string | Restrict results to the current account or an accessible sub-user.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->getOverall($end, $includeSubUsers, $limit, $offset, $packageId, $start, $timezone, $userId, $acceptLanguage);
+    $result = $apiInstance->getOverall($end, $includeSubUsers, $limit, $offset, $packageId, $start, $timezone, $userId, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AnalyticsResource->getOverall: ', $e->getMessage(), PHP_EOL;
@@ -150,6 +153,7 @@ try {
 | **timezone** | **string**| IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). | [optional] |
 | **userId** | **string**| Restrict results to the current account or an accessible sub-user. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -171,7 +175,7 @@ try {
 ## `getTransactions()`
 
 ```php
-getTransactions($id, $end, $limit, $offset, $recipientId, $senderId, $start, $timezone, $type, $acceptLanguage): \ProxyRequest\Dto\TransactionsResponse
+getTransactions($id, $end, $limit, $offset, $recipientId, $senderId, $start, $timezone, $type, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\TransactionsResponse
 ```
 
 List data transactions
@@ -210,9 +214,10 @@ $start = '2026-07-01T00:00:00Z'; // DateTimeInterface|string|int|float | Inclusi
 $timezone = UTC; // string | IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default).
 $type = 56; // int | Transaction type identifier. Defaults to data transactions.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->getTransactions($id, $end, $limit, $offset, $recipientId, $senderId, $start, $timezone, $type, $acceptLanguage);
+    $result = $apiInstance->getTransactions($id, $end, $limit, $offset, $recipientId, $senderId, $start, $timezone, $type, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AnalyticsResource->getTransactions: ', $e->getMessage(), PHP_EOL;
@@ -233,6 +238,7 @@ try {
 | **timezone** | **string**| IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). | [optional] |
 | **type** | **int**| Transaction type identifier. Defaults to data transactions. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -254,7 +260,7 @@ try {
 ## `listDomains()`
 
 ```php
-listDomains($end, $hostname, $includeSubUsers, $ledgerId, $limit, $offset, $ordering, $packageId, $search, $start, $timezone, $userId, $acceptLanguage): \ProxyRequest\Dto\DomainsResponse
+listDomains($end, $hostname, $includeSubUsers, $ledgerId, $limit, $offset, $ordering, $packageId, $search, $start, $timezone, $userId, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\DomainsResponse
 ```
 
 List top destination domains
@@ -296,9 +302,10 @@ $start = '2026-07-01T00:00:00Z'; // DateTimeInterface|string|int|float | Inclusi
 $timezone = UTC; // string | IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default).
 $userId = 550e8400-e29b-41d4-a716-446655440001; // string | Restrict results to the current account or an accessible sub-user.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->listDomains($end, $hostname, $includeSubUsers, $ledgerId, $limit, $offset, $ordering, $packageId, $search, $start, $timezone, $userId, $acceptLanguage);
+    $result = $apiInstance->listDomains($end, $hostname, $includeSubUsers, $ledgerId, $limit, $offset, $ordering, $packageId, $search, $start, $timezone, $userId, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AnalyticsResource->listDomains: ', $e->getMessage(), PHP_EOL;
@@ -322,6 +329,7 @@ try {
 | **timezone** | **string**| IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). | [optional] |
 | **userId** | **string**| Restrict results to the current account or an accessible sub-user. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -343,7 +351,7 @@ try {
 ## `listFeed()`
 
 ```php
-listFeed($city, $country, $end, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $search, $start, $timezone, $userId, $acceptLanguage): \ProxyRequest\Dto\FeedResponse
+listFeed($city, $country, $end, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $search, $start, $timezone, $userId, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\FeedResponse
 ```
 
 List proxy request activity
@@ -387,9 +395,10 @@ $start = '2026-07-01T00:00:00Z'; // DateTimeInterface|string|int|float | Inclusi
 $timezone = UTC; // string | IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default).
 $userId = 550e8400-e29b-41d4-a716-446655440001; // string | Restrict results to the current account or an accessible sub-user.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->listFeed($city, $country, $end, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $search, $start, $timezone, $userId, $acceptLanguage);
+    $result = $apiInstance->listFeed($city, $country, $end, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $search, $start, $timezone, $userId, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AnalyticsResource->listFeed: ', $e->getMessage(), PHP_EOL;
@@ -415,6 +424,7 @@ try {
 | **timezone** | **string**| IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). | [optional] |
 | **userId** | **string**| Restrict results to the current account or an accessible sub-user. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -436,7 +446,7 @@ try {
 ## `listLogs()`
 
 ```php
-listLogs($city, $country, $end, $errorCode, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $start, $timezone, $userId, $acceptLanguage): \ProxyRequest\Dto\LogsResponse
+listLogs($city, $country, $end, $errorCode, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $start, $timezone, $userId, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\LogsResponse
 ```
 
 List proxy error logs
@@ -480,9 +490,10 @@ $start = '2026-07-01T00:00:00Z'; // DateTimeInterface|string|int|float | Inclusi
 $timezone = UTC; // string | IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default).
 $userId = 550e8400-e29b-41d4-a716-446655440001; // string | Restrict results to the current account or an accessible sub-user.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->listLogs($city, $country, $end, $errorCode, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $start, $timezone, $userId, $acceptLanguage);
+    $result = $apiInstance->listLogs($city, $country, $end, $errorCode, $hostname, $ledgerId, $limit, $offset, $packageId, $protocol, $region, $start, $timezone, $userId, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AnalyticsResource->listLogs: ', $e->getMessage(), PHP_EOL;
@@ -508,6 +519,7 @@ try {
 | **timezone** | **string**| IANA timezone used for bucket boundaries and datetime strings without an offset. Missing, empty or unknown names use the deployment timezone (UTC by default). | [optional] |
 | **userId** | **string**| Restrict results to the current account or an accessible sub-user. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 

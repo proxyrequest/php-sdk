@@ -161,15 +161,16 @@ class CouponsResource
      *
      * @param  \ProxyRequest\Dto\CouponCalculatePriceRequest $couponCalculatePriceRequest couponCalculatePriceRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['calculatePrice'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\CouponPriceResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function calculatePrice($couponCalculatePriceRequest, $acceptLanguage = null, string $contentType = self::contentTypes['calculatePrice'][0])
+    public function calculatePrice($couponCalculatePriceRequest, $acceptLanguage = null, string $contentType = self::contentTypes['calculatePrice'][0], $impersonateUserId = null)
     {
-        list($response) = $this->calculatePriceWithHttpInfo($couponCalculatePriceRequest, $acceptLanguage, $contentType);
+        list($response) = $this->calculatePriceWithHttpInfo($couponCalculatePriceRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -178,9 +179,9 @@ class CouponsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function calculatePriceWithResponse($couponCalculatePriceRequest, $acceptLanguage = null, string $contentType = self::contentTypes['calculatePrice'][0]): \ProxyRequest\ApiResponse
+    public function calculatePriceWithResponse($couponCalculatePriceRequest, $acceptLanguage = null, string $contentType = self::contentTypes['calculatePrice'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->calculatePriceWithHttpInfo($couponCalculatePriceRequest, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->calculatePriceWithHttpInfo($couponCalculatePriceRequest, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -190,15 +191,16 @@ class CouponsResource
      *
      * @param  \ProxyRequest\Dto\CouponCalculatePriceRequest $couponCalculatePriceRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['calculatePrice'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\CouponPriceResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function calculatePriceWithHttpInfo($couponCalculatePriceRequest, $acceptLanguage = null, string $contentType = self::contentTypes['calculatePrice'][0])
+    public function calculatePriceWithHttpInfo($couponCalculatePriceRequest, $acceptLanguage = null, string $contentType = self::contentTypes['calculatePrice'][0], $impersonateUserId = null)
     {
-        $request = $this->calculatePriceRequest($couponCalculatePriceRequest, $acceptLanguage, $contentType);
+        $request = $this->calculatePriceRequest($couponCalculatePriceRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\CouponPriceResponse',
 ));
@@ -211,14 +213,15 @@ class CouponsResource
      *
      * @param  \ProxyRequest\Dto\CouponCalculatePriceRequest $couponCalculatePriceRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['calculatePrice'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function calculatePriceAsync($couponCalculatePriceRequest, $acceptLanguage = null, string $contentType = self::contentTypes['calculatePrice'][0])
+    public function calculatePriceAsync($couponCalculatePriceRequest, $acceptLanguage = null, string $contentType = self::contentTypes['calculatePrice'][0], $impersonateUserId = null)
     {
-        return $this->calculatePriceAsyncWithHttpInfo($couponCalculatePriceRequest, $acceptLanguage, $contentType)
+        return $this->calculatePriceAsyncWithHttpInfo($couponCalculatePriceRequest, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -233,14 +236,15 @@ class CouponsResource
      *
      * @param  \ProxyRequest\Dto\CouponCalculatePriceRequest $couponCalculatePriceRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['calculatePrice'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function calculatePriceAsyncWithHttpInfo($couponCalculatePriceRequest, $acceptLanguage = null, string $contentType = self::contentTypes['calculatePrice'][0])
+    public function calculatePriceAsyncWithHttpInfo($couponCalculatePriceRequest, $acceptLanguage = null, string $contentType = self::contentTypes['calculatePrice'][0], $impersonateUserId = null)
     {
-        $request = $this->calculatePriceRequest($couponCalculatePriceRequest, $acceptLanguage, $contentType);
+        $request = $this->calculatePriceRequest($couponCalculatePriceRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\CouponPriceResponse',
 ));
@@ -251,12 +255,13 @@ class CouponsResource
      *
      * @param  \ProxyRequest\Dto\CouponCalculatePriceRequest $couponCalculatePriceRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['calculatePrice'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function calculatePriceRequest($couponCalculatePriceRequest, $acceptLanguage = null, string $contentType = self::contentTypes['calculatePrice'][0])
+    public function calculatePriceRequest($couponCalculatePriceRequest, $acceptLanguage = null, string $contentType = self::contentTypes['calculatePrice'][0], $impersonateUserId = null)
     {
 
         // verify the required parameter 'couponCalculatePriceRequest' is set
@@ -265,6 +270,7 @@ class CouponsResource
                 'Missing the required parameter $couponCalculatePriceRequest when calling calculatePrice'
             );
         }
+
 
 
 
@@ -279,6 +285,10 @@ class CouponsResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 
@@ -360,15 +370,16 @@ class CouponsResource
      * @param  \ProxyRequest\Dto\CouponCreateRequest $couponCreateRequest couponCreateRequest (required)
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['create'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\Coupon|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function create($couponCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0])
+    public function create($couponCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0], $impersonateUserId = null)
     {
-        list($response) = $this->createWithHttpInfo($couponCreateRequest, $idempotencyKey, $acceptLanguage, $contentType);
+        list($response) = $this->createWithHttpInfo($couponCreateRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -377,9 +388,9 @@ class CouponsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function createWithResponse($couponCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0]): \ProxyRequest\ApiResponse
+    public function createWithResponse($couponCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->createWithHttpInfo($couponCreateRequest, $idempotencyKey, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->createWithHttpInfo($couponCreateRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -390,15 +401,16 @@ class CouponsResource
      * @param  \ProxyRequest\Dto\CouponCreateRequest $couponCreateRequest (required)
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['create'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\Coupon|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function createWithHttpInfo($couponCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0])
+    public function createWithHttpInfo($couponCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0], $impersonateUserId = null)
     {
-        $request = $this->createRequest($couponCreateRequest, $idempotencyKey, $acceptLanguage, $contentType);
+        $request = $this->createRequest($couponCreateRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   201 => '\\ProxyRequest\\Dto\\Coupon',
 ));
@@ -412,14 +424,15 @@ class CouponsResource
      * @param  \ProxyRequest\Dto\CouponCreateRequest $couponCreateRequest (required)
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['create'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createAsync($couponCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0])
+    public function createAsync($couponCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0], $impersonateUserId = null)
     {
-        return $this->createAsyncWithHttpInfo($couponCreateRequest, $idempotencyKey, $acceptLanguage, $contentType)
+        return $this->createAsyncWithHttpInfo($couponCreateRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -435,14 +448,15 @@ class CouponsResource
      * @param  \ProxyRequest\Dto\CouponCreateRequest $couponCreateRequest (required)
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['create'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createAsyncWithHttpInfo($couponCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0])
+    public function createAsyncWithHttpInfo($couponCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0], $impersonateUserId = null)
     {
-        $request = $this->createRequest($couponCreateRequest, $idempotencyKey, $acceptLanguage, $contentType);
+        $request = $this->createRequest($couponCreateRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   201 => '\\ProxyRequest\\Dto\\Coupon',
 ));
@@ -454,12 +468,13 @@ class CouponsResource
      * @param  \ProxyRequest\Dto\CouponCreateRequest $couponCreateRequest (required)
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['create'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function createRequest($couponCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0])
+    public function createRequest($couponCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0], $impersonateUserId = null)
     {
 
         // verify the required parameter 'couponCreateRequest' is set
@@ -472,6 +487,7 @@ class CouponsResource
         if ($idempotencyKey !== null && strlen($idempotencyKey) > 255) {
             throw new \InvalidArgumentException('invalid length for "$idempotencyKey" when calling CouponsResource.create, must be smaller than or equal to 255.');
         }
+
 
 
 
@@ -490,6 +506,10 @@ class CouponsResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 
@@ -572,15 +592,16 @@ class CouponsResource
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function delete($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function delete($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null)
     {
-        $this->deleteWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType);
+        $this->deleteWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId);
     }
 
     /**
@@ -588,9 +609,9 @@ class CouponsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function deleteWithResponse($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0]): \ProxyRequest\ApiResponse
+    public function deleteWithResponse($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->deleteWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->deleteWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -602,15 +623,16 @@ class CouponsResource
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deleteWithHttpInfo($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteWithHttpInfo($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null)
     {
-        $request = $this->deleteRequest($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType);
+        $request = $this->deleteRequest($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   204 => 'void',
 ));
@@ -625,14 +647,15 @@ class CouponsResource
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteAsync($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteAsync($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null)
     {
-        return $this->deleteAsyncWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType)
+        return $this->deleteAsyncWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -649,14 +672,15 @@ class CouponsResource
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteAsyncWithHttpInfo($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteAsyncWithHttpInfo($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null)
     {
-        $request = $this->deleteRequest($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType);
+        $request = $this->deleteRequest($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   204 => 'void',
 ));
@@ -669,12 +693,13 @@ class CouponsResource
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function deleteRequest($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteRequest($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null)
     {
 
         // verify the required parameter 'id' is set
@@ -687,6 +712,7 @@ class CouponsResource
         if ($idempotencyKey !== null && strlen($idempotencyKey) > 255) {
             throw new \InvalidArgumentException('invalid length for "$idempotencyKey" when calling CouponsResource.delete, must be smaller than or equal to 255.');
         }
+
 
 
 
@@ -710,6 +736,10 @@ class CouponsResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
         // path params
@@ -791,15 +821,16 @@ class CouponsResource
      *
      * @param  string $id A unique value identifying this Coupon. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\CouponShort|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function get($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function get($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
-        list($response) = $this->getWithHttpInfo($id, $acceptLanguage, $contentType);
+        list($response) = $this->getWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -808,9 +839,9 @@ class CouponsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0]): \ProxyRequest\ApiResponse
+    public function getWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getWithHttpInfo($id, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -820,15 +851,16 @@ class CouponsResource
      *
      * @param  string $id A unique value identifying this Coupon. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\CouponShort|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function getWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
-        $request = $this->getRequest($id, $acceptLanguage, $contentType);
+        $request = $this->getRequest($id, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\CouponShort',
 ));
@@ -841,14 +873,15 @@ class CouponsResource
      *
      * @param  string $id A unique value identifying this Coupon. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function getAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
-        return $this->getAsyncWithHttpInfo($id, $acceptLanguage, $contentType)
+        return $this->getAsyncWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -863,14 +896,15 @@ class CouponsResource
      *
      * @param  string $id A unique value identifying this Coupon. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function getAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
-        $request = $this->getRequest($id, $acceptLanguage, $contentType);
+        $request = $this->getRequest($id, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\CouponShort',
 ));
@@ -881,12 +915,13 @@ class CouponsResource
      *
      * @param  string $id A unique value identifying this Coupon. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function getRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
 
         // verify the required parameter 'id' is set
@@ -895,6 +930,7 @@ class CouponsResource
                 'Missing the required parameter $id when calling get'
             );
         }
+
 
 
 
@@ -909,6 +945,10 @@ class CouponsResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
         // path params
@@ -995,15 +1035,16 @@ class CouponsResource
      * @param  string|null $search Case-insensitive partial search across Coupon fields: &#x60;title&#x60; and &#x60;content&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $type * &#x60;free_data&#x60; - Free Data * &#x60;monetary&#x60; - Money * &#x60;percentage&#x60; - Percentage (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\PaginatedCouponShortList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function list($code = null, $limit = null, $offset = null, $ordering = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function list($code = null, $limit = null, $offset = null, $ordering = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
-        list($response) = $this->listWithHttpInfo($code, $limit, $offset, $ordering, $search, $type, $acceptLanguage, $contentType);
+        list($response) = $this->listWithHttpInfo($code, $limit, $offset, $ordering, $search, $type, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -1012,9 +1053,9 @@ class CouponsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listWithResponse($code = null, $limit = null, $offset = null, $ordering = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0]): \ProxyRequest\ApiResponse
+    public function listWithResponse($code = null, $limit = null, $offset = null, $ordering = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listWithHttpInfo($code, $limit, $offset, $ordering, $search, $type, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listWithHttpInfo($code, $limit, $offset, $ordering, $search, $type, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -1029,15 +1070,16 @@ class CouponsResource
      * @param  string|null $search Case-insensitive partial search across Coupon fields: &#x60;title&#x60; and &#x60;content&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $type * &#x60;free_data&#x60; - Free Data * &#x60;monetary&#x60; - Money * &#x60;percentage&#x60; - Percentage (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\PaginatedCouponShortList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listWithHttpInfo($code = null, $limit = null, $offset = null, $ordering = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function listWithHttpInfo($code = null, $limit = null, $offset = null, $ordering = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
-        $request = $this->listRequest($code, $limit, $offset, $ordering, $search, $type, $acceptLanguage, $contentType);
+        $request = $this->listRequest($code, $limit, $offset, $ordering, $search, $type, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedCouponShortList',
 ));
@@ -1055,14 +1097,15 @@ class CouponsResource
      * @param  string|null $search Case-insensitive partial search across Coupon fields: &#x60;title&#x60; and &#x60;content&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $type * &#x60;free_data&#x60; - Free Data * &#x60;monetary&#x60; - Money * &#x60;percentage&#x60; - Percentage (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listAsync($code = null, $limit = null, $offset = null, $ordering = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function listAsync($code = null, $limit = null, $offset = null, $ordering = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
-        return $this->listAsyncWithHttpInfo($code, $limit, $offset, $ordering, $search, $type, $acceptLanguage, $contentType)
+        return $this->listAsyncWithHttpInfo($code, $limit, $offset, $ordering, $search, $type, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1082,14 +1125,15 @@ class CouponsResource
      * @param  string|null $search Case-insensitive partial search across Coupon fields: &#x60;title&#x60; and &#x60;content&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $type * &#x60;free_data&#x60; - Free Data * &#x60;monetary&#x60; - Money * &#x60;percentage&#x60; - Percentage (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listAsyncWithHttpInfo($code = null, $limit = null, $offset = null, $ordering = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function listAsyncWithHttpInfo($code = null, $limit = null, $offset = null, $ordering = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
-        $request = $this->listRequest($code, $limit, $offset, $ordering, $search, $type, $acceptLanguage, $contentType);
+        $request = $this->listRequest($code, $limit, $offset, $ordering, $search, $type, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedCouponShortList',
 ));
@@ -1105,13 +1149,15 @@ class CouponsResource
      * @param  string|null $search Case-insensitive partial search across Coupon fields: &#x60;title&#x60; and &#x60;content&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $type * &#x60;free_data&#x60; - Free Data * &#x60;monetary&#x60; - Money * &#x60;percentage&#x60; - Percentage (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listRequest($code = null, $limit = null, $offset = null, $ordering = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function listRequest($code = null, $limit = null, $offset = null, $ordering = null, $search = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -1186,6 +1232,10 @@ class CouponsResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 
@@ -1264,15 +1314,16 @@ class CouponsResource
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
      * @param  string|null $type * &#x60;free_data&#x60; - Free Data * &#x60;monetary&#x60; - Money * &#x60;percentage&#x60; - Percentage (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listRedeems'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\PaginatedCouponRedeemList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listRedeems($id, $code = null, $limit = null, $offset = null, $ordering = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRedeems'][0])
+    public function listRedeems($id, $code = null, $limit = null, $offset = null, $ordering = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRedeems'][0], $impersonateUserId = null)
     {
-        list($response) = $this->listRedeemsWithHttpInfo($id, $code, $limit, $offset, $ordering, $type, $acceptLanguage, $contentType);
+        list($response) = $this->listRedeemsWithHttpInfo($id, $code, $limit, $offset, $ordering, $type, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -1281,9 +1332,9 @@ class CouponsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listRedeemsWithResponse($id, $code = null, $limit = null, $offset = null, $ordering = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRedeems'][0]): \ProxyRequest\ApiResponse
+    public function listRedeemsWithResponse($id, $code = null, $limit = null, $offset = null, $ordering = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRedeems'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listRedeemsWithHttpInfo($id, $code, $limit, $offset, $ordering, $type, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listRedeemsWithHttpInfo($id, $code, $limit, $offset, $ordering, $type, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -1298,15 +1349,16 @@ class CouponsResource
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
      * @param  string|null $type * &#x60;free_data&#x60; - Free Data * &#x60;monetary&#x60; - Money * &#x60;percentage&#x60; - Percentage (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listRedeems'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\PaginatedCouponRedeemList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listRedeemsWithHttpInfo($id, $code = null, $limit = null, $offset = null, $ordering = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRedeems'][0])
+    public function listRedeemsWithHttpInfo($id, $code = null, $limit = null, $offset = null, $ordering = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRedeems'][0], $impersonateUserId = null)
     {
-        $request = $this->listRedeemsRequest($id, $code, $limit, $offset, $ordering, $type, $acceptLanguage, $contentType);
+        $request = $this->listRedeemsRequest($id, $code, $limit, $offset, $ordering, $type, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedCouponRedeemList',
 ));
@@ -1324,14 +1376,15 @@ class CouponsResource
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
      * @param  string|null $type * &#x60;free_data&#x60; - Free Data * &#x60;monetary&#x60; - Money * &#x60;percentage&#x60; - Percentage (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listRedeems'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listRedeemsAsync($id, $code = null, $limit = null, $offset = null, $ordering = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRedeems'][0])
+    public function listRedeemsAsync($id, $code = null, $limit = null, $offset = null, $ordering = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRedeems'][0], $impersonateUserId = null)
     {
-        return $this->listRedeemsAsyncWithHttpInfo($id, $code, $limit, $offset, $ordering, $type, $acceptLanguage, $contentType)
+        return $this->listRedeemsAsyncWithHttpInfo($id, $code, $limit, $offset, $ordering, $type, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1351,14 +1404,15 @@ class CouponsResource
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
      * @param  string|null $type * &#x60;free_data&#x60; - Free Data * &#x60;monetary&#x60; - Money * &#x60;percentage&#x60; - Percentage (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listRedeems'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listRedeemsAsyncWithHttpInfo($id, $code = null, $limit = null, $offset = null, $ordering = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRedeems'][0])
+    public function listRedeemsAsyncWithHttpInfo($id, $code = null, $limit = null, $offset = null, $ordering = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRedeems'][0], $impersonateUserId = null)
     {
-        $request = $this->listRedeemsRequest($id, $code, $limit, $offset, $ordering, $type, $acceptLanguage, $contentType);
+        $request = $this->listRedeemsRequest($id, $code, $limit, $offset, $ordering, $type, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedCouponRedeemList',
 ));
@@ -1374,12 +1428,13 @@ class CouponsResource
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
      * @param  string|null $type * &#x60;free_data&#x60; - Free Data * &#x60;monetary&#x60; - Money * &#x60;percentage&#x60; - Percentage (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listRedeems'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listRedeemsRequest($id, $code = null, $limit = null, $offset = null, $ordering = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRedeems'][0])
+    public function listRedeemsRequest($id, $code = null, $limit = null, $offset = null, $ordering = null, $type = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRedeems'][0], $impersonateUserId = null)
     {
 
         // verify the required parameter 'id' is set
@@ -1388,6 +1443,7 @@ class CouponsResource
                 'Missing the required parameter $id when calling listRedeems'
             );
         }
+
 
 
 
@@ -1452,6 +1508,10 @@ class CouponsResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
         // path params
@@ -1535,15 +1595,16 @@ class CouponsResource
      * @param  \ProxyRequest\Dto\CouponUpdateRequest $couponUpdateRequest couponUpdateRequest (required)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replace'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\Coupon|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function replace($id, $couponUpdateRequest, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['replace'][0])
+    public function replace($id, $couponUpdateRequest, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['replace'][0], $impersonateUserId = null)
     {
-        list($response) = $this->replaceWithHttpInfo($id, $couponUpdateRequest, $ifMatch, $acceptLanguage, $contentType);
+        list($response) = $this->replaceWithHttpInfo($id, $couponUpdateRequest, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -1552,9 +1613,9 @@ class CouponsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function replaceWithResponse($id, $couponUpdateRequest, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['replace'][0]): \ProxyRequest\ApiResponse
+    public function replaceWithResponse($id, $couponUpdateRequest, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['replace'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->replaceWithHttpInfo($id, $couponUpdateRequest, $ifMatch, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->replaceWithHttpInfo($id, $couponUpdateRequest, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -1566,15 +1627,16 @@ class CouponsResource
      * @param  \ProxyRequest\Dto\CouponUpdateRequest $couponUpdateRequest (required)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replace'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\Coupon|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function replaceWithHttpInfo($id, $couponUpdateRequest, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['replace'][0])
+    public function replaceWithHttpInfo($id, $couponUpdateRequest, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['replace'][0], $impersonateUserId = null)
     {
-        $request = $this->replaceRequest($id, $couponUpdateRequest, $ifMatch, $acceptLanguage, $contentType);
+        $request = $this->replaceRequest($id, $couponUpdateRequest, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\Coupon',
 ));
@@ -1589,14 +1651,15 @@ class CouponsResource
      * @param  \ProxyRequest\Dto\CouponUpdateRequest $couponUpdateRequest (required)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replace'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function replaceAsync($id, $couponUpdateRequest, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['replace'][0])
+    public function replaceAsync($id, $couponUpdateRequest, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['replace'][0], $impersonateUserId = null)
     {
-        return $this->replaceAsyncWithHttpInfo($id, $couponUpdateRequest, $ifMatch, $acceptLanguage, $contentType)
+        return $this->replaceAsyncWithHttpInfo($id, $couponUpdateRequest, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1613,14 +1676,15 @@ class CouponsResource
      * @param  \ProxyRequest\Dto\CouponUpdateRequest $couponUpdateRequest (required)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replace'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function replaceAsyncWithHttpInfo($id, $couponUpdateRequest, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['replace'][0])
+    public function replaceAsyncWithHttpInfo($id, $couponUpdateRequest, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['replace'][0], $impersonateUserId = null)
     {
-        $request = $this->replaceRequest($id, $couponUpdateRequest, $ifMatch, $acceptLanguage, $contentType);
+        $request = $this->replaceRequest($id, $couponUpdateRequest, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\Coupon',
 ));
@@ -1633,12 +1697,13 @@ class CouponsResource
      * @param  \ProxyRequest\Dto\CouponUpdateRequest $couponUpdateRequest (required)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replace'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function replaceRequest($id, $couponUpdateRequest, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['replace'][0])
+    public function replaceRequest($id, $couponUpdateRequest, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['replace'][0], $impersonateUserId = null)
     {
 
         // verify the required parameter 'id' is set
@@ -1658,6 +1723,7 @@ class CouponsResource
 
 
 
+
         $resourcePath = '/coupons/{id}';
         $formParams = [];
         $queryParams = [];
@@ -1673,6 +1739,10 @@ class CouponsResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
         // path params
@@ -1762,6 +1832,7 @@ class CouponsResource
      * @param  string $id A unique value identifying this Coupon. (required)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\PatchedCouponUpdateRequest|null $patchedCouponUpdateRequest patchedCouponUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['update'] to see the possible values for this operation
      *
@@ -1769,9 +1840,9 @@ class CouponsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\Coupon|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function update($id, $ifMatch = null, $acceptLanguage = null, $patchedCouponUpdateRequest = null, string $contentType = self::contentTypes['update'][0])
+    public function update($id, $ifMatch = null, $acceptLanguage = null, $patchedCouponUpdateRequest = null, string $contentType = self::contentTypes['update'][0], $impersonateUserId = null)
     {
-        list($response) = $this->updateWithHttpInfo($id, $ifMatch, $acceptLanguage, $patchedCouponUpdateRequest, $contentType);
+        list($response) = $this->updateWithHttpInfo($id, $ifMatch, $acceptLanguage, $patchedCouponUpdateRequest, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -1780,9 +1851,9 @@ class CouponsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function updateWithResponse($id, $ifMatch = null, $acceptLanguage = null, $patchedCouponUpdateRequest = null, string $contentType = self::contentTypes['update'][0]): \ProxyRequest\ApiResponse
+    public function updateWithResponse($id, $ifMatch = null, $acceptLanguage = null, $patchedCouponUpdateRequest = null, string $contentType = self::contentTypes['update'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->updateWithHttpInfo($id, $ifMatch, $acceptLanguage, $patchedCouponUpdateRequest, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->updateWithHttpInfo($id, $ifMatch, $acceptLanguage, $patchedCouponUpdateRequest, $contentType, $impersonateUserId));
     }
 
     /**
@@ -1793,6 +1864,7 @@ class CouponsResource
      * @param  string $id A unique value identifying this Coupon. (required)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\PatchedCouponUpdateRequest|null $patchedCouponUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['update'] to see the possible values for this operation
      *
@@ -1800,9 +1872,9 @@ class CouponsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\Coupon|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function updateWithHttpInfo($id, $ifMatch = null, $acceptLanguage = null, $patchedCouponUpdateRequest = null, string $contentType = self::contentTypes['update'][0])
+    public function updateWithHttpInfo($id, $ifMatch = null, $acceptLanguage = null, $patchedCouponUpdateRequest = null, string $contentType = self::contentTypes['update'][0], $impersonateUserId = null)
     {
-        $request = $this->updateRequest($id, $ifMatch, $acceptLanguage, $patchedCouponUpdateRequest, $contentType);
+        $request = $this->updateRequest($id, $ifMatch, $acceptLanguage, $patchedCouponUpdateRequest, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\Coupon',
 ));
@@ -1816,15 +1888,16 @@ class CouponsResource
      * @param  string $id A unique value identifying this Coupon. (required)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\PatchedCouponUpdateRequest|null $patchedCouponUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['update'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function updateAsync($id, $ifMatch = null, $acceptLanguage = null, $patchedCouponUpdateRequest = null, string $contentType = self::contentTypes['update'][0])
+    public function updateAsync($id, $ifMatch = null, $acceptLanguage = null, $patchedCouponUpdateRequest = null, string $contentType = self::contentTypes['update'][0], $impersonateUserId = null)
     {
-        return $this->updateAsyncWithHttpInfo($id, $ifMatch, $acceptLanguage, $patchedCouponUpdateRequest, $contentType)
+        return $this->updateAsyncWithHttpInfo($id, $ifMatch, $acceptLanguage, $patchedCouponUpdateRequest, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1840,15 +1913,16 @@ class CouponsResource
      * @param  string $id A unique value identifying this Coupon. (required)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\PatchedCouponUpdateRequest|null $patchedCouponUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['update'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function updateAsyncWithHttpInfo($id, $ifMatch = null, $acceptLanguage = null, $patchedCouponUpdateRequest = null, string $contentType = self::contentTypes['update'][0])
+    public function updateAsyncWithHttpInfo($id, $ifMatch = null, $acceptLanguage = null, $patchedCouponUpdateRequest = null, string $contentType = self::contentTypes['update'][0], $impersonateUserId = null)
     {
-        $request = $this->updateRequest($id, $ifMatch, $acceptLanguage, $patchedCouponUpdateRequest, $contentType);
+        $request = $this->updateRequest($id, $ifMatch, $acceptLanguage, $patchedCouponUpdateRequest, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\Coupon',
 ));
@@ -1860,13 +1934,14 @@ class CouponsResource
      * @param  string $id A unique value identifying this Coupon. (required)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\PatchedCouponUpdateRequest|null $patchedCouponUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['update'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function updateRequest($id, $ifMatch = null, $acceptLanguage = null, $patchedCouponUpdateRequest = null, string $contentType = self::contentTypes['update'][0])
+    public function updateRequest($id, $ifMatch = null, $acceptLanguage = null, $patchedCouponUpdateRequest = null, string $contentType = self::contentTypes['update'][0], $impersonateUserId = null)
     {
 
         // verify the required parameter 'id' is set
@@ -1875,6 +1950,7 @@ class CouponsResource
                 'Missing the required parameter $id when calling update'
             );
         }
+
 
 
 
@@ -1895,6 +1971,10 @@ class CouponsResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
         // path params

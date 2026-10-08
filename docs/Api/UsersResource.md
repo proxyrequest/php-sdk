@@ -21,7 +21,7 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 ## `addData()`
 
 ```php
-addData($id, $addDataRequest, $idempotencyKey, $acceptLanguage): \ProxyRequest\Dto\Order
+addData($id, $addDataRequest, $idempotencyKey, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\Order
 ```
 
 Add data to a sub-user order
@@ -54,9 +54,10 @@ $id = 'id_example'; // string | A UUID string identifying this user.
 $addDataRequest = {"package_id":"550e8400-e29b-41d4-a716-446655440002","data":1073741824}; // \ProxyRequest\Dto\AddDataRequest
 $idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->addData($id, $addDataRequest, $idempotencyKey, $acceptLanguage);
+    $result = $apiInstance->addData($id, $addDataRequest, $idempotencyKey, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling UsersResource->addData: ', $e->getMessage(), PHP_EOL;
@@ -71,6 +72,7 @@ try {
 | **addDataRequest** | [**\ProxyRequest\Dto\AddDataRequest**](../Model/AddDataRequest.md)|  | |
 | **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -92,7 +94,7 @@ try {
 ## `create()`
 
 ```php
-create($userCreateRequest, $idempotencyKey, $acceptLanguage): \ProxyRequest\Dto\User
+create($userCreateRequest, $idempotencyKey, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\User
 ```
 
 Create a customer account
@@ -124,9 +126,10 @@ $apiInstance = new ProxyRequest\Api\UsersResource(
 $userCreateRequest = {"email":"developer@example.com","username":"developer","password":"Correct-Horse-Battery-Staple-42","first_name":"Dana","last_name":"Morgan","country":"us","state":"state","city":"los_angeles","address":"address","zip":"zip","blocked_domains":["blocked.example"],"allowed_ips":["198.51.100.25"],"connection_limit":1,"is_reseller":false,"is_top_level":false,"data":1073741824,"package_id":"550e8400-e29b-41d4-a716-446655440002","meta":{}}; // \ProxyRequest\Dto\UserCreateRequest
 $idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->create($userCreateRequest, $idempotencyKey, $acceptLanguage);
+    $result = $apiInstance->create($userCreateRequest, $idempotencyKey, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling UsersResource->create: ', $e->getMessage(), PHP_EOL;
@@ -140,6 +143,7 @@ try {
 | **userCreateRequest** | [**\ProxyRequest\Dto\UserCreateRequest**](../Model/UserCreateRequest.md)|  | |
 | **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -161,7 +165,7 @@ try {
 ## `delete()`
 
 ```php
-delete($id, $idempotencyKey, $ifMatch, $acceptLanguage)
+delete($id, $idempotencyKey, $ifMatch, $acceptLanguage, $xImpersonateUser)
 ```
 
 Delete a user
@@ -194,9 +198,10 @@ $id = 'id_example'; // string | A UUID string identifying this user.
 $idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
 $ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $apiInstance->delete($id, $idempotencyKey, $ifMatch, $acceptLanguage);
+    $apiInstance->delete($id, $idempotencyKey, $ifMatch, $acceptLanguage, $xImpersonateUser);
 } catch (Exception $e) {
     echo 'Exception when calling UsersResource->delete: ', $e->getMessage(), PHP_EOL;
 }
@@ -210,6 +215,7 @@ try {
 | **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
 | **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -231,7 +237,7 @@ void (empty response body)
 ## `get()`
 
 ```php
-get($id, $acceptLanguage): \ProxyRequest\Dto\User
+get($id, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\User
 ```
 
 Get a user
@@ -262,9 +268,10 @@ $apiInstance = new ProxyRequest\Api\UsersResource(
 );
 $id = 'id_example'; // string | A UUID string identifying this user.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->get($id, $acceptLanguage);
+    $result = $apiInstance->get($id, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling UsersResource->get: ', $e->getMessage(), PHP_EOL;
@@ -277,6 +284,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**| A UUID string identifying this user. | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -298,7 +306,7 @@ try {
 ## `list()`
 
 ```php
-list($email, $id, $limit, $offset, $ordering, $packageId, $search, $username, $acceptLanguage): \ProxyRequest\Dto\PaginatedUserList
+list($email, $id, $limit, $offset, $ordering, $packageId, $search, $username, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\PaginatedUserList
 ```
 
 List users in the current account
@@ -336,9 +344,10 @@ $packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Filters the visib
 $search = 'search_example'; // string | Case-insensitive partial search across user fields: `email`, `username`, `first_name`, and `last_name`. Separate multiple terms with spaces or commas; every term must match at least one listed field.
 $username = 'username_example'; // string
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->list($email, $id, $limit, $offset, $ordering, $packageId, $search, $username, $acceptLanguage);
+    $result = $apiInstance->list($email, $id, $limit, $offset, $ordering, $packageId, $search, $username, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling UsersResource->list: ', $e->getMessage(), PHP_EOL;
@@ -358,6 +367,7 @@ try {
 | **search** | **string**| Case-insensitive partial search across user fields: &#x60;email&#x60;, &#x60;username&#x60;, &#x60;first_name&#x60;, and &#x60;last_name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. | [optional] |
 | **username** | **string**|  | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -379,7 +389,7 @@ try {
 ## `listOrders()`
 
 ```php
-listOrders($id, $email, $id2, $limit, $offset, $ordering, $username, $acceptLanguage): \ProxyRequest\Dto\PaginatedOrderList
+listOrders($id, $email, $id2, $limit, $offset, $ordering, $username, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\PaginatedOrderList
 ```
 
 List a sub-user's orders
@@ -416,9 +426,10 @@ $offset = 56; // int | The initial index from which to return the results.
 $ordering = 'ordering_example'; // string | Which field to use when ordering the results.
 $username = 'username_example'; // string
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->listOrders($id, $email, $id2, $limit, $offset, $ordering, $username, $acceptLanguage);
+    $result = $apiInstance->listOrders($id, $email, $id2, $limit, $offset, $ordering, $username, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling UsersResource->listOrders: ', $e->getMessage(), PHP_EOL;
@@ -437,6 +448,7 @@ try {
 | **ordering** | **string**| Which field to use when ordering the results. | [optional] |
 | **username** | **string**|  | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -458,7 +470,7 @@ try {
 ## `resetData()`
 
 ```php
-resetData($id, $resetDataRequest, $idempotencyKey, $acceptLanguage): \ProxyRequest\Dto\Order
+resetData($id, $resetDataRequest, $idempotencyKey, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\Order
 ```
 
 Reset a user's remaining data
@@ -491,9 +503,10 @@ $id = 'id_example'; // string | A UUID string identifying this user.
 $resetDataRequest = {"package_id":"550e8400-e29b-41d4-a716-446655440002"}; // \ProxyRequest\Dto\ResetDataRequest
 $idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->resetData($id, $resetDataRequest, $idempotencyKey, $acceptLanguage);
+    $result = $apiInstance->resetData($id, $resetDataRequest, $idempotencyKey, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling UsersResource->resetData: ', $e->getMessage(), PHP_EOL;
@@ -508,6 +521,7 @@ try {
 | **resetDataRequest** | [**\ProxyRequest\Dto\ResetDataRequest**](../Model/ResetDataRequest.md)|  | |
 | **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -529,7 +543,7 @@ try {
 ## `resetPassword()`
 
 ```php
-resetPassword($id, $userPasswordResetRequest, $acceptLanguage): \ProxyRequest\Dto\User
+resetPassword($id, $userPasswordResetRequest, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\User
 ```
 
 Rotate a sub-user proxy password
@@ -561,9 +575,10 @@ $apiInstance = new ProxyRequest\Api\UsersResource(
 $id = 'id_example'; // string | A UUID string identifying this user.
 $userPasswordResetRequest = {"package_id":"550e8400-e29b-41d4-a716-446655440002"}; // \ProxyRequest\Dto\UserPasswordResetRequest
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->resetPassword($id, $userPasswordResetRequest, $acceptLanguage);
+    $result = $apiInstance->resetPassword($id, $userPasswordResetRequest, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling UsersResource->resetPassword: ', $e->getMessage(), PHP_EOL;
@@ -577,6 +592,7 @@ try {
 | **id** | **string**| A UUID string identifying this user. | |
 | **userPasswordResetRequest** | [**\ProxyRequest\Dto\UserPasswordResetRequest**](../Model/UserPasswordResetRequest.md)|  | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -598,7 +614,7 @@ try {
 ## `subtractData()`
 
 ```php
-subtractData($id, $subtractDataRequest, $idempotencyKey, $acceptLanguage): \ProxyRequest\Dto\Order
+subtractData($id, $subtractDataRequest, $idempotencyKey, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\Order
 ```
 
 Subtract data from a sub-user order
@@ -631,9 +647,10 @@ $id = 'id_example'; // string | A UUID string identifying this user.
 $subtractDataRequest = {"package_id":"550e8400-e29b-41d4-a716-446655440002","data":1073741824}; // \ProxyRequest\Dto\SubtractDataRequest
 $idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->subtractData($id, $subtractDataRequest, $idempotencyKey, $acceptLanguage);
+    $result = $apiInstance->subtractData($id, $subtractDataRequest, $idempotencyKey, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling UsersResource->subtractData: ', $e->getMessage(), PHP_EOL;
@@ -648,6 +665,7 @@ try {
 | **subtractDataRequest** | [**\ProxyRequest\Dto\SubtractDataRequest**](../Model/SubtractDataRequest.md)|  | |
 | **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -669,7 +687,7 @@ try {
 ## `update()`
 
 ```php
-update($id, $ifMatch, $acceptLanguage, $patchedUserUpdateRequest): \ProxyRequest\Dto\User
+update($id, $ifMatch, $acceptLanguage, $xImpersonateUser, $patchedUserUpdateRequest): \ProxyRequest\Dto\User
 ```
 
 Update a user
@@ -701,10 +719,11 @@ $apiInstance = new ProxyRequest\Api\UsersResource(
 $id = 'id_example'; // string | A UUID string identifying this user.
 $ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 $patchedUserUpdateRequest = {"email":"developer@example.com","first_name":"Dana","last_name":"Morgan","country":"us","state":"state","city":"los_angeles","address":"address","zip":"zip","company_name":"company name","company_country":"company country","company_city":"company city","company_address":"company address","company_postal_code":"company postal code","company_vat_number":"company vat number","is_reseller":true,"blocked_domains":["blocked.example"],"allowed_ips":["198.51.100.25"],"connection_limit":1,"new_password":"New-Secure-Password-43","meta":{}}; // \ProxyRequest\Dto\PatchedUserUpdateRequest
 
 try {
-    $result = $apiInstance->update($id, $ifMatch, $acceptLanguage, $patchedUserUpdateRequest);
+    $result = $apiInstance->update($id, $ifMatch, $acceptLanguage, $xImpersonateUser, $patchedUserUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling UsersResource->update: ', $e->getMessage(), PHP_EOL;
@@ -718,6 +737,7 @@ try {
 | **id** | **string**| A UUID string identifying this user. | |
 | **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 | **patchedUserUpdateRequest** | [**\ProxyRequest\Dto\PatchedUserUpdateRequest**](../Model/PatchedUserUpdateRequest.md)|  | [optional] |
 
 ### Return type

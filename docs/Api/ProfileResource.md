@@ -21,7 +21,7 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 ## `changePassword()`
 
 ```php
-changePassword($changePasswordRequest, $acceptLanguage): \ProxyRequest\Dto\MessageResponse
+changePassword($changePasswordRequest, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\MessageResponse
 ```
 
 Change the account password
@@ -52,9 +52,10 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
 );
 $changePasswordRequest = {"old_password":"Previous-Password-42","new_password1":"New-Secure-Password-43","new_password2":"New-Secure-Password-43"}; // \ProxyRequest\Dto\ChangePasswordRequest
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->changePassword($changePasswordRequest, $acceptLanguage);
+    $result = $apiInstance->changePassword($changePasswordRequest, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ProfileResource->changePassword: ', $e->getMessage(), PHP_EOL;
@@ -67,6 +68,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **changePasswordRequest** | [**\ProxyRequest\Dto\ChangePasswordRequest**](../Model/ChangePasswordRequest.md)|  | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -88,7 +90,7 @@ try {
 ## `confirmTwoFactor()`
 
 ```php
-confirmTwoFactor($twoFactorConfirmRequest, $acceptLanguage): \ProxyRequest\Dto\EnabledResponse
+confirmTwoFactor($twoFactorConfirmRequest, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\EnabledResponse
 ```
 
 Confirm two-factor authentication
@@ -119,9 +121,10 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
 );
 $twoFactorConfirmRequest = {"code":"492031"}; // \ProxyRequest\Dto\TwoFactorConfirmRequest
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->confirmTwoFactor($twoFactorConfirmRequest, $acceptLanguage);
+    $result = $apiInstance->confirmTwoFactor($twoFactorConfirmRequest, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ProfileResource->confirmTwoFactor: ', $e->getMessage(), PHP_EOL;
@@ -134,6 +137,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **twoFactorConfirmRequest** | [**\ProxyRequest\Dto\TwoFactorConfirmRequest**](../Model/TwoFactorConfirmRequest.md)|  | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -155,7 +159,7 @@ try {
 ## `connectGoogle()`
 
 ```php
-connectGoogle($googleConnectRequestRequest, $acceptLanguage): \ProxyRequest\Dto\SocialAccountState[]
+connectGoogle($googleConnectRequestRequest, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\SocialAccountState[]
 ```
 
 Connect Google to the signed-in account
@@ -181,9 +185,10 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
 );
 $googleConnectRequestRequest = {"credential":"credential","password":"Correct-Horse-Battery-Staple-42"}; // \ProxyRequest\Dto\GoogleConnectRequestRequest
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->connectGoogle($googleConnectRequestRequest, $acceptLanguage);
+    $result = $apiInstance->connectGoogle($googleConnectRequestRequest, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ProfileResource->connectGoogle: ', $e->getMessage(), PHP_EOL;
@@ -196,6 +201,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **googleConnectRequestRequest** | [**\ProxyRequest\Dto\GoogleConnectRequestRequest**](../Model/GoogleConnectRequestRequest.md)|  | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -217,7 +223,7 @@ try {
 ## `delete()`
 
 ```php
-delete($ifMatch, $acceptLanguage)
+delete($ifMatch, $acceptLanguage, $xImpersonateUser)
 ```
 
 Delete the current account
@@ -248,9 +254,10 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
 );
 $ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $apiInstance->delete($ifMatch, $acceptLanguage);
+    $apiInstance->delete($ifMatch, $acceptLanguage, $xImpersonateUser);
 } catch (Exception $e) {
     echo 'Exception when calling ProfileResource->delete: ', $e->getMessage(), PHP_EOL;
 }
@@ -262,6 +269,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -283,7 +291,7 @@ void (empty response body)
 ## `disableTwoFactor()`
 
 ```php
-disableTwoFactor($twoFactorDisableRequest, $acceptLanguage): \ProxyRequest\Dto\EnabledResponse
+disableTwoFactor($twoFactorDisableRequest, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\EnabledResponse
 ```
 
 Disable two-factor authentication
@@ -314,9 +322,10 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
 );
 $twoFactorDisableRequest = {"password":"Correct-Horse-Battery-Staple-42","code":"492031"}; // \ProxyRequest\Dto\TwoFactorDisableRequest
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->disableTwoFactor($twoFactorDisableRequest, $acceptLanguage);
+    $result = $apiInstance->disableTwoFactor($twoFactorDisableRequest, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ProfileResource->disableTwoFactor: ', $e->getMessage(), PHP_EOL;
@@ -329,6 +338,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **twoFactorDisableRequest** | [**\ProxyRequest\Dto\TwoFactorDisableRequest**](../Model/TwoFactorDisableRequest.md)|  | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -350,7 +360,7 @@ try {
 ## `get()`
 
 ```php
-get($acceptLanguage): \ProxyRequest\Dto\User
+get($acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\User
 ```
 
 Get the current profile
@@ -380,9 +390,10 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
     $config
 );
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->get($acceptLanguage);
+    $result = $apiInstance->get($acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ProfileResource->get: ', $e->getMessage(), PHP_EOL;
@@ -394,6 +405,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -415,7 +427,7 @@ try {
 ## `getTwoFactorStatus()`
 
 ```php
-getTwoFactorStatus($acceptLanguage): \ProxyRequest\Dto\EnabledResponse
+getTwoFactorStatus($acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\EnabledResponse
 ```
 
 Get two-factor status
@@ -445,9 +457,10 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
     $config
 );
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->getTwoFactorStatus($acceptLanguage);
+    $result = $apiInstance->getTwoFactorStatus($acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ProfileResource->getTwoFactorStatus: ', $e->getMessage(), PHP_EOL;
@@ -459,6 +472,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -480,7 +494,7 @@ try {
 ## `listSocialAccounts()`
 
 ```php
-listSocialAccounts($acceptLanguage): \ProxyRequest\Dto\SocialAccountState[]
+listSocialAccounts($acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\SocialAccountState[]
 ```
 
 List social account connections
@@ -505,9 +519,10 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
     $config
 );
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->listSocialAccounts($acceptLanguage);
+    $result = $apiInstance->listSocialAccounts($acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ProfileResource->listSocialAccounts: ', $e->getMessage(), PHP_EOL;
@@ -519,6 +534,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -540,7 +556,7 @@ try {
 ## `setupTwoFactor()`
 
 ```php
-setupTwoFactor($acceptLanguage, $twoFactorSetupRequestRequest): \ProxyRequest\Dto\TwoFactorSetupResponse
+setupTwoFactor($acceptLanguage, $xImpersonateUser, $twoFactorSetupRequestRequest): \ProxyRequest\Dto\TwoFactorSetupResponse
 ```
 
 Prepare two-factor authentication
@@ -570,10 +586,11 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
     $config
 );
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 $twoFactorSetupRequestRequest = {"password":"Correct-Horse-Battery-Staple-42"}; // \ProxyRequest\Dto\TwoFactorSetupRequestRequest
 
 try {
-    $result = $apiInstance->setupTwoFactor($acceptLanguage, $twoFactorSetupRequestRequest);
+    $result = $apiInstance->setupTwoFactor($acceptLanguage, $xImpersonateUser, $twoFactorSetupRequestRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ProfileResource->setupTwoFactor: ', $e->getMessage(), PHP_EOL;
@@ -585,6 +602,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 | **twoFactorSetupRequestRequest** | [**\ProxyRequest\Dto\TwoFactorSetupRequestRequest**](../Model/TwoFactorSetupRequestRequest.md)|  | [optional] |
 
 ### Return type
@@ -607,7 +625,7 @@ try {
 ## `update()`
 
 ```php
-update($ifMatch, $acceptLanguage, $patchedProfileUpdateRequest): \ProxyRequest\Dto\User
+update($ifMatch, $acceptLanguage, $xImpersonateUser, $patchedProfileUpdateRequest): \ProxyRequest\Dto\User
 ```
 
 Update the current profile
@@ -638,10 +656,11 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
 );
 $ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 $patchedProfileUpdateRequest = {"first_name":"Dana","last_name":"Morgan"}; // \ProxyRequest\Dto\PatchedProfileUpdateRequest
 
 try {
-    $result = $apiInstance->update($ifMatch, $acceptLanguage, $patchedProfileUpdateRequest);
+    $result = $apiInstance->update($ifMatch, $acceptLanguage, $xImpersonateUser, $patchedProfileUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ProfileResource->update: ', $e->getMessage(), PHP_EOL;
@@ -654,6 +673,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 | **patchedProfileUpdateRequest** | [**\ProxyRequest\Dto\PatchedProfileUpdateRequest**](../Model/PatchedProfileUpdateRequest.md)|  | [optional] |
 
 ### Return type

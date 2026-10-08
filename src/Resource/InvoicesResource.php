@@ -150,15 +150,16 @@ class InvoicesResource
      * @param  \ProxyRequest\Dto\InvoiceCreateRequest $invoiceCreateRequest invoiceCreateRequest (required)
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['create'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\Invoice|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\InvoicesCreate502Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function create($invoiceCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0])
+    public function create($invoiceCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0], $impersonateUserId = null)
     {
-        list($response) = $this->createWithHttpInfo($invoiceCreateRequest, $idempotencyKey, $acceptLanguage, $contentType);
+        list($response) = $this->createWithHttpInfo($invoiceCreateRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -167,9 +168,9 @@ class InvoicesResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function createWithResponse($invoiceCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0]): \ProxyRequest\ApiResponse
+    public function createWithResponse($invoiceCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->createWithHttpInfo($invoiceCreateRequest, $idempotencyKey, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->createWithHttpInfo($invoiceCreateRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -180,15 +181,16 @@ class InvoicesResource
      * @param  \ProxyRequest\Dto\InvoiceCreateRequest $invoiceCreateRequest (required)
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['create'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\Invoice|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\InvoicesCreate502Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function createWithHttpInfo($invoiceCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0])
+    public function createWithHttpInfo($invoiceCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0], $impersonateUserId = null)
     {
-        $request = $this->createRequest($invoiceCreateRequest, $idempotencyKey, $acceptLanguage, $contentType);
+        $request = $this->createRequest($invoiceCreateRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   201 => '\\ProxyRequest\\Dto\\Invoice',
 ));
@@ -202,14 +204,15 @@ class InvoicesResource
      * @param  \ProxyRequest\Dto\InvoiceCreateRequest $invoiceCreateRequest (required)
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['create'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createAsync($invoiceCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0])
+    public function createAsync($invoiceCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0], $impersonateUserId = null)
     {
-        return $this->createAsyncWithHttpInfo($invoiceCreateRequest, $idempotencyKey, $acceptLanguage, $contentType)
+        return $this->createAsyncWithHttpInfo($invoiceCreateRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -225,14 +228,15 @@ class InvoicesResource
      * @param  \ProxyRequest\Dto\InvoiceCreateRequest $invoiceCreateRequest (required)
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['create'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createAsyncWithHttpInfo($invoiceCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0])
+    public function createAsyncWithHttpInfo($invoiceCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0], $impersonateUserId = null)
     {
-        $request = $this->createRequest($invoiceCreateRequest, $idempotencyKey, $acceptLanguage, $contentType);
+        $request = $this->createRequest($invoiceCreateRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   201 => '\\ProxyRequest\\Dto\\Invoice',
 ));
@@ -244,12 +248,13 @@ class InvoicesResource
      * @param  \ProxyRequest\Dto\InvoiceCreateRequest $invoiceCreateRequest (required)
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['create'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function createRequest($invoiceCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0])
+    public function createRequest($invoiceCreateRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['create'][0], $impersonateUserId = null)
     {
 
         // verify the required parameter 'invoiceCreateRequest' is set
@@ -262,6 +267,7 @@ class InvoicesResource
         if ($idempotencyKey !== null && strlen($idempotencyKey) > 255) {
             throw new \InvalidArgumentException('invalid length for "$idempotencyKey" when calling InvoicesResource.create, must be smaller than or equal to 255.');
         }
+
 
 
 
@@ -280,6 +286,10 @@ class InvoicesResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 
@@ -362,15 +372,16 @@ class InvoicesResource
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function delete($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function delete($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null)
     {
-        $this->deleteWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType);
+        $this->deleteWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId);
     }
 
     /**
@@ -378,9 +389,9 @@ class InvoicesResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function deleteWithResponse($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0]): \ProxyRequest\ApiResponse
+    public function deleteWithResponse($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->deleteWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->deleteWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -392,15 +403,16 @@ class InvoicesResource
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deleteWithHttpInfo($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteWithHttpInfo($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null)
     {
-        $request = $this->deleteRequest($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType);
+        $request = $this->deleteRequest($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   204 => 'void',
 ));
@@ -415,14 +427,15 @@ class InvoicesResource
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteAsync($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteAsync($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null)
     {
-        return $this->deleteAsyncWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType)
+        return $this->deleteAsyncWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -439,14 +452,15 @@ class InvoicesResource
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteAsyncWithHttpInfo($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteAsyncWithHttpInfo($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null)
     {
-        $request = $this->deleteRequest($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType);
+        $request = $this->deleteRequest($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   204 => 'void',
 ));
@@ -459,12 +473,13 @@ class InvoicesResource
      * @param  string|null $idempotencyKey Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. (optional)
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function deleteRequest($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteRequest($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null)
     {
 
         // verify the required parameter 'id' is set
@@ -477,6 +492,7 @@ class InvoicesResource
         if ($idempotencyKey !== null && strlen($idempotencyKey) > 255) {
             throw new \InvalidArgumentException('invalid length for "$idempotencyKey" when calling InvoicesResource.delete, must be smaller than or equal to 255.');
         }
+
 
 
 
@@ -500,6 +516,10 @@ class InvoicesResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
         // path params
@@ -581,15 +601,16 @@ class InvoicesResource
      *
      * @param  string $id A unique value identifying this Invoice. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['downloadPdf'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \SplFileObject|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function downloadPdf($id, $acceptLanguage = null, string $contentType = self::contentTypes['downloadPdf'][0])
+    public function downloadPdf($id, $acceptLanguage = null, string $contentType = self::contentTypes['downloadPdf'][0], $impersonateUserId = null)
     {
-        list($response) = $this->downloadPdfWithHttpInfo($id, $acceptLanguage, $contentType);
+        list($response) = $this->downloadPdfWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -598,9 +619,9 @@ class InvoicesResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function downloadPdfWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['downloadPdf'][0]): \ProxyRequest\ApiResponse
+    public function downloadPdfWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['downloadPdf'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->downloadPdfWithHttpInfo($id, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->downloadPdfWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -610,15 +631,16 @@ class InvoicesResource
      *
      * @param  string $id A unique value identifying this Invoice. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['downloadPdf'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \SplFileObject|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function downloadPdfWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['downloadPdf'][0])
+    public function downloadPdfWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['downloadPdf'][0], $impersonateUserId = null)
     {
-        $request = $this->downloadPdfRequest($id, $acceptLanguage, $contentType);
+        $request = $this->downloadPdfRequest($id, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\SplFileObject',
 ));
@@ -631,14 +653,15 @@ class InvoicesResource
      *
      * @param  string $id A unique value identifying this Invoice. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['downloadPdf'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function downloadPdfAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['downloadPdf'][0])
+    public function downloadPdfAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['downloadPdf'][0], $impersonateUserId = null)
     {
-        return $this->downloadPdfAsyncWithHttpInfo($id, $acceptLanguage, $contentType)
+        return $this->downloadPdfAsyncWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -653,14 +676,15 @@ class InvoicesResource
      *
      * @param  string $id A unique value identifying this Invoice. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['downloadPdf'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function downloadPdfAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['downloadPdf'][0])
+    public function downloadPdfAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['downloadPdf'][0], $impersonateUserId = null)
     {
-        $request = $this->downloadPdfRequest($id, $acceptLanguage, $contentType);
+        $request = $this->downloadPdfRequest($id, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\SplFileObject',
 ));
@@ -671,12 +695,13 @@ class InvoicesResource
      *
      * @param  string $id A unique value identifying this Invoice. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['downloadPdf'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function downloadPdfRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['downloadPdf'][0])
+    public function downloadPdfRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['downloadPdf'][0], $impersonateUserId = null)
     {
 
         // verify the required parameter 'id' is set
@@ -685,6 +710,7 @@ class InvoicesResource
                 'Missing the required parameter $id when calling downloadPdf'
             );
         }
+
 
 
 
@@ -699,6 +725,10 @@ class InvoicesResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
         // path params
@@ -780,15 +810,16 @@ class InvoicesResource
      *
      * @param  string $id A unique value identifying this Invoice. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\InvoiceRead|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function get($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function get($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
-        list($response) = $this->getWithHttpInfo($id, $acceptLanguage, $contentType);
+        list($response) = $this->getWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -797,9 +828,9 @@ class InvoicesResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0]): \ProxyRequest\ApiResponse
+    public function getWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getWithHttpInfo($id, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -809,15 +840,16 @@ class InvoicesResource
      *
      * @param  string $id A unique value identifying this Invoice. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\InvoiceRead|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function getWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
-        $request = $this->getRequest($id, $acceptLanguage, $contentType);
+        $request = $this->getRequest($id, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\InvoiceRead',
 ));
@@ -830,14 +862,15 @@ class InvoicesResource
      *
      * @param  string $id A unique value identifying this Invoice. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function getAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
-        return $this->getAsyncWithHttpInfo($id, $acceptLanguage, $contentType)
+        return $this->getAsyncWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -852,14 +885,15 @@ class InvoicesResource
      *
      * @param  string $id A unique value identifying this Invoice. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function getAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
-        $request = $this->getRequest($id, $acceptLanguage, $contentType);
+        $request = $this->getRequest($id, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\InvoiceRead',
 ));
@@ -870,12 +904,13 @@ class InvoicesResource
      *
      * @param  string $id A unique value identifying this Invoice. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function getRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
 
         // verify the required parameter 'id' is set
@@ -884,6 +919,7 @@ class InvoicesResource
                 'Missing the required parameter $id when calling get'
             );
         }
+
 
 
 
@@ -898,6 +934,10 @@ class InvoicesResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
         // path params
@@ -979,15 +1019,16 @@ class InvoicesResource
      *
      * @param  string $id A unique value identifying this Invoice. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentLink'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\PaymentLinkResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function getPaymentLink($id, $acceptLanguage = null, string $contentType = self::contentTypes['getPaymentLink'][0])
+    public function getPaymentLink($id, $acceptLanguage = null, string $contentType = self::contentTypes['getPaymentLink'][0], $impersonateUserId = null)
     {
-        list($response) = $this->getPaymentLinkWithHttpInfo($id, $acceptLanguage, $contentType);
+        list($response) = $this->getPaymentLinkWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -996,9 +1037,9 @@ class InvoicesResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getPaymentLinkWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['getPaymentLink'][0]): \ProxyRequest\ApiResponse
+    public function getPaymentLinkWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['getPaymentLink'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getPaymentLinkWithHttpInfo($id, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getPaymentLinkWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -1008,15 +1049,16 @@ class InvoicesResource
      *
      * @param  string $id A unique value identifying this Invoice. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentLink'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\PaymentLinkResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getPaymentLinkWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['getPaymentLink'][0])
+    public function getPaymentLinkWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['getPaymentLink'][0], $impersonateUserId = null)
     {
-        $request = $this->getPaymentLinkRequest($id, $acceptLanguage, $contentType);
+        $request = $this->getPaymentLinkRequest($id, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaymentLinkResponse',
 ));
@@ -1029,14 +1071,15 @@ class InvoicesResource
      *
      * @param  string $id A unique value identifying this Invoice. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentLink'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getPaymentLinkAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['getPaymentLink'][0])
+    public function getPaymentLinkAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['getPaymentLink'][0], $impersonateUserId = null)
     {
-        return $this->getPaymentLinkAsyncWithHttpInfo($id, $acceptLanguage, $contentType)
+        return $this->getPaymentLinkAsyncWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1051,14 +1094,15 @@ class InvoicesResource
      *
      * @param  string $id A unique value identifying this Invoice. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentLink'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getPaymentLinkAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['getPaymentLink'][0])
+    public function getPaymentLinkAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['getPaymentLink'][0], $impersonateUserId = null)
     {
-        $request = $this->getPaymentLinkRequest($id, $acceptLanguage, $contentType);
+        $request = $this->getPaymentLinkRequest($id, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaymentLinkResponse',
 ));
@@ -1069,12 +1113,13 @@ class InvoicesResource
      *
      * @param  string $id A unique value identifying this Invoice. (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentLink'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getPaymentLinkRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['getPaymentLink'][0])
+    public function getPaymentLinkRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['getPaymentLink'][0], $impersonateUserId = null)
     {
 
         // verify the required parameter 'id' is set
@@ -1083,6 +1128,7 @@ class InvoicesResource
                 'Missing the required parameter $id when calling getPaymentLink'
             );
         }
+
 
 
 
@@ -1097,6 +1143,10 @@ class InvoicesResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
         // path params
@@ -1188,15 +1238,16 @@ class InvoicesResource
      * @param  string|null $userEmail userEmail (optional)
      * @param  string|null $userId userId (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\PaginatedInvoiceReadList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function list($gateway = null, $internalId = null, $limit = null, $offset = null, $ordering = null, $packageId = null, $search = null, $status = null, $type = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function list($gateway = null, $internalId = null, $limit = null, $offset = null, $ordering = null, $packageId = null, $search = null, $status = null, $type = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
-        list($response) = $this->listWithHttpInfo($gateway, $internalId, $limit, $offset, $ordering, $packageId, $search, $status, $type, $userEmail, $userId, $acceptLanguage, $contentType);
+        list($response) = $this->listWithHttpInfo($gateway, $internalId, $limit, $offset, $ordering, $packageId, $search, $status, $type, $userEmail, $userId, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -1205,9 +1256,9 @@ class InvoicesResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listWithResponse($gateway = null, $internalId = null, $limit = null, $offset = null, $ordering = null, $packageId = null, $search = null, $status = null, $type = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0]): \ProxyRequest\ApiResponse
+    public function listWithResponse($gateway = null, $internalId = null, $limit = null, $offset = null, $ordering = null, $packageId = null, $search = null, $status = null, $type = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listWithHttpInfo($gateway, $internalId, $limit, $offset, $ordering, $packageId, $search, $status, $type, $userEmail, $userId, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listWithHttpInfo($gateway, $internalId, $limit, $offset, $ordering, $packageId, $search, $status, $type, $userEmail, $userId, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -1227,15 +1278,16 @@ class InvoicesResource
      * @param  string|null $userEmail (optional)
      * @param  string|null $userId (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\PaginatedInvoiceReadList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listWithHttpInfo($gateway = null, $internalId = null, $limit = null, $offset = null, $ordering = null, $packageId = null, $search = null, $status = null, $type = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function listWithHttpInfo($gateway = null, $internalId = null, $limit = null, $offset = null, $ordering = null, $packageId = null, $search = null, $status = null, $type = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
-        $request = $this->listRequest($gateway, $internalId, $limit, $offset, $ordering, $packageId, $search, $status, $type, $userEmail, $userId, $acceptLanguage, $contentType);
+        $request = $this->listRequest($gateway, $internalId, $limit, $offset, $ordering, $packageId, $search, $status, $type, $userEmail, $userId, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedInvoiceReadList',
 ));
@@ -1258,14 +1310,15 @@ class InvoicesResource
      * @param  string|null $userEmail (optional)
      * @param  string|null $userId (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listAsync($gateway = null, $internalId = null, $limit = null, $offset = null, $ordering = null, $packageId = null, $search = null, $status = null, $type = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function listAsync($gateway = null, $internalId = null, $limit = null, $offset = null, $ordering = null, $packageId = null, $search = null, $status = null, $type = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
-        return $this->listAsyncWithHttpInfo($gateway, $internalId, $limit, $offset, $ordering, $packageId, $search, $status, $type, $userEmail, $userId, $acceptLanguage, $contentType)
+        return $this->listAsyncWithHttpInfo($gateway, $internalId, $limit, $offset, $ordering, $packageId, $search, $status, $type, $userEmail, $userId, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1290,14 +1343,15 @@ class InvoicesResource
      * @param  string|null $userEmail (optional)
      * @param  string|null $userId (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listAsyncWithHttpInfo($gateway = null, $internalId = null, $limit = null, $offset = null, $ordering = null, $packageId = null, $search = null, $status = null, $type = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function listAsyncWithHttpInfo($gateway = null, $internalId = null, $limit = null, $offset = null, $ordering = null, $packageId = null, $search = null, $status = null, $type = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
-        $request = $this->listRequest($gateway, $internalId, $limit, $offset, $ordering, $packageId, $search, $status, $type, $userEmail, $userId, $acceptLanguage, $contentType);
+        $request = $this->listRequest($gateway, $internalId, $limit, $offset, $ordering, $packageId, $search, $status, $type, $userEmail, $userId, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedInvoiceReadList',
 ));
@@ -1318,13 +1372,15 @@ class InvoicesResource
      * @param  string|null $userEmail (optional)
      * @param  string|null $userId (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['list'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listRequest($gateway = null, $internalId = null, $limit = null, $offset = null, $ordering = null, $packageId = null, $search = null, $status = null, $type = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0])
+    public function listRequest($gateway = null, $internalId = null, $limit = null, $offset = null, $ordering = null, $packageId = null, $search = null, $status = null, $type = null, $userEmail = null, $userId = null, $acceptLanguage = null, string $contentType = self::contentTypes['list'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -1449,6 +1505,10 @@ class InvoicesResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 

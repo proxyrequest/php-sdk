@@ -171,15 +171,16 @@ class ProfileResource
      *
      * @param  \ProxyRequest\Dto\ChangePasswordRequest $changePasswordRequest changePasswordRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['changePassword'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\MessageResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function changePassword($changePasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['changePassword'][0])
+    public function changePassword($changePasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['changePassword'][0], $impersonateUserId = null)
     {
-        list($response) = $this->changePasswordWithHttpInfo($changePasswordRequest, $acceptLanguage, $contentType);
+        list($response) = $this->changePasswordWithHttpInfo($changePasswordRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -188,9 +189,9 @@ class ProfileResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function changePasswordWithResponse($changePasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['changePassword'][0]): \ProxyRequest\ApiResponse
+    public function changePasswordWithResponse($changePasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['changePassword'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->changePasswordWithHttpInfo($changePasswordRequest, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->changePasswordWithHttpInfo($changePasswordRequest, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -200,15 +201,16 @@ class ProfileResource
      *
      * @param  \ProxyRequest\Dto\ChangePasswordRequest $changePasswordRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['changePassword'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\MessageResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function changePasswordWithHttpInfo($changePasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['changePassword'][0])
+    public function changePasswordWithHttpInfo($changePasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['changePassword'][0], $impersonateUserId = null)
     {
-        $request = $this->changePasswordRequest($changePasswordRequest, $acceptLanguage, $contentType);
+        $request = $this->changePasswordRequest($changePasswordRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\MessageResponse',
 ));
@@ -221,14 +223,15 @@ class ProfileResource
      *
      * @param  \ProxyRequest\Dto\ChangePasswordRequest $changePasswordRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['changePassword'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function changePasswordAsync($changePasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['changePassword'][0])
+    public function changePasswordAsync($changePasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['changePassword'][0], $impersonateUserId = null)
     {
-        return $this->changePasswordAsyncWithHttpInfo($changePasswordRequest, $acceptLanguage, $contentType)
+        return $this->changePasswordAsyncWithHttpInfo($changePasswordRequest, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -243,14 +246,15 @@ class ProfileResource
      *
      * @param  \ProxyRequest\Dto\ChangePasswordRequest $changePasswordRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['changePassword'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function changePasswordAsyncWithHttpInfo($changePasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['changePassword'][0])
+    public function changePasswordAsyncWithHttpInfo($changePasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['changePassword'][0], $impersonateUserId = null)
     {
-        $request = $this->changePasswordRequest($changePasswordRequest, $acceptLanguage, $contentType);
+        $request = $this->changePasswordRequest($changePasswordRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\MessageResponse',
 ));
@@ -261,12 +265,13 @@ class ProfileResource
      *
      * @param  \ProxyRequest\Dto\ChangePasswordRequest $changePasswordRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['changePassword'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function changePasswordRequest($changePasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['changePassword'][0])
+    public function changePasswordRequest($changePasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['changePassword'][0], $impersonateUserId = null)
     {
 
         // verify the required parameter 'changePasswordRequest' is set
@@ -275,6 +280,7 @@ class ProfileResource
                 'Missing the required parameter $changePasswordRequest when calling changePassword'
             );
         }
+
 
 
 
@@ -289,6 +295,10 @@ class ProfileResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 
@@ -369,15 +379,16 @@ class ProfileResource
      *
      * @param  \ProxyRequest\Dto\TwoFactorConfirmRequest $twoFactorConfirmRequest twoFactorConfirmRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['confirmTwoFactor'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\EnabledResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function confirmTwoFactor($twoFactorConfirmRequest, $acceptLanguage = null, string $contentType = self::contentTypes['confirmTwoFactor'][0])
+    public function confirmTwoFactor($twoFactorConfirmRequest, $acceptLanguage = null, string $contentType = self::contentTypes['confirmTwoFactor'][0], $impersonateUserId = null)
     {
-        list($response) = $this->confirmTwoFactorWithHttpInfo($twoFactorConfirmRequest, $acceptLanguage, $contentType);
+        list($response) = $this->confirmTwoFactorWithHttpInfo($twoFactorConfirmRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -386,9 +397,9 @@ class ProfileResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function confirmTwoFactorWithResponse($twoFactorConfirmRequest, $acceptLanguage = null, string $contentType = self::contentTypes['confirmTwoFactor'][0]): \ProxyRequest\ApiResponse
+    public function confirmTwoFactorWithResponse($twoFactorConfirmRequest, $acceptLanguage = null, string $contentType = self::contentTypes['confirmTwoFactor'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->confirmTwoFactorWithHttpInfo($twoFactorConfirmRequest, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->confirmTwoFactorWithHttpInfo($twoFactorConfirmRequest, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -398,15 +409,16 @@ class ProfileResource
      *
      * @param  \ProxyRequest\Dto\TwoFactorConfirmRequest $twoFactorConfirmRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['confirmTwoFactor'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\EnabledResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function confirmTwoFactorWithHttpInfo($twoFactorConfirmRequest, $acceptLanguage = null, string $contentType = self::contentTypes['confirmTwoFactor'][0])
+    public function confirmTwoFactorWithHttpInfo($twoFactorConfirmRequest, $acceptLanguage = null, string $contentType = self::contentTypes['confirmTwoFactor'][0], $impersonateUserId = null)
     {
-        $request = $this->confirmTwoFactorRequest($twoFactorConfirmRequest, $acceptLanguage, $contentType);
+        $request = $this->confirmTwoFactorRequest($twoFactorConfirmRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\EnabledResponse',
 ));
@@ -419,14 +431,15 @@ class ProfileResource
      *
      * @param  \ProxyRequest\Dto\TwoFactorConfirmRequest $twoFactorConfirmRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['confirmTwoFactor'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function confirmTwoFactorAsync($twoFactorConfirmRequest, $acceptLanguage = null, string $contentType = self::contentTypes['confirmTwoFactor'][0])
+    public function confirmTwoFactorAsync($twoFactorConfirmRequest, $acceptLanguage = null, string $contentType = self::contentTypes['confirmTwoFactor'][0], $impersonateUserId = null)
     {
-        return $this->confirmTwoFactorAsyncWithHttpInfo($twoFactorConfirmRequest, $acceptLanguage, $contentType)
+        return $this->confirmTwoFactorAsyncWithHttpInfo($twoFactorConfirmRequest, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -441,14 +454,15 @@ class ProfileResource
      *
      * @param  \ProxyRequest\Dto\TwoFactorConfirmRequest $twoFactorConfirmRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['confirmTwoFactor'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function confirmTwoFactorAsyncWithHttpInfo($twoFactorConfirmRequest, $acceptLanguage = null, string $contentType = self::contentTypes['confirmTwoFactor'][0])
+    public function confirmTwoFactorAsyncWithHttpInfo($twoFactorConfirmRequest, $acceptLanguage = null, string $contentType = self::contentTypes['confirmTwoFactor'][0], $impersonateUserId = null)
     {
-        $request = $this->confirmTwoFactorRequest($twoFactorConfirmRequest, $acceptLanguage, $contentType);
+        $request = $this->confirmTwoFactorRequest($twoFactorConfirmRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\EnabledResponse',
 ));
@@ -459,12 +473,13 @@ class ProfileResource
      *
      * @param  \ProxyRequest\Dto\TwoFactorConfirmRequest $twoFactorConfirmRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['confirmTwoFactor'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function confirmTwoFactorRequest($twoFactorConfirmRequest, $acceptLanguage = null, string $contentType = self::contentTypes['confirmTwoFactor'][0])
+    public function confirmTwoFactorRequest($twoFactorConfirmRequest, $acceptLanguage = null, string $contentType = self::contentTypes['confirmTwoFactor'][0], $impersonateUserId = null)
     {
 
         // verify the required parameter 'twoFactorConfirmRequest' is set
@@ -473,6 +488,7 @@ class ProfileResource
                 'Missing the required parameter $twoFactorConfirmRequest when calling confirmTwoFactor'
             );
         }
+
 
 
 
@@ -487,6 +503,10 @@ class ProfileResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 
@@ -567,15 +587,16 @@ class ProfileResource
      *
      * @param  \ProxyRequest\Dto\GoogleConnectRequestRequest $googleConnectRequestRequest googleConnectRequestRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['connectGoogle'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\SocialAccountState[]|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function connectGoogle($googleConnectRequestRequest, $acceptLanguage = null, string $contentType = self::contentTypes['connectGoogle'][0])
+    public function connectGoogle($googleConnectRequestRequest, $acceptLanguage = null, string $contentType = self::contentTypes['connectGoogle'][0], $impersonateUserId = null)
     {
-        list($response) = $this->connectGoogleWithHttpInfo($googleConnectRequestRequest, $acceptLanguage, $contentType);
+        list($response) = $this->connectGoogleWithHttpInfo($googleConnectRequestRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -584,9 +605,9 @@ class ProfileResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function connectGoogleWithResponse($googleConnectRequestRequest, $acceptLanguage = null, string $contentType = self::contentTypes['connectGoogle'][0]): \ProxyRequest\ApiResponse
+    public function connectGoogleWithResponse($googleConnectRequestRequest, $acceptLanguage = null, string $contentType = self::contentTypes['connectGoogle'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->connectGoogleWithHttpInfo($googleConnectRequestRequest, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->connectGoogleWithHttpInfo($googleConnectRequestRequest, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -596,15 +617,16 @@ class ProfileResource
      *
      * @param  \ProxyRequest\Dto\GoogleConnectRequestRequest $googleConnectRequestRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['connectGoogle'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\SocialAccountState[]|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function connectGoogleWithHttpInfo($googleConnectRequestRequest, $acceptLanguage = null, string $contentType = self::contentTypes['connectGoogle'][0])
+    public function connectGoogleWithHttpInfo($googleConnectRequestRequest, $acceptLanguage = null, string $contentType = self::contentTypes['connectGoogle'][0], $impersonateUserId = null)
     {
-        $request = $this->connectGoogleRequest($googleConnectRequestRequest, $acceptLanguage, $contentType);
+        $request = $this->connectGoogleRequest($googleConnectRequestRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\SocialAccountState[]',
 ));
@@ -617,14 +639,15 @@ class ProfileResource
      *
      * @param  \ProxyRequest\Dto\GoogleConnectRequestRequest $googleConnectRequestRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['connectGoogle'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function connectGoogleAsync($googleConnectRequestRequest, $acceptLanguage = null, string $contentType = self::contentTypes['connectGoogle'][0])
+    public function connectGoogleAsync($googleConnectRequestRequest, $acceptLanguage = null, string $contentType = self::contentTypes['connectGoogle'][0], $impersonateUserId = null)
     {
-        return $this->connectGoogleAsyncWithHttpInfo($googleConnectRequestRequest, $acceptLanguage, $contentType)
+        return $this->connectGoogleAsyncWithHttpInfo($googleConnectRequestRequest, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -639,14 +662,15 @@ class ProfileResource
      *
      * @param  \ProxyRequest\Dto\GoogleConnectRequestRequest $googleConnectRequestRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['connectGoogle'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function connectGoogleAsyncWithHttpInfo($googleConnectRequestRequest, $acceptLanguage = null, string $contentType = self::contentTypes['connectGoogle'][0])
+    public function connectGoogleAsyncWithHttpInfo($googleConnectRequestRequest, $acceptLanguage = null, string $contentType = self::contentTypes['connectGoogle'][0], $impersonateUserId = null)
     {
-        $request = $this->connectGoogleRequest($googleConnectRequestRequest, $acceptLanguage, $contentType);
+        $request = $this->connectGoogleRequest($googleConnectRequestRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\SocialAccountState[]',
 ));
@@ -657,12 +681,13 @@ class ProfileResource
      *
      * @param  \ProxyRequest\Dto\GoogleConnectRequestRequest $googleConnectRequestRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['connectGoogle'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function connectGoogleRequest($googleConnectRequestRequest, $acceptLanguage = null, string $contentType = self::contentTypes['connectGoogle'][0])
+    public function connectGoogleRequest($googleConnectRequestRequest, $acceptLanguage = null, string $contentType = self::contentTypes['connectGoogle'][0], $impersonateUserId = null)
     {
 
         // verify the required parameter 'googleConnectRequestRequest' is set
@@ -671,6 +696,7 @@ class ProfileResource
                 'Missing the required parameter $googleConnectRequestRequest when calling connectGoogle'
             );
         }
+
 
 
 
@@ -685,6 +711,10 @@ class ProfileResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 
@@ -760,15 +790,16 @@ class ProfileResource
      *
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function delete($ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function delete($ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null)
     {
-        $this->deleteWithHttpInfo($ifMatch, $acceptLanguage, $contentType);
+        $this->deleteWithHttpInfo($ifMatch, $acceptLanguage, $contentType, $impersonateUserId);
     }
 
     /**
@@ -776,9 +807,9 @@ class ProfileResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function deleteWithResponse($ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0]): \ProxyRequest\ApiResponse
+    public function deleteWithResponse($ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->deleteWithHttpInfo($ifMatch, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->deleteWithHttpInfo($ifMatch, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -788,15 +819,16 @@ class ProfileResource
      *
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deleteWithHttpInfo($ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteWithHttpInfo($ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null)
     {
-        $request = $this->deleteRequest($ifMatch, $acceptLanguage, $contentType);
+        $request = $this->deleteRequest($ifMatch, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   204 => 'void',
 ));
@@ -809,14 +841,15 @@ class ProfileResource
      *
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteAsync($ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteAsync($ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null)
     {
-        return $this->deleteAsyncWithHttpInfo($ifMatch, $acceptLanguage, $contentType)
+        return $this->deleteAsyncWithHttpInfo($ifMatch, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -831,14 +864,15 @@ class ProfileResource
      *
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteAsyncWithHttpInfo($ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteAsyncWithHttpInfo($ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null)
     {
-        $request = $this->deleteRequest($ifMatch, $acceptLanguage, $contentType);
+        $request = $this->deleteRequest($ifMatch, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   204 => 'void',
 ));
@@ -849,13 +883,15 @@ class ProfileResource
      *
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['delete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function deleteRequest($ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0])
+    public function deleteRequest($ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -875,6 +911,10 @@ class ProfileResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 
@@ -948,15 +988,16 @@ class ProfileResource
      *
      * @param  \ProxyRequest\Dto\TwoFactorDisableRequest $twoFactorDisableRequest twoFactorDisableRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['disableTwoFactor'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\EnabledResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function disableTwoFactor($twoFactorDisableRequest, $acceptLanguage = null, string $contentType = self::contentTypes['disableTwoFactor'][0])
+    public function disableTwoFactor($twoFactorDisableRequest, $acceptLanguage = null, string $contentType = self::contentTypes['disableTwoFactor'][0], $impersonateUserId = null)
     {
-        list($response) = $this->disableTwoFactorWithHttpInfo($twoFactorDisableRequest, $acceptLanguage, $contentType);
+        list($response) = $this->disableTwoFactorWithHttpInfo($twoFactorDisableRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -965,9 +1006,9 @@ class ProfileResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function disableTwoFactorWithResponse($twoFactorDisableRequest, $acceptLanguage = null, string $contentType = self::contentTypes['disableTwoFactor'][0]): \ProxyRequest\ApiResponse
+    public function disableTwoFactorWithResponse($twoFactorDisableRequest, $acceptLanguage = null, string $contentType = self::contentTypes['disableTwoFactor'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->disableTwoFactorWithHttpInfo($twoFactorDisableRequest, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->disableTwoFactorWithHttpInfo($twoFactorDisableRequest, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -977,15 +1018,16 @@ class ProfileResource
      *
      * @param  \ProxyRequest\Dto\TwoFactorDisableRequest $twoFactorDisableRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['disableTwoFactor'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\EnabledResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function disableTwoFactorWithHttpInfo($twoFactorDisableRequest, $acceptLanguage = null, string $contentType = self::contentTypes['disableTwoFactor'][0])
+    public function disableTwoFactorWithHttpInfo($twoFactorDisableRequest, $acceptLanguage = null, string $contentType = self::contentTypes['disableTwoFactor'][0], $impersonateUserId = null)
     {
-        $request = $this->disableTwoFactorRequest($twoFactorDisableRequest, $acceptLanguage, $contentType);
+        $request = $this->disableTwoFactorRequest($twoFactorDisableRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\EnabledResponse',
 ));
@@ -998,14 +1040,15 @@ class ProfileResource
      *
      * @param  \ProxyRequest\Dto\TwoFactorDisableRequest $twoFactorDisableRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['disableTwoFactor'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function disableTwoFactorAsync($twoFactorDisableRequest, $acceptLanguage = null, string $contentType = self::contentTypes['disableTwoFactor'][0])
+    public function disableTwoFactorAsync($twoFactorDisableRequest, $acceptLanguage = null, string $contentType = self::contentTypes['disableTwoFactor'][0], $impersonateUserId = null)
     {
-        return $this->disableTwoFactorAsyncWithHttpInfo($twoFactorDisableRequest, $acceptLanguage, $contentType)
+        return $this->disableTwoFactorAsyncWithHttpInfo($twoFactorDisableRequest, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1020,14 +1063,15 @@ class ProfileResource
      *
      * @param  \ProxyRequest\Dto\TwoFactorDisableRequest $twoFactorDisableRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['disableTwoFactor'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function disableTwoFactorAsyncWithHttpInfo($twoFactorDisableRequest, $acceptLanguage = null, string $contentType = self::contentTypes['disableTwoFactor'][0])
+    public function disableTwoFactorAsyncWithHttpInfo($twoFactorDisableRequest, $acceptLanguage = null, string $contentType = self::contentTypes['disableTwoFactor'][0], $impersonateUserId = null)
     {
-        $request = $this->disableTwoFactorRequest($twoFactorDisableRequest, $acceptLanguage, $contentType);
+        $request = $this->disableTwoFactorRequest($twoFactorDisableRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\EnabledResponse',
 ));
@@ -1038,12 +1082,13 @@ class ProfileResource
      *
      * @param  \ProxyRequest\Dto\TwoFactorDisableRequest $twoFactorDisableRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['disableTwoFactor'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function disableTwoFactorRequest($twoFactorDisableRequest, $acceptLanguage = null, string $contentType = self::contentTypes['disableTwoFactor'][0])
+    public function disableTwoFactorRequest($twoFactorDisableRequest, $acceptLanguage = null, string $contentType = self::contentTypes['disableTwoFactor'][0], $impersonateUserId = null)
     {
 
         // verify the required parameter 'twoFactorDisableRequest' is set
@@ -1052,6 +1097,7 @@ class ProfileResource
                 'Missing the required parameter $twoFactorDisableRequest when calling disableTwoFactor'
             );
         }
+
 
 
 
@@ -1066,6 +1112,10 @@ class ProfileResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 
@@ -1145,15 +1195,16 @@ class ProfileResource
      * Get the current profile
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\User|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function get($acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function get($acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
-        list($response) = $this->getWithHttpInfo($acceptLanguage, $contentType);
+        list($response) = $this->getWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -1162,9 +1213,9 @@ class ProfileResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getWithResponse($acceptLanguage = null, string $contentType = self::contentTypes['get'][0]): \ProxyRequest\ApiResponse
+    public function getWithResponse($acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getWithHttpInfo($acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -1173,15 +1224,16 @@ class ProfileResource
      * Get the current profile
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\User|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function getWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
-        $request = $this->getRequest($acceptLanguage, $contentType);
+        $request = $this->getRequest($acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\User',
 ));
@@ -1193,14 +1245,15 @@ class ProfileResource
      * Get the current profile
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getAsync($acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function getAsync($acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
-        return $this->getAsyncWithHttpInfo($acceptLanguage, $contentType)
+        return $this->getAsyncWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1214,14 +1267,15 @@ class ProfileResource
      * Get the current profile
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getAsyncWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function getAsyncWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
-        $request = $this->getRequest($acceptLanguage, $contentType);
+        $request = $this->getRequest($acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\User',
 ));
@@ -1231,13 +1285,15 @@ class ProfileResource
      * Create request for operation 'get'
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['get'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getRequest($acceptLanguage = null, string $contentType = self::contentTypes['get'][0])
+    public function getRequest($acceptLanguage = null, string $contentType = self::contentTypes['get'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -1252,6 +1308,10 @@ class ProfileResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 
@@ -1324,15 +1384,16 @@ class ProfileResource
      * Get two-factor status
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTwoFactorStatus'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\EnabledResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function getTwoFactorStatus($acceptLanguage = null, string $contentType = self::contentTypes['getTwoFactorStatus'][0])
+    public function getTwoFactorStatus($acceptLanguage = null, string $contentType = self::contentTypes['getTwoFactorStatus'][0], $impersonateUserId = null)
     {
-        list($response) = $this->getTwoFactorStatusWithHttpInfo($acceptLanguage, $contentType);
+        list($response) = $this->getTwoFactorStatusWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -1341,9 +1402,9 @@ class ProfileResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getTwoFactorStatusWithResponse($acceptLanguage = null, string $contentType = self::contentTypes['getTwoFactorStatus'][0]): \ProxyRequest\ApiResponse
+    public function getTwoFactorStatusWithResponse($acceptLanguage = null, string $contentType = self::contentTypes['getTwoFactorStatus'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getTwoFactorStatusWithHttpInfo($acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getTwoFactorStatusWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -1352,15 +1413,16 @@ class ProfileResource
      * Get two-factor status
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTwoFactorStatus'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\EnabledResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getTwoFactorStatusWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['getTwoFactorStatus'][0])
+    public function getTwoFactorStatusWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['getTwoFactorStatus'][0], $impersonateUserId = null)
     {
-        $request = $this->getTwoFactorStatusRequest($acceptLanguage, $contentType);
+        $request = $this->getTwoFactorStatusRequest($acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\EnabledResponse',
 ));
@@ -1372,14 +1434,15 @@ class ProfileResource
      * Get two-factor status
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTwoFactorStatus'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getTwoFactorStatusAsync($acceptLanguage = null, string $contentType = self::contentTypes['getTwoFactorStatus'][0])
+    public function getTwoFactorStatusAsync($acceptLanguage = null, string $contentType = self::contentTypes['getTwoFactorStatus'][0], $impersonateUserId = null)
     {
-        return $this->getTwoFactorStatusAsyncWithHttpInfo($acceptLanguage, $contentType)
+        return $this->getTwoFactorStatusAsyncWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1393,14 +1456,15 @@ class ProfileResource
      * Get two-factor status
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTwoFactorStatus'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getTwoFactorStatusAsyncWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['getTwoFactorStatus'][0])
+    public function getTwoFactorStatusAsyncWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['getTwoFactorStatus'][0], $impersonateUserId = null)
     {
-        $request = $this->getTwoFactorStatusRequest($acceptLanguage, $contentType);
+        $request = $this->getTwoFactorStatusRequest($acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\EnabledResponse',
 ));
@@ -1410,13 +1474,15 @@ class ProfileResource
      * Create request for operation 'getTwoFactorStatus'
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTwoFactorStatus'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getTwoFactorStatusRequest($acceptLanguage = null, string $contentType = self::contentTypes['getTwoFactorStatus'][0])
+    public function getTwoFactorStatusRequest($acceptLanguage = null, string $contentType = self::contentTypes['getTwoFactorStatus'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -1431,6 +1497,10 @@ class ProfileResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 
@@ -1503,15 +1573,16 @@ class ProfileResource
      * List social account connections
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listSocialAccounts'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\SocialAccountState[]|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listSocialAccounts($acceptLanguage = null, string $contentType = self::contentTypes['listSocialAccounts'][0])
+    public function listSocialAccounts($acceptLanguage = null, string $contentType = self::contentTypes['listSocialAccounts'][0], $impersonateUserId = null)
     {
-        list($response) = $this->listSocialAccountsWithHttpInfo($acceptLanguage, $contentType);
+        list($response) = $this->listSocialAccountsWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -1520,9 +1591,9 @@ class ProfileResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listSocialAccountsWithResponse($acceptLanguage = null, string $contentType = self::contentTypes['listSocialAccounts'][0]): \ProxyRequest\ApiResponse
+    public function listSocialAccountsWithResponse($acceptLanguage = null, string $contentType = self::contentTypes['listSocialAccounts'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listSocialAccountsWithHttpInfo($acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listSocialAccountsWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -1531,15 +1602,16 @@ class ProfileResource
      * List social account connections
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listSocialAccounts'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\SocialAccountState[]|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listSocialAccountsWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['listSocialAccounts'][0])
+    public function listSocialAccountsWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['listSocialAccounts'][0], $impersonateUserId = null)
     {
-        $request = $this->listSocialAccountsRequest($acceptLanguage, $contentType);
+        $request = $this->listSocialAccountsRequest($acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\SocialAccountState[]',
 ));
@@ -1551,14 +1623,15 @@ class ProfileResource
      * List social account connections
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listSocialAccounts'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listSocialAccountsAsync($acceptLanguage = null, string $contentType = self::contentTypes['listSocialAccounts'][0])
+    public function listSocialAccountsAsync($acceptLanguage = null, string $contentType = self::contentTypes['listSocialAccounts'][0], $impersonateUserId = null)
     {
-        return $this->listSocialAccountsAsyncWithHttpInfo($acceptLanguage, $contentType)
+        return $this->listSocialAccountsAsyncWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1572,14 +1645,15 @@ class ProfileResource
      * List social account connections
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listSocialAccounts'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listSocialAccountsAsyncWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['listSocialAccounts'][0])
+    public function listSocialAccountsAsyncWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['listSocialAccounts'][0], $impersonateUserId = null)
     {
-        $request = $this->listSocialAccountsRequest($acceptLanguage, $contentType);
+        $request = $this->listSocialAccountsRequest($acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\SocialAccountState[]',
 ));
@@ -1589,13 +1663,15 @@ class ProfileResource
      * Create request for operation 'listSocialAccounts'
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listSocialAccounts'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listSocialAccountsRequest($acceptLanguage = null, string $contentType = self::contentTypes['listSocialAccounts'][0])
+    public function listSocialAccountsRequest($acceptLanguage = null, string $contentType = self::contentTypes['listSocialAccounts'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -1610,6 +1686,10 @@ class ProfileResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 
@@ -1677,6 +1757,7 @@ class ProfileResource
      * Prepare two-factor authentication
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\TwoFactorSetupRequestRequest|null $twoFactorSetupRequestRequest twoFactorSetupRequestRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setupTwoFactor'] to see the possible values for this operation
      *
@@ -1684,9 +1765,9 @@ class ProfileResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\TwoFactorSetupResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function setupTwoFactor($acceptLanguage = null, $twoFactorSetupRequestRequest = null, string $contentType = self::contentTypes['setupTwoFactor'][0])
+    public function setupTwoFactor($acceptLanguage = null, $twoFactorSetupRequestRequest = null, string $contentType = self::contentTypes['setupTwoFactor'][0], $impersonateUserId = null)
     {
-        list($response) = $this->setupTwoFactorWithHttpInfo($acceptLanguage, $twoFactorSetupRequestRequest, $contentType);
+        list($response) = $this->setupTwoFactorWithHttpInfo($acceptLanguage, $twoFactorSetupRequestRequest, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -1695,9 +1776,9 @@ class ProfileResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function setupTwoFactorWithResponse($acceptLanguage = null, $twoFactorSetupRequestRequest = null, string $contentType = self::contentTypes['setupTwoFactor'][0]): \ProxyRequest\ApiResponse
+    public function setupTwoFactorWithResponse($acceptLanguage = null, $twoFactorSetupRequestRequest = null, string $contentType = self::contentTypes['setupTwoFactor'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->setupTwoFactorWithHttpInfo($acceptLanguage, $twoFactorSetupRequestRequest, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->setupTwoFactorWithHttpInfo($acceptLanguage, $twoFactorSetupRequestRequest, $contentType, $impersonateUserId));
     }
 
     /**
@@ -1706,6 +1787,7 @@ class ProfileResource
      * Prepare two-factor authentication
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\TwoFactorSetupRequestRequest|null $twoFactorSetupRequestRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setupTwoFactor'] to see the possible values for this operation
      *
@@ -1713,9 +1795,9 @@ class ProfileResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\TwoFactorSetupResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function setupTwoFactorWithHttpInfo($acceptLanguage = null, $twoFactorSetupRequestRequest = null, string $contentType = self::contentTypes['setupTwoFactor'][0])
+    public function setupTwoFactorWithHttpInfo($acceptLanguage = null, $twoFactorSetupRequestRequest = null, string $contentType = self::contentTypes['setupTwoFactor'][0], $impersonateUserId = null)
     {
-        $request = $this->setupTwoFactorRequest($acceptLanguage, $twoFactorSetupRequestRequest, $contentType);
+        $request = $this->setupTwoFactorRequest($acceptLanguage, $twoFactorSetupRequestRequest, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\TwoFactorSetupResponse',
 ));
@@ -1727,15 +1809,16 @@ class ProfileResource
      * Prepare two-factor authentication
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\TwoFactorSetupRequestRequest|null $twoFactorSetupRequestRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setupTwoFactor'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function setupTwoFactorAsync($acceptLanguage = null, $twoFactorSetupRequestRequest = null, string $contentType = self::contentTypes['setupTwoFactor'][0])
+    public function setupTwoFactorAsync($acceptLanguage = null, $twoFactorSetupRequestRequest = null, string $contentType = self::contentTypes['setupTwoFactor'][0], $impersonateUserId = null)
     {
-        return $this->setupTwoFactorAsyncWithHttpInfo($acceptLanguage, $twoFactorSetupRequestRequest, $contentType)
+        return $this->setupTwoFactorAsyncWithHttpInfo($acceptLanguage, $twoFactorSetupRequestRequest, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1749,15 +1832,16 @@ class ProfileResource
      * Prepare two-factor authentication
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\TwoFactorSetupRequestRequest|null $twoFactorSetupRequestRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setupTwoFactor'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function setupTwoFactorAsyncWithHttpInfo($acceptLanguage = null, $twoFactorSetupRequestRequest = null, string $contentType = self::contentTypes['setupTwoFactor'][0])
+    public function setupTwoFactorAsyncWithHttpInfo($acceptLanguage = null, $twoFactorSetupRequestRequest = null, string $contentType = self::contentTypes['setupTwoFactor'][0], $impersonateUserId = null)
     {
-        $request = $this->setupTwoFactorRequest($acceptLanguage, $twoFactorSetupRequestRequest, $contentType);
+        $request = $this->setupTwoFactorRequest($acceptLanguage, $twoFactorSetupRequestRequest, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\TwoFactorSetupResponse',
 ));
@@ -1767,14 +1851,16 @@ class ProfileResource
      * Create request for operation 'setupTwoFactor'
      *
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\TwoFactorSetupRequestRequest|null $twoFactorSetupRequestRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setupTwoFactor'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function setupTwoFactorRequest($acceptLanguage = null, $twoFactorSetupRequestRequest = null, string $contentType = self::contentTypes['setupTwoFactor'][0])
+    public function setupTwoFactorRequest($acceptLanguage = null, $twoFactorSetupRequestRequest = null, string $contentType = self::contentTypes['setupTwoFactor'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -1790,6 +1876,10 @@ class ProfileResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 
@@ -1870,6 +1960,7 @@ class ProfileResource
      *
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\PatchedProfileUpdateRequest|null $patchedProfileUpdateRequest patchedProfileUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['update'] to see the possible values for this operation
      *
@@ -1877,9 +1968,9 @@ class ProfileResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\User|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function update($ifMatch = null, $acceptLanguage = null, $patchedProfileUpdateRequest = null, string $contentType = self::contentTypes['update'][0])
+    public function update($ifMatch = null, $acceptLanguage = null, $patchedProfileUpdateRequest = null, string $contentType = self::contentTypes['update'][0], $impersonateUserId = null)
     {
-        list($response) = $this->updateWithHttpInfo($ifMatch, $acceptLanguage, $patchedProfileUpdateRequest, $contentType);
+        list($response) = $this->updateWithHttpInfo($ifMatch, $acceptLanguage, $patchedProfileUpdateRequest, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -1888,9 +1979,9 @@ class ProfileResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function updateWithResponse($ifMatch = null, $acceptLanguage = null, $patchedProfileUpdateRequest = null, string $contentType = self::contentTypes['update'][0]): \ProxyRequest\ApiResponse
+    public function updateWithResponse($ifMatch = null, $acceptLanguage = null, $patchedProfileUpdateRequest = null, string $contentType = self::contentTypes['update'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->updateWithHttpInfo($ifMatch, $acceptLanguage, $patchedProfileUpdateRequest, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->updateWithHttpInfo($ifMatch, $acceptLanguage, $patchedProfileUpdateRequest, $contentType, $impersonateUserId));
     }
 
     /**
@@ -1900,6 +1991,7 @@ class ProfileResource
      *
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\PatchedProfileUpdateRequest|null $patchedProfileUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['update'] to see the possible values for this operation
      *
@@ -1907,9 +1999,9 @@ class ProfileResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\User|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function updateWithHttpInfo($ifMatch = null, $acceptLanguage = null, $patchedProfileUpdateRequest = null, string $contentType = self::contentTypes['update'][0])
+    public function updateWithHttpInfo($ifMatch = null, $acceptLanguage = null, $patchedProfileUpdateRequest = null, string $contentType = self::contentTypes['update'][0], $impersonateUserId = null)
     {
-        $request = $this->updateRequest($ifMatch, $acceptLanguage, $patchedProfileUpdateRequest, $contentType);
+        $request = $this->updateRequest($ifMatch, $acceptLanguage, $patchedProfileUpdateRequest, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   202 => '\\ProxyRequest\\Dto\\User',
 ));
@@ -1922,15 +2014,16 @@ class ProfileResource
      *
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\PatchedProfileUpdateRequest|null $patchedProfileUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['update'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function updateAsync($ifMatch = null, $acceptLanguage = null, $patchedProfileUpdateRequest = null, string $contentType = self::contentTypes['update'][0])
+    public function updateAsync($ifMatch = null, $acceptLanguage = null, $patchedProfileUpdateRequest = null, string $contentType = self::contentTypes['update'][0], $impersonateUserId = null)
     {
-        return $this->updateAsyncWithHttpInfo($ifMatch, $acceptLanguage, $patchedProfileUpdateRequest, $contentType)
+        return $this->updateAsyncWithHttpInfo($ifMatch, $acceptLanguage, $patchedProfileUpdateRequest, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1945,15 +2038,16 @@ class ProfileResource
      *
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\PatchedProfileUpdateRequest|null $patchedProfileUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['update'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function updateAsyncWithHttpInfo($ifMatch = null, $acceptLanguage = null, $patchedProfileUpdateRequest = null, string $contentType = self::contentTypes['update'][0])
+    public function updateAsyncWithHttpInfo($ifMatch = null, $acceptLanguage = null, $patchedProfileUpdateRequest = null, string $contentType = self::contentTypes['update'][0], $impersonateUserId = null)
     {
-        $request = $this->updateRequest($ifMatch, $acceptLanguage, $patchedProfileUpdateRequest, $contentType);
+        $request = $this->updateRequest($ifMatch, $acceptLanguage, $patchedProfileUpdateRequest, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   202 => '\\ProxyRequest\\Dto\\User',
 ));
@@ -1964,14 +2058,16 @@ class ProfileResource
      *
      * @param  string|null $ifMatch Strong ETag from the latest representation of this resource. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  \ProxyRequest\Dto\PatchedProfileUpdateRequest|null $patchedProfileUpdateRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['update'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function updateRequest($ifMatch = null, $acceptLanguage = null, $patchedProfileUpdateRequest = null, string $contentType = self::contentTypes['update'][0])
+    public function updateRequest($ifMatch = null, $acceptLanguage = null, $patchedProfileUpdateRequest = null, string $contentType = self::contentTypes['update'][0], $impersonateUserId = null)
     {
+
 
 
 
@@ -1992,6 +2088,10 @@ class ProfileResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 

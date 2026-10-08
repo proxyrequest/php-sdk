@@ -17,7 +17,7 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 ## `create()`
 
 ```php
-create($invoiceCreateRequest, $idempotencyKey, $acceptLanguage): \ProxyRequest\Dto\Invoice
+create($invoiceCreateRequest, $idempotencyKey, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\Invoice
 ```
 
 Create an invoice
@@ -49,9 +49,10 @@ $apiInstance = new ProxyRequest\Api\InvoicesResource(
 $invoiceCreateRequest = {"package_id":"550e8400-e29b-41d4-a716-446655440002","data":10737418240,"gateway":"stripe"}; // \ProxyRequest\Dto\InvoiceCreateRequest
 $idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->create($invoiceCreateRequest, $idempotencyKey, $acceptLanguage);
+    $result = $apiInstance->create($invoiceCreateRequest, $idempotencyKey, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling InvoicesResource->create: ', $e->getMessage(), PHP_EOL;
@@ -65,6 +66,7 @@ try {
 | **invoiceCreateRequest** | [**\ProxyRequest\Dto\InvoiceCreateRequest**](../Model/InvoiceCreateRequest.md)|  | |
 | **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -86,7 +88,7 @@ try {
 ## `delete()`
 
 ```php
-delete($id, $idempotencyKey, $ifMatch, $acceptLanguage)
+delete($id, $idempotencyKey, $ifMatch, $acceptLanguage, $xImpersonateUser)
 ```
 
 Delete an invoice
@@ -119,9 +121,10 @@ $id = 'id_example'; // string | A unique value identifying this Invoice.
 $idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
 $ifMatch = 'ifMatch_example'; // string | Strong ETag from the latest representation of this resource.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $apiInstance->delete($id, $idempotencyKey, $ifMatch, $acceptLanguage);
+    $apiInstance->delete($id, $idempotencyKey, $ifMatch, $acceptLanguage, $xImpersonateUser);
 } catch (Exception $e) {
     echo 'Exception when calling InvoicesResource->delete: ', $e->getMessage(), PHP_EOL;
 }
@@ -135,6 +138,7 @@ try {
 | **idempotencyKey** | **string**| Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409. | [optional] |
 | **ifMatch** | **string**| Strong ETag from the latest representation of this resource. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -156,7 +160,7 @@ void (empty response body)
 ## `downloadPdf()`
 
 ```php
-downloadPdf($id, $acceptLanguage): \SplFileObject
+downloadPdf($id, $acceptLanguage, $xImpersonateUser): \SplFileObject
 ```
 
 Download an invoice PDF
@@ -187,9 +191,10 @@ $apiInstance = new ProxyRequest\Api\InvoicesResource(
 );
 $id = 'id_example'; // string | A unique value identifying this Invoice.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->downloadPdf($id, $acceptLanguage);
+    $result = $apiInstance->downloadPdf($id, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling InvoicesResource->downloadPdf: ', $e->getMessage(), PHP_EOL;
@@ -202,6 +207,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**| A unique value identifying this Invoice. | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -223,7 +229,7 @@ try {
 ## `get()`
 
 ```php
-get($id, $acceptLanguage): \ProxyRequest\Dto\InvoiceRead
+get($id, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\InvoiceRead
 ```
 
 Get an invoice
@@ -254,9 +260,10 @@ $apiInstance = new ProxyRequest\Api\InvoicesResource(
 );
 $id = 'id_example'; // string | A unique value identifying this Invoice.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->get($id, $acceptLanguage);
+    $result = $apiInstance->get($id, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling InvoicesResource->get: ', $e->getMessage(), PHP_EOL;
@@ -269,6 +276,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**| A unique value identifying this Invoice. | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -290,7 +298,7 @@ try {
 ## `getPaymentLink()`
 
 ```php
-getPaymentLink($id, $acceptLanguage): \ProxyRequest\Dto\PaymentLinkResponse
+getPaymentLink($id, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\PaymentLinkResponse
 ```
 
 Get an invoice payment link
@@ -321,9 +329,10 @@ $apiInstance = new ProxyRequest\Api\InvoicesResource(
 );
 $id = 'id_example'; // string | A unique value identifying this Invoice.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->getPaymentLink($id, $acceptLanguage);
+    $result = $apiInstance->getPaymentLink($id, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling InvoicesResource->getPaymentLink: ', $e->getMessage(), PHP_EOL;
@@ -336,6 +345,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**| A unique value identifying this Invoice. | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 
@@ -357,7 +367,7 @@ try {
 ## `list()`
 
 ```php
-list($gateway, $internalId, $limit, $offset, $ordering, $packageId, $search, $status, $type, $userEmail, $userId, $acceptLanguage): \ProxyRequest\Dto\PaginatedInvoiceReadList
+list($gateway, $internalId, $limit, $offset, $ordering, $packageId, $search, $status, $type, $userEmail, $userId, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\PaginatedInvoiceReadList
 ```
 
 List invoices
@@ -398,9 +408,10 @@ $type = 'type_example'; // string | The type of invoice, indicating the type of 
 $userEmail = 'userEmail_example'; // string
 $userId = 'userId_example'; // string
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->list($gateway, $internalId, $limit, $offset, $ordering, $packageId, $search, $status, $type, $userEmail, $userId, $acceptLanguage);
+    $result = $apiInstance->list($gateway, $internalId, $limit, $offset, $ordering, $packageId, $search, $status, $type, $userEmail, $userId, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling InvoicesResource->list: ', $e->getMessage(), PHP_EOL;
@@ -423,6 +434,7 @@ try {
 | **userEmail** | **string**|  | [optional] |
 | **userId** | **string**|  | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 
 ### Return type
 

@@ -241,6 +241,19 @@ An existing `GuzzleHttp\ClientInterface` can be supplied through
 `withHttpClient()`. The generated resource layer forces `http_errors=true` so
 documented 4xx responses follow the same exception contract with every client.
 
+## Per-call reseller impersonation
+
+Use the same client for ordinary and reseller-scoped calls. Pass the optional
+`impersonateUserId` only to the call that needs it; the header is not stored on
+the client or carried into later requests.
+
+```php
+$child = $client->users()->get($childId, impersonateUserId: $resellerId);
+$admin = $client->users()->get($adminId);
+```
+
+The API key must have permission to impersonate the selected reseller.
+
 ## Invoice downloads
 
 ```php

@@ -134,15 +134,16 @@ class ProxiesResource
      *
      * @param  \ProxyRequest\Dto\GenerateProxyRequest $generateProxyRequest generateProxyRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['generate'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\GenerateProxyResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function generate($generateProxyRequest, $acceptLanguage = null, string $contentType = self::contentTypes['generate'][0])
+    public function generate($generateProxyRequest, $acceptLanguage = null, string $contentType = self::contentTypes['generate'][0], $impersonateUserId = null)
     {
-        list($response) = $this->generateWithHttpInfo($generateProxyRequest, $acceptLanguage, $contentType);
+        list($response) = $this->generateWithHttpInfo($generateProxyRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -151,9 +152,9 @@ class ProxiesResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function generateWithResponse($generateProxyRequest, $acceptLanguage = null, string $contentType = self::contentTypes['generate'][0]): \ProxyRequest\ApiResponse
+    public function generateWithResponse($generateProxyRequest, $acceptLanguage = null, string $contentType = self::contentTypes['generate'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->generateWithHttpInfo($generateProxyRequest, $acceptLanguage, $contentType));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->generateWithHttpInfo($generateProxyRequest, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -163,15 +164,16 @@ class ProxiesResource
      *
      * @param  \ProxyRequest\Dto\GenerateProxyRequest $generateProxyRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['generate'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\GenerateProxyResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function generateWithHttpInfo($generateProxyRequest, $acceptLanguage = null, string $contentType = self::contentTypes['generate'][0])
+    public function generateWithHttpInfo($generateProxyRequest, $acceptLanguage = null, string $contentType = self::contentTypes['generate'][0], $impersonateUserId = null)
     {
-        $request = $this->generateRequest($generateProxyRequest, $acceptLanguage, $contentType);
+        $request = $this->generateRequest($generateProxyRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   201 => '\\ProxyRequest\\Dto\\GenerateProxyResponse',
 ));
@@ -184,14 +186,15 @@ class ProxiesResource
      *
      * @param  \ProxyRequest\Dto\GenerateProxyRequest $generateProxyRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['generate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function generateAsync($generateProxyRequest, $acceptLanguage = null, string $contentType = self::contentTypes['generate'][0])
+    public function generateAsync($generateProxyRequest, $acceptLanguage = null, string $contentType = self::contentTypes['generate'][0], $impersonateUserId = null)
     {
-        return $this->generateAsyncWithHttpInfo($generateProxyRequest, $acceptLanguage, $contentType)
+        return $this->generateAsyncWithHttpInfo($generateProxyRequest, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -206,14 +209,15 @@ class ProxiesResource
      *
      * @param  \ProxyRequest\Dto\GenerateProxyRequest $generateProxyRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['generate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function generateAsyncWithHttpInfo($generateProxyRequest, $acceptLanguage = null, string $contentType = self::contentTypes['generate'][0])
+    public function generateAsyncWithHttpInfo($generateProxyRequest, $acceptLanguage = null, string $contentType = self::contentTypes['generate'][0], $impersonateUserId = null)
     {
-        $request = $this->generateRequest($generateProxyRequest, $acceptLanguage, $contentType);
+        $request = $this->generateRequest($generateProxyRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   201 => '\\ProxyRequest\\Dto\\GenerateProxyResponse',
 ));
@@ -224,12 +228,13 @@ class ProxiesResource
      *
      * @param  \ProxyRequest\Dto\GenerateProxyRequest $generateProxyRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['generate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function generateRequest($generateProxyRequest, $acceptLanguage = null, string $contentType = self::contentTypes['generate'][0])
+    public function generateRequest($generateProxyRequest, $acceptLanguage = null, string $contentType = self::contentTypes['generate'][0], $impersonateUserId = null)
     {
 
         // verify the required parameter 'generateProxyRequest' is set
@@ -238,6 +243,7 @@ class ProxiesResource
                 'Missing the required parameter $generateProxyRequest when calling generate'
             );
         }
+
 
 
 
@@ -252,6 +258,10 @@ class ProxiesResource
         // header params
         if ($acceptLanguage !== null) {
             $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
         }
 
 
