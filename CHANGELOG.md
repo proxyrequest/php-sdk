@@ -5,6 +5,12 @@ the package uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [4.4.0] - 2026-10-08
+
+- Add optional, per-call `impersonateUserId` to all generated resource operations. The SDK sends `X-Impersonate-User` only for that request, so one `Client` can make ordinary and impersonated calls safely.
+- Keep existing positional arguments in place by appending the new argument, and validate blank impersonation IDs before sending a request.
+- Add the same option to raw requests and invoice PDF downloads. Synchronize the client version and User-Agent with this release.
+
 ## [4.3.0] - 2026-10-07
 
 - Add the optional `includeGeo` argument to `locations()->listAsns()`. Set it to `true` to request country, region, and city scopes in each ASN's `geo` list; the API returns an empty list by default.

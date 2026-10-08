@@ -33,7 +33,7 @@ use UnexpectedValueException;
 
 final class Client
 {
-    public const VERSION = '4.1.0';
+    public const VERSION = '4.4.0';
     public const USER_AGENT = 'proxyrequest-php/' . self::VERSION;
 
     /** @var array<class-string, object> */

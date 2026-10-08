@@ -92,7 +92,7 @@ final class ProviderBalancesTest extends TestCase
         foreach ($legacy as $method => $names) {
             foreach (['', 'WithResponse', 'WithHttpInfo', 'Async', 'AsyncWithHttpInfo', 'Request'] as $suffix) {
                 $parameters = new \ReflectionMethod($resource, $method . $suffix)->getParameters();
-                self::assertSame([...$names, 'includeAsns'], array_map(static fn(\ReflectionParameter $parameter): string => $parameter->getName(), $parameters));
+                self::assertSame([...$names, 'includeAsns', 'impersonateUserId'], array_map(static fn(\ReflectionParameter $parameter): string => $parameter->getName(), $parameters));
             }
             $arguments = ['packageId' => 'package'];
             if (str_starts_with($method, 'get')) {

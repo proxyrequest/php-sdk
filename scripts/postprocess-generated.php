@@ -79,8 +79,6 @@ foreach (glob($root . '/src/Resource/*Resource.php') ?: [] as $path) {
         continue;
     }
     $source = (string) file_get_contents($path);
-    $source = preserveImpersonationArguments($source);
-    $source = str_replace('$xImpersonateUser', '$impersonateUserId', $source);
     if ('LocationsResource.php' === basename($path)) {
         $source = preserveLocationArguments($source);
         $source = str_replace(
@@ -99,6 +97,10 @@ foreach (glob($root . '/src/Resource/*Resource.php') ?: [] as $path) {
         $docs = str_replace(', $includeGeo)', ', includeGeo: $includeGeo)', $docs);
         file_put_contents($docsPath, $docs);
     }
+    // The existing location options must be ordered first so impersonation
+    // remains the final argument on those methods as well.
+    $source = preserveImpersonationArguments($source);
+    $source = str_replace('$xImpersonateUser', '$impersonateUserId', $source);
     if ('AnalyticsResource.php' === basename($path)) {
         $source = str_replace(
             '            $includeSubUsers,' . "\n            'include_sub_users', // param base name",

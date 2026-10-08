@@ -168,9 +168,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\City|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function getCity($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $impersonateUserId = null, $includeAsns = null)
+    public function getCity($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null, $impersonateUserId = null)
     {
-        list($response) = $this->getCityWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns);
+        list($response) = $this->getCityWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
         return $response;
     }
 
@@ -179,9 +179,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getCityWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $impersonateUserId = null, $includeAsns = null): \ProxyRequest\ApiResponse
+    public function getCityWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null, $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getCityWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getCityWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId));
     }
 
     /**
@@ -200,9 +200,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\City|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getCityWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $impersonateUserId = null, $includeAsns = null)
+    public function getCityWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null, $impersonateUserId = null)
     {
-        $request = $this->getCityRequest($id, $packageId, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns);
+        $request = $this->getCityRequest($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\City',
 ));
@@ -223,9 +223,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getCityAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $impersonateUserId = null, $includeAsns = null)
+    public function getCityAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null, $impersonateUserId = null)
     {
-        return $this->getCityAsyncWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns)
+        return $this->getCityAsyncWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -248,9 +248,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getCityAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $impersonateUserId = null, $includeAsns = null)
+    public function getCityAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null, $impersonateUserId = null)
     {
-        $request = $this->getCityRequest($id, $packageId, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns);
+        $request = $this->getCityRequest($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\City',
 ));
@@ -269,7 +269,7 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getCityRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $impersonateUserId = null, $includeAsns = null)
+    public function getCityRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null, $impersonateUserId = null)
     {
 
         // verify the required parameter 'id' is set
@@ -643,9 +643,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\Country|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function getCountry($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $impersonateUserId = null, $includeAsns = null)
+    public function getCountry($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null, $impersonateUserId = null)
     {
-        list($response) = $this->getCountryWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns);
+        list($response) = $this->getCountryWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
         return $response;
     }
 
@@ -654,9 +654,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getCountryWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $impersonateUserId = null, $includeAsns = null): \ProxyRequest\ApiResponse
+    public function getCountryWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null, $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getCountryWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getCountryWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId));
     }
 
     /**
@@ -675,9 +675,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\Country|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getCountryWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $impersonateUserId = null, $includeAsns = null)
+    public function getCountryWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null, $impersonateUserId = null)
     {
-        $request = $this->getCountryRequest($id, $packageId, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns);
+        $request = $this->getCountryRequest($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\Country',
 ));
@@ -698,9 +698,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getCountryAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $impersonateUserId = null, $includeAsns = null)
+    public function getCountryAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null, $impersonateUserId = null)
     {
-        return $this->getCountryAsyncWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns)
+        return $this->getCountryAsyncWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -723,9 +723,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getCountryAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $impersonateUserId = null, $includeAsns = null)
+    public function getCountryAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null, $impersonateUserId = null)
     {
-        $request = $this->getCountryRequest($id, $packageId, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns);
+        $request = $this->getCountryRequest($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\Country',
 ));
@@ -744,7 +744,7 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getCountryRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $impersonateUserId = null, $includeAsns = null)
+    public function getCountryRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null, $impersonateUserId = null)
     {
 
         // verify the required parameter 'id' is set
@@ -888,9 +888,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\Region|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function getRegion($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $impersonateUserId = null, $includeAsns = null)
+    public function getRegion($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null, $impersonateUserId = null)
     {
-        list($response) = $this->getRegionWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns);
+        list($response) = $this->getRegionWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
         return $response;
     }
 
@@ -899,9 +899,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getRegionWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $impersonateUserId = null, $includeAsns = null): \ProxyRequest\ApiResponse
+    public function getRegionWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null, $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getRegionWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getRegionWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId));
     }
 
     /**
@@ -920,9 +920,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\Region|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getRegionWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $impersonateUserId = null, $includeAsns = null)
+    public function getRegionWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null, $impersonateUserId = null)
     {
-        $request = $this->getRegionRequest($id, $packageId, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns);
+        $request = $this->getRegionRequest($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\Region',
 ));
@@ -943,9 +943,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getRegionAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $impersonateUserId = null, $includeAsns = null)
+    public function getRegionAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null, $impersonateUserId = null)
     {
-        return $this->getRegionAsyncWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns)
+        return $this->getRegionAsyncWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -968,9 +968,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getRegionAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $impersonateUserId = null, $includeAsns = null)
+    public function getRegionAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null, $impersonateUserId = null)
     {
-        $request = $this->getRegionRequest($id, $packageId, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns);
+        $request = $this->getRegionRequest($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\Region',
 ));
@@ -989,7 +989,7 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getRegionRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $impersonateUserId = null, $includeAsns = null)
+    public function getRegionRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null, $impersonateUserId = null)
     {
 
         // verify the required parameter 'id' is set
@@ -1140,9 +1140,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\PaginatedLocationASNRecordList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listAsns($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $impersonateUserId = null, $includeGeo = null)
+    public function listAsns($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null, $impersonateUserId = null)
     {
-        list($response) = $this->listAsnsWithHttpInfo($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId, $includeGeo);
+        list($response) = $this->listAsnsWithHttpInfo($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeGeo, $impersonateUserId);
         return $response;
     }
 
@@ -1151,9 +1151,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listAsnsWithResponse($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $impersonateUserId = null, $includeGeo = null): \ProxyRequest\ApiResponse
+    public function listAsnsWithResponse($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null, $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listAsnsWithHttpInfo($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId, $includeGeo));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listAsnsWithHttpInfo($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeGeo, $impersonateUserId));
     }
 
     /**
@@ -1179,9 +1179,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\PaginatedLocationASNRecordList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listAsnsWithHttpInfo($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $impersonateUserId = null, $includeGeo = null)
+    public function listAsnsWithHttpInfo($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null, $impersonateUserId = null)
     {
-        $request = $this->listAsnsRequest($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId, $includeGeo);
+        $request = $this->listAsnsRequest($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeGeo, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedLocationASNRecordList',
 ));
@@ -1209,9 +1209,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listAsnsAsync($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $impersonateUserId = null, $includeGeo = null)
+    public function listAsnsAsync($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null, $impersonateUserId = null)
     {
-        return $this->listAsnsAsyncWithHttpInfo($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId, $includeGeo)
+        return $this->listAsnsAsyncWithHttpInfo($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeGeo, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1241,9 +1241,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listAsnsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $impersonateUserId = null, $includeGeo = null)
+    public function listAsnsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null, $impersonateUserId = null)
     {
-        $request = $this->listAsnsRequest($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId, $includeGeo);
+        $request = $this->listAsnsRequest($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeGeo, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedLocationASNRecordList',
 ));
@@ -1269,7 +1269,7 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listAsnsRequest($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $impersonateUserId = null, $includeGeo = null)
+    public function listAsnsRequest($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null, $impersonateUserId = null)
     {
 
         // verify the required parameter 'packageId' is set
@@ -1485,9 +1485,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\PaginatedCityList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listCities($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $impersonateUserId = null, $includeAsns = null)
+    public function listCities($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null, $impersonateUserId = null)
     {
-        list($response) = $this->listCitiesWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns);
+        list($response) = $this->listCitiesWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
         return $response;
     }
 
@@ -1496,9 +1496,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listCitiesWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $impersonateUserId = null, $includeAsns = null): \ProxyRequest\ApiResponse
+    public function listCitiesWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null, $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listCitiesWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listCitiesWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId));
     }
 
     /**
@@ -1524,9 +1524,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\PaginatedCityList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listCitiesWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $impersonateUserId = null, $includeAsns = null)
+    public function listCitiesWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null, $impersonateUserId = null)
     {
-        $request = $this->listCitiesRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns);
+        $request = $this->listCitiesRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedCityList',
 ));
@@ -1554,9 +1554,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listCitiesAsync($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $impersonateUserId = null, $includeAsns = null)
+    public function listCitiesAsync($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null, $impersonateUserId = null)
     {
-        return $this->listCitiesAsyncWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns)
+        return $this->listCitiesAsyncWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1586,9 +1586,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listCitiesAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $impersonateUserId = null, $includeAsns = null)
+    public function listCitiesAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null, $impersonateUserId = null)
     {
-        $request = $this->listCitiesRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns);
+        $request = $this->listCitiesRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedCityList',
 ));
@@ -1614,7 +1614,7 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listCitiesRequest($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $impersonateUserId = null, $includeAsns = null)
+    public function listCitiesRequest($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null, $impersonateUserId = null)
     {
 
         // verify the required parameter 'packageId' is set
@@ -2128,9 +2128,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\PaginatedCountryList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listCountries($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $impersonateUserId = null, $includeAsns = null)
+    public function listCountries($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null, $impersonateUserId = null)
     {
-        list($response) = $this->listCountriesWithHttpInfo($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns);
+        list($response) = $this->listCountriesWithHttpInfo($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
         return $response;
     }
 
@@ -2139,9 +2139,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listCountriesWithResponse($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $impersonateUserId = null, $includeAsns = null): \ProxyRequest\ApiResponse
+    public function listCountriesWithResponse($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null, $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listCountriesWithHttpInfo($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listCountriesWithHttpInfo($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId));
     }
 
     /**
@@ -2165,9 +2165,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\PaginatedCountryList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listCountriesWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $impersonateUserId = null, $includeAsns = null)
+    public function listCountriesWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null, $impersonateUserId = null)
     {
-        $request = $this->listCountriesRequest($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns);
+        $request = $this->listCountriesRequest($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedCountryList',
 ));
@@ -2193,9 +2193,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listCountriesAsync($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $impersonateUserId = null, $includeAsns = null)
+    public function listCountriesAsync($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null, $impersonateUserId = null)
     {
-        return $this->listCountriesAsyncWithHttpInfo($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns)
+        return $this->listCountriesAsyncWithHttpInfo($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2223,9 +2223,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listCountriesAsyncWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $impersonateUserId = null, $includeAsns = null)
+    public function listCountriesAsyncWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null, $impersonateUserId = null)
     {
-        $request = $this->listCountriesRequest($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns);
+        $request = $this->listCountriesRequest($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedCountryList',
 ));
@@ -2249,7 +2249,7 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listCountriesRequest($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $impersonateUserId = null, $includeAsns = null)
+    public function listCountriesRequest($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null, $impersonateUserId = null)
     {
 
         // verify the required parameter 'packageId' is set
@@ -2759,9 +2759,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \ProxyRequest\Dto\PaginatedRegionList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listRegions($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $impersonateUserId = null, $includeAsns = null)
+    public function listRegions($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null, $impersonateUserId = null)
     {
-        list($response) = $this->listRegionsWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns);
+        list($response) = $this->listRegionsWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
         return $response;
     }
 
@@ -2770,9 +2770,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listRegionsWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $impersonateUserId = null, $includeAsns = null): \ProxyRequest\ApiResponse
+    public function listRegionsWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null, $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listRegionsWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listRegionsWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId));
     }
 
     /**
@@ -2797,9 +2797,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return array of \ProxyRequest\Dto\PaginatedRegionList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listRegionsWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $impersonateUserId = null, $includeAsns = null)
+    public function listRegionsWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null, $impersonateUserId = null)
     {
-        $request = $this->listRegionsRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns);
+        $request = $this->listRegionsRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedRegionList',
 ));
@@ -2826,9 +2826,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listRegionsAsync($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $impersonateUserId = null, $includeAsns = null)
+    public function listRegionsAsync($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null, $impersonateUserId = null)
     {
-        return $this->listRegionsAsyncWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns)
+        return $this->listRegionsAsyncWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2857,9 +2857,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listRegionsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $impersonateUserId = null, $includeAsns = null)
+    public function listRegionsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null, $impersonateUserId = null)
     {
-        $request = $this->listRegionsRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId, $includeAsns);
+        $request = $this->listRegionsRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedRegionList',
 ));
@@ -2884,7 +2884,7 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listRegionsRequest($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $impersonateUserId = null, $includeAsns = null)
+    public function listRegionsRequest($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null, $impersonateUserId = null)
     {
 
         // verify the required parameter 'packageId' is set

@@ -4,7 +4,7 @@
         "id": "php",
         "label": "PHP",
         "language": "PHP",
-        "version": "4.3.0",
+        "version": "4.4.0",
         "package": "proxyrequest/php-sdk",
         "runtime": "64-bit PHP 8.5 or later",
         "install": "composer require proxyrequest/php-sdk",
@@ -5181,33 +5181,33 @@
                     "signatures": [
                         {
                             "label": "Sync",
-                            "signature": "$client->locations()->listAsns($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $impersonateUserId = null, $includeGeo = null)"
+                            "signature": "$client->locations()->listAsns($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null, $impersonateUserId = null)"
                         }
                     ],
                     "variants": [
                         {
                             "name": "listAsnsWithResponse",
-                            "signature": "$client->locations()->listAsnsWithResponse($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $impersonateUserId = null, $includeGeo = null): \\ProxyRequest\\ApiResponse",
+                            "signature": "$client->locations()->listAsnsWithResponse($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null, $impersonateUserId = null): \\ProxyRequest\\ApiResponse",
                             "description": "Returns an ApiResponse with decoded data and HTTP metadata."
                         },
                         {
                             "name": "listAsnsWithHttpInfo",
-                            "signature": "$client->locations()->listAsnsWithHttpInfo($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $impersonateUserId = null, $includeGeo = null)",
+                            "signature": "$client->locations()->listAsnsWithHttpInfo($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null, $impersonateUserId = null)",
                             "description": "Returns the OpenAPI Generator response tuple."
                         },
                         {
                             "name": "listAsnsAsync",
-                            "signature": "$client->locations()->listAsnsAsync($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $impersonateUserId = null, $includeGeo = null)",
+                            "signature": "$client->locations()->listAsnsAsync($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null, $impersonateUserId = null)",
                             "description": "Returns a Guzzle promise for the decoded result."
                         },
                         {
                             "name": "listAsnsAsyncWithHttpInfo",
-                            "signature": "$client->locations()->listAsnsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $impersonateUserId = null, $includeGeo = null)",
+                            "signature": "$client->locations()->listAsnsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null, $impersonateUserId = null)",
                             "description": "Returns a Guzzle promise for the response tuple."
                         },
                         {
                             "name": "listAsnsRequest",
-                            "signature": "$client->locations()->listAsnsRequest($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $impersonateUserId = null, $includeGeo = null)",
+                            "signature": "$client->locations()->listAsnsRequest($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null, $impersonateUserId = null)",
                             "description": "Builds the PSR-7 request without sending it."
                         }
                     ],
@@ -5409,33 +5409,33 @@
                     "signatures": [
                         {
                             "label": "Sync",
-                            "signature": "$client->locations()->listCities($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $impersonateUserId = null, $includeAsns = null)"
+                            "signature": "$client->locations()->listCities($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null, $impersonateUserId = null)"
                         }
                     ],
                     "variants": [
                         {
                             "name": "listCitiesWithResponse",
-                            "signature": "$client->locations()->listCitiesWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $impersonateUserId = null, $includeAsns = null): \\ProxyRequest\\ApiResponse",
+                            "signature": "$client->locations()->listCitiesWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null, $impersonateUserId = null): \\ProxyRequest\\ApiResponse",
                             "description": "Returns an ApiResponse with decoded data and HTTP metadata."
                         },
                         {
                             "name": "listCitiesWithHttpInfo",
-                            "signature": "$client->locations()->listCitiesWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $impersonateUserId = null, $includeAsns = null)",
+                            "signature": "$client->locations()->listCitiesWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null, $impersonateUserId = null)",
                             "description": "Returns the OpenAPI Generator response tuple."
                         },
                         {
                             "name": "listCitiesAsync",
-                            "signature": "$client->locations()->listCitiesAsync($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $impersonateUserId = null, $includeAsns = null)",
+                            "signature": "$client->locations()->listCitiesAsync($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null, $impersonateUserId = null)",
                             "description": "Returns a Guzzle promise for the decoded result."
                         },
                         {
                             "name": "listCitiesAsyncWithHttpInfo",
-                            "signature": "$client->locations()->listCitiesAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $impersonateUserId = null, $includeAsns = null)",
+                            "signature": "$client->locations()->listCitiesAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null, $impersonateUserId = null)",
                             "description": "Returns a Guzzle promise for the response tuple."
                         },
                         {
                             "name": "listCitiesRequest",
-                            "signature": "$client->locations()->listCitiesRequest($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $impersonateUserId = null, $includeAsns = null)",
+                            "signature": "$client->locations()->listCitiesRequest($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null, $impersonateUserId = null)",
                             "description": "Builds the PSR-7 request without sending it."
                         }
                     ],
@@ -5637,33 +5637,33 @@
                     "signatures": [
                         {
                             "label": "Sync",
-                            "signature": "$client->locations()->getCity($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $impersonateUserId = null, $includeAsns = null)"
+                            "signature": "$client->locations()->getCity($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null, $impersonateUserId = null)"
                         }
                     ],
                     "variants": [
                         {
                             "name": "getCityWithResponse",
-                            "signature": "$client->locations()->getCityWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $impersonateUserId = null, $includeAsns = null): \\ProxyRequest\\ApiResponse",
+                            "signature": "$client->locations()->getCityWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null, $impersonateUserId = null): \\ProxyRequest\\ApiResponse",
                             "description": "Returns an ApiResponse with decoded data and HTTP metadata."
                         },
                         {
                             "name": "getCityWithHttpInfo",
-                            "signature": "$client->locations()->getCityWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $impersonateUserId = null, $includeAsns = null)",
+                            "signature": "$client->locations()->getCityWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null, $impersonateUserId = null)",
                             "description": "Returns the OpenAPI Generator response tuple."
                         },
                         {
                             "name": "getCityAsync",
-                            "signature": "$client->locations()->getCityAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $impersonateUserId = null, $includeAsns = null)",
+                            "signature": "$client->locations()->getCityAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null, $impersonateUserId = null)",
                             "description": "Returns a Guzzle promise for the decoded result."
                         },
                         {
                             "name": "getCityAsyncWithHttpInfo",
-                            "signature": "$client->locations()->getCityAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $impersonateUserId = null, $includeAsns = null)",
+                            "signature": "$client->locations()->getCityAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null, $impersonateUserId = null)",
                             "description": "Returns a Guzzle promise for the response tuple."
                         },
                         {
                             "name": "getCityRequest",
-                            "signature": "$client->locations()->getCityRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $impersonateUserId = null, $includeAsns = null)",
+                            "signature": "$client->locations()->getCityRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null, $impersonateUserId = null)",
                             "description": "Builds the PSR-7 request without sending it."
                         }
                     ],
@@ -6139,33 +6139,33 @@
                     "signatures": [
                         {
                             "label": "Sync",
-                            "signature": "$client->locations()->listCountries($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $impersonateUserId = null, $includeAsns = null)"
+                            "signature": "$client->locations()->listCountries($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null, $impersonateUserId = null)"
                         }
                     ],
                     "variants": [
                         {
                             "name": "listCountriesWithResponse",
-                            "signature": "$client->locations()->listCountriesWithResponse($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $impersonateUserId = null, $includeAsns = null): \\ProxyRequest\\ApiResponse",
+                            "signature": "$client->locations()->listCountriesWithResponse($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null, $impersonateUserId = null): \\ProxyRequest\\ApiResponse",
                             "description": "Returns an ApiResponse with decoded data and HTTP metadata."
                         },
                         {
                             "name": "listCountriesWithHttpInfo",
-                            "signature": "$client->locations()->listCountriesWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $impersonateUserId = null, $includeAsns = null)",
+                            "signature": "$client->locations()->listCountriesWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null, $impersonateUserId = null)",
                             "description": "Returns the OpenAPI Generator response tuple."
                         },
                         {
                             "name": "listCountriesAsync",
-                            "signature": "$client->locations()->listCountriesAsync($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $impersonateUserId = null, $includeAsns = null)",
+                            "signature": "$client->locations()->listCountriesAsync($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null, $impersonateUserId = null)",
                             "description": "Returns a Guzzle promise for the decoded result."
                         },
                         {
                             "name": "listCountriesAsyncWithHttpInfo",
-                            "signature": "$client->locations()->listCountriesAsyncWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $impersonateUserId = null, $includeAsns = null)",
+                            "signature": "$client->locations()->listCountriesAsyncWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null, $impersonateUserId = null)",
                             "description": "Returns a Guzzle promise for the response tuple."
                         },
                         {
                             "name": "listCountriesRequest",
-                            "signature": "$client->locations()->listCountriesRequest($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $impersonateUserId = null, $includeAsns = null)",
+                            "signature": "$client->locations()->listCountriesRequest($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null, $impersonateUserId = null)",
                             "description": "Builds the PSR-7 request without sending it."
                         }
                     ],
@@ -6345,33 +6345,33 @@
                     "signatures": [
                         {
                             "label": "Sync",
-                            "signature": "$client->locations()->getCountry($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $impersonateUserId = null, $includeAsns = null)"
+                            "signature": "$client->locations()->getCountry($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null, $impersonateUserId = null)"
                         }
                     ],
                     "variants": [
                         {
                             "name": "getCountryWithResponse",
-                            "signature": "$client->locations()->getCountryWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $impersonateUserId = null, $includeAsns = null): \\ProxyRequest\\ApiResponse",
+                            "signature": "$client->locations()->getCountryWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null, $impersonateUserId = null): \\ProxyRequest\\ApiResponse",
                             "description": "Returns an ApiResponse with decoded data and HTTP metadata."
                         },
                         {
                             "name": "getCountryWithHttpInfo",
-                            "signature": "$client->locations()->getCountryWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $impersonateUserId = null, $includeAsns = null)",
+                            "signature": "$client->locations()->getCountryWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null, $impersonateUserId = null)",
                             "description": "Returns the OpenAPI Generator response tuple."
                         },
                         {
                             "name": "getCountryAsync",
-                            "signature": "$client->locations()->getCountryAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $impersonateUserId = null, $includeAsns = null)",
+                            "signature": "$client->locations()->getCountryAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null, $impersonateUserId = null)",
                             "description": "Returns a Guzzle promise for the decoded result."
                         },
                         {
                             "name": "getCountryAsyncWithHttpInfo",
-                            "signature": "$client->locations()->getCountryAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $impersonateUserId = null, $includeAsns = null)",
+                            "signature": "$client->locations()->getCountryAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null, $impersonateUserId = null)",
                             "description": "Returns a Guzzle promise for the response tuple."
                         },
                         {
                             "name": "getCountryRequest",
-                            "signature": "$client->locations()->getCountryRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $impersonateUserId = null, $includeAsns = null)",
+                            "signature": "$client->locations()->getCountryRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null, $impersonateUserId = null)",
                             "description": "Builds the PSR-7 request without sending it."
                         }
                     ],
@@ -6710,33 +6710,33 @@
                     "signatures": [
                         {
                             "label": "Sync",
-                            "signature": "$client->locations()->listRegions($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $impersonateUserId = null, $includeAsns = null)"
+                            "signature": "$client->locations()->listRegions($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null, $impersonateUserId = null)"
                         }
                     ],
                     "variants": [
                         {
                             "name": "listRegionsWithResponse",
-                            "signature": "$client->locations()->listRegionsWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $impersonateUserId = null, $includeAsns = null): \\ProxyRequest\\ApiResponse",
+                            "signature": "$client->locations()->listRegionsWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null, $impersonateUserId = null): \\ProxyRequest\\ApiResponse",
                             "description": "Returns an ApiResponse with decoded data and HTTP metadata."
                         },
                         {
                             "name": "listRegionsWithHttpInfo",
-                            "signature": "$client->locations()->listRegionsWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $impersonateUserId = null, $includeAsns = null)",
+                            "signature": "$client->locations()->listRegionsWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null, $impersonateUserId = null)",
                             "description": "Returns the OpenAPI Generator response tuple."
                         },
                         {
                             "name": "listRegionsAsync",
-                            "signature": "$client->locations()->listRegionsAsync($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $impersonateUserId = null, $includeAsns = null)",
+                            "signature": "$client->locations()->listRegionsAsync($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null, $impersonateUserId = null)",
                             "description": "Returns a Guzzle promise for the decoded result."
                         },
                         {
                             "name": "listRegionsAsyncWithHttpInfo",
-                            "signature": "$client->locations()->listRegionsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $impersonateUserId = null, $includeAsns = null)",
+                            "signature": "$client->locations()->listRegionsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null, $impersonateUserId = null)",
                             "description": "Returns a Guzzle promise for the response tuple."
                         },
                         {
                             "name": "listRegionsRequest",
-                            "signature": "$client->locations()->listRegionsRequest($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $impersonateUserId = null, $includeAsns = null)",
+                            "signature": "$client->locations()->listRegionsRequest($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null, $impersonateUserId = null)",
                             "description": "Builds the PSR-7 request without sending it."
                         }
                     ],
@@ -6927,33 +6927,33 @@
                     "signatures": [
                         {
                             "label": "Sync",
-                            "signature": "$client->locations()->getRegion($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $impersonateUserId = null, $includeAsns = null)"
+                            "signature": "$client->locations()->getRegion($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null, $impersonateUserId = null)"
                         }
                     ],
                     "variants": [
                         {
                             "name": "getRegionWithResponse",
-                            "signature": "$client->locations()->getRegionWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $impersonateUserId = null, $includeAsns = null): \\ProxyRequest\\ApiResponse",
+                            "signature": "$client->locations()->getRegionWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null, $impersonateUserId = null): \\ProxyRequest\\ApiResponse",
                             "description": "Returns an ApiResponse with decoded data and HTTP metadata."
                         },
                         {
                             "name": "getRegionWithHttpInfo",
-                            "signature": "$client->locations()->getRegionWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $impersonateUserId = null, $includeAsns = null)",
+                            "signature": "$client->locations()->getRegionWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null, $impersonateUserId = null)",
                             "description": "Returns the OpenAPI Generator response tuple."
                         },
                         {
                             "name": "getRegionAsync",
-                            "signature": "$client->locations()->getRegionAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $impersonateUserId = null, $includeAsns = null)",
+                            "signature": "$client->locations()->getRegionAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null, $impersonateUserId = null)",
                             "description": "Returns a Guzzle promise for the decoded result."
                         },
                         {
                             "name": "getRegionAsyncWithHttpInfo",
-                            "signature": "$client->locations()->getRegionAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $impersonateUserId = null, $includeAsns = null)",
+                            "signature": "$client->locations()->getRegionAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null, $impersonateUserId = null)",
                             "description": "Returns a Guzzle promise for the response tuple."
                         },
                         {
                             "name": "getRegionRequest",
-                            "signature": "$client->locations()->getRegionRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $impersonateUserId = null, $includeAsns = null)",
+                            "signature": "$client->locations()->getRegionRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null, $impersonateUserId = null)",
                             "description": "Builds the PSR-7 request without sending it."
                         }
                     ],
