@@ -167,7 +167,7 @@ class UsersResource
     /**
      * Operation addData
      *
-     * Add data to a sub-user order
+     * Add data to a managed user order
      *
      * @param  string $id A UUID string identifying this user. (required)
      * @param  \ProxyRequest\Dto\AddDataRequest $addDataRequest addDataRequest (required)
@@ -199,7 +199,7 @@ class UsersResource
     /**
      * Operation addDataWithHttpInfo
      *
-     * Add data to a sub-user order
+     * Add data to a managed user order
      *
      * @param  string $id A UUID string identifying this user. (required)
      * @param  \ProxyRequest\Dto\AddDataRequest $addDataRequest (required)
@@ -223,7 +223,7 @@ class UsersResource
     /**
      * Operation addDataAsync
      *
-     * Add data to a sub-user order
+     * Add data to a managed user order
      *
      * @param  string $id A UUID string identifying this user. (required)
      * @param  \ProxyRequest\Dto\AddDataRequest $addDataRequest (required)
@@ -248,7 +248,7 @@ class UsersResource
     /**
      * Operation addDataAsyncWithHttpInfo
      *
-     * Add data to a sub-user order
+     * Add data to a managed user order
      *
      * @param  string $id A UUID string identifying this user. (required)
      * @param  \ProxyRequest\Dto\AddDataRequest $addDataRequest (required)
@@ -2146,7 +2146,7 @@ class UsersResource
     /**
      * Operation subtractData
      *
-     * Subtract data from a sub-user order
+     * Subtract data from a managed user order
      *
      * @param  string $id A UUID string identifying this user. (required)
      * @param  \ProxyRequest\Dto\SubtractDataRequest $subtractDataRequest subtractDataRequest (required)
@@ -2178,7 +2178,7 @@ class UsersResource
     /**
      * Operation subtractDataWithHttpInfo
      *
-     * Subtract data from a sub-user order
+     * Subtract data from a managed user order
      *
      * @param  string $id A UUID string identifying this user. (required)
      * @param  \ProxyRequest\Dto\SubtractDataRequest $subtractDataRequest (required)
@@ -2202,7 +2202,7 @@ class UsersResource
     /**
      * Operation subtractDataAsync
      *
-     * Subtract data from a sub-user order
+     * Subtract data from a managed user order
      *
      * @param  string $id A UUID string identifying this user. (required)
      * @param  \ProxyRequest\Dto\SubtractDataRequest $subtractDataRequest (required)
@@ -2227,7 +2227,7 @@ class UsersResource
     /**
      * Operation subtractDataAsyncWithHttpInfo
      *
-     * Subtract data from a sub-user order
+     * Subtract data from a managed user order
      *
      * @param  string $id A UUID string identifying this user. (required)
      * @param  \ProxyRequest\Dto\SubtractDataRequest $subtractDataRequest (required)
