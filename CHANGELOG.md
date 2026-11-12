@@ -5,6 +5,13 @@ the package uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+
+## [4.4.1] - 2026-11-12
+
+- Document administrative traffic grants and debits for independent customers through the existing add/subtract methods. This capability requires the corresponding PapaProxy API update.
+- Refresh the bundled contract documentation while preserving request fields, response types and existing method signatures.
+- Synchronize the SDK version and User-Agent with this patch release.
+
 ## [4.4.0] - 2026-10-08
 
 - Add optional, per-call `impersonateUserId` to all generated resource operations. The SDK sends `X-Impersonate-User` only for that request, so one `Client` can make ordinary and impersonated calls safely.
