@@ -4,7 +4,7 @@
         "id": "php",
         "label": "PHP",
         "language": "PHP",
-        "version": "4.4.1",
+        "version": "4.4.2",
         "package": "proxyrequest/php-sdk",
         "runtime": "64-bit PHP 8.5 or later",
         "install": "composer require proxyrequest/php-sdk",
