@@ -156,6 +156,7 @@ docs/Model/PaginatedUserList.md
 docs/Model/PaginatedWebhookList.md
 docs/Model/PasswordRecoveryResponse.md
 docs/Model/PasswordResetInputRequest.md
+docs/Model/PasswordRotationStatusEnum.md
 docs/Model/PatchedCouponUpdateRequest.md
 docs/Model/PatchedEndpointUpdateRequest.md
 docs/Model/PatchedOrderAutoRenewalRequest.md
@@ -405,6 +406,7 @@ src/Dto/PaginatedUserList.php
 src/Dto/PaginatedWebhookList.php
 src/Dto/PasswordRecoveryResponse.php
 src/Dto/PasswordResetInputRequest.php
+src/Dto/PasswordRotationStatusEnum.php
 src/Dto/PatchedCouponUpdateRequest.php
 src/Dto/PatchedEndpointUpdateRequest.php
 src/Dto/PatchedOrderAutoRenewalRequest.php

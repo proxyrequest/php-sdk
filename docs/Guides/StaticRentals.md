@@ -85,3 +85,18 @@ $renewal = $orders->renew(
 ```
 
 Set `'allEndpoints' => true` in the request model to quote and renew the whole eligible rental. Calendar renewal settings use `getCalendarRenewal()` and `setCalendarRenewal()`. For a manual replacement, use `requestReplacement()`, poll `listReplacements()`, and refresh the resulting connection parameters.
+
+
+## Rotate credentials
+
+Check the endpoint's `rotate_password` capability. Select any endpoint in the credential group to rotate that group's password.
+
+```php
+$result = $client->orders()->resetProxyPasswordWithResponse($orderId, endpointId: $endpointId);
+if (202 === $result->statusCode) {
+    $endpoint = $client->staticProxies()->getEndpoint($endpointId);
+    $status = $endpoint->getPasswordRotationStatus();
+}
+```
+
+HTTP 200 confirms synchronous rotation. HTTP 202 queues a supplier request. Poll `getEndpoint()` until the status is `succeeded` and read the credentials again. A `failed` status ends the attempt. With `unknown`, the supplier result is still being reconciled. Omitting `endpointId` requests rotation for the order. If a provider cannot rotate ISP credentials, the API returns HTTP 400 with code `unsupported_operation`.

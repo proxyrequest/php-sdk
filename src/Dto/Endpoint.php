@@ -65,7 +65,8 @@ class Endpoint extends \ProxyRequest\Support\AdditionalProperties implements Mod
         'periods' => '\ProxyRequest\Dto\Period[]',
         'connections' => '\ProxyRequest\Dto\StaticConnection[]',
         'maxBandwidthMbps' => 'int',
-        'capabilities' => 'array<string,bool>'
+        'capabilities' => 'array<string,bool>',
+        'passwordRotationStatus' => 'string'
     ];
 
     /**
@@ -84,7 +85,8 @@ class Endpoint extends \ProxyRequest\Support\AdditionalProperties implements Mod
         'periods' => null,
         'connections' => null,
         'maxBandwidthMbps' => null,
-        'capabilities' => null
+        'capabilities' => null,
+        'passwordRotationStatus' => null
     ];
 
     /**
@@ -101,7 +103,8 @@ class Endpoint extends \ProxyRequest\Support\AdditionalProperties implements Mod
         'periods' => false,
         'connections' => false,
         'maxBandwidthMbps' => true,
-        'capabilities' => false
+        'capabilities' => false,
+        'passwordRotationStatus' => true
     ];
 
     /**
@@ -198,7 +201,8 @@ class Endpoint extends \ProxyRequest\Support\AdditionalProperties implements Mod
         'periods' => 'periods',
         'connections' => 'connections',
         'maxBandwidthMbps' => 'max_bandwidth_mbps',
-        'capabilities' => 'capabilities'
+        'capabilities' => 'capabilities',
+        'passwordRotationStatus' => 'password_rotation_status'
     ];
 
     /**
@@ -215,7 +219,8 @@ class Endpoint extends \ProxyRequest\Support\AdditionalProperties implements Mod
         'periods' => 'setPeriods',
         'connections' => 'setConnections',
         'maxBandwidthMbps' => 'setMaxBandwidthMbps',
-        'capabilities' => 'setCapabilities'
+        'capabilities' => 'setCapabilities',
+        'passwordRotationStatus' => 'setPasswordRotationStatus'
     ];
 
     /**
@@ -232,7 +237,8 @@ class Endpoint extends \ProxyRequest\Support\AdditionalProperties implements Mod
         'periods' => 'getPeriods',
         'connections' => 'getConnections',
         'maxBandwidthMbps' => 'getMaxBandwidthMbps',
-        'capabilities' => 'getCapabilities'
+        'capabilities' => 'getCapabilities',
+        'passwordRotationStatus' => 'getPasswordRotationStatus'
     ];
 
     /**
@@ -276,6 +282,29 @@ class Endpoint extends \ProxyRequest\Support\AdditionalProperties implements Mod
         return self::$openAPIModelName;
     }
 
+    public const PASSWORD_ROTATION_STATUS_PENDING = 'pending';
+    public const PASSWORD_ROTATION_STATUS_RUNNING = 'running';
+    public const PASSWORD_ROTATION_STATUS_UNKNOWN = 'unknown';
+    public const PASSWORD_ROTATION_STATUS_SUCCEEDED = 'succeeded';
+    public const PASSWORD_ROTATION_STATUS_FAILED = 'failed';
+    public const PASSWORD_ROTATION_STATUS_UNKNOWN_DEFAULT_OPEN_API = 'unknown_default_open_api';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getPasswordRotationStatusAllowableValues()
+    {
+        return [
+            self::PASSWORD_ROTATION_STATUS_PENDING,
+            self::PASSWORD_ROTATION_STATUS_RUNNING,
+            self::PASSWORD_ROTATION_STATUS_UNKNOWN,
+            self::PASSWORD_ROTATION_STATUS_SUCCEEDED,
+            self::PASSWORD_ROTATION_STATUS_FAILED,
+            self::PASSWORD_ROTATION_STATUS_UNKNOWN_DEFAULT_OPEN_API,
+        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -301,6 +330,7 @@ class Endpoint extends \ProxyRequest\Support\AdditionalProperties implements Mod
         $this->setIfExists('connections', $data ?? [], null);
         $this->setIfExists('maxBandwidthMbps', $data ?? [], null);
         $this->setIfExists('capabilities', $data ?? [], null);
+        $this->setIfExists('passwordRotationStatus', $data ?? [], null);
     }
 
     /**
@@ -356,6 +386,15 @@ class Endpoint extends \ProxyRequest\Support\AdditionalProperties implements Mod
         if ($this->container['capabilities'] === null) {
             $invalidProperties[] = "'capabilities' can't be null";
         }
+        $allowedValues = $this->getPasswordRotationStatusAllowableValues();
+        if (!is_null($this->container['passwordRotationStatus']) && !in_array($this->container['passwordRotationStatus'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'passwordRotationStatus', must be one of '%s'",
+                $this->container['passwordRotationStatus'],
+                implode("', '", $allowedValues)
+            );
+        }
+
         return $invalidProperties;
     }
 
@@ -625,6 +664,44 @@ class Endpoint extends \ProxyRequest\Support\AdditionalProperties implements Mod
             throw new \InvalidArgumentException('non-nullable capabilities cannot be null');
         }
         $this->container['capabilities'] = $capabilities;
+
+        return $this;
+    }
+
+    /**
+     * Gets passwordRotationStatus
+     *
+     * @return string|null
+     */
+    public function getPasswordRotationStatus()
+    {
+        return $this->container['passwordRotationStatus'];
+    }
+
+    /**
+     * Sets passwordRotationStatus
+     *
+     * @param string|null $passwordRotationStatus passwordRotationStatus
+     *
+     * @return self
+     */
+    public function setPasswordRotationStatus($passwordRotationStatus)
+    {
+        if (is_null($passwordRotationStatus)) {
+            array_push($this->openAPINullablesSetToNull, 'passwordRotationStatus');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('passwordRotationStatus', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $allowedValues = $this->getPasswordRotationStatusAllowableValues();
+        if (!is_null($passwordRotationStatus) && !in_array($passwordRotationStatus, $allowedValues, true)) {
+            $passwordRotationStatus = self::PASSWORD_ROTATION_STATUS_UNKNOWN_DEFAULT_OPEN_API;
+        }
+        $this->container['passwordRotationStatus'] = $passwordRotationStatus;
 
         return $this;
     }

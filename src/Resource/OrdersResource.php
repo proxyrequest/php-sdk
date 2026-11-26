@@ -4227,7 +4227,7 @@ class OrdersResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \ProxyRequest\Dto\ProxyPasswordResetResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     * @return \ProxyRequest\Dto\ProxyPasswordResetResponse|\ProxyRequest\Dto\ProxyPasswordResetResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
     public function resetPassword($resetPasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['resetPassword'][0], $impersonateUserId = null)
     {
@@ -4257,13 +4257,14 @@ class OrdersResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \ProxyRequest\Dto\ProxyPasswordResetResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ProxyRequest\Dto\ProxyPasswordResetResponse|\ProxyRequest\Dto\ProxyPasswordResetResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
     public function resetPasswordWithHttpInfo($resetPasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['resetPassword'][0], $impersonateUserId = null)
     {
         $request = $this->resetPasswordRequest($resetPasswordRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\ProxyPasswordResetResponse',
+  202 => '\\ProxyRequest\\Dto\\ProxyPasswordResetResponse',
 ));
     }
 
@@ -4308,6 +4309,7 @@ class OrdersResource
         $request = $this->resetPasswordRequest($resetPasswordRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\ProxyPasswordResetResponse',
+  202 => '\\ProxyRequest\\Dto\\ProxyPasswordResetResponse',
 ));
     }
 
@@ -4429,17 +4431,18 @@ class OrdersResource
      * Rotate the password for a static rental order
      *
      * @param  string $id id (required)
+     * @param  string|null $endpointId Select one credential group. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetProxyPassword'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \ProxyRequest\Dto\ProxyPasswordResetResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     * @return \ProxyRequest\Dto\ProxyPasswordResetResponse|\ProxyRequest\Dto\ProxyPasswordResetResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function resetProxyPassword($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null)
+    public function resetProxyPassword($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null, $endpointId = null)
     {
-        list($response) = $this->resetProxyPasswordWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId);
+        list($response) = $this->resetProxyPasswordWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId, $endpointId);
         return $response;
     }
 
@@ -4448,9 +4451,9 @@ class OrdersResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function resetProxyPasswordWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
+    public function resetProxyPasswordWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null, $endpointId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->resetProxyPasswordWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->resetProxyPasswordWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId, $endpointId));
     }
 
     /**
@@ -4459,19 +4462,21 @@ class OrdersResource
      * Rotate the password for a static rental order
      *
      * @param  string $id (required)
+     * @param  string|null $endpointId Select one credential group. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetProxyPassword'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \ProxyRequest\Dto\ProxyPasswordResetResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ProxyRequest\Dto\ProxyPasswordResetResponse|\ProxyRequest\Dto\ProxyPasswordResetResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function resetProxyPasswordWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null)
+    public function resetProxyPasswordWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null, $endpointId = null)
     {
-        $request = $this->resetProxyPasswordRequest($id, $acceptLanguage, $contentType, $impersonateUserId);
+        $request = $this->resetProxyPasswordRequest($id, $acceptLanguage, $contentType, $impersonateUserId, $endpointId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\ProxyPasswordResetResponse',
+  202 => '\\ProxyRequest\\Dto\\ProxyPasswordResetResponse',
 ));
     }
 
@@ -4481,6 +4486,7 @@ class OrdersResource
      * Rotate the password for a static rental order
      *
      * @param  string $id (required)
+     * @param  string|null $endpointId Select one credential group. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetProxyPassword'] to see the possible values for this operation
@@ -4488,9 +4494,9 @@ class OrdersResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function resetProxyPasswordAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null)
+    public function resetProxyPasswordAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null, $endpointId = null)
     {
-        return $this->resetProxyPasswordAsyncWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId)
+        return $this->resetProxyPasswordAsyncWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId, $endpointId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -4504,6 +4510,7 @@ class OrdersResource
      * Rotate the password for a static rental order
      *
      * @param  string $id (required)
+     * @param  string|null $endpointId Select one credential group. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetProxyPassword'] to see the possible values for this operation
@@ -4511,11 +4518,12 @@ class OrdersResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function resetProxyPasswordAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null)
+    public function resetProxyPasswordAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null, $endpointId = null)
     {
-        $request = $this->resetProxyPasswordRequest($id, $acceptLanguage, $contentType, $impersonateUserId);
+        $request = $this->resetProxyPasswordRequest($id, $acceptLanguage, $contentType, $impersonateUserId, $endpointId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\ProxyPasswordResetResponse',
+  202 => '\\ProxyRequest\\Dto\\ProxyPasswordResetResponse',
 ));
     }
 
@@ -4523,6 +4531,7 @@ class OrdersResource
      * Create request for operation 'resetProxyPassword'
      *
      * @param  string $id (required)
+     * @param  string|null $endpointId Select one credential group. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetProxyPassword'] to see the possible values for this operation
@@ -4530,7 +4539,7 @@ class OrdersResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function resetProxyPasswordRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null)
+    public function resetProxyPasswordRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null, $endpointId = null)
     {
 
         // verify the required parameter 'id' is set
@@ -4543,6 +4552,7 @@ class OrdersResource
 
 
 
+
         $resourcePath = '/orders/{id}/proxy-password/reset';
         $formParams = [];
         $queryParams = [];
@@ -4550,6 +4560,15 @@ class OrdersResource
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $endpointId,
+            'endpoint_id', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
 
         // header params
         if ($acceptLanguage !== null) {

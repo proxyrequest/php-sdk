@@ -1334,12 +1334,12 @@ try {
 ## `resetProxyPassword()`
 
 ```php
-resetProxyPassword($id, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\ProxyPasswordResetResponse
+resetProxyPassword($id, $acceptLanguage, impersonateUserId: $xImpersonateUser, endpointId: $endpointId): \ProxyRequest\Dto\ProxyPasswordResetResponse
 ```
 
 Rotate the password for a static rental order
 
-Rotate the password for an owned static rental order. Read the rental again to obtain the new credentials.
+Rotate all supported credentials in the order, or select the shared credential group of one endpoint. Supplier resets return 202. Poll the endpoint password_rotation_status and read the new credentials after success.
 
 ### Example
 
@@ -1364,11 +1364,12 @@ $apiInstance = new ProxyRequest\Api\OrdersResource(
     $config
 );
 $id = 'id_example'; // string
+$endpointId = 'endpointId_example'; // string | Select one credential group.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 $xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $result = $apiInstance->resetProxyPassword($id, $acceptLanguage, $xImpersonateUser);
+    $result = $apiInstance->resetProxyPassword($id, $acceptLanguage, impersonateUserId: $xImpersonateUser, endpointId: $endpointId);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling OrdersResource->resetProxyPassword: ', $e->getMessage(), PHP_EOL;
@@ -1380,6 +1381,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**|  | |
+| **endpointId** | **string**| Select one credential group. | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 | **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
 

@@ -78,6 +78,31 @@ final class StaticRentalsTest extends TestCase
         self::assertSame(['order_id' => 'order-1'], json_decode((string) $request->getBody(), true));
     }
 
+    public function testRotateAnEndpointCredentialGroupAndReadItsStatus(): void
+    {
+        $mock = new MockHandler([
+            new Response(200, [], '{"success":true,"message":"Password reset successfully."}'),
+            new Response(202, [], '{"success":true,"message":"Password rotation queued."}'),
+            new Response(200, [], '{"id":"endpoint-1","password_rotation_status":"succeeded"}'),
+        ]);
+        $client = self::client(HandlerStack::create($mock));
+        $orders = $client->orders();
+
+        $done = $orders->resetProxyPassword('order-1', 'fr', 'application/json', 'user-1');
+        self::assertTrue($done->getSuccess());
+        self::assertSame('', $mock->getLastRequest()->getUri()->getQuery());
+        self::assertSame('fr', $mock->getLastRequest()->getHeaderLine('Accept-Language'));
+        self::assertSame('user-1', $mock->getLastRequest()->getHeaderLine('X-Impersonate-User'));
+
+        $queued = $orders->resetProxyPasswordWithResponse('order-1', endpointId: 'endpoint-1');
+        self::assertSame(202, $queued->statusCode);
+        self::assertTrue($queued->data->getSuccess());
+        self::assertSame('endpoint_id=endpoint-1', $mock->getLastRequest()->getUri()->getQuery());
+
+        $endpoint = $client->staticProxies()->getEndpointAsync('endpoint-1')->wait();
+        self::assertSame('succeeded', $endpoint->getPasswordRotationStatus());
+    }
+
     private static function client(HandlerStack $stack): Client
     {
         return Client::builder()->withApiKey('key')->withHttpClient(new GuzzleClient(['handler' => $stack]))->build();

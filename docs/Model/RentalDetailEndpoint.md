@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **connections** | [**\ProxyRequest\Dto\StaticConnection[]**](StaticConnection.md) |  | [readonly]
 **maxBandwidthMbps** | **int** |  | [readonly]
 **capabilities** | **array<string,bool>** |  | [readonly]
+**passwordRotationStatus** | **string** |  | [optional]
 **groupId** | **string** |  |
 **groupSize** | **int** |  |
 **renewable** | **bool** |  |

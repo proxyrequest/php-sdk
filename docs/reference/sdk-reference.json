@@ -9,16 +9,16 @@
         "runtime": "64-bit PHP 8.5 or later",
         "install": "composer require proxyrequest/php-sdk",
         "openapi": {
-            "commit": "70b94205a9fb50325b5e1e949c136330c1b75fa6",
+            "commit": "1d36b7a78ef677ad1b67d674505119758627e9fc",
             "excludedOperations": [
                 "sessions_destroy",
                 "sessions_list"
             ],
             "repository": "papaproxy/api",
-            "sha256": "160e8dae93a72e35fb734b681bd8b91c65c7880cae99d9bc1e08e43c04fcf3bc",
+            "sha256": "ac6996101a9cb8a3b9a02c848a6903413a854a53647abfceaa538d4aa797b59c",
             "source": "openapi.yml",
             "operations": 125,
-            "schemas": 234
+            "schemas": 235
         }
     },
     "setup": [
@@ -10571,43 +10571,54 @@
                     "operationId": "orders_proxy_password_reset_create",
                     "name": "resetProxyPassword",
                     "summary": "Rotate the password for a static rental order",
-                    "description": "Rotate the password for an owned static rental order. Read the rental again to obtain the new credentials.",
+                    "description": "Rotate all supported credentials in the order, or select the shared credential group of one endpoint. Supplier resets return 202. Poll the endpoint password_rotation_status and read the new credentials after success.",
                     "httpMethod": "POST",
                     "path": "/orders/{id}/proxy-password/reset",
                     "signatures": [
                         {
                             "label": "Sync",
-                            "signature": "$client->orders()->resetProxyPassword($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null)"
+                            "signature": "$client->orders()->resetProxyPassword($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null, $endpointId = null)"
                         }
                     ],
                     "variants": [
                         {
                             "name": "resetProxyPasswordWithResponse",
-                            "signature": "$client->orders()->resetProxyPasswordWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null): \\ProxyRequest\\ApiResponse",
+                            "signature": "$client->orders()->resetProxyPasswordWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null, $endpointId = null): \\ProxyRequest\\ApiResponse",
                             "description": "Returns an ApiResponse with decoded data and HTTP metadata."
                         },
                         {
                             "name": "resetProxyPasswordWithHttpInfo",
-                            "signature": "$client->orders()->resetProxyPasswordWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null)",
+                            "signature": "$client->orders()->resetProxyPasswordWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null, $endpointId = null)",
                             "description": "Returns the OpenAPI Generator response tuple."
                         },
                         {
                             "name": "resetProxyPasswordAsync",
-                            "signature": "$client->orders()->resetProxyPasswordAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null)",
+                            "signature": "$client->orders()->resetProxyPasswordAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null, $endpointId = null)",
                             "description": "Returns a Guzzle promise for the decoded result."
                         },
                         {
                             "name": "resetProxyPasswordAsyncWithHttpInfo",
-                            "signature": "$client->orders()->resetProxyPasswordAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null)",
+                            "signature": "$client->orders()->resetProxyPasswordAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null, $endpointId = null)",
                             "description": "Returns a Guzzle promise for the response tuple."
                         },
                         {
                             "name": "resetProxyPasswordRequest",
-                            "signature": "$client->orders()->resetProxyPasswordRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null)",
+                            "signature": "$client->orders()->resetProxyPasswordRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null, $endpointId = null)",
                             "description": "Builds the PSR-7 request without sending it."
                         }
                     ],
                     "parameters": [
+                        {
+                            "name": "endpointId",
+                            "wireName": "endpoint_id",
+                            "in": "query",
+                            "required": false,
+                            "type": "string",
+                            "default": null,
+                            "description": "Select one credential group.",
+                            "example": "550e8400-e29b-41d4-a716-446655440000",
+                            "modelRefs": []
+                        },
                         {
                             "name": "id",
                             "wireName": "id",
@@ -22292,6 +22303,16 @@
                     "description": "| [readonly]",
                     "enum": null,
                     "modelRefs": []
+                },
+                {
+                    "name": "passwordRotationStatus",
+                    "wireName": "passwordRotationStatus",
+                    "type": "string",
+                    "required": true,
+                    "default": null,
+                    "description": "| [optional]",
+                    "enum": null,
+                    "modelRefs": []
                 }
             ]
         },
@@ -28406,6 +28427,12 @@
             ]
         },
         {
+            "name": "PasswordRotationStatusEnum",
+            "kind": "enum",
+            "description": "* `pending` - pending * `running` - running * `unknown` - unknown * `succeeded` - succeeded * `failed` - failed",
+            "fields": []
+        },
+        {
             "name": "PatchedCouponUpdateRequest",
             "kind": "class",
             "description": "",
@@ -30963,6 +30990,16 @@
                     "required": true,
                     "default": null,
                     "description": "| [readonly]",
+                    "enum": null,
+                    "modelRefs": []
+                },
+                {
+                    "name": "passwordRotationStatus",
+                    "wireName": "passwordRotationStatus",
+                    "type": "string",
+                    "required": true,
+                    "default": null,
+                    "description": "| [optional]",
                     "enum": null,
                     "modelRefs": []
                 },

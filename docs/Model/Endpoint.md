@@ -13,5 +13,6 @@ Name | Type | Description | Notes
 **connections** | [**\ProxyRequest\Dto\StaticConnection[]**](StaticConnection.md) |  | [readonly]
 **maxBandwidthMbps** | **int** |  | [readonly]
 **capabilities** | **array<string,bool>** |  | [readonly]
+**passwordRotationStatus** | **string** |  | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

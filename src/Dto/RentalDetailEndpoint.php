@@ -66,6 +66,7 @@ class RentalDetailEndpoint extends \ProxyRequest\Support\AdditionalProperties im
         'connections' => '\ProxyRequest\Dto\StaticConnection[]',
         'maxBandwidthMbps' => 'int',
         'capabilities' => 'array<string,bool>',
+        'passwordRotationStatus' => 'string',
         'groupId' => 'string',
         'groupSize' => 'int',
         'renewable' => 'bool',
@@ -89,6 +90,7 @@ class RentalDetailEndpoint extends \ProxyRequest\Support\AdditionalProperties im
         'connections' => null,
         'maxBandwidthMbps' => null,
         'capabilities' => null,
+        'passwordRotationStatus' => null,
         'groupId' => 'uuid',
         'groupSize' => null,
         'renewable' => null,
@@ -110,6 +112,7 @@ class RentalDetailEndpoint extends \ProxyRequest\Support\AdditionalProperties im
         'connections' => false,
         'maxBandwidthMbps' => true,
         'capabilities' => false,
+        'passwordRotationStatus' => true,
         'groupId' => true,
         'groupSize' => false,
         'renewable' => false,
@@ -211,6 +214,7 @@ class RentalDetailEndpoint extends \ProxyRequest\Support\AdditionalProperties im
         'connections' => 'connections',
         'maxBandwidthMbps' => 'max_bandwidth_mbps',
         'capabilities' => 'capabilities',
+        'passwordRotationStatus' => 'password_rotation_status',
         'groupId' => 'group_id',
         'groupSize' => 'group_size',
         'renewable' => 'renewable',
@@ -232,6 +236,7 @@ class RentalDetailEndpoint extends \ProxyRequest\Support\AdditionalProperties im
         'connections' => 'setConnections',
         'maxBandwidthMbps' => 'setMaxBandwidthMbps',
         'capabilities' => 'setCapabilities',
+        'passwordRotationStatus' => 'setPasswordRotationStatus',
         'groupId' => 'setGroupId',
         'groupSize' => 'setGroupSize',
         'renewable' => 'setRenewable',
@@ -253,6 +258,7 @@ class RentalDetailEndpoint extends \ProxyRequest\Support\AdditionalProperties im
         'connections' => 'getConnections',
         'maxBandwidthMbps' => 'getMaxBandwidthMbps',
         'capabilities' => 'getCapabilities',
+        'passwordRotationStatus' => 'getPasswordRotationStatus',
         'groupId' => 'getGroupId',
         'groupSize' => 'getGroupSize',
         'renewable' => 'getRenewable',
@@ -300,6 +306,29 @@ class RentalDetailEndpoint extends \ProxyRequest\Support\AdditionalProperties im
         return self::$openAPIModelName;
     }
 
+    public const PASSWORD_ROTATION_STATUS_PENDING = 'pending';
+    public const PASSWORD_ROTATION_STATUS_RUNNING = 'running';
+    public const PASSWORD_ROTATION_STATUS_UNKNOWN = 'unknown';
+    public const PASSWORD_ROTATION_STATUS_SUCCEEDED = 'succeeded';
+    public const PASSWORD_ROTATION_STATUS_FAILED = 'failed';
+    public const PASSWORD_ROTATION_STATUS_UNKNOWN_DEFAULT_OPEN_API = 'unknown_default_open_api';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getPasswordRotationStatusAllowableValues()
+    {
+        return [
+            self::PASSWORD_ROTATION_STATUS_PENDING,
+            self::PASSWORD_ROTATION_STATUS_RUNNING,
+            self::PASSWORD_ROTATION_STATUS_UNKNOWN,
+            self::PASSWORD_ROTATION_STATUS_SUCCEEDED,
+            self::PASSWORD_ROTATION_STATUS_FAILED,
+            self::PASSWORD_ROTATION_STATUS_UNKNOWN_DEFAULT_OPEN_API,
+        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -325,6 +354,7 @@ class RentalDetailEndpoint extends \ProxyRequest\Support\AdditionalProperties im
         $this->setIfExists('connections', $data ?? [], null);
         $this->setIfExists('maxBandwidthMbps', $data ?? [], null);
         $this->setIfExists('capabilities', $data ?? [], null);
+        $this->setIfExists('passwordRotationStatus', $data ?? [], null);
         $this->setIfExists('groupId', $data ?? [], null);
         $this->setIfExists('groupSize', $data ?? [], null);
         $this->setIfExists('renewable', $data ?? [], null);
@@ -384,6 +414,15 @@ class RentalDetailEndpoint extends \ProxyRequest\Support\AdditionalProperties im
         if ($this->container['capabilities'] === null) {
             $invalidProperties[] = "'capabilities' can't be null";
         }
+        $allowedValues = $this->getPasswordRotationStatusAllowableValues();
+        if (!is_null($this->container['passwordRotationStatus']) && !in_array($this->container['passwordRotationStatus'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'passwordRotationStatus', must be one of '%s'",
+                $this->container['passwordRotationStatus'],
+                implode("', '", $allowedValues)
+            );
+        }
+
         if ($this->container['groupId'] === null && !$this->isNullableSetToNull('groupId')) {
             $invalidProperties[] = "'groupId' is required";
         }
@@ -669,6 +708,44 @@ class RentalDetailEndpoint extends \ProxyRequest\Support\AdditionalProperties im
             throw new \InvalidArgumentException('non-nullable capabilities cannot be null');
         }
         $this->container['capabilities'] = $capabilities;
+
+        return $this;
+    }
+
+    /**
+     * Gets passwordRotationStatus
+     *
+     * @return string|null
+     */
+    public function getPasswordRotationStatus()
+    {
+        return $this->container['passwordRotationStatus'];
+    }
+
+    /**
+     * Sets passwordRotationStatus
+     *
+     * @param string|null $passwordRotationStatus passwordRotationStatus
+     *
+     * @return self
+     */
+    public function setPasswordRotationStatus($passwordRotationStatus)
+    {
+        if (is_null($passwordRotationStatus)) {
+            array_push($this->openAPINullablesSetToNull, 'passwordRotationStatus');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('passwordRotationStatus', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $allowedValues = $this->getPasswordRotationStatusAllowableValues();
+        if (!is_null($passwordRotationStatus) && !in_array($passwordRotationStatus, $allowedValues, true)) {
+            $passwordRotationStatus = self::PASSWORD_ROTATION_STATUS_UNKNOWN_DEFAULT_OPEN_API;
+        }
+        $this->container['passwordRotationStatus'] = $passwordRotationStatus;
 
         return $this;
     }
