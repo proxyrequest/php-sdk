@@ -57,7 +57,7 @@ class SocialAccountState extends \ProxyRequest\Support\AdditionalProperties impl
      * @var string[]
      */
     protected static $openAPITypes = [
-        'provider' => '\ProxyRequest\Dto\ProviderEnum',
+        'provider' => '\ProxyRequest\Dto\SocialAccountStateProviderEnum',
         'linked' => 'bool',
         'canUnlink' => 'bool',
         'unlinkBlockReason' => 'string'
@@ -325,7 +325,7 @@ class SocialAccountState extends \ProxyRequest\Support\AdditionalProperties impl
     /**
      * Gets provider
      *
-     * @return \ProxyRequest\Dto\ProviderEnum
+     * @return \ProxyRequest\Dto\SocialAccountStateProviderEnum
      */
     public function getProvider()
     {
@@ -335,7 +335,7 @@ class SocialAccountState extends \ProxyRequest\Support\AdditionalProperties impl
     /**
      * Sets provider
      *
-     * @param \ProxyRequest\Dto\ProviderEnum $provider provider
+     * @param \ProxyRequest\Dto\SocialAccountStateProviderEnum $provider provider
      *
      * @return self
      */

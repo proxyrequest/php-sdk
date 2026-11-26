@@ -13,6 +13,7 @@ use ProxyRequest\Resource\APIKeysResource;
 use ProxyRequest\Resource\AuthorizationResource;
 use ProxyRequest\Resource\CouponsResource;
 use ProxyRequest\Resource\InvoicesResource;
+use ProxyRequest\Resource\KYCResource;
 use ProxyRequest\Resource\LocationsResource;
 use ProxyRequest\Resource\NewsResource;
 use ProxyRequest\Resource\OrdersResource;
@@ -22,6 +23,7 @@ use ProxyRequest\Resource\ProvidersResource;
 use ProxyRequest\Resource\ProxiesResource;
 use ProxyRequest\Resource\RewardsResource;
 use ProxyRequest\Resource\SettingsResource;
+use ProxyRequest\Resource\StaticProxiesResource;
 use ProxyRequest\Resource\TelegramDashboardResource;
 use ProxyRequest\Resource\UsersResource;
 use ProxyRequest\Resource\WebhooksResource;
@@ -103,6 +105,16 @@ final class Client
     public function news(): NewsResource
     {
         return $this->resource(NewsResource::class);
+    }
+
+    public function kyc(): KYCResource
+    {
+        return $this->resource(KYCResource::class);
+    }
+
+    public function staticProxies(): StaticProxiesResource
+    {
+        return $this->resource(StaticProxiesResource::class);
     }
 
     public function orders(): OrdersResource

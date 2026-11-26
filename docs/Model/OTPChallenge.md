@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**status** | **string** |  |
+**status** | [**\ProxyRequest\Dto\OTPChallengeStatusEnum**](OTPChallengeStatusEnum.md) |  |
 **challenge** | **string** |  |
 **expiresIn** | **int** |  |
 

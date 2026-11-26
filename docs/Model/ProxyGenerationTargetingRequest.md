@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **country** | **string** | Target country code. | [optional]
 **region** | **string** | Target region or state code. | [optional]
 **city** | **string** | Target city code. | [optional]
+**zip** | **string** | Postal code; requires a concrete country. Leading zeros are preserved. | [optional]
 **pool** | **string** | Proxy pool identifier. | [optional]
 **asn** | **int** | Target autonomous system number. | [optional]
 **isp** | **string** | Target internet service provider. | [optional]

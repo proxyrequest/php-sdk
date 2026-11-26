@@ -24,7 +24,11 @@ foreach ($document['paths'] ?? [] as $path => $pathItem) {
             if ('header' === ($parameter['in'] ?? null) && 'Idempotency-Key' === ($parameter['name'] ?? null)) {
                 $pattern = preg_quote((string) $path, '#');
                 $pattern = preg_replace('/\\\\\{[^}]+\\\\\}/', '[^/]+', $pattern);
-                $routes[] = [strtoupper($method), '#^' . $pattern . '$#D'];
+                $body = $operation['requestBody']['content']['application/json']['schema'] ?? [];
+                if (isset($body['$ref'])) {
+                    $body = $document['components']['schemas'][basename($body['$ref'])] ?? [];
+                }
+                $routes[] = [strtoupper($method), '#^' . $pattern . '$#D', isset($body['properties']['idempotency_key'])];
                 break;
             }
         }
@@ -32,7 +36,12 @@ foreach ($document['paths'] ?? [] as $path => $pathItem) {
 }
 
 $entries = implode(",\n", array_map(
-    static fn(array $route): string => \sprintf("        [%s, %s]", var_export($route[0], true), var_export($route[1], true)),
+    static fn(array $route): string => \sprintf(
+        "        [%s, %s, %s]",
+        var_export($route[0], true),
+        var_export($route[1], true),
+        var_export($route[2], true),
+    ),
     $routes,
 ));
 $source = <<<PHP
@@ -53,18 +62,28 @@ $source = <<<PHP
 
         public static function supports(RequestInterface \$request, string \$basePath): bool
         {
+            return self::match(\$request, \$basePath) !== null;
+        }
+
+        public static function acceptsBodyKey(RequestInterface \$request, string \$basePath): bool
+        {
+            return self::match(\$request, \$basePath) === true;
+        }
+
+        private static function match(RequestInterface \$request, string \$basePath): ?bool
+        {
             \$path = \$request->getUri()->getPath();
             if ('' !== \$basePath && str_starts_with(\$path, \$basePath)) {
                 \$path = substr(\$path, strlen(\$basePath));
             }
             \$path = '/' . ltrim(\$path, '/');
-            foreach (self::ROUTES as [\$method, \$pattern]) {
+            foreach (self::ROUTES as [\$method, \$pattern, \$acceptsBodyKey]) {
                 if (\$method === strtoupper(\$request->getMethod()) && 1 === preg_match(\$pattern, \$path)) {
-                    return true;
+                    return \$acceptsBodyKey;
                 }
             }
 
-            return false;
+            return null;
         }
     }
     PHP;

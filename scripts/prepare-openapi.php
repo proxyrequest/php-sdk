@@ -31,9 +31,36 @@ foreach ($compatibility->schemas as $name => $legacy) {
     $current->properties = (object) array_merge((array) ($legacy->properties ?? []), (array) ($current->properties ?? []));
     $current->required = array_values(array_intersect($current->required ?? [], $legacy->required ?? []));
 }
+$schemas = $document->components->schemas;
+foreach ($compatibility->optionalProperties ?? [] as $name => $properties) {
+    $schema = $schemas->{$name};
+    $schema->required = array_values(array_diff($schema->required ?? [], $properties));
+}
+if (isset($schemas->PasswordResetInputRequest, $schemas->ProxyPasswordResetRequestRequest)) {
+    // Preserve the original order-id model and name the account reset DTO separately.
+    $schemas->AccountPasswordResetRequest = $schemas->ResetPasswordRequest;
+    $schemas->ResetPasswordRequest = clone $schemas->ProxyPasswordResetRequestRequest;
+    foreach ($schemas->PasswordResetInputRequest->oneOf as $variant) {
+        if ('#/components/schemas/ResetPasswordRequest' === $variant->{'$ref'}) {
+            $variant->{'$ref'} = '#/components/schemas/AccountPasswordResetRequest';
+        }
+    }
+    $operation = $document->paths->{'/reset-password'}->post;
+    $operation->requestBody->required = true;
+    foreach ($operation->requestBody->content as $variant) {
+        $variant->schema->{'$ref'} = '#/components/schemas/ResetPasswordRequest';
+    }
+}
 $excluded = ['sessions_destroy', 'sessions_list'];
 $methods = ['get', 'post', 'put', 'patch', 'delete', 'head', 'options', 'trace'];
 $seen = [];
+$legacyMfaModels = [
+    'login_otp_create' => ['VerifyOTPRequest', 'TokenPairResponse'],
+    'profile_2fa_confirm_create' => ['TwoFactorConfirmRequest', 'EnabledResponse'],
+    'profile_2fa_disable_create' => ['TwoFactorDisableRequest', 'EnabledResponse'],
+    'profile_2fa_setup_create' => ['TwoFactorSetupRequestRequest', 'TwoFactorSetupResponse'],
+    'profile_2fa_status_retrieve' => [null, 'EnabledResponse'],
+];
 foreach ($document->paths as $path => $item) {
     foreach ($methods as $method) {
         if (!isset($item->{$method})) {
@@ -44,6 +71,19 @@ foreach ($document->paths as $path => $item) {
             throw new RuntimeException('Missing or duplicate operationId: ' . (string) $id);
         }
         $seen[$id] = true;
+        if (($item->{$method}->tags ?? []) === ['MFA']) {
+            $item->{$method}->tags = ['login_otp_create' === $id ? 'Authorization' : 'Profile'];
+        }
+        if (isset($legacyMfaModels[$id])) {
+            [$requestModel, $responseModel] = $legacyMfaModels[$id];
+            if (null !== $requestModel) {
+                $item->{$method}->requestBody->required = true;
+                foreach ($item->{$method}->requestBody->content as $variant) {
+                    $variant->schema->{'$ref'} = '#/components/schemas/' . $requestModel;
+                }
+            }
+            $item->{$method}->responses->{'200'}->content->{'application/json'}->schema->{'$ref'} = '#/components/schemas/' . $responseModel;
+        }
         if (\in_array($id, $excluded, true)) {
             unset($item->{$method});
             continue;

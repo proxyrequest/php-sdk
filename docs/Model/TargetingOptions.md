@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **country** | **string** |  |
 **region** | **string** |  |
 **city** | **string** |  |
+**zip** | **string** |  | [optional]
 **asn** | **string** |  |
 **isp** | **string** |  |
 **username** | **string** |  |

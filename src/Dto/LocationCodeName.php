@@ -57,6 +57,7 @@ class LocationCodeName extends \ProxyRequest\Support\AdditionalProperties implem
      * @var string[]
      */
     protected static $openAPITypes = [
+        'count' => 'int',
         'code' => 'string',
         'name' => 'string'
     ];
@@ -69,6 +70,7 @@ class LocationCodeName extends \ProxyRequest\Support\AdditionalProperties implem
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
+        'count' => null,
         'code' => null,
         'name' => null
     ];
@@ -79,6 +81,7 @@ class LocationCodeName extends \ProxyRequest\Support\AdditionalProperties implem
      * @var boolean[]
      */
     protected static array $openAPINullables = [
+        'count' => false,
         'code' => false,
         'name' => false
     ];
@@ -169,6 +172,7 @@ class LocationCodeName extends \ProxyRequest\Support\AdditionalProperties implem
      * @var string[]
      */
     protected static $attributeMap = [
+        'count' => 'count',
         'code' => 'code',
         'name' => 'name'
     ];
@@ -179,6 +183,7 @@ class LocationCodeName extends \ProxyRequest\Support\AdditionalProperties implem
      * @var string[]
      */
     protected static $setters = [
+        'count' => 'setCount',
         'code' => 'setCode',
         'name' => 'setName'
     ];
@@ -189,6 +194,7 @@ class LocationCodeName extends \ProxyRequest\Support\AdditionalProperties implem
      * @var string[]
      */
     protected static $getters = [
+        'count' => 'getCount',
         'code' => 'getCode',
         'name' => 'getName'
     ];
@@ -250,6 +256,7 @@ class LocationCodeName extends \ProxyRequest\Support\AdditionalProperties implem
      */
     public function __construct(?array $data = null)
     {
+        $this->setIfExists('count', $data ?? [], null);
         $this->setIfExists('code', $data ?? [], null);
         $this->setIfExists('name', $data ?? [], null);
     }
@@ -281,6 +288,10 @@ class LocationCodeName extends \ProxyRequest\Support\AdditionalProperties implem
     {
         $invalidProperties = [];
 
+        if (!is_null($this->container['count']) && ($this->container['count'] < 0)) {
+            $invalidProperties[] = "invalid value for 'count', must be bigger than or equal to 0.";
+        }
+
         if ($this->container['code'] === null) {
             $invalidProperties[] = "'code' can't be null";
         }
@@ -301,6 +312,38 @@ class LocationCodeName extends \ProxyRequest\Support\AdditionalProperties implem
         return count($this->listInvalidProperties()) === 0;
     }
 
+
+    /**
+     * Gets count
+     *
+     * @return int|null
+     */
+    public function getCount()
+    {
+        return $this->container['count'];
+    }
+
+    /**
+     * Sets count
+     *
+     * @param int|null $count Node count in Rust search mode; unknown quantities are zero.
+     *
+     * @return self
+     */
+    public function setCount($count)
+    {
+        if (is_null($count)) {
+            throw new \InvalidArgumentException('non-nullable count cannot be null');
+        }
+
+        if (($count < 0)) {
+            throw new \InvalidArgumentException('invalid value for $count when calling LocationCodeName., must be bigger than or equal to 0.');
+        }
+
+        $this->container['count'] = $count;
+
+        return $this;
+    }
 
     /**
      * Gets code

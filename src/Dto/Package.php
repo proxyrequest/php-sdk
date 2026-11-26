@@ -73,6 +73,7 @@ class Package extends \ProxyRequest\Support\AdditionalProperties implements Mode
         'pricingUnit' => '\ProxyRequest\Dto\PricingUnitEnum',
         'billingCycle' => 'int',
         'billingModel' => 'array<string,mixed>',
+        'bandwidthPlans' => '\ProxyRequest\Dto\BandwidthPlan[]',
         'isUnlimitedData' => 'bool',
         'billingUnlimited' => 'int',
         'priceRequiresConfiguration' => 'bool',
@@ -105,6 +106,7 @@ class Package extends \ProxyRequest\Support\AdditionalProperties implements Mode
         'pricingUnit' => null,
         'billingCycle' => null,
         'billingModel' => null,
+        'bandwidthPlans' => null,
         'isUnlimitedData' => null,
         'billingUnlimited' => null,
         'priceRequiresConfiguration' => null,
@@ -135,6 +137,7 @@ class Package extends \ProxyRequest\Support\AdditionalProperties implements Mode
         'pricingUnit' => false,
         'billingCycle' => false,
         'billingModel' => false,
+        'bandwidthPlans' => false,
         'isUnlimitedData' => false,
         'billingUnlimited' => false,
         'priceRequiresConfiguration' => false,
@@ -245,6 +248,7 @@ class Package extends \ProxyRequest\Support\AdditionalProperties implements Mode
         'pricingUnit' => 'pricing_unit',
         'billingCycle' => 'billing_cycle',
         'billingModel' => 'billing_model',
+        'bandwidthPlans' => 'bandwidth_plans',
         'isUnlimitedData' => 'is_unlimited_data',
         'billingUnlimited' => 'billing_unlimited',
         'priceRequiresConfiguration' => 'price_requires_configuration',
@@ -275,6 +279,7 @@ class Package extends \ProxyRequest\Support\AdditionalProperties implements Mode
         'pricingUnit' => 'setPricingUnit',
         'billingCycle' => 'setBillingCycle',
         'billingModel' => 'setBillingModel',
+        'bandwidthPlans' => 'setBandwidthPlans',
         'isUnlimitedData' => 'setIsUnlimitedData',
         'billingUnlimited' => 'setBillingUnlimited',
         'priceRequiresConfiguration' => 'setPriceRequiresConfiguration',
@@ -305,6 +310,7 @@ class Package extends \ProxyRequest\Support\AdditionalProperties implements Mode
         'pricingUnit' => 'getPricingUnit',
         'billingCycle' => 'getBillingCycle',
         'billingModel' => 'getBillingModel',
+        'bandwidthPlans' => 'getBandwidthPlans',
         'isUnlimitedData' => 'getIsUnlimitedData',
         'billingUnlimited' => 'getBillingUnlimited',
         'priceRequiresConfiguration' => 'getPriceRequiresConfiguration',
@@ -386,6 +392,7 @@ class Package extends \ProxyRequest\Support\AdditionalProperties implements Mode
         $this->setIfExists('pricingUnit', $data ?? [], null);
         $this->setIfExists('billingCycle', $data ?? [], null);
         $this->setIfExists('billingModel', $data ?? [], null);
+        $this->setIfExists('bandwidthPlans', $data ?? [], null);
         $this->setIfExists('isUnlimitedData', $data ?? [], null);
         $this->setIfExists('billingUnlimited', $data ?? [], null);
         $this->setIfExists('priceRequiresConfiguration', $data ?? [], null);
@@ -875,7 +882,7 @@ class Package extends \ProxyRequest\Support\AdditionalProperties implements Mode
     /**
      * Sets pricing
      *
-     * @param \ProxyRequest\Dto\PricingEnum|null $pricing Pricing model applied when customers purchase data on this package. Fixed a fixed price per data amount — 10 GB for $10, 50 GB for $50 Range tiered pricing where the unit price decreases as quantity increases * `fixed` - Fixed * `range` - Range
+     * @param \ProxyRequest\Dto\PricingEnum|null $pricing Pricing model applied when customers purchase data on this package. Fixed a fixed price per data amount — 10 GB for $10, 50 GB for $50 Range tiered pricing where the unit price decreases as quantity increases * `fixed` - Fixed * `range` - Range * `bandwidth` - Bandwidth
      *
      * @return self
      */
@@ -974,6 +981,33 @@ class Package extends \ProxyRequest\Support\AdditionalProperties implements Mode
             throw new \InvalidArgumentException('non-nullable billingModel cannot be null');
         }
         $this->container['billingModel'] = $billingModel;
+
+        return $this;
+    }
+
+    /**
+     * Gets bandwidthPlans
+     *
+     * @return \ProxyRequest\Dto\BandwidthPlan[]|null
+     */
+    public function getBandwidthPlans()
+    {
+        return $this->container['bandwidthPlans'];
+    }
+
+    /**
+     * Sets bandwidthPlans
+     *
+     * @param \ProxyRequest\Dto\BandwidthPlan[]|null $bandwidthPlans bandwidthPlans
+     *
+     * @return self
+     */
+    public function setBandwidthPlans($bandwidthPlans)
+    {
+        if (is_null($bandwidthPlans)) {
+            throw new \InvalidArgumentException('non-nullable bandwidthPlans cannot be null');
+        }
+        $this->container['bandwidthPlans'] = $bandwidthPlans;
 
         return $this;
     }

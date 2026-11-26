@@ -5,6 +5,10 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **string** |  | [optional]
+**connectionLimit** | **int** |  | [optional] [readonly]
+**speedLimit** | **int** | Bandwidth cap in Mbit/s applied across all connections for a user on this package. Set to 0 for unlimited. | [optional]
+**fulfillmentKind** | **string** |  | [optional] [readonly]
+**rentalStatus** | **string** |  | [optional] [readonly]
 **package** | [**\ProxyRequest\Dto\PackageShort**](PackageShort.md) |  |
 **isActive** | **bool** | When enabled, the customer can actively use proxies on this order. Disable to suspend access without deleting the order. | [optional]
 **isAutoRenewal** | **bool** |  | [readonly]

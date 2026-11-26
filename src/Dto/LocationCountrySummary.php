@@ -57,6 +57,7 @@ class LocationCountrySummary extends \ProxyRequest\Support\AdditionalProperties 
      * @var string[]
      */
     protected static $openAPITypes = [
+        'count' => 'int',
         'code' => 'string',
         'name' => 'string',
         'originalName' => 'string'
@@ -70,6 +71,7 @@ class LocationCountrySummary extends \ProxyRequest\Support\AdditionalProperties 
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
+        'count' => null,
         'code' => null,
         'name' => null,
         'originalName' => null
@@ -81,6 +83,7 @@ class LocationCountrySummary extends \ProxyRequest\Support\AdditionalProperties 
      * @var boolean[]
      */
     protected static array $openAPINullables = [
+        'count' => false,
         'code' => false,
         'name' => false,
         'originalName' => false
@@ -172,6 +175,7 @@ class LocationCountrySummary extends \ProxyRequest\Support\AdditionalProperties 
      * @var string[]
      */
     protected static $attributeMap = [
+        'count' => 'count',
         'code' => 'code',
         'name' => 'name',
         'originalName' => 'original_name'
@@ -183,6 +187,7 @@ class LocationCountrySummary extends \ProxyRequest\Support\AdditionalProperties 
      * @var string[]
      */
     protected static $setters = [
+        'count' => 'setCount',
         'code' => 'setCode',
         'name' => 'setName',
         'originalName' => 'setOriginalName'
@@ -194,6 +199,7 @@ class LocationCountrySummary extends \ProxyRequest\Support\AdditionalProperties 
      * @var string[]
      */
     protected static $getters = [
+        'count' => 'getCount',
         'code' => 'getCode',
         'name' => 'getName',
         'originalName' => 'getOriginalName'
@@ -256,6 +262,7 @@ class LocationCountrySummary extends \ProxyRequest\Support\AdditionalProperties 
      */
     public function __construct(?array $data = null)
     {
+        $this->setIfExists('count', $data ?? [], null);
         $this->setIfExists('code', $data ?? [], null);
         $this->setIfExists('name', $data ?? [], null);
         $this->setIfExists('originalName', $data ?? [], null);
@@ -288,6 +295,10 @@ class LocationCountrySummary extends \ProxyRequest\Support\AdditionalProperties 
     {
         $invalidProperties = [];
 
+        if (!is_null($this->container['count']) && ($this->container['count'] < 0)) {
+            $invalidProperties[] = "invalid value for 'count', must be bigger than or equal to 0.";
+        }
+
         if ($this->container['code'] === null) {
             $invalidProperties[] = "'code' can't be null";
         }
@@ -308,6 +319,38 @@ class LocationCountrySummary extends \ProxyRequest\Support\AdditionalProperties 
         return count($this->listInvalidProperties()) === 0;
     }
 
+
+    /**
+     * Gets count
+     *
+     * @return int|null
+     */
+    public function getCount()
+    {
+        return $this->container['count'];
+    }
+
+    /**
+     * Sets count
+     *
+     * @param int|null $count Node count in Rust search mode; unknown quantities are zero.
+     *
+     * @return self
+     */
+    public function setCount($count)
+    {
+        if (is_null($count)) {
+            throw new \InvalidArgumentException('non-nullable count cannot be null');
+        }
+
+        if (($count < 0)) {
+            throw new \InvalidArgumentException('invalid value for $count when calling LocationCountrySummary., must be bigger than or equal to 0.');
+        }
+
+        $this->container['count'] = $count;
+
+        return $this;
+    }
 
     /**
      * Gets code

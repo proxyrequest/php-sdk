@@ -57,7 +57,7 @@ class ProxyGenerationConnectionRequest extends \ProxyRequest\Support\AdditionalP
      * @var string[]
      */
     protected static $openAPITypes = [
-        'protocol' => '\ProxyRequest\Dto\ProtocolEnum',
+        'protocol' => '\ProxyRequest\Dto\ProxyGenerationConnectionProtocolEnum',
         'host' => 'string',
         'port' => 'int',
         'format' => 'string'
@@ -262,7 +262,7 @@ class ProxyGenerationConnectionRequest extends \ProxyRequest\Support\AdditionalP
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('protocol', $data ?? [], ProtocolEnum::HTTP);
+        $this->setIfExists('protocol', $data ?? [], ProxyGenerationConnectionProtocolEnum::HTTP);
         $this->setIfExists('host', $data ?? [], null);
         $this->setIfExists('port', $data ?? [], null);
         $this->setIfExists('format', $data ?? [], '{protocol}://{username}:{password}@{host}:{port}');
@@ -329,7 +329,7 @@ class ProxyGenerationConnectionRequest extends \ProxyRequest\Support\AdditionalP
     /**
      * Gets protocol
      *
-     * @return \ProxyRequest\Dto\ProtocolEnum|null
+     * @return \ProxyRequest\Dto\ProxyGenerationConnectionProtocolEnum|null
      */
     public function getProtocol()
     {
@@ -339,7 +339,7 @@ class ProxyGenerationConnectionRequest extends \ProxyRequest\Support\AdditionalP
     /**
      * Sets protocol
      *
-     * @param \ProxyRequest\Dto\ProtocolEnum|null $protocol Proxy protocol. * `http` - http * `socks5` - socks5 * `auto` - auto
+     * @param \ProxyRequest\Dto\ProxyGenerationConnectionProtocolEnum|null $protocol Proxy protocol. * `http` - http * `socks5` - socks5 * `auto` - auto
      *
      * @return self
      */

@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**count** | **int** | Node count in Rust search mode. | [optional] [readonly]
 **code** | **string** | Unique internal code used to identify this ISP in location vocabulary entries and provider routing rules. comcast att deutsche_telekom |
 **name** | **string** | Full display name of the Internet Service Provider. Comcast Cable Communications AT&amp;T Services |
 

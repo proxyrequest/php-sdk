@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**code** | **string** | Stable machine-readable error code, when available. | [optional]
 **detail** | **string** |  | [optional]
 **nonFieldErrors** | **string[]** |  | [optional]
 

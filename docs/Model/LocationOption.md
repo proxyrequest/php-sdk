@@ -1,0 +1,13 @@
+# LocationOption
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**id** | **string** |  |
+**value** | **string** |  |
+**label** | **string** |  |
+**count** | **int** |  |
+**regionId** | **string** |  | [optional]
+
+[[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

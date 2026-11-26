@@ -57,6 +57,7 @@ class LocationASNRecord extends \ProxyRequest\Support\AdditionalProperties imple
      * @var string[]
      */
     protected static $openAPITypes = [
+        'count' => 'int',
         'code' => 'string',
         'name' => 'string',
         'countryCodes' => 'string[]',
@@ -71,6 +72,7 @@ class LocationASNRecord extends \ProxyRequest\Support\AdditionalProperties imple
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
+        'count' => null,
         'code' => null,
         'name' => null,
         'countryCodes' => null,
@@ -83,6 +85,7 @@ class LocationASNRecord extends \ProxyRequest\Support\AdditionalProperties imple
      * @var boolean[]
      */
     protected static array $openAPINullables = [
+        'count' => false,
         'code' => false,
         'name' => false,
         'countryCodes' => false,
@@ -175,6 +178,7 @@ class LocationASNRecord extends \ProxyRequest\Support\AdditionalProperties imple
      * @var string[]
      */
     protected static $attributeMap = [
+        'count' => 'count',
         'code' => 'code',
         'name' => 'name',
         'countryCodes' => 'country_codes',
@@ -187,6 +191,7 @@ class LocationASNRecord extends \ProxyRequest\Support\AdditionalProperties imple
      * @var string[]
      */
     protected static $setters = [
+        'count' => 'setCount',
         'code' => 'setCode',
         'name' => 'setName',
         'countryCodes' => 'setCountryCodes',
@@ -199,6 +204,7 @@ class LocationASNRecord extends \ProxyRequest\Support\AdditionalProperties imple
      * @var string[]
      */
     protected static $getters = [
+        'count' => 'getCount',
         'code' => 'getCode',
         'name' => 'getName',
         'countryCodes' => 'getCountryCodes',
@@ -262,6 +268,7 @@ class LocationASNRecord extends \ProxyRequest\Support\AdditionalProperties imple
      */
     public function __construct(?array $data = null)
     {
+        $this->setIfExists('count', $data ?? [], null);
         $this->setIfExists('code', $data ?? [], null);
         $this->setIfExists('name', $data ?? [], null);
         $this->setIfExists('countryCodes', $data ?? [], null);
@@ -295,6 +302,10 @@ class LocationASNRecord extends \ProxyRequest\Support\AdditionalProperties imple
     {
         $invalidProperties = [];
 
+        if (!is_null($this->container['count']) && ($this->container['count'] < 0)) {
+            $invalidProperties[] = "invalid value for 'count', must be bigger than or equal to 0.";
+        }
+
         if ($this->container['code'] === null) {
             $invalidProperties[] = "'code' can't be null";
         }
@@ -321,6 +332,38 @@ class LocationASNRecord extends \ProxyRequest\Support\AdditionalProperties imple
         return count($this->listInvalidProperties()) === 0;
     }
 
+
+    /**
+     * Gets count
+     *
+     * @return int|null
+     */
+    public function getCount()
+    {
+        return $this->container['count'];
+    }
+
+    /**
+     * Sets count
+     *
+     * @param int|null $count Node count in Rust search mode; unknown quantities are zero.
+     *
+     * @return self
+     */
+    public function setCount($count)
+    {
+        if (is_null($count)) {
+            throw new \InvalidArgumentException('non-nullable count cannot be null');
+        }
+
+        if (($count < 0)) {
+            throw new \InvalidArgumentException('invalid value for $count when calling LocationASNRecord., must be bigger than or equal to 0.');
+        }
+
+        $this->container['count'] = $count;
+
+        return $this;
+    }
 
     /**
      * Gets code

@@ -5,6 +5,10 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **string** |  | [optional]
+**connectionLimit** | **int** |  | [optional] [readonly]
+**speedLimit** | **int** | Bandwidth cap in Mbit/s applied across all connections for a user on this package. Set to 0 for unlimited. | [optional]
+**fulfillmentKind** | **string** |  | [optional] [readonly]
+**rentalStatus** | **string** |  | [optional] [readonly]
 **isAutoRenewal** | **bool** |  | [readonly]
 **autoRenewalPercentage** | **int** | When this percentage of the data allowance has been consumed, the order is automatically renewed if the user has sufficient balance. Set to 0 to disable auto-renewal. 80 → renew when 80% of data is used | [optional]
 **autoRenewalData** | **int** | Amount of data in GB to add when auto-renewal is triggered. Set to 0 to use the package default. | [optional]
@@ -21,5 +25,6 @@ Name | Type | Description | Notes
 **dataUpdated** | **\DateTime** |  | [readonly]
 **updated** | **\DateTime** |  | [readonly]
 **created** | **\DateTime** |  | [readonly]
+**expires** | **\DateTime** | Date and time when this order expires and access is revoked. Leave blank for orders that do not expire. | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

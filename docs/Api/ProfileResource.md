@@ -7,14 +7,16 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
 | [**changePassword()**](ProfileResource.md#changePassword) | **POST** /profile/change-password | Change the account password |
-| [**confirmTwoFactor()**](ProfileResource.md#confirmTwoFactor) | **POST** /profile/2fa/confirm | Confirm two-factor authentication |
+| [**confirmTwoFactor()**](ProfileResource.md#confirmTwoFactor) | **POST** /profile/2fa/confirm | Manage two-factor authentication |
 | [**connectGoogle()**](ProfileResource.md#connectGoogle) | **POST** /profile/social-accounts/google | Connect Google to the signed-in account |
 | [**delete()**](ProfileResource.md#delete) | **DELETE** /profile | Delete the current account |
-| [**disableTwoFactor()**](ProfileResource.md#disableTwoFactor) | **POST** /profile/2fa/disable | Disable two-factor authentication |
+| [**disableTwoFactor()**](ProfileResource.md#disableTwoFactor) | **POST** /profile/2fa/disable | Manage two-factor authentication |
 | [**get()**](ProfileResource.md#get) | **GET** /profile | Get the current profile |
-| [**getTwoFactorStatus()**](ProfileResource.md#getTwoFactorStatus) | **GET** /profile/2fa/status | Get two-factor status |
+| [**getTwoFactorStatus()**](ProfileResource.md#getTwoFactorStatus) | **GET** /profile/2fa/status | Get two-factor authentication status |
+| [**listLoginHistory()**](ProfileResource.md#listLoginHistory) | **GET** /profile/login-history | List your recent successful sign-ins |
 | [**listSocialAccounts()**](ProfileResource.md#listSocialAccounts) | **GET** /profile/social-accounts | List social account connections |
-| [**setupTwoFactor()**](ProfileResource.md#setupTwoFactor) | **POST** /profile/2fa/setup | Prepare two-factor authentication |
+| [**regenerateTwoFactorCodes()**](ProfileResource.md#regenerateTwoFactorCodes) | **POST** /profile/2fa/regenerate | Manage two-factor authentication |
+| [**setupTwoFactor()**](ProfileResource.md#setupTwoFactor) | **POST** /profile/2fa/setup | Manage two-factor authentication |
 | [**update()**](ProfileResource.md#update) | **PATCH** /profile | Update the current profile |
 
 
@@ -93,9 +95,9 @@ try {
 confirmTwoFactor($twoFactorConfirmRequest, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\EnabledResponse
 ```
 
-Confirm two-factor authentication
+Manage two-factor authentication
 
-Activates the pending authenticator after verifying its code and revokes previous JWTs.
+Prepare or confirm an authenticator, disable it, or replace recovery codes. Changes revoke previous authentication proofs. Setup returns an SVG QR code and recovery codes are returned once.
 
 ### Example
 
@@ -119,7 +121,7 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
     new GuzzleHttp\Client(),
     $config
 );
-$twoFactorConfirmRequest = {"code":"492031"}; // \ProxyRequest\Dto\TwoFactorConfirmRequest
+$twoFactorConfirmRequest = {"password":"Correct-Horse-Battery-Staple-42","credential":"credential","code":"us","confirmed":true}; // \ProxyRequest\Dto\TwoFactorConfirmRequest
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 $xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
@@ -223,12 +225,12 @@ try {
 ## `delete()`
 
 ```php
-delete($ifMatch, $acceptLanguage, $xImpersonateUser)
+delete($ifMatch, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\UsageClosureResponse
 ```
 
 Delete the current account
 
-Permanently deletes the authenticated customer account. Superusers and reseller sub-accounts cannot delete themselves with this operation.
+Permanently deletes the authenticated customer account. Superusers and reseller sub-accounts cannot delete themselves with this operation. An account with outstanding proxy accounting returns 202 and is disabled immediately.
 
 ### Example
 
@@ -257,7 +259,8 @@ $acceptLanguage = de; // string | Preferred language for human-readable API erro
 $xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $apiInstance->delete($ifMatch, $acceptLanguage, $xImpersonateUser);
+    $result = $apiInstance->delete($ifMatch, $acceptLanguage, $xImpersonateUser);
+    print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ProfileResource->delete: ', $e->getMessage(), PHP_EOL;
 }
@@ -273,7 +276,7 @@ try {
 
 ### Return type
 
-void (empty response body)
+[**\ProxyRequest\Dto\UsageClosureResponse**](../Model/UsageClosureResponse.md)
 
 ### Authorization
 
@@ -294,9 +297,9 @@ void (empty response body)
 disableTwoFactor($twoFactorDisableRequest, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\EnabledResponse
 ```
 
-Disable two-factor authentication
+Manage two-factor authentication
 
-Requires the primary factor and current authenticator code, then revokes previous JWTs.
+Prepare or confirm an authenticator, disable it, or replace recovery codes. Changes revoke previous authentication proofs. Setup returns an SVG QR code and recovery codes are returned once.
 
 ### Example
 
@@ -320,7 +323,7 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
     new GuzzleHttp\Client(),
     $config
 );
-$twoFactorDisableRequest = {"password":"Correct-Horse-Battery-Staple-42","code":"492031"}; // \ProxyRequest\Dto\TwoFactorDisableRequest
+$twoFactorDisableRequest = {"password":"Correct-Horse-Battery-Staple-42","credential":"credential","code":"us","confirmed":true}; // \ProxyRequest\Dto\TwoFactorDisableRequest
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 $xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
@@ -430,9 +433,9 @@ try {
 getTwoFactorStatus($acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\EnabledResponse
 ```
 
-Get two-factor status
+Get two-factor authentication status
 
-Returns whether TOTP two-factor authentication is enabled for the authenticated account.
+Return the current factor state, primary-factor availability and remaining recovery-code count.
 
 ### Example
 
@@ -477,6 +480,77 @@ try {
 ### Return type
 
 [**\ProxyRequest\Dto\EnabledResponse**](../Model/EnabledResponse.md)
+
+### Authorization
+
+[StaticAuth](../../README.md#StaticAuth), [BearerAuth](../../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `listLoginHistory()`
+
+```php
+listLoginHistory($limit, $offset, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\PaginatedLoginHistoryList
+```
+
+List your recent successful sign-ins
+
+Returns only the authenticated user's latest personal sign-ins, newest first. At most 50 records are retained per account. Refreshes, API key requests, failed attempts and impersonation are excluded. Client metadata is descriptive, not proof of identity; location is present only when supplied by trusted Cloudflare edges.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: StaticAuth
+$config = ProxyRequest\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = ProxyRequest\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
+
+// Configure Bearer (JWT) authorization: BearerAuth
+$config = ProxyRequest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new ProxyRequest\Api\ProfileResource(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$limit = 56; // int | Number of results to return per page.
+$offset = 56; // int | The initial index from which to return the results.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
+
+try {
+    $result = $apiInstance->listLoginHistory($limit, $offset, $acceptLanguage, $xImpersonateUser);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling ProfileResource->listLoginHistory: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **limit** | **int**| Number of results to return per page. | [optional] |
+| **offset** | **int**| The initial index from which to return the results. | [optional] |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
+
+### Return type
+
+[**\ProxyRequest\Dto\PaginatedLoginHistoryList**](../Model/PaginatedLoginHistoryList.md)
 
 ### Authorization
 
@@ -553,15 +627,15 @@ try {
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `setupTwoFactor()`
+## `regenerateTwoFactorCodes()`
 
 ```php
-setupTwoFactor($acceptLanguage, $xImpersonateUser, $twoFactorSetupRequestRequest): \ProxyRequest\Dto\TwoFactorSetupResponse
+regenerateTwoFactorCodes($acceptLanguage, $xImpersonateUser, $mFAActionRequest): \ProxyRequest\Dto\MFAResponse
 ```
 
-Prepare two-factor authentication
+Manage two-factor authentication
 
-Confirms the primary factor and prepares a pending secret without disabling current protection.
+Prepare or confirm an authenticator, disable it, or replace recovery codes. Changes revoke previous authentication proofs. Setup returns an SVG QR code and recovery codes are returned once.
 
 ### Example
 
@@ -587,10 +661,79 @@ $apiInstance = new ProxyRequest\Api\ProfileResource(
 );
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 $xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
-$twoFactorSetupRequestRequest = {"password":"Correct-Horse-Battery-Staple-42"}; // \ProxyRequest\Dto\TwoFactorSetupRequestRequest
+$mFAActionRequest = {"password":"Correct-Horse-Battery-Staple-42","credential":"credential","code":"us","confirmed":true}; // \ProxyRequest\Dto\MFAActionRequest
 
 try {
-    $result = $apiInstance->setupTwoFactor($acceptLanguage, $xImpersonateUser, $twoFactorSetupRequestRequest);
+    $result = $apiInstance->regenerateTwoFactorCodes($acceptLanguage, $xImpersonateUser, $mFAActionRequest);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling ProfileResource->regenerateTwoFactorCodes: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
+| **mFAActionRequest** | [**\ProxyRequest\Dto\MFAActionRequest**](../Model/MFAActionRequest.md)|  | [optional] |
+
+### Return type
+
+[**\ProxyRequest\Dto\MFAResponse**](../Model/MFAResponse.md)
+
+### Authorization
+
+[StaticAuth](../../README.md#StaticAuth), [BearerAuth](../../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `setupTwoFactor()`
+
+```php
+setupTwoFactor($twoFactorSetupRequestRequest, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\TwoFactorSetupResponse
+```
+
+Manage two-factor authentication
+
+Prepare or confirm an authenticator, disable it, or replace recovery codes. Changes revoke previous authentication proofs. Setup returns an SVG QR code and recovery codes are returned once.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: StaticAuth
+$config = ProxyRequest\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = ProxyRequest\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
+
+// Configure Bearer (JWT) authorization: BearerAuth
+$config = ProxyRequest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new ProxyRequest\Api\ProfileResource(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$twoFactorSetupRequestRequest = {"password":"Correct-Horse-Battery-Staple-42","credential":"credential","code":"us","confirmed":true}; // \ProxyRequest\Dto\TwoFactorSetupRequestRequest
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
+
+try {
+    $result = $apiInstance->setupTwoFactor($twoFactorSetupRequestRequest, $acceptLanguage, $xImpersonateUser);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ProfileResource->setupTwoFactor: ', $e->getMessage(), PHP_EOL;
@@ -601,9 +744,9 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
+| **twoFactorSetupRequestRequest** | [**\ProxyRequest\Dto\TwoFactorSetupRequestRequest**](../Model/TwoFactorSetupRequestRequest.md)|  | |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 | **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
-| **twoFactorSetupRequestRequest** | [**\ProxyRequest\Dto\TwoFactorSetupRequestRequest**](../Model/TwoFactorSetupRequestRequest.md)|  | [optional] |
 
 ### Return type
 

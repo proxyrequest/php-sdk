@@ -98,6 +98,47 @@ operationIdNameMappings:
   webhooks_create: create
   webhooks_retrieve: get
   webhooks_destroy: delete
+  invoices_quote_create: quote
+  kyc_retrieve: getStatus
+  kyc_sessions_create: createSession
+  locations_zipcodes_list: listZipcodes
+  locations_zipcodes_retrieve: getZipcode
+  orders_auto_renewal_retrieve: getCalendarRenewal
+  orders_auto_renewal_update: setCalendarRenewal
+  orders_cancel_reservation_create: cancelReservation
+  orders_checkout_create: checkout
+  orders_checkout_quote_create: quoteCheckout
+  orders_proxy_password_reset_create: resetProxyPassword
+  orders_renew_create: renew
+  orders_renew_quote_create: quoteRenewal
+  orders_rental_retrieve: getRental
+  orders_replacement_requests_retrieve: listReplacements
+  orders_replacement_requests_create: requestReplacement
+  orders_availability_retrieve: getAvailability
+  orders_catalog_retrieve: listCatalog
+  orders_products_retrieve: listProducts
+  orders_purchase_create: reserve
+  orders_purchase_quote_create: quotePurchase
+  profile_2fa_regenerate_create: regenerateTwoFactorCodes
+  profileLoginHistory: listLoginHistory
+  static_catalog_retrieve: listCatalog
+  static_endpoints_list: listEndpoints
+  static_endpoints_retrieve: getEndpoint
+  static_endpoints_partial_update: updateEndpoint
+  static_endpoints_throughput_retrieve: getThroughput
+  static_export_retrieve: exportUrls
+  static_integration_keys_list: listIntegrationKeys
+  static_integration_keys_create: createIntegrationKey
+  static_integration_keys_destroy: revokeIntegrationKey
+  static_purchases_create: reserve
+  static_purchases_list: listPurchases
+  static_purchases_retrieve: getPurchase
+  static_purchases_checkout_create: checkout
+  static_quotes_retrieve: quoteOffer
+  users_package_connection_limit_update: setConnectionLimit
+  webhooks_static_events_retrieve: getStaticEvents
+  webhooks_static_events_partial_update: setStaticEvents
+
 modelNameMappings:
   LoginRequestRequest: LoginRequest
   InvoiceCreateRequestRequest: InvoiceCreateRequest

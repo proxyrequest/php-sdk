@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**count** | **int** | Node count in Rust search mode. | [optional] [readonly]
 **id** | **string** |  | [optional]
 **code** | **string** | Raw city code as it appears in the source data. los_angeles paris |
 **name** | **string** | English display name of the city used across the admin and API responses. |

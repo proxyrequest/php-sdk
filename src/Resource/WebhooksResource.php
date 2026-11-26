@@ -85,8 +85,16 @@ class WebhooksResource
         'get' => [
             'application/json',
         ],
+        'getStaticEvents' => [
+            'application/json',
+        ],
         'list' => [
             'application/json',
+        ],
+        'setStaticEvents' => [
+            'application/json',
+            'application/x-www-form-urlencoded',
+            'multipart/form-data',
         ],
     ];
 
@@ -798,6 +806,215 @@ class WebhooksResource
     }
 
     /**
+     * Operation getStaticEvents
+     *
+     * Read static rental event subscriptions
+     *
+     * @param  string $id A unique value identifying this Webhook. (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getStaticEvents'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\StaticWebhookSubscription|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function getStaticEvents($id, $acceptLanguage = null, string $contentType = self::contentTypes['getStaticEvents'][0], $impersonateUserId = null)
+    {
+        list($response) = $this->getStaticEventsWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId);
+        return $response;
+    }
+
+    /**
+     * Operation getStaticEventsWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function getStaticEventsWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['getStaticEvents'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getStaticEventsWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId));
+    }
+
+    /**
+     * Operation getStaticEventsWithHttpInfo
+     *
+     * Read static rental event subscriptions
+     *
+     * @param  string $id A unique value identifying this Webhook. (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getStaticEvents'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\StaticWebhookSubscription|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getStaticEventsWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['getStaticEvents'][0], $impersonateUserId = null)
+    {
+        $request = $this->getStaticEventsRequest($id, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\StaticWebhookSubscription',
+));
+    }
+
+    /**
+     * Operation getStaticEventsAsync
+     *
+     * Read static rental event subscriptions
+     *
+     * @param  string $id A unique value identifying this Webhook. (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getStaticEvents'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getStaticEventsAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['getStaticEvents'][0], $impersonateUserId = null)
+    {
+        return $this->getStaticEventsAsyncWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getStaticEventsAsyncWithHttpInfo
+     *
+     * Read static rental event subscriptions
+     *
+     * @param  string $id A unique value identifying this Webhook. (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getStaticEvents'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getStaticEventsAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['getStaticEvents'][0], $impersonateUserId = null)
+    {
+        $request = $this->getStaticEventsRequest($id, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\StaticWebhookSubscription',
+));
+    }
+
+    /**
+     * Create request for operation 'getStaticEvents'
+     *
+     * @param  string $id A unique value identifying this Webhook. (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getStaticEvents'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getStaticEventsRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['getStaticEvents'][0], $impersonateUserId = null)
+    {
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling getStaticEvents'
+            );
+        }
+
+
+
+
+        $resourcePath = '/webhooks/{id}/static-events';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation list
      *
      * List customer webhooks
@@ -1010,6 +1227,228 @@ class WebhooksResource
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
             'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation setStaticEvents
+     *
+     * Replace static rental event subscriptions
+     *
+     * @param  string $id A unique value identifying this Webhook. (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  \ProxyRequest\Dto\PatchedStaticWebhookSubscriptionRequest|null $patchedStaticWebhookSubscriptionRequest patchedStaticWebhookSubscriptionRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setStaticEvents'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\StaticWebhookSubscription|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function setStaticEvents($id, $acceptLanguage = null, $patchedStaticWebhookSubscriptionRequest = null, string $contentType = self::contentTypes['setStaticEvents'][0], $impersonateUserId = null)
+    {
+        list($response) = $this->setStaticEventsWithHttpInfo($id, $acceptLanguage, $patchedStaticWebhookSubscriptionRequest, $contentType, $impersonateUserId);
+        return $response;
+    }
+
+    /**
+     * Operation setStaticEventsWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function setStaticEventsWithResponse($id, $acceptLanguage = null, $patchedStaticWebhookSubscriptionRequest = null, string $contentType = self::contentTypes['setStaticEvents'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->setStaticEventsWithHttpInfo($id, $acceptLanguage, $patchedStaticWebhookSubscriptionRequest, $contentType, $impersonateUserId));
+    }
+
+    /**
+     * Operation setStaticEventsWithHttpInfo
+     *
+     * Replace static rental event subscriptions
+     *
+     * @param  string $id A unique value identifying this Webhook. (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  \ProxyRequest\Dto\PatchedStaticWebhookSubscriptionRequest|null $patchedStaticWebhookSubscriptionRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setStaticEvents'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\StaticWebhookSubscription|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function setStaticEventsWithHttpInfo($id, $acceptLanguage = null, $patchedStaticWebhookSubscriptionRequest = null, string $contentType = self::contentTypes['setStaticEvents'][0], $impersonateUserId = null)
+    {
+        $request = $this->setStaticEventsRequest($id, $acceptLanguage, $patchedStaticWebhookSubscriptionRequest, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\StaticWebhookSubscription',
+));
+    }
+
+    /**
+     * Operation setStaticEventsAsync
+     *
+     * Replace static rental event subscriptions
+     *
+     * @param  string $id A unique value identifying this Webhook. (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  \ProxyRequest\Dto\PatchedStaticWebhookSubscriptionRequest|null $patchedStaticWebhookSubscriptionRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setStaticEvents'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function setStaticEventsAsync($id, $acceptLanguage = null, $patchedStaticWebhookSubscriptionRequest = null, string $contentType = self::contentTypes['setStaticEvents'][0], $impersonateUserId = null)
+    {
+        return $this->setStaticEventsAsyncWithHttpInfo($id, $acceptLanguage, $patchedStaticWebhookSubscriptionRequest, $contentType, $impersonateUserId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation setStaticEventsAsyncWithHttpInfo
+     *
+     * Replace static rental event subscriptions
+     *
+     * @param  string $id A unique value identifying this Webhook. (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  \ProxyRequest\Dto\PatchedStaticWebhookSubscriptionRequest|null $patchedStaticWebhookSubscriptionRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setStaticEvents'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function setStaticEventsAsyncWithHttpInfo($id, $acceptLanguage = null, $patchedStaticWebhookSubscriptionRequest = null, string $contentType = self::contentTypes['setStaticEvents'][0], $impersonateUserId = null)
+    {
+        $request = $this->setStaticEventsRequest($id, $acceptLanguage, $patchedStaticWebhookSubscriptionRequest, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\StaticWebhookSubscription',
+));
+    }
+
+    /**
+     * Create request for operation 'setStaticEvents'
+     *
+     * @param  string $id A unique value identifying this Webhook. (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  \ProxyRequest\Dto\PatchedStaticWebhookSubscriptionRequest|null $patchedStaticWebhookSubscriptionRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setStaticEvents'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function setStaticEventsRequest($id, $acceptLanguage = null, $patchedStaticWebhookSubscriptionRequest = null, string $contentType = self::contentTypes['setStaticEvents'][0], $impersonateUserId = null)
+    {
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling setStaticEvents'
+            );
+        }
+
+
+
+
+
+        $resourcePath = '/webhooks/{id}/static-events';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($patchedStaticWebhookSubscriptionRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \ProxyRequest\Support\Json::encode(ObjectSerializer::sanitizeForSerialization($patchedStaticWebhookSubscriptionRequest));
+            } else {
+                $httpBody = $patchedStaticWebhookSubscriptionRequest;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'PATCH',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

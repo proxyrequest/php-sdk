@@ -346,7 +346,7 @@ class AddDataRequest extends \ProxyRequest\Support\AdditionalProperties implemen
     /**
      * Sets data
      *
-     * @param int $data Positive integer bytes to add to the child's assigned quota. Does not reserve parent data; may exceed the parent's remaining pool.
+     * @param int $data Positive integer bytes. Independent child orders receive traffic debited from the parent. Reseller virtual quotas do not reserve parent data and may exceed the parent's remaining pool.
      *
      * @return self
      */

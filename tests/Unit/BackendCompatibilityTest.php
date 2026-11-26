@@ -138,7 +138,7 @@ final class BackendCompatibilityTest extends TestCase
             foreach ([false, true] as $google) {
                 $mock = new MockHandler([
                     new Response(202, [], '{"status":"otp_required","challenge":"synthetic","expires_in":300}'),
-                    new Response(200, [], '{"token":"access","refresh":"refresh"}'),
+                    new Response(200, [], $google ? '{"access":"access","refresh":"refresh"}' : '{"token":"access","refresh":"refresh"}'),
                 ]);
                 $resource = self::client($mock)->authorization();
                 $method = ($google ? 'loginWithGoogle' : 'login') . ($async ? 'Async' : '');

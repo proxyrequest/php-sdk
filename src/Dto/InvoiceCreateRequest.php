@@ -57,6 +57,9 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
      * @var string[]
      */
     protected static $openAPITypes = [
+        'payerDetails' => 'array<string,string>',
+        'pricingPlanId' => 'string',
+        'quoteToken' => 'string',
         'packageId' => 'string',
         'userId' => 'string',
         'gateway' => '\ProxyRequest\Dto\InvoiceCreateRequestGatewayEnum',
@@ -84,6 +87,9 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
+        'payerDetails' => null,
+        'pricingPlanId' => 'uuid',
+        'quoteToken' => null,
         'packageId' => 'uuid',
         'userId' => 'uuid',
         'gateway' => null,
@@ -109,6 +115,9 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
      * @var boolean[]
      */
     protected static array $openAPINullables = [
+        'payerDetails' => false,
+        'pricingPlanId' => false,
+        'quoteToken' => false,
         'packageId' => false,
         'userId' => false,
         'gateway' => false,
@@ -214,6 +223,9 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
      * @var string[]
      */
     protected static $attributeMap = [
+        'payerDetails' => 'payer_details',
+        'pricingPlanId' => 'pricing_plan_id',
+        'quoteToken' => 'quote_token',
         'packageId' => 'package_id',
         'userId' => 'user_id',
         'gateway' => 'gateway',
@@ -239,6 +251,9 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
      * @var string[]
      */
     protected static $setters = [
+        'payerDetails' => 'setPayerDetails',
+        'pricingPlanId' => 'setPricingPlanId',
+        'quoteToken' => 'setQuoteToken',
         'packageId' => 'setPackageId',
         'userId' => 'setUserId',
         'gateway' => 'setGateway',
@@ -264,6 +279,9 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
      * @var string[]
      */
     protected static $getters = [
+        'payerDetails' => 'getPayerDetails',
+        'pricingPlanId' => 'getPricingPlanId',
+        'quoteToken' => 'getQuoteToken',
         'packageId' => 'getPackageId',
         'userId' => 'getUserId',
         'gateway' => 'getGateway',
@@ -340,6 +358,9 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
      */
     public function __construct(?array $data = null)
     {
+        $this->setIfExists('payerDetails', $data ?? [], null);
+        $this->setIfExists('pricingPlanId', $data ?? [], null);
+        $this->setIfExists('quoteToken', $data ?? [], null);
         $this->setIfExists('packageId', $data ?? [], null);
         $this->setIfExists('userId', $data ?? [], null);
         $this->setIfExists('gateway', $data ?? [], null);
@@ -385,6 +406,10 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
     public function listInvalidProperties()
     {
         $invalidProperties = [];
+
+        if (!is_null($this->container['quoteToken']) && (mb_strlen($this->container['quoteToken']) < 1)) {
+            $invalidProperties[] = "invalid value for 'quoteToken', the character length must be bigger than or equal to 1.";
+        }
 
         if ($this->container['gateway'] === null) {
             $invalidProperties[] = "'gateway' can't be null";
@@ -447,6 +472,92 @@ class InvoiceCreateRequest extends \ProxyRequest\Support\AdditionalProperties im
         return count($this->listInvalidProperties()) === 0;
     }
 
+
+    /**
+     * Gets payerDetails
+     *
+     * @return array<string,string>|null
+     */
+    public function getPayerDetails()
+    {
+        return $this->container['payerDetails'];
+    }
+
+    /**
+     * Sets payerDetails
+     *
+     * @param array<string,string>|null $payerDetails Regional payer data: first_name, last_name, identity_number, address, city, country, phone. Required keys depend on the provider.
+     *
+     * @return self
+     */
+    public function setPayerDetails($payerDetails)
+    {
+        if (is_null($payerDetails)) {
+            throw new \InvalidArgumentException('non-nullable payerDetails cannot be null');
+        }
+        $this->container['payerDetails'] = $payerDetails;
+
+        return $this;
+    }
+
+    /**
+     * Gets pricingPlanId
+     *
+     * @return string|null
+     */
+    public function getPricingPlanId()
+    {
+        return $this->container['pricingPlanId'];
+    }
+
+    /**
+     * Sets pricingPlanId
+     *
+     * @param string|null $pricingPlanId Required for bandwidth pricing: active plan from the package catalogue. Defines Mbps, duration in 24-hour days and price; omit data/amount/quantity/expires.
+     *
+     * @return self
+     */
+    public function setPricingPlanId($pricingPlanId)
+    {
+        if (is_null($pricingPlanId)) {
+            throw new \InvalidArgumentException('non-nullable pricingPlanId cannot be null');
+        }
+        $this->container['pricingPlanId'] = $pricingPlanId;
+
+        return $this;
+    }
+
+    /**
+     * Gets quoteToken
+     *
+     * @return string|null
+     */
+    public function getQuoteToken()
+    {
+        return $this->container['quoteToken'];
+    }
+
+    /**
+     * Sets quoteToken
+     *
+     * @param string|null $quoteToken For an active bandwidth upgrade, pass the signed token from POST /invoices/quote/. Valid for 60 seconds and bound to the buyer, plan and current access. Upgrades require wallet payment.
+     *
+     * @return self
+     */
+    public function setQuoteToken($quoteToken)
+    {
+        if (is_null($quoteToken)) {
+            throw new \InvalidArgumentException('non-nullable quoteToken cannot be null');
+        }
+
+        if ((mb_strlen($quoteToken) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $quoteToken when calling InvoiceCreateRequest., must be bigger than or equal to 1.');
+        }
+
+        $this->container['quoteToken'] = $quoteToken;
+
+        return $this;
+    }
 
     /**
      * Gets packageId

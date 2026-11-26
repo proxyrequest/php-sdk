@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**count** | **int** | Node count in Rust search mode. | [optional] [readonly]
 **id** | **string** |  | [optional]
 **code** | **string** | Raw region code as it appears in the source data. Used together with country to form a unique identifier. california ile_de_france |
 **iso31662** | **string** | ISO 3166-2 subdivision code for this region. US-CA FR-IDF | [optional]

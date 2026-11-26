@@ -14,6 +14,7 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 | [**listOrders()**](UsersResource.md#listOrders) | **GET** /users/{id}/orders | List a sub-user&#39;s orders |
 | [**resetData()**](UsersResource.md#resetData) | **POST** /users/{id}/data/reset | Reset a user&#39;s remaining data |
 | [**resetPassword()**](UsersResource.md#resetPassword) | **POST** /users/{id}/password | Rotate a sub-user proxy password |
+| [**setConnectionLimit()**](UsersResource.md#setConnectionLimit) | **PATCH** /users/{id}/connection-limit | Set a managed user&#39;s package connection limit |
 | [**subtractData()**](UsersResource.md#subtractData) | **POST** /users/{id}/data/subtract | Subtract data from a managed user order |
 | [**update()**](UsersResource.md#update) | **PATCH** /users/{id} | Update a user |
 
@@ -123,7 +124,7 @@ $apiInstance = new ProxyRequest\Api\UsersResource(
     new GuzzleHttp\Client(),
     $config
 );
-$userCreateRequest = {"email":"developer@example.com","username":"developer","password":"Correct-Horse-Battery-Staple-42","first_name":"Dana","last_name":"Morgan","country":"us","state":"state","city":"los_angeles","address":"address","zip":"zip","blocked_domains":["blocked.example"],"allowed_ips":["198.51.100.25"],"connection_limit":1,"is_reseller":false,"is_top_level":false,"data":1073741824,"package_id":"550e8400-e29b-41d4-a716-446655440002","meta":{}}; // \ProxyRequest\Dto\UserCreateRequest
+$userCreateRequest = {"email":"developer@example.com","username":"developer","password":"Correct-Horse-Battery-Staple-42","first_name":"Dana","last_name":"Morgan","country":"us","state":"state","city":"los_angeles","address":"address","zip":"zip","blocked_domains":["blocked.example"],"allowed_ips":["198.51.100.25"],"connection_limit":1,"is_reseller":false,"is_top_level":false,"data":1073741824,"package_id":"550e8400-e29b-41d4-a716-446655440002","package_connection_limit":1,"meta":{}}; // \ProxyRequest\Dto\UserCreateRequest
 $idempotencyKey = 'idempotencyKey_example'; // string | Stable key for one logical mutation. Successful responses are replayable for 24 hours; reusing a key with a different request returns 409.
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 $xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
@@ -165,12 +166,12 @@ try {
 ## `delete()`
 
 ```php
-delete($id, $idempotencyKey, $ifMatch, $acceptLanguage, $xImpersonateUser)
+delete($id, $idempotencyKey, $ifMatch, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\UsageClosureResponse
 ```
 
 Delete a user
 
-Deletes a user that the authenticated account is allowed to manage.
+Deletes a user that the authenticated account is allowed to manage. An account with outstanding proxy accounting returns 202 and is disabled immediately.
 
 ### Example
 
@@ -201,7 +202,8 @@ $acceptLanguage = de; // string | Preferred language for human-readable API erro
 $xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 
 try {
-    $apiInstance->delete($id, $idempotencyKey, $ifMatch, $acceptLanguage, $xImpersonateUser);
+    $result = $apiInstance->delete($id, $idempotencyKey, $ifMatch, $acceptLanguage, $xImpersonateUser);
+    print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling UsersResource->delete: ', $e->getMessage(), PHP_EOL;
 }
@@ -219,7 +221,7 @@ try {
 
 ### Return type
 
-void (empty response body)
+[**\ProxyRequest\Dto\UsageClosureResponse**](../Model/UsageClosureResponse.md)
 
 ### Authorization
 
@@ -311,7 +313,7 @@ list($email, $id, $limit, $offset, $ordering, $packageId, $search, $username, $a
 
 List users in the current account
 
-Returns users visible to the caller. Resellers see their sub-users, regular customers see only themselves, and administrators can see all users.
+Returns users visible to the caller. Resellers see their sub-users, regular customers see themselves and their direct sub-users, and administrators can see all users.
 
 ### Example
 
@@ -341,7 +343,7 @@ $limit = 56; // int | Number of results to return per page.
 $offset = 56; // int | The initial index from which to return the results.
 $ordering = 'ordering_example'; // string | Which field to use when ordering the results.
 $packageId = 550e8400-e29b-41d4-a716-446655440002; // string | Filters the visible user list to accounts that have at least one stored order for this package UUID. Orders are matched regardless of whether they are active or expired; this filter never expands the caller's normal account scope.
-$search = 'search_example'; // string | Case-insensitive partial search across user fields: `email`, `username`, `first_name`, and `last_name`. Separate multiple terms with spaces or commas; every term must match at least one listed field.
+$search = 'search_example'; // string | Case-insensitive partial search across user fields: `email`, `username`, `first_name`, `last_name`, and `id`. Separate multiple terms with spaces or commas; every term must match at least one listed field. User IDs accept full UUIDs or hyphen-insensitive fragments of at least four hexadecimal characters.
 $username = 'username_example'; // string
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 $xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
@@ -364,7 +366,7 @@ try {
 | **offset** | **int**| The initial index from which to return the results. | [optional] |
 | **ordering** | **string**| Which field to use when ordering the results. | [optional] |
 | **packageId** | **string**| Filters the visible user list to accounts that have at least one stored order for this package UUID. Orders are matched regardless of whether they are active or expired; this filter never expands the caller&#39;s normal account scope. | [optional] |
-| **search** | **string**| Case-insensitive partial search across user fields: &#x60;email&#x60;, &#x60;username&#x60;, &#x60;first_name&#x60;, and &#x60;last_name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. | [optional] |
+| **search** | **string**| Case-insensitive partial search across user fields: &#x60;email&#x60;, &#x60;username&#x60;, &#x60;first_name&#x60;, &#x60;last_name&#x60;, and &#x60;id&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. User IDs accept full UUIDs or hyphen-insensitive fragments of at least four hexadecimal characters. | [optional] |
 | **username** | **string**|  | [optional] |
 | **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
 | **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
@@ -475,7 +477,7 @@ resetData($id, $resetDataRequest, $idempotencyKey, $acceptLanguage, $xImpersonat
 
 Reset a user's remaining data
 
-Atomically resets remaining data to zero for package_id, including zero or negative balances. Supply package_id only; data is not accepted. System administrators may reset any user; other accounts may reset only their direct children. Purchased root orders have their ledger balances cleared; virtual child orders have their quota set to usage without changing the parent's pool. Usage history and invoices are preserved. Unlimited packages are rejected. Use Idempotency-Key for safe retries so a repeated request cannot clear a subsequent top-up.
+Atomically resets remaining data to zero for package_id, including zero or negative balances. Supply package_id only; data is not accepted. System administrators may reset any user; other accounts may reset only their direct children. Independently funded sub-user orders first return their unspent, unexpired traffic to the parent with the same deadlines. Top-level purchased orders have their ledger balances cleared; virtual child orders have their quota set to usage without changing the parent's pool. Usage history and invoices are preserved. Unlimited packages are rejected. Use Idempotency-Key for safe retries so a repeated request cannot clear a subsequent top-up.
 
 ### Example
 
@@ -597,6 +599,77 @@ try {
 ### Return type
 
 [**\ProxyRequest\Dto\User**](../Model/User.md)
+
+### Authorization
+
+[StaticAuth](../../README.md#StaticAuth), [BearerAuth](../../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `setConnectionLimit()`
+
+```php
+setConnectionLimit($id, $acceptLanguage, $xImpersonateUser, $patchedUserPackageConnectionLimitRequest): \ProxyRequest\Dto\Order
+```
+
+Set a managed user's package connection limit
+
+Updates the connection limit for package_id on a direct sub-user. Use -1 to inherit the package limit, or 1 through 1000000 for a custom limit. Other packages retain their effective limits, including when converting a legacy user-wide override. Administrators may manage any user's traffic package.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: StaticAuth
+$config = ProxyRequest\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = ProxyRequest\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
+
+// Configure Bearer (JWT) authorization: BearerAuth
+$config = ProxyRequest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new ProxyRequest\Api\UsersResource(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$id = 'id_example'; // string | A UUID string identifying this user.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
+$patchedUserPackageConnectionLimitRequest = {"package_id":"550e8400-e29b-41d4-a716-446655440002","connection_limit":1}; // \ProxyRequest\Dto\PatchedUserPackageConnectionLimitRequest
+
+try {
+    $result = $apiInstance->setConnectionLimit($id, $acceptLanguage, $xImpersonateUser, $patchedUserPackageConnectionLimitRequest);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling UsersResource->setConnectionLimit: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **id** | **string**| A UUID string identifying this user. | |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
+| **patchedUserPackageConnectionLimitRequest** | [**\ProxyRequest\Dto\PatchedUserPackageConnectionLimitRequest**](../Model/PatchedUserPackageConnectionLimitRequest.md)|  | [optional] |
+
+### Return type
+
+[**\ProxyRequest\Dto\Order**](../Model/Order.md)
 
 ### Authorization
 

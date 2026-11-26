@@ -319,7 +319,7 @@ class SubtractDataRequest extends \ProxyRequest\Support\AdditionalProperties imp
     /**
      * Sets packageId
      *
-     * @param string $packageId Package of the managed virtual child order.
+     * @param string $packageId Package of the managed sub-user order.
      *
      * @return self
      */
@@ -346,7 +346,7 @@ class SubtractDataRequest extends \ProxyRequest\Support\AdditionalProperties imp
     /**
      * Sets data
      *
-     * @param int $data Positive integer bytes to remove from assigned quota, not from usage. Cannot exceed total assigned data. Does not credit the parent's pool.
+     * @param int $data Positive integer bytes. Independent orders return available traffic to the parent without extending expiry. Virtual orders only reduce assigned quota. Usage is preserved in both models.
      *
      * @return self
      */

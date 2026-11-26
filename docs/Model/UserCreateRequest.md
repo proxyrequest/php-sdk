@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **email** | **string** | User&#39;s email address. Must be unique if provided. | [optional]
-**username** | **string** | Unique username for the account. Must be 4-128 characters. |
+**username** | **string** | Unique username for the account. Must be 3-128 characters. |
 **password** | **string** | Account password. Must be 8-128 characters long. |
 **firstName** | **string** | User&#39;s first name. | [optional]
 **lastName** | **string** | User&#39;s last name. | [optional]
@@ -19,8 +19,9 @@ Name | Type | Description | Notes
 **connectionLimit** | **int** | Maximum number of concurrent connections allowed for the user. | [optional]
 **isReseller** | **bool** | Whether the user should have reseller privileges. Only superusers can create resellers. | [optional] [default to false]
 **isTopLevel** | **bool** | Superuser only: true creates an independent account with no parent. False (default) creates a sub-user under the caller. | [optional] [default to false]
-**data** | **int** | Initial integer-byte data amount. With package_id, a normal sub-user receives a virtual quota from the caller&#39;s existing root order; is_top_level&#x3D;true provisions a separate paid purchase. Omit both data and package_id to create identity without package access. | [optional]
+**data** | **int** | Initial integer-byte data amount. With package_id, a normal sub-user receives traffic from the caller&#39;s root order: ordinary callers transfer available balance, while resellers grant a virtual quota; is_top_level&#x3D;true provisions a separate paid purchase. Omit both data and package_id to create identity without package access. | [optional]
 **packageId** | **string** | ProxyRequest package UUID to assign to the user. Headless integrations resolve it from their local product mapping. | [optional]
+**packageConnectionLimit** | **int** | Connection limit for the initially assigned sub-user package only. Use -1 for package settings. Requires package_id and positive data; cannot be combined with connection_limit or is_top_level&#x3D;true. | [optional]
 **meta** | **array<string,mixed>** | Additional metadata for the user. Maximum 50 fields. | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

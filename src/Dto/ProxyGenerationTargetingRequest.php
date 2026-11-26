@@ -61,6 +61,7 @@ class ProxyGenerationTargetingRequest extends \ProxyRequest\Support\AdditionalPr
         'country' => 'string',
         'region' => 'string',
         'city' => 'string',
+        'zip' => 'string',
         'pool' => 'string',
         'asn' => 'int',
         'isp' => 'string',
@@ -79,6 +80,7 @@ class ProxyGenerationTargetingRequest extends \ProxyRequest\Support\AdditionalPr
         'country' => null,
         'region' => null,
         'city' => null,
+        'zip' => null,
         'pool' => null,
         'asn' => null,
         'isp' => null,
@@ -95,6 +97,7 @@ class ProxyGenerationTargetingRequest extends \ProxyRequest\Support\AdditionalPr
         'country' => false,
         'region' => false,
         'city' => false,
+        'zip' => false,
         'pool' => false,
         'asn' => false,
         'isp' => false,
@@ -191,6 +194,7 @@ class ProxyGenerationTargetingRequest extends \ProxyRequest\Support\AdditionalPr
         'country' => 'country',
         'region' => 'region',
         'city' => 'city',
+        'zip' => 'zip',
         'pool' => 'pool',
         'asn' => 'asn',
         'isp' => 'isp',
@@ -207,6 +211,7 @@ class ProxyGenerationTargetingRequest extends \ProxyRequest\Support\AdditionalPr
         'country' => 'setCountry',
         'region' => 'setRegion',
         'city' => 'setCity',
+        'zip' => 'setZip',
         'pool' => 'setPool',
         'asn' => 'setAsn',
         'isp' => 'setIsp',
@@ -223,6 +228,7 @@ class ProxyGenerationTargetingRequest extends \ProxyRequest\Support\AdditionalPr
         'country' => 'getCountry',
         'region' => 'getRegion',
         'city' => 'getCity',
+        'zip' => 'getZip',
         'pool' => 'getPool',
         'asn' => 'getAsn',
         'isp' => 'getIsp',
@@ -290,6 +296,7 @@ class ProxyGenerationTargetingRequest extends \ProxyRequest\Support\AdditionalPr
         $this->setIfExists('country', $data ?? [], null);
         $this->setIfExists('region', $data ?? [], null);
         $this->setIfExists('city', $data ?? [], null);
+        $this->setIfExists('zip', $data ?? [], null);
         $this->setIfExists('pool', $data ?? [], null);
         $this->setIfExists('asn', $data ?? [], null);
         $this->setIfExists('isp', $data ?? [], null);
@@ -337,6 +344,10 @@ class ProxyGenerationTargetingRequest extends \ProxyRequest\Support\AdditionalPr
 
         if (!is_null($this->container['city']) && (mb_strlen($this->container['city']) > 255)) {
             $invalidProperties[] = "invalid value for 'city', the character length must be smaller than or equal to 255.";
+        }
+
+        if (!is_null($this->container['zip']) && (mb_strlen($this->container['zip']) > 32)) {
+            $invalidProperties[] = "invalid value for 'zip', the character length must be smaller than or equal to 32.";
         }
 
         if (!is_null($this->container['pool']) && (mb_strlen($this->container['pool']) > 255)) {
@@ -494,6 +505,37 @@ class ProxyGenerationTargetingRequest extends \ProxyRequest\Support\AdditionalPr
         }
 
         $this->container['city'] = $city;
+
+        return $this;
+    }
+
+    /**
+     * Gets zip
+     *
+     * @return string|null
+     */
+    public function getZip()
+    {
+        return $this->container['zip'];
+    }
+
+    /**
+     * Sets zip
+     *
+     * @param string|null $zip Postal code; requires a concrete country. Leading zeros are preserved.
+     *
+     * @return self
+     */
+    public function setZip($zip)
+    {
+        if (is_null($zip)) {
+            throw new \InvalidArgumentException('non-nullable zip cannot be null');
+        }
+        if ((mb_strlen($zip) > 32)) {
+            throw new \InvalidArgumentException('invalid length for $zip when calling ProxyGenerationTargetingRequest., must be smaller than or equal to 32.');
+        }
+
+        $this->container['zip'] = $zip;
 
         return $this;
     }

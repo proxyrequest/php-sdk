@@ -94,6 +94,11 @@ class InvoicesResource
         'list' => [
             'application/json',
         ],
+        'quote' => [
+            'application/json',
+            'application/x-www-form-urlencoded',
+            'multipart/form-data',
+        ],
     ];
 
     /**
@@ -1226,7 +1231,7 @@ class InvoicesResource
      *
      * List invoices
      *
-     * @param  string|null $gateway The payment gateway used for processing the payment. * &#x60;coinbase&#x60; - Coinbase * &#x60;cryptomus&#x60; - Cryptomus * &#x60;stripe&#x60; - Stripe * &#x60;coingate&#x60; - Coingate * &#x60;wallet&#x60; - Wallet * &#x60;manual&#x60; - Manual * &#x60;whitepay&#x60; - Whitepay * &#x60;wayforpay&#x60; - WayForPay * &#x60;usegateway&#x60; - UseGateway * &#x60;binance&#x60; - Binance Pay * &#x60;anymoney&#x60; - Any.Money * &#x60;coinpayments&#x60; - CoinPayments * &#x60;checkoutcom&#x60; - Checkout.com * &#x60;nowpayments&#x60; - NOWPayments * &#x60;btcpay&#x60; - BTCPay Server * &#x60;braintree&#x60; - Braintree * &#x60;monobank&#x60; - monobank * &#x60;liqpay&#x60; - LiqPay * &#x60;iyzico&#x60; - iyzico * &#x60;paytr&#x60; - PayTR * &#x60;payu&#x60; - PayU * &#x60;tpay&#x60; - Tpay * &#x60;przelewy24&#x60; - Przelewy24 * &#x60;gopay&#x60; - GoPay * &#x60;comgate&#x60; - Comgate * &#x60;monei&#x60; - MONEI * &#x60;redsys&#x60; - Redsys * &#x60;payplug&#x60; - PayPlug * &#x60;mollie&#x60; - Mollie * &#x60;unzer&#x60; - Unzer * &#x60;payone&#x60; - PAYONE * &#x60;nexi_xpay&#x60; - Nexi XPay * &#x60;halyk_epay&#x60; - Halyk ePay * &#x60;kaspi_pay&#x60; - Kaspi Pay * &#x60;vipps_mobilepay&#x60; - Vipps MobilePay * &#x60;paytrail&#x60; - Paytrail (optional)
+     * @param  string|null $gateway The payment gateway used for processing the payment. * &#x60;revolut&#x60; - Revolut * &#x60;paypal&#x60; - PayPal * &#x60;coinbase&#x60; - Coinbase * &#x60;cryptomus&#x60; - Cryptomus * &#x60;stripe&#x60; - Stripe * &#x60;coingate&#x60; - Coingate * &#x60;wallet&#x60; - Wallet * &#x60;manual&#x60; - Manual * &#x60;whitepay&#x60; - Whitepay * &#x60;wayforpay&#x60; - WayForPay * &#x60;usegateway&#x60; - UseGateway * &#x60;binance&#x60; - Binance Pay * &#x60;anymoney&#x60; - Any.Money * &#x60;coinpayments&#x60; - CoinPayments * &#x60;checkoutcom&#x60; - Checkout.com * &#x60;nowpayments&#x60; - NOWPayments * &#x60;btcpay&#x60; - BTCPay Server * &#x60;braintree&#x60; - Braintree * &#x60;monobank&#x60; - monobank * &#x60;liqpay&#x60; - LiqPay * &#x60;iyzico&#x60; - iyzico * &#x60;paytr&#x60; - PayTR * &#x60;payu&#x60; - PayU * &#x60;tpay&#x60; - Tpay * &#x60;przelewy24&#x60; - Przelewy24 * &#x60;gopay&#x60; - GoPay * &#x60;comgate&#x60; - Comgate * &#x60;monei&#x60; - MONEI * &#x60;redsys&#x60; - Redsys * &#x60;payplug&#x60; - PayPlug * &#x60;mollie&#x60; - Mollie * &#x60;unzer&#x60; - Unzer * &#x60;payone&#x60; - PAYONE * &#x60;nexi_xpay&#x60; - Nexi XPay * &#x60;halyk_epay&#x60; - Halyk ePay * &#x60;kaspi_pay&#x60; - Kaspi Pay * &#x60;vipps_mobilepay&#x60; - Vipps MobilePay * &#x60;paytrail&#x60; - Paytrail (optional)
      * @param  string|null $internalId internalId (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -1266,7 +1271,7 @@ class InvoicesResource
      *
      * List invoices
      *
-     * @param  string|null $gateway The payment gateway used for processing the payment. * &#x60;coinbase&#x60; - Coinbase * &#x60;cryptomus&#x60; - Cryptomus * &#x60;stripe&#x60; - Stripe * &#x60;coingate&#x60; - Coingate * &#x60;wallet&#x60; - Wallet * &#x60;manual&#x60; - Manual * &#x60;whitepay&#x60; - Whitepay * &#x60;wayforpay&#x60; - WayForPay * &#x60;usegateway&#x60; - UseGateway * &#x60;binance&#x60; - Binance Pay * &#x60;anymoney&#x60; - Any.Money * &#x60;coinpayments&#x60; - CoinPayments * &#x60;checkoutcom&#x60; - Checkout.com * &#x60;nowpayments&#x60; - NOWPayments * &#x60;btcpay&#x60; - BTCPay Server * &#x60;braintree&#x60; - Braintree * &#x60;monobank&#x60; - monobank * &#x60;liqpay&#x60; - LiqPay * &#x60;iyzico&#x60; - iyzico * &#x60;paytr&#x60; - PayTR * &#x60;payu&#x60; - PayU * &#x60;tpay&#x60; - Tpay * &#x60;przelewy24&#x60; - Przelewy24 * &#x60;gopay&#x60; - GoPay * &#x60;comgate&#x60; - Comgate * &#x60;monei&#x60; - MONEI * &#x60;redsys&#x60; - Redsys * &#x60;payplug&#x60; - PayPlug * &#x60;mollie&#x60; - Mollie * &#x60;unzer&#x60; - Unzer * &#x60;payone&#x60; - PAYONE * &#x60;nexi_xpay&#x60; - Nexi XPay * &#x60;halyk_epay&#x60; - Halyk ePay * &#x60;kaspi_pay&#x60; - Kaspi Pay * &#x60;vipps_mobilepay&#x60; - Vipps MobilePay * &#x60;paytrail&#x60; - Paytrail (optional)
+     * @param  string|null $gateway The payment gateway used for processing the payment. * &#x60;revolut&#x60; - Revolut * &#x60;paypal&#x60; - PayPal * &#x60;coinbase&#x60; - Coinbase * &#x60;cryptomus&#x60; - Cryptomus * &#x60;stripe&#x60; - Stripe * &#x60;coingate&#x60; - Coingate * &#x60;wallet&#x60; - Wallet * &#x60;manual&#x60; - Manual * &#x60;whitepay&#x60; - Whitepay * &#x60;wayforpay&#x60; - WayForPay * &#x60;usegateway&#x60; - UseGateway * &#x60;binance&#x60; - Binance Pay * &#x60;anymoney&#x60; - Any.Money * &#x60;coinpayments&#x60; - CoinPayments * &#x60;checkoutcom&#x60; - Checkout.com * &#x60;nowpayments&#x60; - NOWPayments * &#x60;btcpay&#x60; - BTCPay Server * &#x60;braintree&#x60; - Braintree * &#x60;monobank&#x60; - monobank * &#x60;liqpay&#x60; - LiqPay * &#x60;iyzico&#x60; - iyzico * &#x60;paytr&#x60; - PayTR * &#x60;payu&#x60; - PayU * &#x60;tpay&#x60; - Tpay * &#x60;przelewy24&#x60; - Przelewy24 * &#x60;gopay&#x60; - GoPay * &#x60;comgate&#x60; - Comgate * &#x60;monei&#x60; - MONEI * &#x60;redsys&#x60; - Redsys * &#x60;payplug&#x60; - PayPlug * &#x60;mollie&#x60; - Mollie * &#x60;unzer&#x60; - Unzer * &#x60;payone&#x60; - PAYONE * &#x60;nexi_xpay&#x60; - Nexi XPay * &#x60;halyk_epay&#x60; - Halyk ePay * &#x60;kaspi_pay&#x60; - Kaspi Pay * &#x60;vipps_mobilepay&#x60; - Vipps MobilePay * &#x60;paytrail&#x60; - Paytrail (optional)
      * @param  string|null $internalId (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -1298,7 +1303,7 @@ class InvoicesResource
      *
      * List invoices
      *
-     * @param  string|null $gateway The payment gateway used for processing the payment. * &#x60;coinbase&#x60; - Coinbase * &#x60;cryptomus&#x60; - Cryptomus * &#x60;stripe&#x60; - Stripe * &#x60;coingate&#x60; - Coingate * &#x60;wallet&#x60; - Wallet * &#x60;manual&#x60; - Manual * &#x60;whitepay&#x60; - Whitepay * &#x60;wayforpay&#x60; - WayForPay * &#x60;usegateway&#x60; - UseGateway * &#x60;binance&#x60; - Binance Pay * &#x60;anymoney&#x60; - Any.Money * &#x60;coinpayments&#x60; - CoinPayments * &#x60;checkoutcom&#x60; - Checkout.com * &#x60;nowpayments&#x60; - NOWPayments * &#x60;btcpay&#x60; - BTCPay Server * &#x60;braintree&#x60; - Braintree * &#x60;monobank&#x60; - monobank * &#x60;liqpay&#x60; - LiqPay * &#x60;iyzico&#x60; - iyzico * &#x60;paytr&#x60; - PayTR * &#x60;payu&#x60; - PayU * &#x60;tpay&#x60; - Tpay * &#x60;przelewy24&#x60; - Przelewy24 * &#x60;gopay&#x60; - GoPay * &#x60;comgate&#x60; - Comgate * &#x60;monei&#x60; - MONEI * &#x60;redsys&#x60; - Redsys * &#x60;payplug&#x60; - PayPlug * &#x60;mollie&#x60; - Mollie * &#x60;unzer&#x60; - Unzer * &#x60;payone&#x60; - PAYONE * &#x60;nexi_xpay&#x60; - Nexi XPay * &#x60;halyk_epay&#x60; - Halyk ePay * &#x60;kaspi_pay&#x60; - Kaspi Pay * &#x60;vipps_mobilepay&#x60; - Vipps MobilePay * &#x60;paytrail&#x60; - Paytrail (optional)
+     * @param  string|null $gateway The payment gateway used for processing the payment. * &#x60;revolut&#x60; - Revolut * &#x60;paypal&#x60; - PayPal * &#x60;coinbase&#x60; - Coinbase * &#x60;cryptomus&#x60; - Cryptomus * &#x60;stripe&#x60; - Stripe * &#x60;coingate&#x60; - Coingate * &#x60;wallet&#x60; - Wallet * &#x60;manual&#x60; - Manual * &#x60;whitepay&#x60; - Whitepay * &#x60;wayforpay&#x60; - WayForPay * &#x60;usegateway&#x60; - UseGateway * &#x60;binance&#x60; - Binance Pay * &#x60;anymoney&#x60; - Any.Money * &#x60;coinpayments&#x60; - CoinPayments * &#x60;checkoutcom&#x60; - Checkout.com * &#x60;nowpayments&#x60; - NOWPayments * &#x60;btcpay&#x60; - BTCPay Server * &#x60;braintree&#x60; - Braintree * &#x60;monobank&#x60; - monobank * &#x60;liqpay&#x60; - LiqPay * &#x60;iyzico&#x60; - iyzico * &#x60;paytr&#x60; - PayTR * &#x60;payu&#x60; - PayU * &#x60;tpay&#x60; - Tpay * &#x60;przelewy24&#x60; - Przelewy24 * &#x60;gopay&#x60; - GoPay * &#x60;comgate&#x60; - Comgate * &#x60;monei&#x60; - MONEI * &#x60;redsys&#x60; - Redsys * &#x60;payplug&#x60; - PayPlug * &#x60;mollie&#x60; - Mollie * &#x60;unzer&#x60; - Unzer * &#x60;payone&#x60; - PAYONE * &#x60;nexi_xpay&#x60; - Nexi XPay * &#x60;halyk_epay&#x60; - Halyk ePay * &#x60;kaspi_pay&#x60; - Kaspi Pay * &#x60;vipps_mobilepay&#x60; - Vipps MobilePay * &#x60;paytrail&#x60; - Paytrail (optional)
      * @param  string|null $internalId (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -1331,7 +1336,7 @@ class InvoicesResource
      *
      * List invoices
      *
-     * @param  string|null $gateway The payment gateway used for processing the payment. * &#x60;coinbase&#x60; - Coinbase * &#x60;cryptomus&#x60; - Cryptomus * &#x60;stripe&#x60; - Stripe * &#x60;coingate&#x60; - Coingate * &#x60;wallet&#x60; - Wallet * &#x60;manual&#x60; - Manual * &#x60;whitepay&#x60; - Whitepay * &#x60;wayforpay&#x60; - WayForPay * &#x60;usegateway&#x60; - UseGateway * &#x60;binance&#x60; - Binance Pay * &#x60;anymoney&#x60; - Any.Money * &#x60;coinpayments&#x60; - CoinPayments * &#x60;checkoutcom&#x60; - Checkout.com * &#x60;nowpayments&#x60; - NOWPayments * &#x60;btcpay&#x60; - BTCPay Server * &#x60;braintree&#x60; - Braintree * &#x60;monobank&#x60; - monobank * &#x60;liqpay&#x60; - LiqPay * &#x60;iyzico&#x60; - iyzico * &#x60;paytr&#x60; - PayTR * &#x60;payu&#x60; - PayU * &#x60;tpay&#x60; - Tpay * &#x60;przelewy24&#x60; - Przelewy24 * &#x60;gopay&#x60; - GoPay * &#x60;comgate&#x60; - Comgate * &#x60;monei&#x60; - MONEI * &#x60;redsys&#x60; - Redsys * &#x60;payplug&#x60; - PayPlug * &#x60;mollie&#x60; - Mollie * &#x60;unzer&#x60; - Unzer * &#x60;payone&#x60; - PAYONE * &#x60;nexi_xpay&#x60; - Nexi XPay * &#x60;halyk_epay&#x60; - Halyk ePay * &#x60;kaspi_pay&#x60; - Kaspi Pay * &#x60;vipps_mobilepay&#x60; - Vipps MobilePay * &#x60;paytrail&#x60; - Paytrail (optional)
+     * @param  string|null $gateway The payment gateway used for processing the payment. * &#x60;revolut&#x60; - Revolut * &#x60;paypal&#x60; - PayPal * &#x60;coinbase&#x60; - Coinbase * &#x60;cryptomus&#x60; - Cryptomus * &#x60;stripe&#x60; - Stripe * &#x60;coingate&#x60; - Coingate * &#x60;wallet&#x60; - Wallet * &#x60;manual&#x60; - Manual * &#x60;whitepay&#x60; - Whitepay * &#x60;wayforpay&#x60; - WayForPay * &#x60;usegateway&#x60; - UseGateway * &#x60;binance&#x60; - Binance Pay * &#x60;anymoney&#x60; - Any.Money * &#x60;coinpayments&#x60; - CoinPayments * &#x60;checkoutcom&#x60; - Checkout.com * &#x60;nowpayments&#x60; - NOWPayments * &#x60;btcpay&#x60; - BTCPay Server * &#x60;braintree&#x60; - Braintree * &#x60;monobank&#x60; - monobank * &#x60;liqpay&#x60; - LiqPay * &#x60;iyzico&#x60; - iyzico * &#x60;paytr&#x60; - PayTR * &#x60;payu&#x60; - PayU * &#x60;tpay&#x60; - Tpay * &#x60;przelewy24&#x60; - Przelewy24 * &#x60;gopay&#x60; - GoPay * &#x60;comgate&#x60; - Comgate * &#x60;monei&#x60; - MONEI * &#x60;redsys&#x60; - Redsys * &#x60;payplug&#x60; - PayPlug * &#x60;mollie&#x60; - Mollie * &#x60;unzer&#x60; - Unzer * &#x60;payone&#x60; - PAYONE * &#x60;nexi_xpay&#x60; - Nexi XPay * &#x60;halyk_epay&#x60; - Halyk ePay * &#x60;kaspi_pay&#x60; - Kaspi Pay * &#x60;vipps_mobilepay&#x60; - Vipps MobilePay * &#x60;paytrail&#x60; - Paytrail (optional)
      * @param  string|null $internalId (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -1360,7 +1365,7 @@ class InvoicesResource
     /**
      * Create request for operation 'list'
      *
-     * @param  string|null $gateway The payment gateway used for processing the payment. * &#x60;coinbase&#x60; - Coinbase * &#x60;cryptomus&#x60; - Cryptomus * &#x60;stripe&#x60; - Stripe * &#x60;coingate&#x60; - Coingate * &#x60;wallet&#x60; - Wallet * &#x60;manual&#x60; - Manual * &#x60;whitepay&#x60; - Whitepay * &#x60;wayforpay&#x60; - WayForPay * &#x60;usegateway&#x60; - UseGateway * &#x60;binance&#x60; - Binance Pay * &#x60;anymoney&#x60; - Any.Money * &#x60;coinpayments&#x60; - CoinPayments * &#x60;checkoutcom&#x60; - Checkout.com * &#x60;nowpayments&#x60; - NOWPayments * &#x60;btcpay&#x60; - BTCPay Server * &#x60;braintree&#x60; - Braintree * &#x60;monobank&#x60; - monobank * &#x60;liqpay&#x60; - LiqPay * &#x60;iyzico&#x60; - iyzico * &#x60;paytr&#x60; - PayTR * &#x60;payu&#x60; - PayU * &#x60;tpay&#x60; - Tpay * &#x60;przelewy24&#x60; - Przelewy24 * &#x60;gopay&#x60; - GoPay * &#x60;comgate&#x60; - Comgate * &#x60;monei&#x60; - MONEI * &#x60;redsys&#x60; - Redsys * &#x60;payplug&#x60; - PayPlug * &#x60;mollie&#x60; - Mollie * &#x60;unzer&#x60; - Unzer * &#x60;payone&#x60; - PAYONE * &#x60;nexi_xpay&#x60; - Nexi XPay * &#x60;halyk_epay&#x60; - Halyk ePay * &#x60;kaspi_pay&#x60; - Kaspi Pay * &#x60;vipps_mobilepay&#x60; - Vipps MobilePay * &#x60;paytrail&#x60; - Paytrail (optional)
+     * @param  string|null $gateway The payment gateway used for processing the payment. * &#x60;revolut&#x60; - Revolut * &#x60;paypal&#x60; - PayPal * &#x60;coinbase&#x60; - Coinbase * &#x60;cryptomus&#x60; - Cryptomus * &#x60;stripe&#x60; - Stripe * &#x60;coingate&#x60; - Coingate * &#x60;wallet&#x60; - Wallet * &#x60;manual&#x60; - Manual * &#x60;whitepay&#x60; - Whitepay * &#x60;wayforpay&#x60; - WayForPay * &#x60;usegateway&#x60; - UseGateway * &#x60;binance&#x60; - Binance Pay * &#x60;anymoney&#x60; - Any.Money * &#x60;coinpayments&#x60; - CoinPayments * &#x60;checkoutcom&#x60; - Checkout.com * &#x60;nowpayments&#x60; - NOWPayments * &#x60;btcpay&#x60; - BTCPay Server * &#x60;braintree&#x60; - Braintree * &#x60;monobank&#x60; - monobank * &#x60;liqpay&#x60; - LiqPay * &#x60;iyzico&#x60; - iyzico * &#x60;paytr&#x60; - PayTR * &#x60;payu&#x60; - PayU * &#x60;tpay&#x60; - Tpay * &#x60;przelewy24&#x60; - Przelewy24 * &#x60;gopay&#x60; - GoPay * &#x60;comgate&#x60; - Comgate * &#x60;monei&#x60; - MONEI * &#x60;redsys&#x60; - Redsys * &#x60;payplug&#x60; - PayPlug * &#x60;mollie&#x60; - Mollie * &#x60;unzer&#x60; - Unzer * &#x60;payone&#x60; - PAYONE * &#x60;nexi_xpay&#x60; - Nexi XPay * &#x60;halyk_epay&#x60; - Halyk ePay * &#x60;kaspi_pay&#x60; - Kaspi Pay * &#x60;vipps_mobilepay&#x60; - Vipps MobilePay * &#x60;paytrail&#x60; - Paytrail (optional)
      * @param  string|null $internalId (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
@@ -1569,6 +1574,214 @@ class InvoicesResource
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
             'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation quote
+     *
+     * Quote a purchase without creating an invoice
+     *
+     * @param  \ProxyRequest\Dto\InvoicePurchaseQuoteRequestRequest $invoicePurchaseQuoteRequestRequest invoicePurchaseQuoteRequestRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['quote'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\PurchaseQuoteResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function quote($invoicePurchaseQuoteRequestRequest, $acceptLanguage = null, string $contentType = self::contentTypes['quote'][0], $impersonateUserId = null)
+    {
+        list($response) = $this->quoteWithHttpInfo($invoicePurchaseQuoteRequestRequest, $acceptLanguage, $contentType, $impersonateUserId);
+        return $response;
+    }
+
+    /**
+     * Operation quoteWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function quoteWithResponse($invoicePurchaseQuoteRequestRequest, $acceptLanguage = null, string $contentType = self::contentTypes['quote'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->quoteWithHttpInfo($invoicePurchaseQuoteRequestRequest, $acceptLanguage, $contentType, $impersonateUserId));
+    }
+
+    /**
+     * Operation quoteWithHttpInfo
+     *
+     * Quote a purchase without creating an invoice
+     *
+     * @param  \ProxyRequest\Dto\InvoicePurchaseQuoteRequestRequest $invoicePurchaseQuoteRequestRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['quote'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\PurchaseQuoteResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function quoteWithHttpInfo($invoicePurchaseQuoteRequestRequest, $acceptLanguage = null, string $contentType = self::contentTypes['quote'][0], $impersonateUserId = null)
+    {
+        $request = $this->quoteRequest($invoicePurchaseQuoteRequestRequest, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\PurchaseQuoteResponse',
+));
+    }
+
+    /**
+     * Operation quoteAsync
+     *
+     * Quote a purchase without creating an invoice
+     *
+     * @param  \ProxyRequest\Dto\InvoicePurchaseQuoteRequestRequest $invoicePurchaseQuoteRequestRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['quote'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function quoteAsync($invoicePurchaseQuoteRequestRequest, $acceptLanguage = null, string $contentType = self::contentTypes['quote'][0], $impersonateUserId = null)
+    {
+        return $this->quoteAsyncWithHttpInfo($invoicePurchaseQuoteRequestRequest, $acceptLanguage, $contentType, $impersonateUserId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation quoteAsyncWithHttpInfo
+     *
+     * Quote a purchase without creating an invoice
+     *
+     * @param  \ProxyRequest\Dto\InvoicePurchaseQuoteRequestRequest $invoicePurchaseQuoteRequestRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['quote'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function quoteAsyncWithHttpInfo($invoicePurchaseQuoteRequestRequest, $acceptLanguage = null, string $contentType = self::contentTypes['quote'][0], $impersonateUserId = null)
+    {
+        $request = $this->quoteRequest($invoicePurchaseQuoteRequestRequest, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\PurchaseQuoteResponse',
+));
+    }
+
+    /**
+     * Create request for operation 'quote'
+     *
+     * @param  \ProxyRequest\Dto\InvoicePurchaseQuoteRequestRequest $invoicePurchaseQuoteRequestRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['quote'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function quoteRequest($invoicePurchaseQuoteRequestRequest, $acceptLanguage = null, string $contentType = self::contentTypes['quote'][0], $impersonateUserId = null)
+    {
+
+        // verify the required parameter 'invoicePurchaseQuoteRequestRequest' is set
+        if ($invoicePurchaseQuoteRequestRequest === null || (is_array($invoicePurchaseQuoteRequestRequest) && count($invoicePurchaseQuoteRequestRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $invoicePurchaseQuoteRequestRequest when calling quote'
+            );
+        }
+
+
+
+
+        $resourcePath = '/invoices/quote';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
+
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($invoicePurchaseQuoteRequestRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \ProxyRequest\Support\Json::encode(ObjectSerializer::sanitizeForSerialization($invoicePurchaseQuoteRequestRequest));
+            } else {
+                $httpBody = $invoicePurchaseQuoteRequestRequest;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

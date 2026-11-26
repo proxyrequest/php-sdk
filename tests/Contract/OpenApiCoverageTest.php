@@ -18,6 +18,7 @@ final class OpenApiCoverageTest extends TestCase
         'Analytics' => \ProxyRequest\Resource\AnalyticsResource::class,
         'Authorization' => \ProxyRequest\Resource\AuthorizationResource::class,
         'Coupons' => \ProxyRequest\Resource\CouponsResource::class,
+        'KYC' => \ProxyRequest\Resource\KYCResource::class,
         'Invoices' => \ProxyRequest\Resource\InvoicesResource::class,
         'Locations' => \ProxyRequest\Resource\LocationsResource::class,
         'News' => \ProxyRequest\Resource\NewsResource::class,
@@ -27,6 +28,7 @@ final class OpenApiCoverageTest extends TestCase
         'Providers' => \ProxyRequest\Resource\ProvidersResource::class,
         'Proxies' => \ProxyRequest\Resource\ProxiesResource::class,
         'Rewards' => \ProxyRequest\Resource\RewardsResource::class,
+        'Static proxies' => \ProxyRequest\Resource\StaticProxiesResource::class,
         'Settings' => \ProxyRequest\Resource\SettingsResource::class,
         'Telegram dashboard' => \ProxyRequest\Resource\TelegramDashboardResource::class,
         'Users' => \ProxyRequest\Resource\UsersResource::class,
@@ -55,6 +57,9 @@ final class OpenApiCoverageTest extends TestCase
                     continue;
                 }
                 $tag = $operation['tags'][0];
+                if ('MFA' === $tag) {
+                    $tag = 'login_otp_create' === $operationId ? 'Authorization' : 'Profile';
+                }
                 self::assertArrayHasKey($operationId, $mappings, \sprintf('%s %s has no public name.', strtoupper($httpMethod), $path));
                 self::assertArrayHasKey($tag, self::RESOURCE_BY_TAG, \sprintf('Tag "%s" has no resource class.', $tag));
                 self::assertTrue(

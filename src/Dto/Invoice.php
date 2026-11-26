@@ -58,6 +58,7 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
      */
     protected static $openAPITypes = [
         'id' => 'string',
+        'bandwidthPurchase' => '\ProxyRequest\Dto\BandwidthPurchase',
         'package' => '\ProxyRequest\Dto\PackageShort',
         'country' => '\ProxyRequest\Dto\Country',
         'userId' => 'string',
@@ -70,6 +71,8 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
         'fxQuotedAt' => '\DateTime',
         'updated' => '\DateTime',
         'created' => '\DateTime',
+        'rentalKind' => 'string',
+        'rentalStatus' => 'string',
         'type' => '\ProxyRequest\Dto\InvoiceTypeEnum',
         'isOneTime' => 'bool',
         'isPayout' => 'bool',
@@ -94,7 +97,8 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
         'companyPostalCode' => 'string',
         'companyRegistrationNumber' => 'string',
         'companyVatNumber' => 'string',
-        'paid' => '\DateTime'
+        'paid' => '\DateTime',
+        'rentalOrder' => 'string'
     ];
 
     /**
@@ -106,6 +110,7 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
      */
     protected static $openAPIFormats = [
         'id' => null,
+        'bandwidthPurchase' => null,
         'package' => null,
         'country' => null,
         'userId' => 'uuid',
@@ -118,6 +123,8 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
         'fxQuotedAt' => 'date-time',
         'updated' => 'date-time',
         'created' => 'date-time',
+        'rentalKind' => null,
+        'rentalStatus' => null,
         'type' => null,
         'isOneTime' => null,
         'isPayout' => null,
@@ -142,7 +149,8 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
         'companyPostalCode' => null,
         'companyRegistrationNumber' => null,
         'companyVatNumber' => null,
-        'paid' => 'date-time'
+        'paid' => 'date-time',
+        'rentalOrder' => null
     ];
 
     /**
@@ -152,6 +160,7 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
      */
     protected static array $openAPINullables = [
         'id' => false,
+        'bandwidthPurchase' => true,
         'package' => true,
         'country' => true,
         'userId' => false,
@@ -164,6 +173,8 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
         'fxQuotedAt' => true,
         'updated' => false,
         'created' => false,
+        'rentalKind' => false,
+        'rentalStatus' => false,
         'type' => false,
         'isOneTime' => false,
         'isPayout' => false,
@@ -188,7 +199,8 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
         'companyPostalCode' => false,
         'companyRegistrationNumber' => false,
         'companyVatNumber' => false,
-        'paid' => true
+        'paid' => true,
+        'rentalOrder' => true
     ];
 
     /**
@@ -278,6 +290,7 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
      */
     protected static $attributeMap = [
         'id' => 'id',
+        'bandwidthPurchase' => 'bandwidth_purchase',
         'package' => 'package',
         'country' => 'country',
         'userId' => 'user_id',
@@ -290,6 +303,8 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
         'fxQuotedAt' => 'fx_quoted_at',
         'updated' => 'updated',
         'created' => 'created',
+        'rentalKind' => 'rental_kind',
+        'rentalStatus' => 'rental_status',
         'type' => 'type',
         'isOneTime' => 'is_one_time',
         'isPayout' => 'is_payout',
@@ -314,7 +329,8 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
         'companyPostalCode' => 'company_postal_code',
         'companyRegistrationNumber' => 'company_registration_number',
         'companyVatNumber' => 'company_vat_number',
-        'paid' => 'paid'
+        'paid' => 'paid',
+        'rentalOrder' => 'rental_order'
     ];
 
     /**
@@ -324,6 +340,7 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
      */
     protected static $setters = [
         'id' => 'setId',
+        'bandwidthPurchase' => 'setBandwidthPurchase',
         'package' => 'setPackage',
         'country' => 'setCountry',
         'userId' => 'setUserId',
@@ -336,6 +353,8 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
         'fxQuotedAt' => 'setFxQuotedAt',
         'updated' => 'setUpdated',
         'created' => 'setCreated',
+        'rentalKind' => 'setRentalKind',
+        'rentalStatus' => 'setRentalStatus',
         'type' => 'setType',
         'isOneTime' => 'setIsOneTime',
         'isPayout' => 'setIsPayout',
@@ -360,7 +379,8 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
         'companyPostalCode' => 'setCompanyPostalCode',
         'companyRegistrationNumber' => 'setCompanyRegistrationNumber',
         'companyVatNumber' => 'setCompanyVatNumber',
-        'paid' => 'setPaid'
+        'paid' => 'setPaid',
+        'rentalOrder' => 'setRentalOrder'
     ];
 
     /**
@@ -370,6 +390,7 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
      */
     protected static $getters = [
         'id' => 'getId',
+        'bandwidthPurchase' => 'getBandwidthPurchase',
         'package' => 'getPackage',
         'country' => 'getCountry',
         'userId' => 'getUserId',
@@ -382,6 +403,8 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
         'fxQuotedAt' => 'getFxQuotedAt',
         'updated' => 'getUpdated',
         'created' => 'getCreated',
+        'rentalKind' => 'getRentalKind',
+        'rentalStatus' => 'getRentalStatus',
         'type' => 'getType',
         'isOneTime' => 'getIsOneTime',
         'isPayout' => 'getIsPayout',
@@ -406,7 +429,8 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
         'companyPostalCode' => 'getCompanyPostalCode',
         'companyRegistrationNumber' => 'getCompanyRegistrationNumber',
         'companyVatNumber' => 'getCompanyVatNumber',
-        'paid' => 'getPaid'
+        'paid' => 'getPaid',
+        'rentalOrder' => 'getRentalOrder'
     ];
 
     /**
@@ -467,6 +491,7 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
     public function __construct(?array $data = null)
     {
         $this->setIfExists('id', $data ?? [], null);
+        $this->setIfExists('bandwidthPurchase', $data ?? [], null);
         $this->setIfExists('package', $data ?? [], null);
         $this->setIfExists('country', $data ?? [], null);
         $this->setIfExists('userId', $data ?? [], null);
@@ -479,6 +504,8 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
         $this->setIfExists('fxQuotedAt', $data ?? [], null);
         $this->setIfExists('updated', $data ?? [], null);
         $this->setIfExists('created', $data ?? [], null);
+        $this->setIfExists('rentalKind', $data ?? [], null);
+        $this->setIfExists('rentalStatus', $data ?? [], null);
         $this->setIfExists('type', $data ?? [], null);
         $this->setIfExists('isOneTime', $data ?? [], null);
         $this->setIfExists('isPayout', $data ?? [], null);
@@ -490,7 +517,7 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
         $this->setIfExists('data', $data ?? [], null);
         $this->setIfExists('balance', $data ?? [], null);
         $this->setIfExists('priceTotal', $data ?? [], null);
-        $this->setIfExists('gateway', $data ?? [], null);
+        $this->setIfExists('gateway', $data ?? [], InvoiceGatewayEnum::STRIPE);
         $this->setIfExists('paymentUrl', $data ?? [], null);
         $this->setIfExists('currency', $data ?? [], null);
         $this->setIfExists('providerCheckoutId', $data ?? [], null);
@@ -504,6 +531,7 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
         $this->setIfExists('companyRegistrationNumber', $data ?? [], null);
         $this->setIfExists('companyVatNumber', $data ?? [], null);
         $this->setIfExists('paid', $data ?? [], null);
+        $this->setIfExists('rentalOrder', $data ?? [], null);
     }
 
     /**
@@ -707,6 +735,40 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
         }
 
         $this->container['id'] = $id;
+
+        return $this;
+    }
+
+    /**
+     * Gets bandwidthPurchase
+     *
+     * @return \ProxyRequest\Dto\BandwidthPurchase|null
+     */
+    public function getBandwidthPurchase()
+    {
+        return $this->container['bandwidthPurchase'];
+    }
+
+    /**
+     * Sets bandwidthPurchase
+     *
+     * @param \ProxyRequest\Dto\BandwidthPurchase|null $bandwidthPurchase bandwidthPurchase
+     *
+     * @return self
+     */
+    public function setBandwidthPurchase($bandwidthPurchase)
+    {
+        if (is_null($bandwidthPurchase)) {
+            array_push($this->openAPINullablesSetToNull, 'bandwidthPurchase');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('bandwidthPurchase', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['bandwidthPurchase'] = $bandwidthPurchase;
 
         return $this;
     }
@@ -1059,6 +1121,60 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
             throw new \InvalidArgumentException('non-nullable created cannot be null');
         }
         $this->container['created'] = $created;
+
+        return $this;
+    }
+
+    /**
+     * Gets rentalKind
+     *
+     * @return string|null
+     */
+    public function getRentalKind()
+    {
+        return $this->container['rentalKind'];
+    }
+
+    /**
+     * Sets rentalKind
+     *
+     * @param string|null $rentalKind rentalKind
+     *
+     * @return self
+     */
+    public function setRentalKind($rentalKind)
+    {
+        if (is_null($rentalKind)) {
+            throw new \InvalidArgumentException('non-nullable rentalKind cannot be null');
+        }
+        $this->container['rentalKind'] = $rentalKind;
+
+        return $this;
+    }
+
+    /**
+     * Gets rentalStatus
+     *
+     * @return string|null
+     */
+    public function getRentalStatus()
+    {
+        return $this->container['rentalStatus'];
+    }
+
+    /**
+     * Sets rentalStatus
+     *
+     * @param string|null $rentalStatus rentalStatus
+     *
+     * @return self
+     */
+    public function setRentalStatus($rentalStatus)
+    {
+        if (is_null($rentalStatus)) {
+            throw new \InvalidArgumentException('non-nullable rentalStatus cannot be null');
+        }
+        $this->container['rentalStatus'] = $rentalStatus;
 
         return $this;
     }
@@ -1417,7 +1533,7 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
     /**
      * Sets gateway
      *
-     * @param \ProxyRequest\Dto\InvoiceGatewayEnum|null $gateway The payment gateway used for processing the payment. * `coinbase` - Coinbase * `cryptomus` - Cryptomus * `stripe` - Stripe * `coingate` - Coingate * `wallet` - Wallet * `manual` - Manual * `whitepay` - Whitepay * `wayforpay` - WayForPay * `usegateway` - UseGateway * `binance` - Binance Pay * `anymoney` - Any.Money * `coinpayments` - CoinPayments * `checkoutcom` - Checkout.com * `nowpayments` - NOWPayments * `btcpay` - BTCPay Server * `braintree` - Braintree * `monobank` - monobank * `liqpay` - LiqPay * `iyzico` - iyzico * `paytr` - PayTR * `payu` - PayU * `tpay` - Tpay * `przelewy24` - Przelewy24 * `gopay` - GoPay * `comgate` - Comgate * `monei` - MONEI * `redsys` - Redsys * `payplug` - PayPlug * `mollie` - Mollie * `unzer` - Unzer * `payone` - PAYONE * `nexi_xpay` - Nexi XPay * `halyk_epay` - Halyk ePay * `kaspi_pay` - Kaspi Pay * `vipps_mobilepay` - Vipps MobilePay * `paytrail` - Paytrail
+     * @param \ProxyRequest\Dto\InvoiceGatewayEnum|null $gateway The payment gateway used for processing the payment. * `revolut` - Revolut * `paypal` - PayPal * `coinbase` - Coinbase * `cryptomus` - Cryptomus * `stripe` - Stripe * `coingate` - Coingate * `wallet` - Wallet * `manual` - Manual * `whitepay` - Whitepay * `wayforpay` - WayForPay * `usegateway` - UseGateway * `binance` - Binance Pay * `anymoney` - Any.Money * `coinpayments` - CoinPayments * `checkoutcom` - Checkout.com * `nowpayments` - NOWPayments * `btcpay` - BTCPay Server * `braintree` - Braintree * `monobank` - monobank * `liqpay` - LiqPay * `iyzico` - iyzico * `paytr` - PayTR * `payu` - PayU * `tpay` - Tpay * `przelewy24` - Przelewy24 * `gopay` - GoPay * `comgate` - Comgate * `monei` - MONEI * `redsys` - Redsys * `payplug` - PayPlug * `mollie` - Mollie * `unzer` - Unzer * `payone` - PAYONE * `nexi_xpay` - Nexi XPay * `halyk_epay` - Halyk ePay * `kaspi_pay` - Kaspi Pay * `vipps_mobilepay` - Vipps MobilePay * `paytrail` - Paytrail
      *
      * @return self
      */
@@ -1833,6 +1949,40 @@ class Invoice extends \ProxyRequest\Support\AdditionalProperties implements Mode
             }
         }
         $this->container['paid'] = $paid;
+
+        return $this;
+    }
+
+    /**
+     * Gets rentalOrder
+     *
+     * @return string|null
+     */
+    public function getRentalOrder()
+    {
+        return $this->container['rentalOrder'];
+    }
+
+    /**
+     * Sets rentalOrder
+     *
+     * @param string|null $rentalOrder rentalOrder
+     *
+     * @return self
+     */
+    public function setRentalOrder($rentalOrder)
+    {
+        if (is_null($rentalOrder)) {
+            array_push($this->openAPINullablesSetToNull, 'rentalOrder');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('rentalOrder', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['rentalOrder'] = $rentalOrder;
 
         return $this;
     }
