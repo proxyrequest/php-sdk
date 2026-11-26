@@ -64,6 +64,7 @@ class TargetingOptions extends \ProxyRequest\Support\AdditionalProperties implem
         'country' => 'string',
         'region' => 'string',
         'city' => 'string',
+        'zip' => 'string',
         'asn' => 'string',
         'isp' => 'string',
         'username' => 'string',
@@ -99,6 +100,7 @@ class TargetingOptions extends \ProxyRequest\Support\AdditionalProperties implem
         'country' => null,
         'region' => null,
         'city' => null,
+        'zip' => null,
         'asn' => null,
         'isp' => null,
         'username' => null,
@@ -132,6 +134,7 @@ class TargetingOptions extends \ProxyRequest\Support\AdditionalProperties implem
         'country' => false,
         'region' => false,
         'city' => false,
+        'zip' => false,
         'asn' => false,
         'isp' => false,
         'username' => false,
@@ -245,6 +248,7 @@ class TargetingOptions extends \ProxyRequest\Support\AdditionalProperties implem
         'country' => 'country',
         'region' => 'region',
         'city' => 'city',
+        'zip' => 'zip',
         'asn' => 'asn',
         'isp' => 'isp',
         'username' => 'username',
@@ -278,6 +282,7 @@ class TargetingOptions extends \ProxyRequest\Support\AdditionalProperties implem
         'country' => 'setCountry',
         'region' => 'setRegion',
         'city' => 'setCity',
+        'zip' => 'setZip',
         'asn' => 'setAsn',
         'isp' => 'setIsp',
         'username' => 'setUsername',
@@ -311,6 +316,7 @@ class TargetingOptions extends \ProxyRequest\Support\AdditionalProperties implem
         'country' => 'getCountry',
         'region' => 'getRegion',
         'city' => 'getCity',
+        'zip' => 'getZip',
         'asn' => 'getAsn',
         'isp' => 'getIsp',
         'username' => 'getUsername',
@@ -395,6 +401,7 @@ class TargetingOptions extends \ProxyRequest\Support\AdditionalProperties implem
         $this->setIfExists('country', $data ?? [], null);
         $this->setIfExists('region', $data ?? [], null);
         $this->setIfExists('city', $data ?? [], null);
+        $this->setIfExists('zip', $data ?? [], null);
         $this->setIfExists('asn', $data ?? [], null);
         $this->setIfExists('isp', $data ?? [], null);
         $this->setIfExists('username', $data ?? [], null);
@@ -717,6 +724,33 @@ class TargetingOptions extends \ProxyRequest\Support\AdditionalProperties implem
             throw new \InvalidArgumentException('non-nullable city cannot be null');
         }
         $this->container['city'] = $city;
+
+        return $this;
+    }
+
+    /**
+     * Gets zip
+     *
+     * @return string|null
+     */
+    public function getZip()
+    {
+        return $this->container['zip'];
+    }
+
+    /**
+     * Sets zip
+     *
+     * @param string|null $zip zip
+     *
+     * @return self
+     */
+    public function setZip($zip)
+    {
+        if (is_null($zip)) {
+            throw new \InvalidArgumentException('non-nullable zip cannot be null');
+        }
+        $this->container['zip'] = $zip;
 
         return $this;
     }

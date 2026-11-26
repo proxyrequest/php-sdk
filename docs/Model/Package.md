@@ -16,10 +16,11 @@ Name | Type | Description | Notes
 **isAsnTargeting** | **bool** | Allow users to target a specific ASN in their proxy username. ASNs must be configured in the provider&#39;s location vocabulary. country-us-asn-3602 | [optional]
 **features** | **mixed[]** |  | [readonly]
 **description** | **string** | Customer-facing description shown on the package listing page. | [optional]
-**pricing** | [**\ProxyRequest\Dto\PricingEnum**](PricingEnum.md) | Pricing model applied when customers purchase data on this package. Fixed a fixed price per data amount — 10 GB for $10, 50 GB for $50 Range tiered pricing where the unit price decreases as quantity increases * &#x60;fixed&#x60; - Fixed * &#x60;range&#x60; - Range | [optional]
+**pricing** | [**\ProxyRequest\Dto\PricingEnum**](PricingEnum.md) | Pricing model applied when customers purchase data on this package. Fixed a fixed price per data amount — 10 GB for $10, 50 GB for $50 Range tiered pricing where the unit price decreases as quantity increases * &#x60;fixed&#x60; - Fixed * &#x60;range&#x60; - Range * &#x60;bandwidth&#x60; - Bandwidth | [optional]
 **pricingUnit** | [**\ProxyRequest\Dto\PricingUnitEnum**](PricingUnitEnum.md) | Unit customers purchase — determines how the billing model amounts are interpreted. * &#x60;data&#x60; - Data * &#x60;proxy&#x60; - Proxy | [optional]
 **billingCycle** | **int** | Number of days before purchased data expires. Set to -1 for data that never expires. 30 monthly -1 never expires |
 **billingModel** | **array<string,mixed>** |  | [readonly]
+**bandwidthPlans** | [**\ProxyRequest\Dto\BandwidthPlan[]**](BandwidthPlan.md) |  | [optional] [readonly]
 **isUnlimitedData** | **bool** | When enabled, users on this package have no data cap. The proxy will not enforce any bandwidth limit. | [optional]
 **billingUnlimited** | **int** | Price charged for unlimited data access on this package. Set to 0 to disable unlimited option. | [optional]
 **priceRequiresConfiguration** | **bool** |  | [readonly]

@@ -85,11 +85,32 @@ final class IdempotencyClient implements ClientInterface
         if (!$supported) {
             return [$request, false];
         }
-        if (!$request->hasHeader('Idempotency-Key') && $this->enabled) {
-            $request = $request->withHeader('Idempotency-Key', self::uuid());
+        if (!$request->hasHeader('Idempotency-Key')) {
+            $bodyKey = IdempotencyPolicy::acceptsBodyKey($request, $this->basePath)
+                ? self::legacyBodyKey($request)
+                : null;
+            if (null !== $bodyKey) {
+                if (1 === preg_match('/^[!-~]{1,128}$/D', $bodyKey)) {
+                    $request = $request->withHeader('Idempotency-Key', $bodyKey);
+                }
+            } elseif ($this->enabled) {
+                $request = $request->withHeader('Idempotency-Key', self::uuid());
+            }
         }
 
         return [$request, $request->hasHeader('Idempotency-Key')];
+    }
+
+    private static function legacyBodyKey(RequestInterface $request): ?string
+    {
+        $body = $request->getBody();
+        if (!$body->isSeekable()) {
+            return null;
+        }
+        $data = json_decode((string) $body, true);
+        $body->rewind();
+        $key = \is_array($data) ? ($data['idempotency_key'] ?? null) : null;
+        return \is_string($key) ? $key : null;
     }
 
     /** Prepare once before decoding so failures retain the actual request key. */

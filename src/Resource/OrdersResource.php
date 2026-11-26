@@ -74,16 +74,80 @@ class OrdersResource
 
     /** @var string[] $contentTypes **/
     public const contentTypes = [
+        'cancelReservation' => [
+            'application/json',
+        ],
+        'checkout' => [
+            'application/json',
+            'application/x-www-form-urlencoded',
+            'multipart/form-data',
+        ],
         'delete' => [
             'application/json',
         ],
         'get' => [
             'application/json',
         ],
+        'getAvailability' => [
+            'application/json',
+        ],
+        'getCalendarRenewal' => [
+            'application/json',
+        ],
+        'getRental' => [
+            'application/json',
+        ],
         'list' => [
             'application/json',
         ],
+        'listCatalog' => [
+            'application/json',
+        ],
+        'listProducts' => [
+            'application/json',
+        ],
+        'listReplacements' => [
+            'application/json',
+        ],
+        'quoteCheckout' => [
+            'application/json',
+            'application/x-www-form-urlencoded',
+            'multipart/form-data',
+        ],
+        'quotePurchase' => [
+            'application/json',
+            'application/x-www-form-urlencoded',
+            'multipart/form-data',
+        ],
+        'quoteRenewal' => [
+            'application/json',
+            'application/x-www-form-urlencoded',
+            'multipart/form-data',
+        ],
+        'renew' => [
+            'application/json',
+            'application/x-www-form-urlencoded',
+            'multipart/form-data',
+        ],
+        'requestReplacement' => [
+            'application/json',
+            'application/x-www-form-urlencoded',
+            'multipart/form-data',
+        ],
+        'reserve' => [
+            'application/json',
+            'application/x-www-form-urlencoded',
+            'multipart/form-data',
+        ],
         'resetPassword' => [
+            'application/json',
+            'application/x-www-form-urlencoded',
+            'multipart/form-data',
+        ],
+        'resetProxyPassword' => [
+            'application/json',
+        ],
+        'setCalendarRenewal' => [
             'application/json',
             'application/x-www-form-urlencoded',
             'multipart/form-data',
@@ -142,6 +206,461 @@ class OrdersResource
     }
 
     /**
+     * Operation cancelReservation
+     *
+     * Cancel an unissued reservation
+     *
+     * @param  string $id id (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelReservation'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\ReservationCancellation|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function cancelReservation($id, $acceptLanguage = null, string $contentType = self::contentTypes['cancelReservation'][0], $impersonateUserId = null)
+    {
+        list($response) = $this->cancelReservationWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId);
+        return $response;
+    }
+
+    /**
+     * Operation cancelReservationWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function cancelReservationWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['cancelReservation'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->cancelReservationWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId));
+    }
+
+    /**
+     * Operation cancelReservationWithHttpInfo
+     *
+     * Cancel an unissued reservation
+     *
+     * @param  string $id (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelReservation'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\ReservationCancellation|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function cancelReservationWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['cancelReservation'][0], $impersonateUserId = null)
+    {
+        $request = $this->cancelReservationRequest($id, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\ReservationCancellation',
+));
+    }
+
+    /**
+     * Operation cancelReservationAsync
+     *
+     * Cancel an unissued reservation
+     *
+     * @param  string $id (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelReservation'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function cancelReservationAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['cancelReservation'][0], $impersonateUserId = null)
+    {
+        return $this->cancelReservationAsyncWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation cancelReservationAsyncWithHttpInfo
+     *
+     * Cancel an unissued reservation
+     *
+     * @param  string $id (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelReservation'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function cancelReservationAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['cancelReservation'][0], $impersonateUserId = null)
+    {
+        $request = $this->cancelReservationRequest($id, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\ReservationCancellation',
+));
+    }
+
+    /**
+     * Create request for operation 'cancelReservation'
+     *
+     * @param  string $id (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelReservation'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function cancelReservationRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['cancelReservation'][0], $impersonateUserId = null)
+    {
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling cancelReservation'
+            );
+        }
+
+
+
+
+        $resourcePath = '/orders/{id}/cancel-reservation';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation checkout
+     *
+     * Check out a rental reservation
+     *
+     * @param  string $id id (required)
+     * @param  \ProxyRequest\Dto\StaticCheckoutRequest $staticCheckoutRequest staticCheckoutRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Existing clients can send idempotency_key in the JSON body. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkout'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\Invoice|\ProxyRequest\Dto\Invoice|\ProxyRequest\Dto\StaticMutationError|\ProxyRequest\Dto\InvoicesCreate502Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function checkout($id, $staticCheckoutRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['checkout'][0], $impersonateUserId = null)
+    {
+        list($response) = $this->checkoutWithHttpInfo($id, $staticCheckoutRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId);
+        return $response;
+    }
+
+    /**
+     * Operation checkoutWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function checkoutWithResponse($id, $staticCheckoutRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['checkout'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->checkoutWithHttpInfo($id, $staticCheckoutRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId));
+    }
+
+    /**
+     * Operation checkoutWithHttpInfo
+     *
+     * Check out a rental reservation
+     *
+     * @param  string $id (required)
+     * @param  \ProxyRequest\Dto\StaticCheckoutRequest $staticCheckoutRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Existing clients can send idempotency_key in the JSON body. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkout'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\Invoice|\ProxyRequest\Dto\Invoice|\ProxyRequest\Dto\StaticMutationError|\ProxyRequest\Dto\InvoicesCreate502Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function checkoutWithHttpInfo($id, $staticCheckoutRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['checkout'][0], $impersonateUserId = null)
+    {
+        $request = $this->checkoutRequest($id, $staticCheckoutRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\Invoice',
+  201 => '\\ProxyRequest\\Dto\\Invoice',
+));
+    }
+
+    /**
+     * Operation checkoutAsync
+     *
+     * Check out a rental reservation
+     *
+     * @param  string $id (required)
+     * @param  \ProxyRequest\Dto\StaticCheckoutRequest $staticCheckoutRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Existing clients can send idempotency_key in the JSON body. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkout'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function checkoutAsync($id, $staticCheckoutRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['checkout'][0], $impersonateUserId = null)
+    {
+        return $this->checkoutAsyncWithHttpInfo($id, $staticCheckoutRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation checkoutAsyncWithHttpInfo
+     *
+     * Check out a rental reservation
+     *
+     * @param  string $id (required)
+     * @param  \ProxyRequest\Dto\StaticCheckoutRequest $staticCheckoutRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Existing clients can send idempotency_key in the JSON body. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkout'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function checkoutAsyncWithHttpInfo($id, $staticCheckoutRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['checkout'][0], $impersonateUserId = null)
+    {
+        $request = $this->checkoutRequest($id, $staticCheckoutRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\Invoice',
+  201 => '\\ProxyRequest\\Dto\\Invoice',
+));
+    }
+
+    /**
+     * Create request for operation 'checkout'
+     *
+     * @param  string $id (required)
+     * @param  \ProxyRequest\Dto\StaticCheckoutRequest $staticCheckoutRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Existing clients can send idempotency_key in the JSON body. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['checkout'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function checkoutRequest($id, $staticCheckoutRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['checkout'][0], $impersonateUserId = null)
+    {
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling checkout'
+            );
+        }
+
+        // verify the required parameter 'staticCheckoutRequest' is set
+        if ($staticCheckoutRequest === null || (is_array($staticCheckoutRequest) && count($staticCheckoutRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $staticCheckoutRequest when calling checkout'
+            );
+        }
+
+        if ($idempotencyKey !== null && strlen($idempotencyKey) > 128) {
+            throw new \InvalidArgumentException('invalid length for "$idempotencyKey" when calling OrdersResource.checkout, must be smaller than or equal to 128.');
+        }
+        if ($idempotencyKey !== null && strlen($idempotencyKey) < 1) {
+            throw new \InvalidArgumentException('invalid length for "$idempotencyKey" when calling OrdersResource.checkout, must be bigger than or equal to 1.');
+        }
+
+
+
+
+        $resourcePath = '/orders/{id}/checkout';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // header params
+        if ($idempotencyKey !== null) {
+            $headerParams['Idempotency-Key'] = ObjectSerializer::toHeaderValue($idempotencyKey);
+        }
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($staticCheckoutRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \ProxyRequest\Support\Json::encode(ObjectSerializer::sanitizeForSerialization($staticCheckoutRequest));
+            } else {
+                $httpBody = $staticCheckoutRequest;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation delete
      *
      * Delete a sub-user order
@@ -155,11 +674,12 @@ class OrdersResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \ProxyRequest\Dto\UsageClosureResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
     public function delete($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null)
     {
-        $this->deleteWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId);
+        list($response) = $this->deleteWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId);
+        return $response;
     }
 
     /**
@@ -186,12 +706,13 @@ class OrdersResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ProxyRequest\Dto\UsageClosureResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteWithHttpInfo($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null)
     {
         $request = $this->deleteRequest($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  202 => '\\ProxyRequest\\Dto\\UsageClosureResponse',
   204 => 'void',
 ));
     }
@@ -240,6 +761,7 @@ class OrdersResource
     {
         $request = $this->deleteRequest($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  202 => '\\ProxyRequest\\Dto\\UsageClosureResponse',
   204 => 'void',
 ));
     }
@@ -499,6 +1021,781 @@ class OrdersResource
         $httpBody = '';
         $multipart = false;
 
+
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation getAvailability
+     *
+     * Available static rental locations
+     *
+     * @param  string|null $allocationMode * &#x60;dedicated&#x60; - dedicated * &#x60;shared&#x60; - shared (optional)
+     * @param  string|null $cityId cityId (optional)
+     * @param  string|null $countryCode countryCode (optional)
+     * @param  string|null $networkClass * &#x60;isp&#x60; - isp * &#x60;dc&#x60; - dc * &#x60;mobile&#x60; - mobile (optional)
+     * @param  string|null $operator operator (optional)
+     * @param  string|null $packageId packageId (optional)
+     * @param  string|null $regionId regionId (optional)
+     * @param  string|null $termId termId (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAvailability'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\AvailabilityResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function getAvailability($allocationMode = null, $cityId = null, $countryCode = null, $networkClass = null, $operator = null, $packageId = null, $regionId = null, $termId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getAvailability'][0], $impersonateUserId = null)
+    {
+        list($response) = $this->getAvailabilityWithHttpInfo($allocationMode, $cityId, $countryCode, $networkClass, $operator, $packageId, $regionId, $termId, $acceptLanguage, $contentType, $impersonateUserId);
+        return $response;
+    }
+
+    /**
+     * Operation getAvailabilityWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function getAvailabilityWithResponse($allocationMode = null, $cityId = null, $countryCode = null, $networkClass = null, $operator = null, $packageId = null, $regionId = null, $termId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getAvailability'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getAvailabilityWithHttpInfo($allocationMode, $cityId, $countryCode, $networkClass, $operator, $packageId, $regionId, $termId, $acceptLanguage, $contentType, $impersonateUserId));
+    }
+
+    /**
+     * Operation getAvailabilityWithHttpInfo
+     *
+     * Available static rental locations
+     *
+     * @param  string|null $allocationMode * &#x60;dedicated&#x60; - dedicated * &#x60;shared&#x60; - shared (optional)
+     * @param  string|null $cityId (optional)
+     * @param  string|null $countryCode (optional)
+     * @param  string|null $networkClass * &#x60;isp&#x60; - isp * &#x60;dc&#x60; - dc * &#x60;mobile&#x60; - mobile (optional)
+     * @param  string|null $operator (optional)
+     * @param  string|null $packageId (optional)
+     * @param  string|null $regionId (optional)
+     * @param  string|null $termId (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAvailability'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\AvailabilityResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getAvailabilityWithHttpInfo($allocationMode = null, $cityId = null, $countryCode = null, $networkClass = null, $operator = null, $packageId = null, $regionId = null, $termId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getAvailability'][0], $impersonateUserId = null)
+    {
+        $request = $this->getAvailabilityRequest($allocationMode, $cityId, $countryCode, $networkClass, $operator, $packageId, $regionId, $termId, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\AvailabilityResponse',
+));
+    }
+
+    /**
+     * Operation getAvailabilityAsync
+     *
+     * Available static rental locations
+     *
+     * @param  string|null $allocationMode * &#x60;dedicated&#x60; - dedicated * &#x60;shared&#x60; - shared (optional)
+     * @param  string|null $cityId (optional)
+     * @param  string|null $countryCode (optional)
+     * @param  string|null $networkClass * &#x60;isp&#x60; - isp * &#x60;dc&#x60; - dc * &#x60;mobile&#x60; - mobile (optional)
+     * @param  string|null $operator (optional)
+     * @param  string|null $packageId (optional)
+     * @param  string|null $regionId (optional)
+     * @param  string|null $termId (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAvailability'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getAvailabilityAsync($allocationMode = null, $cityId = null, $countryCode = null, $networkClass = null, $operator = null, $packageId = null, $regionId = null, $termId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getAvailability'][0], $impersonateUserId = null)
+    {
+        return $this->getAvailabilityAsyncWithHttpInfo($allocationMode, $cityId, $countryCode, $networkClass, $operator, $packageId, $regionId, $termId, $acceptLanguage, $contentType, $impersonateUserId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getAvailabilityAsyncWithHttpInfo
+     *
+     * Available static rental locations
+     *
+     * @param  string|null $allocationMode * &#x60;dedicated&#x60; - dedicated * &#x60;shared&#x60; - shared (optional)
+     * @param  string|null $cityId (optional)
+     * @param  string|null $countryCode (optional)
+     * @param  string|null $networkClass * &#x60;isp&#x60; - isp * &#x60;dc&#x60; - dc * &#x60;mobile&#x60; - mobile (optional)
+     * @param  string|null $operator (optional)
+     * @param  string|null $packageId (optional)
+     * @param  string|null $regionId (optional)
+     * @param  string|null $termId (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAvailability'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getAvailabilityAsyncWithHttpInfo($allocationMode = null, $cityId = null, $countryCode = null, $networkClass = null, $operator = null, $packageId = null, $regionId = null, $termId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getAvailability'][0], $impersonateUserId = null)
+    {
+        $request = $this->getAvailabilityRequest($allocationMode, $cityId, $countryCode, $networkClass, $operator, $packageId, $regionId, $termId, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\AvailabilityResponse',
+));
+    }
+
+    /**
+     * Create request for operation 'getAvailability'
+     *
+     * @param  string|null $allocationMode * &#x60;dedicated&#x60; - dedicated * &#x60;shared&#x60; - shared (optional)
+     * @param  string|null $cityId (optional)
+     * @param  string|null $countryCode (optional)
+     * @param  string|null $networkClass * &#x60;isp&#x60; - isp * &#x60;dc&#x60; - dc * &#x60;mobile&#x60; - mobile (optional)
+     * @param  string|null $operator (optional)
+     * @param  string|null $packageId (optional)
+     * @param  string|null $regionId (optional)
+     * @param  string|null $termId (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAvailability'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getAvailabilityRequest($allocationMode = null, $cityId = null, $countryCode = null, $networkClass = null, $operator = null, $packageId = null, $regionId = null, $termId = null, $acceptLanguage = null, string $contentType = self::contentTypes['getAvailability'][0], $impersonateUserId = null)
+    {
+
+        if ($allocationMode !== null && strlen($allocationMode) < 1) {
+            throw new \InvalidArgumentException('invalid length for "$allocationMode" when calling OrdersResource.getAvailability, must be bigger than or equal to 1.');
+        }
+
+
+        if ($countryCode !== null && strlen($countryCode) > 2) {
+            throw new \InvalidArgumentException('invalid length for "$countryCode" when calling OrdersResource.getAvailability, must be smaller than or equal to 2.');
+        }
+        if ($countryCode !== null && strlen($countryCode) < 2) {
+            throw new \InvalidArgumentException('invalid length for "$countryCode" when calling OrdersResource.getAvailability, must be bigger than or equal to 2.');
+        }
+
+        if ($networkClass !== null && strlen($networkClass) < 1) {
+            throw new \InvalidArgumentException('invalid length for "$networkClass" when calling OrdersResource.getAvailability, must be bigger than or equal to 1.');
+        }
+
+        if ($operator !== null && strlen($operator) > 100) {
+            throw new \InvalidArgumentException('invalid length for "$operator" when calling OrdersResource.getAvailability, must be smaller than or equal to 100.');
+        }
+        if ($operator !== null && strlen($operator) < 1) {
+            throw new \InvalidArgumentException('invalid length for "$operator" when calling OrdersResource.getAvailability, must be bigger than or equal to 1.');
+        }
+
+
+
+
+
+
+
+        $resourcePath = '/orders/availability';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $allocationMode,
+            'allocation_mode', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $cityId,
+            'city_id', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $countryCode,
+            'country_code', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $networkClass,
+            'network_class', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $operator,
+            'operator', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $packageId,
+            'package_id', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $regionId,
+            'region_id', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $termId,
+            'term_id', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
+
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation getCalendarRenewal
+     *
+     * Read static calendar renewal settings
+     *
+     * @param  string $id id (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCalendarRenewal'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\AutoRenewalStatus|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function getCalendarRenewal($id, $acceptLanguage = null, string $contentType = self::contentTypes['getCalendarRenewal'][0], $impersonateUserId = null)
+    {
+        list($response) = $this->getCalendarRenewalWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId);
+        return $response;
+    }
+
+    /**
+     * Operation getCalendarRenewalWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function getCalendarRenewalWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['getCalendarRenewal'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getCalendarRenewalWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId));
+    }
+
+    /**
+     * Operation getCalendarRenewalWithHttpInfo
+     *
+     * Read static calendar renewal settings
+     *
+     * @param  string $id (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCalendarRenewal'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\AutoRenewalStatus|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getCalendarRenewalWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['getCalendarRenewal'][0], $impersonateUserId = null)
+    {
+        $request = $this->getCalendarRenewalRequest($id, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\AutoRenewalStatus',
+));
+    }
+
+    /**
+     * Operation getCalendarRenewalAsync
+     *
+     * Read static calendar renewal settings
+     *
+     * @param  string $id (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCalendarRenewal'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getCalendarRenewalAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['getCalendarRenewal'][0], $impersonateUserId = null)
+    {
+        return $this->getCalendarRenewalAsyncWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getCalendarRenewalAsyncWithHttpInfo
+     *
+     * Read static calendar renewal settings
+     *
+     * @param  string $id (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCalendarRenewal'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getCalendarRenewalAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['getCalendarRenewal'][0], $impersonateUserId = null)
+    {
+        $request = $this->getCalendarRenewalRequest($id, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\AutoRenewalStatus',
+));
+    }
+
+    /**
+     * Create request for operation 'getCalendarRenewal'
+     *
+     * @param  string $id (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCalendarRenewal'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getCalendarRenewalRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['getCalendarRenewal'][0], $impersonateUserId = null)
+    {
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling getCalendarRenewal'
+            );
+        }
+
+
+
+
+        $resourcePath = '/orders/{id}/auto-renewal';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation getRental
+     *
+     * Read order rental
+     *
+     * @param  string $id id (required)
+     * @param  int|null $limit Page size, up to 1000. Defaults to 100. (optional)
+     * @param  int|null $offset Zero-based position of the first result. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRental'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\RentalDetail|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function getRental($id, $limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['getRental'][0], $impersonateUserId = null)
+    {
+        list($response) = $this->getRentalWithHttpInfo($id, $limit, $offset, $acceptLanguage, $contentType, $impersonateUserId);
+        return $response;
+    }
+
+    /**
+     * Operation getRentalWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function getRentalWithResponse($id, $limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['getRental'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getRentalWithHttpInfo($id, $limit, $offset, $acceptLanguage, $contentType, $impersonateUserId));
+    }
+
+    /**
+     * Operation getRentalWithHttpInfo
+     *
+     * Read order rental
+     *
+     * @param  string $id (required)
+     * @param  int|null $limit Page size, up to 1000. Defaults to 100. (optional)
+     * @param  int|null $offset Zero-based position of the first result. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRental'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\RentalDetail|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getRentalWithHttpInfo($id, $limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['getRental'][0], $impersonateUserId = null)
+    {
+        $request = $this->getRentalRequest($id, $limit, $offset, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\RentalDetail',
+));
+    }
+
+    /**
+     * Operation getRentalAsync
+     *
+     * Read order rental
+     *
+     * @param  string $id (required)
+     * @param  int|null $limit Page size, up to 1000. Defaults to 100. (optional)
+     * @param  int|null $offset Zero-based position of the first result. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRental'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getRentalAsync($id, $limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['getRental'][0], $impersonateUserId = null)
+    {
+        return $this->getRentalAsyncWithHttpInfo($id, $limit, $offset, $acceptLanguage, $contentType, $impersonateUserId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getRentalAsyncWithHttpInfo
+     *
+     * Read order rental
+     *
+     * @param  string $id (required)
+     * @param  int|null $limit Page size, up to 1000. Defaults to 100. (optional)
+     * @param  int|null $offset Zero-based position of the first result. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRental'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getRentalAsyncWithHttpInfo($id, $limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['getRental'][0], $impersonateUserId = null)
+    {
+        $request = $this->getRentalRequest($id, $limit, $offset, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\RentalDetail',
+));
+    }
+
+    /**
+     * Create request for operation 'getRental'
+     *
+     * @param  string $id (required)
+     * @param  int|null $limit Page size, up to 1000. Defaults to 100. (optional)
+     * @param  int|null $offset Zero-based position of the first result. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRental'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getRentalRequest($id, $limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['getRental'][0], $impersonateUserId = null)
+    {
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling getRental'
+            );
+        }
+
+
+
+
+
+
+        $resourcePath = '/orders/{id}/rental';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $limit,
+            'limit', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $offset,
+            'offset', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
 
         // header params
         if ($acceptLanguage !== null) {
@@ -906,9 +2203,2022 @@ class OrdersResource
     }
 
     /**
+     * Operation listCatalog
+     *
+     * List static rental offers
+     *
+     * @param  int|null $limit Page size, up to 1000. Defaults to 100. (optional)
+     * @param  int|null $offset Zero-based position of the first result. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCatalog'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\CatalogPage|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function listCatalog($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCatalog'][0], $impersonateUserId = null)
+    {
+        list($response) = $this->listCatalogWithHttpInfo($limit, $offset, $acceptLanguage, $contentType, $impersonateUserId);
+        return $response;
+    }
+
+    /**
+     * Operation listCatalogWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function listCatalogWithResponse($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCatalog'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listCatalogWithHttpInfo($limit, $offset, $acceptLanguage, $contentType, $impersonateUserId));
+    }
+
+    /**
+     * Operation listCatalogWithHttpInfo
+     *
+     * List static rental offers
+     *
+     * @param  int|null $limit Page size, up to 1000. Defaults to 100. (optional)
+     * @param  int|null $offset Zero-based position of the first result. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCatalog'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\CatalogPage|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function listCatalogWithHttpInfo($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCatalog'][0], $impersonateUserId = null)
+    {
+        $request = $this->listCatalogRequest($limit, $offset, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\CatalogPage',
+));
+    }
+
+    /**
+     * Operation listCatalogAsync
+     *
+     * List static rental offers
+     *
+     * @param  int|null $limit Page size, up to 1000. Defaults to 100. (optional)
+     * @param  int|null $offset Zero-based position of the first result. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCatalog'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listCatalogAsync($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCatalog'][0], $impersonateUserId = null)
+    {
+        return $this->listCatalogAsyncWithHttpInfo($limit, $offset, $acceptLanguage, $contentType, $impersonateUserId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation listCatalogAsyncWithHttpInfo
+     *
+     * List static rental offers
+     *
+     * @param  int|null $limit Page size, up to 1000. Defaults to 100. (optional)
+     * @param  int|null $offset Zero-based position of the first result. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCatalog'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listCatalogAsyncWithHttpInfo($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCatalog'][0], $impersonateUserId = null)
+    {
+        $request = $this->listCatalogRequest($limit, $offset, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\CatalogPage',
+));
+    }
+
+    /**
+     * Create request for operation 'listCatalog'
+     *
+     * @param  int|null $limit Page size, up to 1000. Defaults to 100. (optional)
+     * @param  int|null $offset Zero-based position of the first result. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listCatalog'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function listCatalogRequest($limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCatalog'][0], $impersonateUserId = null)
+    {
+
+
+
+
+
+
+        $resourcePath = '/orders/catalog';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $limit,
+            'limit', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $offset,
+            'offset', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
+
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation listProducts
+     *
+     * Available proxy products
+     *
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listProducts'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\Products|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function listProducts($acceptLanguage = null, string $contentType = self::contentTypes['listProducts'][0], $impersonateUserId = null)
+    {
+        list($response) = $this->listProductsWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId);
+        return $response;
+    }
+
+    /**
+     * Operation listProductsWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function listProductsWithResponse($acceptLanguage = null, string $contentType = self::contentTypes['listProducts'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listProductsWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId));
+    }
+
+    /**
+     * Operation listProductsWithHttpInfo
+     *
+     * Available proxy products
+     *
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listProducts'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\Products|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function listProductsWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['listProducts'][0], $impersonateUserId = null)
+    {
+        $request = $this->listProductsRequest($acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\Products',
+));
+    }
+
+    /**
+     * Operation listProductsAsync
+     *
+     * Available proxy products
+     *
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listProducts'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listProductsAsync($acceptLanguage = null, string $contentType = self::contentTypes['listProducts'][0], $impersonateUserId = null)
+    {
+        return $this->listProductsAsyncWithHttpInfo($acceptLanguage, $contentType, $impersonateUserId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation listProductsAsyncWithHttpInfo
+     *
+     * Available proxy products
+     *
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listProducts'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listProductsAsyncWithHttpInfo($acceptLanguage = null, string $contentType = self::contentTypes['listProducts'][0], $impersonateUserId = null)
+    {
+        $request = $this->listProductsRequest($acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\Products',
+));
+    }
+
+    /**
+     * Create request for operation 'listProducts'
+     *
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listProducts'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function listProductsRequest($acceptLanguage = null, string $contentType = self::contentTypes['listProducts'][0], $impersonateUserId = null)
+    {
+
+
+
+
+        $resourcePath = '/orders/products';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
+
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation listReplacements
+     *
+     * List order replacement requests
+     *
+     * @param  string $id id (required)
+     * @param  int|null $limit Page size, up to 1000. Defaults to 100. (optional)
+     * @param  int|null $offset Zero-based position of the first result. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listReplacements'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\ReplacementPage|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function listReplacements($id, $limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listReplacements'][0], $impersonateUserId = null)
+    {
+        list($response) = $this->listReplacementsWithHttpInfo($id, $limit, $offset, $acceptLanguage, $contentType, $impersonateUserId);
+        return $response;
+    }
+
+    /**
+     * Operation listReplacementsWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function listReplacementsWithResponse($id, $limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listReplacements'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listReplacementsWithHttpInfo($id, $limit, $offset, $acceptLanguage, $contentType, $impersonateUserId));
+    }
+
+    /**
+     * Operation listReplacementsWithHttpInfo
+     *
+     * List order replacement requests
+     *
+     * @param  string $id (required)
+     * @param  int|null $limit Page size, up to 1000. Defaults to 100. (optional)
+     * @param  int|null $offset Zero-based position of the first result. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listReplacements'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\ReplacementPage|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function listReplacementsWithHttpInfo($id, $limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listReplacements'][0], $impersonateUserId = null)
+    {
+        $request = $this->listReplacementsRequest($id, $limit, $offset, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\ReplacementPage',
+));
+    }
+
+    /**
+     * Operation listReplacementsAsync
+     *
+     * List order replacement requests
+     *
+     * @param  string $id (required)
+     * @param  int|null $limit Page size, up to 1000. Defaults to 100. (optional)
+     * @param  int|null $offset Zero-based position of the first result. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listReplacements'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listReplacementsAsync($id, $limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listReplacements'][0], $impersonateUserId = null)
+    {
+        return $this->listReplacementsAsyncWithHttpInfo($id, $limit, $offset, $acceptLanguage, $contentType, $impersonateUserId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation listReplacementsAsyncWithHttpInfo
+     *
+     * List order replacement requests
+     *
+     * @param  string $id (required)
+     * @param  int|null $limit Page size, up to 1000. Defaults to 100. (optional)
+     * @param  int|null $offset Zero-based position of the first result. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listReplacements'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listReplacementsAsyncWithHttpInfo($id, $limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listReplacements'][0], $impersonateUserId = null)
+    {
+        $request = $this->listReplacementsRequest($id, $limit, $offset, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\ReplacementPage',
+));
+    }
+
+    /**
+     * Create request for operation 'listReplacements'
+     *
+     * @param  string $id (required)
+     * @param  int|null $limit Page size, up to 1000. Defaults to 100. (optional)
+     * @param  int|null $offset Zero-based position of the first result. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listReplacements'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function listReplacementsRequest($id, $limit = null, $offset = null, $acceptLanguage = null, string $contentType = self::contentTypes['listReplacements'][0], $impersonateUserId = null)
+    {
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling listReplacements'
+            );
+        }
+
+
+
+
+
+
+        $resourcePath = '/orders/{id}/replacement-requests';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $limit,
+            'limit', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $offset,
+            'offset', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation quoteCheckout
+     *
+     * Quote order checkout
+     *
+     * @param  string $id id (required)
+     * @param  \ProxyRequest\Dto\StaticCheckoutRequest $staticCheckoutRequest staticCheckoutRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['quoteCheckout'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\CheckoutQuote|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function quoteCheckout($id, $staticCheckoutRequest, $acceptLanguage = null, string $contentType = self::contentTypes['quoteCheckout'][0], $impersonateUserId = null)
+    {
+        list($response) = $this->quoteCheckoutWithHttpInfo($id, $staticCheckoutRequest, $acceptLanguage, $contentType, $impersonateUserId);
+        return $response;
+    }
+
+    /**
+     * Operation quoteCheckoutWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function quoteCheckoutWithResponse($id, $staticCheckoutRequest, $acceptLanguage = null, string $contentType = self::contentTypes['quoteCheckout'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->quoteCheckoutWithHttpInfo($id, $staticCheckoutRequest, $acceptLanguage, $contentType, $impersonateUserId));
+    }
+
+    /**
+     * Operation quoteCheckoutWithHttpInfo
+     *
+     * Quote order checkout
+     *
+     * @param  string $id (required)
+     * @param  \ProxyRequest\Dto\StaticCheckoutRequest $staticCheckoutRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['quoteCheckout'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\CheckoutQuote|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function quoteCheckoutWithHttpInfo($id, $staticCheckoutRequest, $acceptLanguage = null, string $contentType = self::contentTypes['quoteCheckout'][0], $impersonateUserId = null)
+    {
+        $request = $this->quoteCheckoutRequest($id, $staticCheckoutRequest, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\CheckoutQuote',
+));
+    }
+
+    /**
+     * Operation quoteCheckoutAsync
+     *
+     * Quote order checkout
+     *
+     * @param  string $id (required)
+     * @param  \ProxyRequest\Dto\StaticCheckoutRequest $staticCheckoutRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['quoteCheckout'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function quoteCheckoutAsync($id, $staticCheckoutRequest, $acceptLanguage = null, string $contentType = self::contentTypes['quoteCheckout'][0], $impersonateUserId = null)
+    {
+        return $this->quoteCheckoutAsyncWithHttpInfo($id, $staticCheckoutRequest, $acceptLanguage, $contentType, $impersonateUserId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation quoteCheckoutAsyncWithHttpInfo
+     *
+     * Quote order checkout
+     *
+     * @param  string $id (required)
+     * @param  \ProxyRequest\Dto\StaticCheckoutRequest $staticCheckoutRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['quoteCheckout'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function quoteCheckoutAsyncWithHttpInfo($id, $staticCheckoutRequest, $acceptLanguage = null, string $contentType = self::contentTypes['quoteCheckout'][0], $impersonateUserId = null)
+    {
+        $request = $this->quoteCheckoutRequest($id, $staticCheckoutRequest, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\CheckoutQuote',
+));
+    }
+
+    /**
+     * Create request for operation 'quoteCheckout'
+     *
+     * @param  string $id (required)
+     * @param  \ProxyRequest\Dto\StaticCheckoutRequest $staticCheckoutRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['quoteCheckout'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function quoteCheckoutRequest($id, $staticCheckoutRequest, $acceptLanguage = null, string $contentType = self::contentTypes['quoteCheckout'][0], $impersonateUserId = null)
+    {
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling quoteCheckout'
+            );
+        }
+
+        // verify the required parameter 'staticCheckoutRequest' is set
+        if ($staticCheckoutRequest === null || (is_array($staticCheckoutRequest) && count($staticCheckoutRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $staticCheckoutRequest when calling quoteCheckout'
+            );
+        }
+
+
+
+
+        $resourcePath = '/orders/{id}/checkout/quote';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($staticCheckoutRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \ProxyRequest\Support\Json::encode(ObjectSerializer::sanitizeForSerialization($staticCheckoutRequest));
+            } else {
+                $httpBody = $staticCheckoutRequest;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation quotePurchase
+     *
+     * Quote a static rental selection
+     *
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  \ProxyRequest\Dto\IntentRequest|null $intentRequest intentRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['quotePurchase'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\RentalQuote|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function quotePurchase($acceptLanguage = null, $intentRequest = null, string $contentType = self::contentTypes['quotePurchase'][0], $impersonateUserId = null)
+    {
+        list($response) = $this->quotePurchaseWithHttpInfo($acceptLanguage, $intentRequest, $contentType, $impersonateUserId);
+        return $response;
+    }
+
+    /**
+     * Operation quotePurchaseWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function quotePurchaseWithResponse($acceptLanguage = null, $intentRequest = null, string $contentType = self::contentTypes['quotePurchase'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->quotePurchaseWithHttpInfo($acceptLanguage, $intentRequest, $contentType, $impersonateUserId));
+    }
+
+    /**
+     * Operation quotePurchaseWithHttpInfo
+     *
+     * Quote a static rental selection
+     *
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  \ProxyRequest\Dto\IntentRequest|null $intentRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['quotePurchase'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\RentalQuote|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function quotePurchaseWithHttpInfo($acceptLanguage = null, $intentRequest = null, string $contentType = self::contentTypes['quotePurchase'][0], $impersonateUserId = null)
+    {
+        $request = $this->quotePurchaseRequest($acceptLanguage, $intentRequest, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\RentalQuote',
+));
+    }
+
+    /**
+     * Operation quotePurchaseAsync
+     *
+     * Quote a static rental selection
+     *
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  \ProxyRequest\Dto\IntentRequest|null $intentRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['quotePurchase'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function quotePurchaseAsync($acceptLanguage = null, $intentRequest = null, string $contentType = self::contentTypes['quotePurchase'][0], $impersonateUserId = null)
+    {
+        return $this->quotePurchaseAsyncWithHttpInfo($acceptLanguage, $intentRequest, $contentType, $impersonateUserId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation quotePurchaseAsyncWithHttpInfo
+     *
+     * Quote a static rental selection
+     *
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  \ProxyRequest\Dto\IntentRequest|null $intentRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['quotePurchase'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function quotePurchaseAsyncWithHttpInfo($acceptLanguage = null, $intentRequest = null, string $contentType = self::contentTypes['quotePurchase'][0], $impersonateUserId = null)
+    {
+        $request = $this->quotePurchaseRequest($acceptLanguage, $intentRequest, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\RentalQuote',
+));
+    }
+
+    /**
+     * Create request for operation 'quotePurchase'
+     *
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  \ProxyRequest\Dto\IntentRequest|null $intentRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['quotePurchase'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function quotePurchaseRequest($acceptLanguage = null, $intentRequest = null, string $contentType = self::contentTypes['quotePurchase'][0], $impersonateUserId = null)
+    {
+
+
+
+
+
+        $resourcePath = '/orders/purchase/quote';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
+
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($intentRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \ProxyRequest\Support\Json::encode(ObjectSerializer::sanitizeForSerialization($intentRequest));
+            } else {
+                $httpBody = $intentRequest;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation quoteRenewal
+     *
+     * Quote order renewal
+     *
+     * @param  string $id id (required)
+     * @param  \ProxyRequest\Dto\RenewalSelectionRequest $renewalSelectionRequest renewalSelectionRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['quoteRenewal'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\RenewalQuote|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function quoteRenewal($id, $renewalSelectionRequest, $acceptLanguage = null, string $contentType = self::contentTypes['quoteRenewal'][0], $impersonateUserId = null)
+    {
+        list($response) = $this->quoteRenewalWithHttpInfo($id, $renewalSelectionRequest, $acceptLanguage, $contentType, $impersonateUserId);
+        return $response;
+    }
+
+    /**
+     * Operation quoteRenewalWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function quoteRenewalWithResponse($id, $renewalSelectionRequest, $acceptLanguage = null, string $contentType = self::contentTypes['quoteRenewal'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->quoteRenewalWithHttpInfo($id, $renewalSelectionRequest, $acceptLanguage, $contentType, $impersonateUserId));
+    }
+
+    /**
+     * Operation quoteRenewalWithHttpInfo
+     *
+     * Quote order renewal
+     *
+     * @param  string $id (required)
+     * @param  \ProxyRequest\Dto\RenewalSelectionRequest $renewalSelectionRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['quoteRenewal'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\RenewalQuote|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function quoteRenewalWithHttpInfo($id, $renewalSelectionRequest, $acceptLanguage = null, string $contentType = self::contentTypes['quoteRenewal'][0], $impersonateUserId = null)
+    {
+        $request = $this->quoteRenewalRequest($id, $renewalSelectionRequest, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\RenewalQuote',
+));
+    }
+
+    /**
+     * Operation quoteRenewalAsync
+     *
+     * Quote order renewal
+     *
+     * @param  string $id (required)
+     * @param  \ProxyRequest\Dto\RenewalSelectionRequest $renewalSelectionRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['quoteRenewal'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function quoteRenewalAsync($id, $renewalSelectionRequest, $acceptLanguage = null, string $contentType = self::contentTypes['quoteRenewal'][0], $impersonateUserId = null)
+    {
+        return $this->quoteRenewalAsyncWithHttpInfo($id, $renewalSelectionRequest, $acceptLanguage, $contentType, $impersonateUserId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation quoteRenewalAsyncWithHttpInfo
+     *
+     * Quote order renewal
+     *
+     * @param  string $id (required)
+     * @param  \ProxyRequest\Dto\RenewalSelectionRequest $renewalSelectionRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['quoteRenewal'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function quoteRenewalAsyncWithHttpInfo($id, $renewalSelectionRequest, $acceptLanguage = null, string $contentType = self::contentTypes['quoteRenewal'][0], $impersonateUserId = null)
+    {
+        $request = $this->quoteRenewalRequest($id, $renewalSelectionRequest, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\RenewalQuote',
+));
+    }
+
+    /**
+     * Create request for operation 'quoteRenewal'
+     *
+     * @param  string $id (required)
+     * @param  \ProxyRequest\Dto\RenewalSelectionRequest $renewalSelectionRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['quoteRenewal'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function quoteRenewalRequest($id, $renewalSelectionRequest, $acceptLanguage = null, string $contentType = self::contentTypes['quoteRenewal'][0], $impersonateUserId = null)
+    {
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling quoteRenewal'
+            );
+        }
+
+        // verify the required parameter 'renewalSelectionRequest' is set
+        if ($renewalSelectionRequest === null || (is_array($renewalSelectionRequest) && count($renewalSelectionRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $renewalSelectionRequest when calling quoteRenewal'
+            );
+        }
+
+
+
+
+        $resourcePath = '/orders/{id}/renew/quote';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($renewalSelectionRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \ProxyRequest\Support\Json::encode(ObjectSerializer::sanitizeForSerialization($renewalSelectionRequest));
+            } else {
+                $httpBody = $renewalSelectionRequest;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation renew
+     *
+     * Renew an order
+     *
+     * @param  string $id id (required)
+     * @param  \ProxyRequest\Dto\RenewalRequestRequest $renewalRequestRequest renewalRequestRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Existing clients can send idempotency_key in the JSON body. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['renew'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\Invoice|\ProxyRequest\Dto\Invoice|\ProxyRequest\Dto\StaticMutationError|\ProxyRequest\Dto\InvoicesCreate502Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function renew($id, $renewalRequestRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['renew'][0], $impersonateUserId = null)
+    {
+        list($response) = $this->renewWithHttpInfo($id, $renewalRequestRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId);
+        return $response;
+    }
+
+    /**
+     * Operation renewWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function renewWithResponse($id, $renewalRequestRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['renew'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->renewWithHttpInfo($id, $renewalRequestRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId));
+    }
+
+    /**
+     * Operation renewWithHttpInfo
+     *
+     * Renew an order
+     *
+     * @param  string $id (required)
+     * @param  \ProxyRequest\Dto\RenewalRequestRequest $renewalRequestRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Existing clients can send idempotency_key in the JSON body. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['renew'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\Invoice|\ProxyRequest\Dto\Invoice|\ProxyRequest\Dto\StaticMutationError|\ProxyRequest\Dto\InvoicesCreate502Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function renewWithHttpInfo($id, $renewalRequestRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['renew'][0], $impersonateUserId = null)
+    {
+        $request = $this->renewRequest($id, $renewalRequestRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\Invoice',
+  201 => '\\ProxyRequest\\Dto\\Invoice',
+));
+    }
+
+    /**
+     * Operation renewAsync
+     *
+     * Renew an order
+     *
+     * @param  string $id (required)
+     * @param  \ProxyRequest\Dto\RenewalRequestRequest $renewalRequestRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Existing clients can send idempotency_key in the JSON body. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['renew'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function renewAsync($id, $renewalRequestRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['renew'][0], $impersonateUserId = null)
+    {
+        return $this->renewAsyncWithHttpInfo($id, $renewalRequestRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation renewAsyncWithHttpInfo
+     *
+     * Renew an order
+     *
+     * @param  string $id (required)
+     * @param  \ProxyRequest\Dto\RenewalRequestRequest $renewalRequestRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Existing clients can send idempotency_key in the JSON body. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['renew'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function renewAsyncWithHttpInfo($id, $renewalRequestRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['renew'][0], $impersonateUserId = null)
+    {
+        $request = $this->renewRequest($id, $renewalRequestRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\Invoice',
+  201 => '\\ProxyRequest\\Dto\\Invoice',
+));
+    }
+
+    /**
+     * Create request for operation 'renew'
+     *
+     * @param  string $id (required)
+     * @param  \ProxyRequest\Dto\RenewalRequestRequest $renewalRequestRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Existing clients can send idempotency_key in the JSON body. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['renew'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function renewRequest($id, $renewalRequestRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['renew'][0], $impersonateUserId = null)
+    {
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling renew'
+            );
+        }
+
+        // verify the required parameter 'renewalRequestRequest' is set
+        if ($renewalRequestRequest === null || (is_array($renewalRequestRequest) && count($renewalRequestRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $renewalRequestRequest when calling renew'
+            );
+        }
+
+        if ($idempotencyKey !== null && strlen($idempotencyKey) > 128) {
+            throw new \InvalidArgumentException('invalid length for "$idempotencyKey" when calling OrdersResource.renew, must be smaller than or equal to 128.');
+        }
+        if ($idempotencyKey !== null && strlen($idempotencyKey) < 1) {
+            throw new \InvalidArgumentException('invalid length for "$idempotencyKey" when calling OrdersResource.renew, must be bigger than or equal to 1.');
+        }
+
+
+
+
+        $resourcePath = '/orders/{id}/renew';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // header params
+        if ($idempotencyKey !== null) {
+            $headerParams['Idempotency-Key'] = ObjectSerializer::toHeaderValue($idempotencyKey);
+        }
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($renewalRequestRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \ProxyRequest\Support\Json::encode(ObjectSerializer::sanitizeForSerialization($renewalRequestRequest));
+            } else {
+                $httpBody = $renewalRequestRequest;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation requestReplacement
+     *
+     * Request an IP replacement
+     *
+     * @param  string $id id (required)
+     * @param  \ProxyRequest\Dto\ReplacementRequestRequest $replacementRequestRequest replacementRequestRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Existing clients can send idempotency_key in the JSON body. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestReplacement'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\ReplacementResponse|\ProxyRequest\Dto\StaticMutationError|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function requestReplacement($id, $replacementRequestRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['requestReplacement'][0], $impersonateUserId = null)
+    {
+        list($response) = $this->requestReplacementWithHttpInfo($id, $replacementRequestRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId);
+        return $response;
+    }
+
+    /**
+     * Operation requestReplacementWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function requestReplacementWithResponse($id, $replacementRequestRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['requestReplacement'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->requestReplacementWithHttpInfo($id, $replacementRequestRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId));
+    }
+
+    /**
+     * Operation requestReplacementWithHttpInfo
+     *
+     * Request an IP replacement
+     *
+     * @param  string $id (required)
+     * @param  \ProxyRequest\Dto\ReplacementRequestRequest $replacementRequestRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Existing clients can send idempotency_key in the JSON body. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestReplacement'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\ReplacementResponse|\ProxyRequest\Dto\StaticMutationError|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function requestReplacementWithHttpInfo($id, $replacementRequestRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['requestReplacement'][0], $impersonateUserId = null)
+    {
+        $request = $this->requestReplacementRequest($id, $replacementRequestRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  201 => '\\ProxyRequest\\Dto\\ReplacementResponse',
+));
+    }
+
+    /**
+     * Operation requestReplacementAsync
+     *
+     * Request an IP replacement
+     *
+     * @param  string $id (required)
+     * @param  \ProxyRequest\Dto\ReplacementRequestRequest $replacementRequestRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Existing clients can send idempotency_key in the JSON body. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestReplacement'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function requestReplacementAsync($id, $replacementRequestRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['requestReplacement'][0], $impersonateUserId = null)
+    {
+        return $this->requestReplacementAsyncWithHttpInfo($id, $replacementRequestRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation requestReplacementAsyncWithHttpInfo
+     *
+     * Request an IP replacement
+     *
+     * @param  string $id (required)
+     * @param  \ProxyRequest\Dto\ReplacementRequestRequest $replacementRequestRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Existing clients can send idempotency_key in the JSON body. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestReplacement'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function requestReplacementAsyncWithHttpInfo($id, $replacementRequestRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['requestReplacement'][0], $impersonateUserId = null)
+    {
+        $request = $this->requestReplacementRequest($id, $replacementRequestRequest, $idempotencyKey, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  201 => '\\ProxyRequest\\Dto\\ReplacementResponse',
+));
+    }
+
+    /**
+     * Create request for operation 'requestReplacement'
+     *
+     * @param  string $id (required)
+     * @param  \ProxyRequest\Dto\ReplacementRequestRequest $replacementRequestRequest (required)
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Existing clients can send idempotency_key in the JSON body. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['requestReplacement'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function requestReplacementRequest($id, $replacementRequestRequest, $idempotencyKey = null, $acceptLanguage = null, string $contentType = self::contentTypes['requestReplacement'][0], $impersonateUserId = null)
+    {
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling requestReplacement'
+            );
+        }
+
+        // verify the required parameter 'replacementRequestRequest' is set
+        if ($replacementRequestRequest === null || (is_array($replacementRequestRequest) && count($replacementRequestRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $replacementRequestRequest when calling requestReplacement'
+            );
+        }
+
+        if ($idempotencyKey !== null && strlen($idempotencyKey) > 128) {
+            throw new \InvalidArgumentException('invalid length for "$idempotencyKey" when calling OrdersResource.requestReplacement, must be smaller than or equal to 128.');
+        }
+        if ($idempotencyKey !== null && strlen($idempotencyKey) < 1) {
+            throw new \InvalidArgumentException('invalid length for "$idempotencyKey" when calling OrdersResource.requestReplacement, must be bigger than or equal to 1.');
+        }
+
+
+
+
+        $resourcePath = '/orders/{id}/replacement-requests';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // header params
+        if ($idempotencyKey !== null) {
+            $headerParams['Idempotency-Key'] = ObjectSerializer::toHeaderValue($idempotencyKey);
+        }
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($replacementRequestRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \ProxyRequest\Support\Json::encode(ObjectSerializer::sanitizeForSerialization($replacementRequestRequest));
+            } else {
+                $httpBody = $replacementRequestRequest;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation reserve
+     *
+     * Reserve a new Order
+     *
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Existing clients can send idempotency_key in the JSON body. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  \ProxyRequest\Dto\PurchaseMutationRequest|null $purchaseMutationRequest purchaseMutationRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['reserve'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\PurchaseResponse|\ProxyRequest\Dto\StaticMutationError|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function reserve($idempotencyKey = null, $acceptLanguage = null, $purchaseMutationRequest = null, string $contentType = self::contentTypes['reserve'][0], $impersonateUserId = null)
+    {
+        list($response) = $this->reserveWithHttpInfo($idempotencyKey, $acceptLanguage, $purchaseMutationRequest, $contentType, $impersonateUserId);
+        return $response;
+    }
+
+    /**
+     * Operation reserveWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function reserveWithResponse($idempotencyKey = null, $acceptLanguage = null, $purchaseMutationRequest = null, string $contentType = self::contentTypes['reserve'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->reserveWithHttpInfo($idempotencyKey, $acceptLanguage, $purchaseMutationRequest, $contentType, $impersonateUserId));
+    }
+
+    /**
+     * Operation reserveWithHttpInfo
+     *
+     * Reserve a new Order
+     *
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Existing clients can send idempotency_key in the JSON body. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  \ProxyRequest\Dto\PurchaseMutationRequest|null $purchaseMutationRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['reserve'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\PurchaseResponse|\ProxyRequest\Dto\StaticMutationError|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function reserveWithHttpInfo($idempotencyKey = null, $acceptLanguage = null, $purchaseMutationRequest = null, string $contentType = self::contentTypes['reserve'][0], $impersonateUserId = null)
+    {
+        $request = $this->reserveRequest($idempotencyKey, $acceptLanguage, $purchaseMutationRequest, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  201 => '\\ProxyRequest\\Dto\\PurchaseResponse',
+));
+    }
+
+    /**
+     * Operation reserveAsync
+     *
+     * Reserve a new Order
+     *
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Existing clients can send idempotency_key in the JSON body. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  \ProxyRequest\Dto\PurchaseMutationRequest|null $purchaseMutationRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['reserve'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function reserveAsync($idempotencyKey = null, $acceptLanguage = null, $purchaseMutationRequest = null, string $contentType = self::contentTypes['reserve'][0], $impersonateUserId = null)
+    {
+        return $this->reserveAsyncWithHttpInfo($idempotencyKey, $acceptLanguage, $purchaseMutationRequest, $contentType, $impersonateUserId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation reserveAsyncWithHttpInfo
+     *
+     * Reserve a new Order
+     *
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Existing clients can send idempotency_key in the JSON body. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  \ProxyRequest\Dto\PurchaseMutationRequest|null $purchaseMutationRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['reserve'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function reserveAsyncWithHttpInfo($idempotencyKey = null, $acceptLanguage = null, $purchaseMutationRequest = null, string $contentType = self::contentTypes['reserve'][0], $impersonateUserId = null)
+    {
+        $request = $this->reserveRequest($idempotencyKey, $acceptLanguage, $purchaseMutationRequest, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  201 => '\\ProxyRequest\\Dto\\PurchaseResponse',
+));
+    }
+
+    /**
+     * Create request for operation 'reserve'
+     *
+     * @param  string|null $idempotencyKey Stable key for one logical mutation. Existing clients can send idempotency_key in the JSON body. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  \ProxyRequest\Dto\PurchaseMutationRequest|null $purchaseMutationRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['reserve'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function reserveRequest($idempotencyKey = null, $acceptLanguage = null, $purchaseMutationRequest = null, string $contentType = self::contentTypes['reserve'][0], $impersonateUserId = null)
+    {
+
+        if ($idempotencyKey !== null && strlen($idempotencyKey) > 128) {
+            throw new \InvalidArgumentException('invalid length for "$idempotencyKey" when calling OrdersResource.reserve, must be smaller than or equal to 128.');
+        }
+        if ($idempotencyKey !== null && strlen($idempotencyKey) < 1) {
+            throw new \InvalidArgumentException('invalid length for "$idempotencyKey" when calling OrdersResource.reserve, must be bigger than or equal to 1.');
+        }
+
+
+
+
+
+        $resourcePath = '/orders/purchase';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // header params
+        if ($idempotencyKey !== null) {
+            $headerParams['Idempotency-Key'] = ObjectSerializer::toHeaderValue($idempotencyKey);
+        }
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
+
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($purchaseMutationRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \ProxyRequest\Support\Json::encode(ObjectSerializer::sanitizeForSerialization($purchaseMutationRequest));
+            } else {
+                $httpBody = $purchaseMutationRequest;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation resetPassword
      *
-     * Reset an order&#39;s proxy password
+     * Confirm an account password reset or rotate an order&#39;s proxy password
      *
      * @param  \ProxyRequest\Dto\ResetPasswordRequest $resetPasswordRequest resetPasswordRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
@@ -917,7 +4227,7 @@ class OrdersResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \ProxyRequest\Dto\ProxyPasswordResetResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     * @return \ProxyRequest\Dto\ProxyPasswordResetResponse|\ProxyRequest\Dto\ProxyPasswordResetResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
     public function resetPassword($resetPasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['resetPassword'][0], $impersonateUserId = null)
     {
@@ -938,7 +4248,7 @@ class OrdersResource
     /**
      * Operation resetPasswordWithHttpInfo
      *
-     * Reset an order&#39;s proxy password
+     * Confirm an account password reset or rotate an order&#39;s proxy password
      *
      * @param  \ProxyRequest\Dto\ResetPasswordRequest $resetPasswordRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
@@ -947,20 +4257,21 @@ class OrdersResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \ProxyRequest\Dto\ProxyPasswordResetResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ProxyRequest\Dto\ProxyPasswordResetResponse|\ProxyRequest\Dto\ProxyPasswordResetResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
     public function resetPasswordWithHttpInfo($resetPasswordRequest, $acceptLanguage = null, string $contentType = self::contentTypes['resetPassword'][0], $impersonateUserId = null)
     {
         $request = $this->resetPasswordRequest($resetPasswordRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\ProxyPasswordResetResponse',
+  202 => '\\ProxyRequest\\Dto\\ProxyPasswordResetResponse',
 ));
     }
 
     /**
      * Operation resetPasswordAsync
      *
-     * Reset an order&#39;s proxy password
+     * Confirm an account password reset or rotate an order&#39;s proxy password
      *
      * @param  \ProxyRequest\Dto\ResetPasswordRequest $resetPasswordRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
@@ -983,7 +4294,7 @@ class OrdersResource
     /**
      * Operation resetPasswordAsyncWithHttpInfo
      *
-     * Reset an order&#39;s proxy password
+     * Confirm an account password reset or rotate an order&#39;s proxy password
      *
      * @param  \ProxyRequest\Dto\ResetPasswordRequest $resetPasswordRequest (required)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
@@ -998,6 +4309,7 @@ class OrdersResource
         $request = $this->resetPasswordRequest($resetPasswordRequest, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\ProxyPasswordResetResponse',
+  202 => '\\ProxyRequest\\Dto\\ProxyPasswordResetResponse',
 ));
     }
 
@@ -1082,6 +4394,15 @@ class OrdersResource
             }
         }
 
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1098,6 +4419,460 @@ class OrdersResource
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
             'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation resetProxyPassword
+     *
+     * Rotate the password for a static rental order
+     *
+     * @param  string $id id (required)
+     * @param  string|null $endpointId Select one credential group. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetProxyPassword'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\ProxyPasswordResetResponse|\ProxyRequest\Dto\ProxyPasswordResetResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function resetProxyPassword($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null, $endpointId = null)
+    {
+        list($response) = $this->resetProxyPasswordWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId, $endpointId);
+        return $response;
+    }
+
+    /**
+     * Operation resetProxyPasswordWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function resetProxyPasswordWithResponse($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null, $endpointId = null): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->resetProxyPasswordWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId, $endpointId));
+    }
+
+    /**
+     * Operation resetProxyPasswordWithHttpInfo
+     *
+     * Rotate the password for a static rental order
+     *
+     * @param  string $id (required)
+     * @param  string|null $endpointId Select one credential group. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetProxyPassword'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\ProxyPasswordResetResponse|\ProxyRequest\Dto\ProxyPasswordResetResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function resetProxyPasswordWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null, $endpointId = null)
+    {
+        $request = $this->resetProxyPasswordRequest($id, $acceptLanguage, $contentType, $impersonateUserId, $endpointId);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\ProxyPasswordResetResponse',
+  202 => '\\ProxyRequest\\Dto\\ProxyPasswordResetResponse',
+));
+    }
+
+    /**
+     * Operation resetProxyPasswordAsync
+     *
+     * Rotate the password for a static rental order
+     *
+     * @param  string $id (required)
+     * @param  string|null $endpointId Select one credential group. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetProxyPassword'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function resetProxyPasswordAsync($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null, $endpointId = null)
+    {
+        return $this->resetProxyPasswordAsyncWithHttpInfo($id, $acceptLanguage, $contentType, $impersonateUserId, $endpointId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation resetProxyPasswordAsyncWithHttpInfo
+     *
+     * Rotate the password for a static rental order
+     *
+     * @param  string $id (required)
+     * @param  string|null $endpointId Select one credential group. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetProxyPassword'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function resetProxyPasswordAsyncWithHttpInfo($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null, $endpointId = null)
+    {
+        $request = $this->resetProxyPasswordRequest($id, $acceptLanguage, $contentType, $impersonateUserId, $endpointId);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\ProxyPasswordResetResponse',
+  202 => '\\ProxyRequest\\Dto\\ProxyPasswordResetResponse',
+));
+    }
+
+    /**
+     * Create request for operation 'resetProxyPassword'
+     *
+     * @param  string $id (required)
+     * @param  string|null $endpointId Select one credential group. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetProxyPassword'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function resetProxyPasswordRequest($id, $acceptLanguage = null, string $contentType = self::contentTypes['resetProxyPassword'][0], $impersonateUserId = null, $endpointId = null)
+    {
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling resetProxyPassword'
+            );
+        }
+
+
+
+
+
+        $resourcePath = '/orders/{id}/proxy-password/reset';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $endpointId,
+            'endpoint_id', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation setCalendarRenewal
+     *
+     * Set static calendar renewal settings
+     *
+     * @param  string $id id (required)
+     * @param  \ProxyRequest\Dto\AutoRenewalSettingsRequest $autoRenewalSettingsRequest autoRenewalSettingsRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setCalendarRenewal'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\AutoRenewalStatus|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function setCalendarRenewal($id, $autoRenewalSettingsRequest, $acceptLanguage = null, string $contentType = self::contentTypes['setCalendarRenewal'][0], $impersonateUserId = null)
+    {
+        list($response) = $this->setCalendarRenewalWithHttpInfo($id, $autoRenewalSettingsRequest, $acceptLanguage, $contentType, $impersonateUserId);
+        return $response;
+    }
+
+    /**
+     * Operation setCalendarRenewalWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function setCalendarRenewalWithResponse($id, $autoRenewalSettingsRequest, $acceptLanguage = null, string $contentType = self::contentTypes['setCalendarRenewal'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->setCalendarRenewalWithHttpInfo($id, $autoRenewalSettingsRequest, $acceptLanguage, $contentType, $impersonateUserId));
+    }
+
+    /**
+     * Operation setCalendarRenewalWithHttpInfo
+     *
+     * Set static calendar renewal settings
+     *
+     * @param  string $id (required)
+     * @param  \ProxyRequest\Dto\AutoRenewalSettingsRequest $autoRenewalSettingsRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setCalendarRenewal'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\AutoRenewalStatus|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function setCalendarRenewalWithHttpInfo($id, $autoRenewalSettingsRequest, $acceptLanguage = null, string $contentType = self::contentTypes['setCalendarRenewal'][0], $impersonateUserId = null)
+    {
+        $request = $this->setCalendarRenewalRequest($id, $autoRenewalSettingsRequest, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\AutoRenewalStatus',
+));
+    }
+
+    /**
+     * Operation setCalendarRenewalAsync
+     *
+     * Set static calendar renewal settings
+     *
+     * @param  string $id (required)
+     * @param  \ProxyRequest\Dto\AutoRenewalSettingsRequest $autoRenewalSettingsRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setCalendarRenewal'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function setCalendarRenewalAsync($id, $autoRenewalSettingsRequest, $acceptLanguage = null, string $contentType = self::contentTypes['setCalendarRenewal'][0], $impersonateUserId = null)
+    {
+        return $this->setCalendarRenewalAsyncWithHttpInfo($id, $autoRenewalSettingsRequest, $acceptLanguage, $contentType, $impersonateUserId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation setCalendarRenewalAsyncWithHttpInfo
+     *
+     * Set static calendar renewal settings
+     *
+     * @param  string $id (required)
+     * @param  \ProxyRequest\Dto\AutoRenewalSettingsRequest $autoRenewalSettingsRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setCalendarRenewal'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function setCalendarRenewalAsyncWithHttpInfo($id, $autoRenewalSettingsRequest, $acceptLanguage = null, string $contentType = self::contentTypes['setCalendarRenewal'][0], $impersonateUserId = null)
+    {
+        $request = $this->setCalendarRenewalRequest($id, $autoRenewalSettingsRequest, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\AutoRenewalStatus',
+));
+    }
+
+    /**
+     * Create request for operation 'setCalendarRenewal'
+     *
+     * @param  string $id (required)
+     * @param  \ProxyRequest\Dto\AutoRenewalSettingsRequest $autoRenewalSettingsRequest (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setCalendarRenewal'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function setCalendarRenewalRequest($id, $autoRenewalSettingsRequest, $acceptLanguage = null, string $contentType = self::contentTypes['setCalendarRenewal'][0], $impersonateUserId = null)
+    {
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling setCalendarRenewal'
+            );
+        }
+
+        // verify the required parameter 'autoRenewalSettingsRequest' is set
+        if ($autoRenewalSettingsRequest === null || (is_array($autoRenewalSettingsRequest) && count($autoRenewalSettingsRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $autoRenewalSettingsRequest when calling setCalendarRenewal'
+            );
+        }
+
+
+
+
+        $resourcePath = '/orders/{id}/auto-renewal';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($autoRenewalSettingsRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \ProxyRequest\Support\Json::encode(ObjectSerializer::sanitizeForSerialization($autoRenewalSettingsRequest));
+            } else {
+                $httpBody = $autoRenewalSettingsRequest;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'PUT',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

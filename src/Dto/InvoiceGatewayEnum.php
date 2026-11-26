@@ -33,7 +33,7 @@ use \ProxyRequest\ObjectSerializer;
  * InvoiceGatewayEnum Class Doc Comment
  *
  * @category Class
- * @description * &#x60;coinbase&#x60; - Coinbase * &#x60;cryptomus&#x60; - Cryptomus * &#x60;stripe&#x60; - Stripe * &#x60;coingate&#x60; - Coingate * &#x60;wallet&#x60; - Wallet * &#x60;manual&#x60; - Manual * &#x60;whitepay&#x60; - Whitepay * &#x60;wayforpay&#x60; - WayForPay * &#x60;usegateway&#x60; - UseGateway * &#x60;binance&#x60; - Binance Pay * &#x60;anymoney&#x60; - Any.Money * &#x60;coinpayments&#x60; - CoinPayments * &#x60;checkoutcom&#x60; - Checkout.com * &#x60;nowpayments&#x60; - NOWPayments * &#x60;btcpay&#x60; - BTCPay Server * &#x60;braintree&#x60; - Braintree * &#x60;monobank&#x60; - monobank * &#x60;liqpay&#x60; - LiqPay * &#x60;iyzico&#x60; - iyzico * &#x60;paytr&#x60; - PayTR * &#x60;payu&#x60; - PayU * &#x60;tpay&#x60; - Tpay * &#x60;przelewy24&#x60; - Przelewy24 * &#x60;gopay&#x60; - GoPay * &#x60;comgate&#x60; - Comgate * &#x60;monei&#x60; - MONEI * &#x60;redsys&#x60; - Redsys * &#x60;payplug&#x60; - PayPlug * &#x60;mollie&#x60; - Mollie * &#x60;unzer&#x60; - Unzer * &#x60;payone&#x60; - PAYONE * &#x60;nexi_xpay&#x60; - Nexi XPay * &#x60;halyk_epay&#x60; - Halyk ePay * &#x60;kaspi_pay&#x60; - Kaspi Pay * &#x60;vipps_mobilepay&#x60; - Vipps MobilePay * &#x60;paytrail&#x60; - Paytrail
+ * @description * &#x60;revolut&#x60; - Revolut * &#x60;paypal&#x60; - PayPal * &#x60;coinbase&#x60; - Coinbase * &#x60;cryptomus&#x60; - Cryptomus * &#x60;stripe&#x60; - Stripe * &#x60;coingate&#x60; - Coingate * &#x60;wallet&#x60; - Wallet * &#x60;manual&#x60; - Manual * &#x60;whitepay&#x60; - Whitepay * &#x60;wayforpay&#x60; - WayForPay * &#x60;usegateway&#x60; - UseGateway * &#x60;binance&#x60; - Binance Pay * &#x60;anymoney&#x60; - Any.Money * &#x60;coinpayments&#x60; - CoinPayments * &#x60;checkoutcom&#x60; - Checkout.com * &#x60;nowpayments&#x60; - NOWPayments * &#x60;btcpay&#x60; - BTCPay Server * &#x60;braintree&#x60; - Braintree * &#x60;monobank&#x60; - monobank * &#x60;liqpay&#x60; - LiqPay * &#x60;iyzico&#x60; - iyzico * &#x60;paytr&#x60; - PayTR * &#x60;payu&#x60; - PayU * &#x60;tpay&#x60; - Tpay * &#x60;przelewy24&#x60; - Przelewy24 * &#x60;gopay&#x60; - GoPay * &#x60;comgate&#x60; - Comgate * &#x60;monei&#x60; - MONEI * &#x60;redsys&#x60; - Redsys * &#x60;payplug&#x60; - PayPlug * &#x60;mollie&#x60; - Mollie * &#x60;unzer&#x60; - Unzer * &#x60;payone&#x60; - PAYONE * &#x60;nexi_xpay&#x60; - Nexi XPay * &#x60;halyk_epay&#x60; - Halyk ePay * &#x60;kaspi_pay&#x60; - Kaspi Pay * &#x60;vipps_mobilepay&#x60; - Vipps MobilePay * &#x60;paytrail&#x60; - Paytrail
  * @package  ProxyRequest
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
@@ -43,6 +43,10 @@ class InvoiceGatewayEnum
     /**
      * Possible values of this enum
      */
+    public const REVOLUT = 'revolut';
+
+    public const PAYPAL = 'paypal';
+
     public const COINBASE = 'coinbase';
 
     public const CRYPTOMUS = 'cryptomus';
@@ -124,6 +128,8 @@ class InvoiceGatewayEnum
     public static function getAllowableEnumValues()
     {
         return [
+            self::REVOLUT,
+            self::PAYPAL,
             self::COINBASE,
             self::CRYPTOMUS,
             self::STRIPE,

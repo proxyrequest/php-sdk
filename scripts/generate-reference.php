@@ -280,6 +280,9 @@ foreach ($schema['paths'] as $path => $pathItem) {
             continue;
         }
         $tag = $operation['tags'][0];
+        if ('MFA' === $tag) {
+            $tag = 'login_otp_create' === $operationId ? 'Authorization' : 'Profile';
+        }
         $className = preg_replace('/[^a-zA-Z0-9]/', '', ucwords($tag)) . 'Resource';
         $accessor = match ($tag) {
             'API Keys' => 'apiKeys',

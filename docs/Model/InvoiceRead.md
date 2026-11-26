@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **string** |  | [optional]
+**bandwidthPurchase** | [**\ProxyRequest\Dto\BandwidthPurchase**](BandwidthPurchase.md) |  | [optional] [readonly]
 **package** | [**\ProxyRequest\Dto\PackageShort**](PackageShort.md) |  | [readonly]
 **country** | [**\ProxyRequest\Dto\Country**](Country.md) |  | [readonly]
 **userId** | **string** |  | [readonly]
@@ -17,6 +18,8 @@ Name | Type | Description | Notes
 **fxQuotedAt** | **\DateTime** |  | [readonly]
 **updated** | **\DateTime** |  | [readonly]
 **created** | **\DateTime** |  | [readonly]
+**rentalKind** | **string** |  | [optional] [readonly]
+**rentalStatus** | **string** |  | [optional] [readonly]
 **type** | [**\ProxyRequest\Dto\InvoiceTypeEnum**](InvoiceTypeEnum.md) | The type of invoice, indicating the type of proxy service. Options include: RESIDENTIAL: Residential proxies. STATIC: Static proxies. * &#x60;static&#x60; - Static * &#x60;residential&#x60; - Residential * &#x60;balance&#x60; - Balance | [optional]
 **isOneTime** | **bool** | Indicates whether this invoice is for a one-time purchase. Default is False, meaning it is a recurring invoice. | [optional]
 **isPayout** | **bool** | Indicates whether this invoice is a payout to the marketer. Default is False. | [optional]
@@ -42,6 +45,7 @@ Name | Type | Description | Notes
 **companyRegistrationNumber** | **string** |  | [optional]
 **companyVatNumber** | **string** |  | [optional]
 **paid** | **\DateTime** | The date and time when the invoice was paid. | [optional]
+**rentalOrder** | **string** |  | [optional] [readonly]
 **expires** | **\DateTime** | The date and time when the invoice expires. If not set, the invoice does not expire. | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

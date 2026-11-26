@@ -1163,7 +1163,7 @@ class AuthorizationResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \ProxyRequest\Dto\TokenPairResponse|\ProxyRequest\Dto\AffiliatesList401Response
+     * @return \ProxyRequest\Dto\TokenPairResponse|\ProxyRequest\Dto\MFAError|\ProxyRequest\Dto\MFAError|\ProxyRequest\Dto\MFAError|\ProxyRequest\Dto\MFAError
      */
     public function verifyOtp($verifyOTPRequest, $acceptLanguage = null, string $contentType = self::contentTypes['verifyOtp'][0], $impersonateUserId = null)
     {
@@ -1193,7 +1193,7 @@ class AuthorizationResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \ProxyRequest\Dto\TokenPairResponse|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ProxyRequest\Dto\TokenPairResponse|\ProxyRequest\Dto\MFAError|\ProxyRequest\Dto\MFAError|\ProxyRequest\Dto\MFAError|\ProxyRequest\Dto\MFAError, HTTP status code, HTTP response headers (array of strings)
      */
     public function verifyOtpWithHttpInfo($verifyOTPRequest, $acceptLanguage = null, string $contentType = self::contentTypes['verifyOtp'][0], $impersonateUserId = null)
     {

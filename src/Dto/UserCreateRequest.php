@@ -75,6 +75,7 @@ class UserCreateRequest extends \ProxyRequest\Support\AdditionalProperties imple
         'isTopLevel' => 'bool',
         'data' => 'int',
         'packageId' => 'string',
+        'packageConnectionLimit' => 'int',
         'meta' => 'array<string,mixed>'
     ];
 
@@ -103,6 +104,7 @@ class UserCreateRequest extends \ProxyRequest\Support\AdditionalProperties imple
         'isTopLevel' => null,
         'data' => null,
         'packageId' => 'uuid',
+        'packageConnectionLimit' => null,
         'meta' => null
     ];
 
@@ -129,6 +131,7 @@ class UserCreateRequest extends \ProxyRequest\Support\AdditionalProperties imple
         'isTopLevel' => false,
         'data' => false,
         'packageId' => false,
+        'packageConnectionLimit' => false,
         'meta' => false
     ];
 
@@ -235,6 +238,7 @@ class UserCreateRequest extends \ProxyRequest\Support\AdditionalProperties imple
         'isTopLevel' => 'is_top_level',
         'data' => 'data',
         'packageId' => 'package_id',
+        'packageConnectionLimit' => 'package_connection_limit',
         'meta' => 'meta'
     ];
 
@@ -261,6 +265,7 @@ class UserCreateRequest extends \ProxyRequest\Support\AdditionalProperties imple
         'isTopLevel' => 'setIsTopLevel',
         'data' => 'setData',
         'packageId' => 'setPackageId',
+        'packageConnectionLimit' => 'setPackageConnectionLimit',
         'meta' => 'setMeta'
     ];
 
@@ -287,6 +292,7 @@ class UserCreateRequest extends \ProxyRequest\Support\AdditionalProperties imple
         'isTopLevel' => 'getIsTopLevel',
         'data' => 'getData',
         'packageId' => 'getPackageId',
+        'packageConnectionLimit' => 'getPackageConnectionLimit',
         'meta' => 'getMeta'
     ];
 
@@ -364,6 +370,7 @@ class UserCreateRequest extends \ProxyRequest\Support\AdditionalProperties imple
         $this->setIfExists('isTopLevel', $data ?? [], false);
         $this->setIfExists('data', $data ?? [], null);
         $this->setIfExists('packageId', $data ?? [], null);
+        $this->setIfExists('packageConnectionLimit', $data ?? [], null);
         $this->setIfExists('meta', $data ?? [], null);
     }
 
@@ -401,8 +408,8 @@ class UserCreateRequest extends \ProxyRequest\Support\AdditionalProperties imple
             $invalidProperties[] = "invalid value for 'username', the character length must be smaller than or equal to 128.";
         }
 
-        if ((mb_strlen($this->container['username']) < 4)) {
-            $invalidProperties[] = "invalid value for 'username', the character length must be bigger than or equal to 4.";
+        if ((mb_strlen($this->container['username']) < 3)) {
+            $invalidProperties[] = "invalid value for 'username', the character length must be bigger than or equal to 3.";
         }
 
         if ($this->container['password'] === null) {
@@ -454,6 +461,14 @@ class UserCreateRequest extends \ProxyRequest\Support\AdditionalProperties imple
 
         if (!is_null($this->container['data']) && ($this->container['data'] < 0)) {
             $invalidProperties[] = "invalid value for 'data', must be bigger than or equal to 0.";
+        }
+
+        if (!is_null($this->container['packageConnectionLimit']) && ($this->container['packageConnectionLimit'] > 1000000)) {
+            $invalidProperties[] = "invalid value for 'packageConnectionLimit', must be smaller than or equal to 1000000.";
+        }
+
+        if (!is_null($this->container['packageConnectionLimit']) && ($this->container['packageConnectionLimit'] < -1)) {
+            $invalidProperties[] = "invalid value for 'packageConnectionLimit', must be bigger than or equal to -1.";
         }
 
         return $invalidProperties;
@@ -511,7 +526,7 @@ class UserCreateRequest extends \ProxyRequest\Support\AdditionalProperties imple
     /**
      * Sets username
      *
-     * @param string $username Unique username for the account. Must be 4-128 characters.
+     * @param string $username Unique username for the account. Must be 3-128 characters.
      *
      * @return self
      */
@@ -523,8 +538,8 @@ class UserCreateRequest extends \ProxyRequest\Support\AdditionalProperties imple
         if ((mb_strlen($username) > 128)) {
             throw new \InvalidArgumentException('invalid length for $username when calling UserCreateRequest., must be smaller than or equal to 128.');
         }
-        if ((mb_strlen($username) < 4)) {
-            throw new \InvalidArgumentException('invalid length for $username when calling UserCreateRequest., must be bigger than or equal to 4.');
+        if ((mb_strlen($username) < 3)) {
+            throw new \InvalidArgumentException('invalid length for $username when calling UserCreateRequest., must be bigger than or equal to 3.');
         }
 
         $this->container['username'] = $username;
@@ -939,7 +954,7 @@ class UserCreateRequest extends \ProxyRequest\Support\AdditionalProperties imple
     /**
      * Sets data
      *
-     * @param int|null $data Initial integer-byte data amount. With package_id, a normal sub-user receives a virtual quota from the caller's existing root order; is_top_level=true provisions a separate paid purchase. Omit both data and package_id to create identity without package access.
+     * @param int|null $data Initial integer-byte data amount. With package_id, a normal sub-user receives traffic from the caller's root order: ordinary callers transfer available balance, while resellers grant a virtual quota; is_top_level=true provisions a separate paid purchase. Omit both data and package_id to create identity without package access.
      *
      * @return self
      */
@@ -981,6 +996,41 @@ class UserCreateRequest extends \ProxyRequest\Support\AdditionalProperties imple
             throw new \InvalidArgumentException('non-nullable packageId cannot be null');
         }
         $this->container['packageId'] = $packageId;
+
+        return $this;
+    }
+
+    /**
+     * Gets packageConnectionLimit
+     *
+     * @return int|null
+     */
+    public function getPackageConnectionLimit()
+    {
+        return $this->container['packageConnectionLimit'];
+    }
+
+    /**
+     * Sets packageConnectionLimit
+     *
+     * @param int|null $packageConnectionLimit Connection limit for the initially assigned sub-user package only. Use -1 for package settings. Requires package_id and positive data; cannot be combined with connection_limit or is_top_level=true.
+     *
+     * @return self
+     */
+    public function setPackageConnectionLimit($packageConnectionLimit)
+    {
+        if (is_null($packageConnectionLimit)) {
+            throw new \InvalidArgumentException('non-nullable packageConnectionLimit cannot be null');
+        }
+
+        if (($packageConnectionLimit > 1000000)) {
+            throw new \InvalidArgumentException('invalid value for $packageConnectionLimit when calling UserCreateRequest., must be smaller than or equal to 1000000.');
+        }
+        if (($packageConnectionLimit < -1)) {
+            throw new \InvalidArgumentException('invalid value for $packageConnectionLimit when calling UserCreateRequest., must be bigger than or equal to -1.');
+        }
+
+        $this->container['packageConnectionLimit'] = $packageConnectionLimit;
 
         return $this;
     }

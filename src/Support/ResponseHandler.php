@@ -83,6 +83,9 @@ final class ResponseHandler
             } else {
                 $flags = JSON_THROW_ON_ERROR | (FeedResponse::class === ltrim($type, '\\') ? JSON_BIGINT_AS_STRING : 0);
                 $content = '\\SplFileObject' === $type ? \GuzzleHttp\Psr7\Utils::streamFor($raw) : ('string' === $type ? $raw : json_decode($raw, false, 512, $flags));
+                if (TokenPairResponse::class === ltrim($type, '\\') && $content instanceof \stdClass && !isset($content->token) && isset($content->access)) {
+                    $content->token = $content->access;
+                }
                 $serializedHeaders = array_map(static fn(array $values): string => implode(', ', $values), $headers);
                 $data = ObjectSerializer::deserialize($content, $type, $serializedHeaders);
                 if (($data instanceof TokenPairResponse || $data instanceof OTPChallenge) && !$data->valid()) {

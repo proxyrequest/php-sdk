@@ -78,7 +78,7 @@ and [provision a reseller customer](docs/Guides/ResellerProvisioning.md).
 ## Installation
 
 ```bash
-composer require proxyrequest/php-sdk:^2.0
+composer require proxyrequest/php-sdk
 ```
 
 The SDK requires 64-bit PHP 8.5 or newer. It includes Guzzle as the ready-to-use
@@ -111,6 +111,7 @@ them to browser code.
 
 ## Common workflows
 
+- [Use and renew static proxy rentals](docs/Guides/StaticRentals.md) covers ISP/DC connections, reservation, checkout, fulfillment, and retries.
 - [Purchase a package with an invoice](docs/Guides/PurchaseFlow.md) explains
   package selection, coupon previews, checkout, payment confirmation,
   entitlement checks, and credential generation.
@@ -120,7 +121,7 @@ them to browser code.
 
 ## Resource API
 
-`Client` exposes 18 API groups. The pinned public schema contains 83 operations;
+`Client` exposes 20 API groups. The pinned public schema contains 125 operations;
 disabled `sessions_list` and `sessions_destroy` operations are intentionally
 excluded. Sticky session options in proxy generation remain supported.
 
@@ -132,6 +133,7 @@ $client->authorization();
 $client->users();
 $client->profile();
 $client->orders();
+$client->staticProxies();
 $client->providers();
 $client->proxies();
 $client->analytics();
@@ -146,6 +148,7 @@ $client->webhooks();
 $client->telegram();
 $client->settings();
 $client->news();
+$client->kyc();
 ```
 
 All operation parameters and return types are documented in the generated

@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **string** |  | [readonly]
-**username** | **string** | Value must contain only letters, numbers, and underscores. It must not start or end with an underscore. |
+**username** | **string** | At least 3 characters. Spaces and control characters are not allowed. |
 **email** | **string** |  |
 **isReseller** | **bool** | Reseller can create sub-users and manage their data. | [optional]
 **isMarketer** | **bool** | Marketer can manage marketing campaigns and view analytics. | [optional]
@@ -47,5 +47,6 @@ Name | Type | Description | Notes
 **proxyPassword** | **string** | Present only when SITE_PACKAGE_BASED_AUTH is disabled. | [optional] [readonly]
 **proxyPasswordReset** | **\DateTime** | Present only when SITE_PACKAGE_BASED_AUTH is disabled. | [optional] [readonly]
 **orders** | [**\ProxyRequest\Dto\Order[]**](Order.md) | The user&#39;s package orders, including inactive orders. Each order contains its own data allowance, usage, ledgers, and proxy credentials. An empty list means the user has no orders. | [optional] [readonly]
+**kycPassed** | **bool** |  | [optional] [readonly]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

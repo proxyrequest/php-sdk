@@ -106,6 +106,11 @@ class UsersResource
             'application/x-www-form-urlencoded',
             'multipart/form-data',
         ],
+        'setConnectionLimit' => [
+            'application/json',
+            'application/x-www-form-urlencoded',
+            'multipart/form-data',
+        ],
         'subtractData' => [
             'application/json',
             'application/x-www-form-urlencoded',
@@ -640,11 +645,12 @@ class UsersResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \ProxyRequest\Dto\UsageClosureResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
     public function delete($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null)
     {
-        $this->deleteWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId);
+        list($response) = $this->deleteWithHttpInfo($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId);
+        return $response;
     }
 
     /**
@@ -671,12 +677,13 @@ class UsersResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ProxyRequest\Dto\UsageClosureResponse|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteWithHttpInfo($id, $idempotencyKey = null, $ifMatch = null, $acceptLanguage = null, string $contentType = self::contentTypes['delete'][0], $impersonateUserId = null)
     {
         $request = $this->deleteRequest($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  202 => '\\ProxyRequest\\Dto\\UsageClosureResponse',
   204 => 'void',
 ));
     }
@@ -725,6 +732,7 @@ class UsersResource
     {
         $request = $this->deleteRequest($id, $idempotencyKey, $ifMatch, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  202 => '\\ProxyRequest\\Dto\\UsageClosureResponse',
   204 => 'void',
 ));
     }
@@ -1077,7 +1085,7 @@ class UsersResource
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
      * @param  string|null $packageId Filters the visible user list to accounts that have at least one stored order for this package UUID. Orders are matched regardless of whether they are active or expired; this filter never expands the caller&#39;s normal account scope. (optional)
-     * @param  string|null $search Case-insensitive partial search across user fields: &#x60;email&#x60;, &#x60;username&#x60;, &#x60;first_name&#x60;, and &#x60;last_name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
+     * @param  string|null $search Case-insensitive partial search across user fields: &#x60;email&#x60;, &#x60;username&#x60;, &#x60;first_name&#x60;, &#x60;last_name&#x60;, and &#x60;id&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. User IDs accept full UUIDs or hyphen-insensitive fragments of at least four hexadecimal characters. (optional)
      * @param  string|null $username username (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -1114,7 +1122,7 @@ class UsersResource
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
      * @param  string|null $packageId Filters the visible user list to accounts that have at least one stored order for this package UUID. Orders are matched regardless of whether they are active or expired; this filter never expands the caller&#39;s normal account scope. (optional)
-     * @param  string|null $search Case-insensitive partial search across user fields: &#x60;email&#x60;, &#x60;username&#x60;, &#x60;first_name&#x60;, and &#x60;last_name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
+     * @param  string|null $search Case-insensitive partial search across user fields: &#x60;email&#x60;, &#x60;username&#x60;, &#x60;first_name&#x60;, &#x60;last_name&#x60;, and &#x60;id&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. User IDs accept full UUIDs or hyphen-insensitive fragments of at least four hexadecimal characters. (optional)
      * @param  string|null $username (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -1143,7 +1151,7 @@ class UsersResource
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
      * @param  string|null $packageId Filters the visible user list to accounts that have at least one stored order for this package UUID. Orders are matched regardless of whether they are active or expired; this filter never expands the caller&#39;s normal account scope. (optional)
-     * @param  string|null $search Case-insensitive partial search across user fields: &#x60;email&#x60;, &#x60;username&#x60;, &#x60;first_name&#x60;, and &#x60;last_name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
+     * @param  string|null $search Case-insensitive partial search across user fields: &#x60;email&#x60;, &#x60;username&#x60;, &#x60;first_name&#x60;, &#x60;last_name&#x60;, and &#x60;id&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. User IDs accept full UUIDs or hyphen-insensitive fragments of at least four hexadecimal characters. (optional)
      * @param  string|null $username (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -1173,7 +1181,7 @@ class UsersResource
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
      * @param  string|null $packageId Filters the visible user list to accounts that have at least one stored order for this package UUID. Orders are matched regardless of whether they are active or expired; this filter never expands the caller&#39;s normal account scope. (optional)
-     * @param  string|null $search Case-insensitive partial search across user fields: &#x60;email&#x60;, &#x60;username&#x60;, &#x60;first_name&#x60;, and &#x60;last_name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
+     * @param  string|null $search Case-insensitive partial search across user fields: &#x60;email&#x60;, &#x60;username&#x60;, &#x60;first_name&#x60;, &#x60;last_name&#x60;, and &#x60;id&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. User IDs accept full UUIDs or hyphen-insensitive fragments of at least four hexadecimal characters. (optional)
      * @param  string|null $username (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -1199,7 +1207,7 @@ class UsersResource
      * @param  int|null $offset The initial index from which to return the results. (optional)
      * @param  string|null $ordering Which field to use when ordering the results. (optional)
      * @param  string|null $packageId Filters the visible user list to accounts that have at least one stored order for this package UUID. Orders are matched regardless of whether they are active or expired; this filter never expands the caller&#39;s normal account scope. (optional)
-     * @param  string|null $search Case-insensitive partial search across user fields: &#x60;email&#x60;, &#x60;username&#x60;, &#x60;first_name&#x60;, and &#x60;last_name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
+     * @param  string|null $search Case-insensitive partial search across user fields: &#x60;email&#x60;, &#x60;username&#x60;, &#x60;first_name&#x60;, &#x60;last_name&#x60;, and &#x60;id&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. User IDs accept full UUIDs or hyphen-insensitive fragments of at least four hexadecimal characters. (optional)
      * @param  string|null $username (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -2137,6 +2145,228 @@ class UsersResource
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
             'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation setConnectionLimit
+     *
+     * Set a managed user&#39;s package connection limit
+     *
+     * @param  string $id A UUID string identifying this user. (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  \ProxyRequest\Dto\PatchedUserPackageConnectionLimitRequest|null $patchedUserPackageConnectionLimitRequest patchedUserPackageConnectionLimitRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setConnectionLimit'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\Order|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function setConnectionLimit($id, $acceptLanguage = null, $patchedUserPackageConnectionLimitRequest = null, string $contentType = self::contentTypes['setConnectionLimit'][0], $impersonateUserId = null)
+    {
+        list($response) = $this->setConnectionLimitWithHttpInfo($id, $acceptLanguage, $patchedUserPackageConnectionLimitRequest, $contentType, $impersonateUserId);
+        return $response;
+    }
+
+    /**
+     * Operation setConnectionLimitWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function setConnectionLimitWithResponse($id, $acceptLanguage = null, $patchedUserPackageConnectionLimitRequest = null, string $contentType = self::contentTypes['setConnectionLimit'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->setConnectionLimitWithHttpInfo($id, $acceptLanguage, $patchedUserPackageConnectionLimitRequest, $contentType, $impersonateUserId));
+    }
+
+    /**
+     * Operation setConnectionLimitWithHttpInfo
+     *
+     * Set a managed user&#39;s package connection limit
+     *
+     * @param  string $id A UUID string identifying this user. (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  \ProxyRequest\Dto\PatchedUserPackageConnectionLimitRequest|null $patchedUserPackageConnectionLimitRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setConnectionLimit'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\Order|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function setConnectionLimitWithHttpInfo($id, $acceptLanguage = null, $patchedUserPackageConnectionLimitRequest = null, string $contentType = self::contentTypes['setConnectionLimit'][0], $impersonateUserId = null)
+    {
+        $request = $this->setConnectionLimitRequest($id, $acceptLanguage, $patchedUserPackageConnectionLimitRequest, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\Order',
+));
+    }
+
+    /**
+     * Operation setConnectionLimitAsync
+     *
+     * Set a managed user&#39;s package connection limit
+     *
+     * @param  string $id A UUID string identifying this user. (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  \ProxyRequest\Dto\PatchedUserPackageConnectionLimitRequest|null $patchedUserPackageConnectionLimitRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setConnectionLimit'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function setConnectionLimitAsync($id, $acceptLanguage = null, $patchedUserPackageConnectionLimitRequest = null, string $contentType = self::contentTypes['setConnectionLimit'][0], $impersonateUserId = null)
+    {
+        return $this->setConnectionLimitAsyncWithHttpInfo($id, $acceptLanguage, $patchedUserPackageConnectionLimitRequest, $contentType, $impersonateUserId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation setConnectionLimitAsyncWithHttpInfo
+     *
+     * Set a managed user&#39;s package connection limit
+     *
+     * @param  string $id A UUID string identifying this user. (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  \ProxyRequest\Dto\PatchedUserPackageConnectionLimitRequest|null $patchedUserPackageConnectionLimitRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setConnectionLimit'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function setConnectionLimitAsyncWithHttpInfo($id, $acceptLanguage = null, $patchedUserPackageConnectionLimitRequest = null, string $contentType = self::contentTypes['setConnectionLimit'][0], $impersonateUserId = null)
+    {
+        $request = $this->setConnectionLimitRequest($id, $acceptLanguage, $patchedUserPackageConnectionLimitRequest, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\Order',
+));
+    }
+
+    /**
+     * Create request for operation 'setConnectionLimit'
+     *
+     * @param  string $id A UUID string identifying this user. (required)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  \ProxyRequest\Dto\PatchedUserPackageConnectionLimitRequest|null $patchedUserPackageConnectionLimitRequest (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setConnectionLimit'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function setConnectionLimitRequest($id, $acceptLanguage = null, $patchedUserPackageConnectionLimitRequest = null, string $contentType = self::contentTypes['setConnectionLimit'][0], $impersonateUserId = null)
+    {
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling setConnectionLimit'
+            );
+        }
+
+
+
+
+
+        $resourcePath = '/users/{id}/connection-limit';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($patchedUserPackageConnectionLimitRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \ProxyRequest\Support\Json::encode(ObjectSerializer::sanitizeForSerialization($patchedUserPackageConnectionLimitRequest));
+            } else {
+                $httpBody = $patchedUserPackageConnectionLimitRequest;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'PATCH',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

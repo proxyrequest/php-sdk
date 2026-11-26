@@ -12,6 +12,7 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 | [**get()**](InvoicesResource.md#get) | **GET** /invoices/{id} | Get an invoice |
 | [**getPaymentLink()**](InvoicesResource.md#getPaymentLink) | **GET** /invoices/{id}/pay | Get an invoice payment link |
 | [**list()**](InvoicesResource.md#list) | **GET** /invoices | List invoices |
+| [**quote()**](InvoicesResource.md#quote) | **POST** /invoices/quote | Quote a purchase without creating an invoice |
 
 
 ## `create()`
@@ -396,7 +397,7 @@ $apiInstance = new ProxyRequest\Api\InvoicesResource(
     new GuzzleHttp\Client(),
     $config
 );
-$gateway = 'gateway_example'; // string | The payment gateway used for processing the payment. * `coinbase` - Coinbase * `cryptomus` - Cryptomus * `stripe` - Stripe * `coingate` - Coingate * `wallet` - Wallet * `manual` - Manual * `whitepay` - Whitepay * `wayforpay` - WayForPay * `usegateway` - UseGateway * `binance` - Binance Pay * `anymoney` - Any.Money * `coinpayments` - CoinPayments * `checkoutcom` - Checkout.com * `nowpayments` - NOWPayments * `btcpay` - BTCPay Server * `braintree` - Braintree * `monobank` - monobank * `liqpay` - LiqPay * `iyzico` - iyzico * `paytr` - PayTR * `payu` - PayU * `tpay` - Tpay * `przelewy24` - Przelewy24 * `gopay` - GoPay * `comgate` - Comgate * `monei` - MONEI * `redsys` - Redsys * `payplug` - PayPlug * `mollie` - Mollie * `unzer` - Unzer * `payone` - PAYONE * `nexi_xpay` - Nexi XPay * `halyk_epay` - Halyk ePay * `kaspi_pay` - Kaspi Pay * `vipps_mobilepay` - Vipps MobilePay * `paytrail` - Paytrail
+$gateway = 'gateway_example'; // string | The payment gateway used for processing the payment. * `revolut` - Revolut * `paypal` - PayPal * `coinbase` - Coinbase * `cryptomus` - Cryptomus * `stripe` - Stripe * `coingate` - Coingate * `wallet` - Wallet * `manual` - Manual * `whitepay` - Whitepay * `wayforpay` - WayForPay * `usegateway` - UseGateway * `binance` - Binance Pay * `anymoney` - Any.Money * `coinpayments` - CoinPayments * `checkoutcom` - Checkout.com * `nowpayments` - NOWPayments * `btcpay` - BTCPay Server * `braintree` - Braintree * `monobank` - monobank * `liqpay` - LiqPay * `iyzico` - iyzico * `paytr` - PayTR * `payu` - PayU * `tpay` - Tpay * `przelewy24` - Przelewy24 * `gopay` - GoPay * `comgate` - Comgate * `monei` - MONEI * `redsys` - Redsys * `payplug` - PayPlug * `mollie` - Mollie * `unzer` - Unzer * `payone` - PAYONE * `nexi_xpay` - Nexi XPay * `halyk_epay` - Halyk ePay * `kaspi_pay` - Kaspi Pay * `vipps_mobilepay` - Vipps MobilePay * `paytrail` - Paytrail
 $internalId = 'internalId_example'; // string
 $limit = 56; // int | Number of results to return per page.
 $offset = 56; // int | The initial index from which to return the results.
@@ -422,7 +423,7 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **gateway** | **string**| The payment gateway used for processing the payment. * &#x60;coinbase&#x60; - Coinbase * &#x60;cryptomus&#x60; - Cryptomus * &#x60;stripe&#x60; - Stripe * &#x60;coingate&#x60; - Coingate * &#x60;wallet&#x60; - Wallet * &#x60;manual&#x60; - Manual * &#x60;whitepay&#x60; - Whitepay * &#x60;wayforpay&#x60; - WayForPay * &#x60;usegateway&#x60; - UseGateway * &#x60;binance&#x60; - Binance Pay * &#x60;anymoney&#x60; - Any.Money * &#x60;coinpayments&#x60; - CoinPayments * &#x60;checkoutcom&#x60; - Checkout.com * &#x60;nowpayments&#x60; - NOWPayments * &#x60;btcpay&#x60; - BTCPay Server * &#x60;braintree&#x60; - Braintree * &#x60;monobank&#x60; - monobank * &#x60;liqpay&#x60; - LiqPay * &#x60;iyzico&#x60; - iyzico * &#x60;paytr&#x60; - PayTR * &#x60;payu&#x60; - PayU * &#x60;tpay&#x60; - Tpay * &#x60;przelewy24&#x60; - Przelewy24 * &#x60;gopay&#x60; - GoPay * &#x60;comgate&#x60; - Comgate * &#x60;monei&#x60; - MONEI * &#x60;redsys&#x60; - Redsys * &#x60;payplug&#x60; - PayPlug * &#x60;mollie&#x60; - Mollie * &#x60;unzer&#x60; - Unzer * &#x60;payone&#x60; - PAYONE * &#x60;nexi_xpay&#x60; - Nexi XPay * &#x60;halyk_epay&#x60; - Halyk ePay * &#x60;kaspi_pay&#x60; - Kaspi Pay * &#x60;vipps_mobilepay&#x60; - Vipps MobilePay * &#x60;paytrail&#x60; - Paytrail | [optional] |
+| **gateway** | **string**| The payment gateway used for processing the payment. * &#x60;revolut&#x60; - Revolut * &#x60;paypal&#x60; - PayPal * &#x60;coinbase&#x60; - Coinbase * &#x60;cryptomus&#x60; - Cryptomus * &#x60;stripe&#x60; - Stripe * &#x60;coingate&#x60; - Coingate * &#x60;wallet&#x60; - Wallet * &#x60;manual&#x60; - Manual * &#x60;whitepay&#x60; - Whitepay * &#x60;wayforpay&#x60; - WayForPay * &#x60;usegateway&#x60; - UseGateway * &#x60;binance&#x60; - Binance Pay * &#x60;anymoney&#x60; - Any.Money * &#x60;coinpayments&#x60; - CoinPayments * &#x60;checkoutcom&#x60; - Checkout.com * &#x60;nowpayments&#x60; - NOWPayments * &#x60;btcpay&#x60; - BTCPay Server * &#x60;braintree&#x60; - Braintree * &#x60;monobank&#x60; - monobank * &#x60;liqpay&#x60; - LiqPay * &#x60;iyzico&#x60; - iyzico * &#x60;paytr&#x60; - PayTR * &#x60;payu&#x60; - PayU * &#x60;tpay&#x60; - Tpay * &#x60;przelewy24&#x60; - Przelewy24 * &#x60;gopay&#x60; - GoPay * &#x60;comgate&#x60; - Comgate * &#x60;monei&#x60; - MONEI * &#x60;redsys&#x60; - Redsys * &#x60;payplug&#x60; - PayPlug * &#x60;mollie&#x60; - Mollie * &#x60;unzer&#x60; - Unzer * &#x60;payone&#x60; - PAYONE * &#x60;nexi_xpay&#x60; - Nexi XPay * &#x60;halyk_epay&#x60; - Halyk ePay * &#x60;kaspi_pay&#x60; - Kaspi Pay * &#x60;vipps_mobilepay&#x60; - Vipps MobilePay * &#x60;paytrail&#x60; - Paytrail | [optional] |
 | **internalId** | **string**|  | [optional] |
 | **limit** | **int**| Number of results to return per page. | [optional] |
 | **offset** | **int**| The initial index from which to return the results. | [optional] |
@@ -447,6 +448,75 @@ try {
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `quote()`
+
+```php
+quote($invoicePurchaseQuoteRequestRequest, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\PurchaseQuoteResponse
+```
+
+Quote a purchase without creating an invoice
+
+Calculate a purchase without creating an invoice or charging money. For bandwidth access, select pricing_plan_id. Same speed extends the remaining term; higher speed credits unused paid periods and starts a new term. Downgrades require expired access. An upgrade must use wallet payment and the returned quote_token within 60 seconds. If unused credit exceeds the new price, select a longer term. Prices and credits are integer minor currency units; each day is 24 hours.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: StaticAuth
+$config = ProxyRequest\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = ProxyRequest\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
+
+// Configure Bearer (JWT) authorization: BearerAuth
+$config = ProxyRequest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new ProxyRequest\Api\InvoicesResource(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$invoicePurchaseQuoteRequestRequest = {"payer_details":{"key":"value"},"pricing_plan_id":"550e8400-e29b-41d4-a716-446655440001","package_id":"550e8400-e29b-41d4-a716-446655440002","user_id":"550e8400-e29b-41d4-a716-446655440001","gateway":"revolut","crypto_currency":"crypto currency","payment_currency":"payment currency","coupon_code":"coupon code","country_code":"us","data":1073741824,"quantity":1,"amount":2500,"connection_limit":1,"expires":1893456000,"company_name":"company name","company_registration_number":"company registration number","company_vat_number":"company vat number"}; // \ProxyRequest\Dto\InvoicePurchaseQuoteRequestRequest
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
+
+try {
+    $result = $apiInstance->quote($invoicePurchaseQuoteRequestRequest, $acceptLanguage, $xImpersonateUser);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling InvoicesResource->quote: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **invoicePurchaseQuoteRequestRequest** | [**\ProxyRequest\Dto\InvoicePurchaseQuoteRequestRequest**](../Model/InvoicePurchaseQuoteRequestRequest.md)|  | |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
+
+### Return type
+
+[**\ProxyRequest\Dto\PurchaseQuoteResponse**](../Model/PurchaseQuoteResponse.md)
+
+### Authorization
+
+[StaticAuth](../../README.md#StaticAuth), [BearerAuth](../../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

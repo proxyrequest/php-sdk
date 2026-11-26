@@ -58,6 +58,10 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
      */
     protected static $openAPITypes = [
         'id' => 'string',
+        'connectionLimit' => 'int',
+        'speedLimit' => 'int',
+        'fulfillmentKind' => 'string',
+        'rentalStatus' => 'string',
         'isAutoRenewal' => 'bool',
         'autoRenewalPercentage' => 'int',
         'autoRenewalData' => 'int',
@@ -73,7 +77,8 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
         'latestDataTopUpDate' => '\DateTime',
         'dataUpdated' => '\DateTime',
         'updated' => '\DateTime',
-        'created' => '\DateTime'
+        'created' => '\DateTime',
+        'expires' => '\DateTime'
     ];
 
     /**
@@ -85,6 +90,10 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
      */
     protected static $openAPIFormats = [
         'id' => null,
+        'connectionLimit' => null,
+        'speedLimit' => null,
+        'fulfillmentKind' => null,
+        'rentalStatus' => null,
         'isAutoRenewal' => null,
         'autoRenewalPercentage' => null,
         'autoRenewalData' => null,
@@ -100,7 +109,8 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
         'latestDataTopUpDate' => 'date-time',
         'dataUpdated' => 'date-time',
         'updated' => 'date-time',
-        'created' => 'date-time'
+        'created' => 'date-time',
+        'expires' => 'date-time'
     ];
 
     /**
@@ -110,6 +120,10 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
      */
     protected static array $openAPINullables = [
         'id' => false,
+        'connectionLimit' => false,
+        'speedLimit' => false,
+        'fulfillmentKind' => false,
+        'rentalStatus' => true,
         'isAutoRenewal' => false,
         'autoRenewalPercentage' => false,
         'autoRenewalData' => false,
@@ -125,7 +139,8 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
         'latestDataTopUpDate' => true,
         'dataUpdated' => false,
         'updated' => false,
-        'created' => false
+        'created' => false,
+        'expires' => true
     ];
 
     /**
@@ -215,6 +230,10 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
      */
     protected static $attributeMap = [
         'id' => 'id',
+        'connectionLimit' => 'connection_limit',
+        'speedLimit' => 'speed_limit',
+        'fulfillmentKind' => 'fulfillment_kind',
+        'rentalStatus' => 'rental_status',
         'isAutoRenewal' => 'is_auto_renewal',
         'autoRenewalPercentage' => 'auto_renewal_percentage',
         'autoRenewalData' => 'auto_renewal_data',
@@ -230,7 +249,8 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
         'latestDataTopUpDate' => 'latest_data_top_up_date',
         'dataUpdated' => 'data_updated',
         'updated' => 'updated',
-        'created' => 'created'
+        'created' => 'created',
+        'expires' => 'expires'
     ];
 
     /**
@@ -240,6 +260,10 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
      */
     protected static $setters = [
         'id' => 'setId',
+        'connectionLimit' => 'setConnectionLimit',
+        'speedLimit' => 'setSpeedLimit',
+        'fulfillmentKind' => 'setFulfillmentKind',
+        'rentalStatus' => 'setRentalStatus',
         'isAutoRenewal' => 'setIsAutoRenewal',
         'autoRenewalPercentage' => 'setAutoRenewalPercentage',
         'autoRenewalData' => 'setAutoRenewalData',
@@ -255,7 +279,8 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
         'latestDataTopUpDate' => 'setLatestDataTopUpDate',
         'dataUpdated' => 'setDataUpdated',
         'updated' => 'setUpdated',
-        'created' => 'setCreated'
+        'created' => 'setCreated',
+        'expires' => 'setExpires'
     ];
 
     /**
@@ -265,6 +290,10 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
      */
     protected static $getters = [
         'id' => 'getId',
+        'connectionLimit' => 'getConnectionLimit',
+        'speedLimit' => 'getSpeedLimit',
+        'fulfillmentKind' => 'getFulfillmentKind',
+        'rentalStatus' => 'getRentalStatus',
         'isAutoRenewal' => 'getIsAutoRenewal',
         'autoRenewalPercentage' => 'getAutoRenewalPercentage',
         'autoRenewalData' => 'getAutoRenewalData',
@@ -280,7 +309,8 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
         'latestDataTopUpDate' => 'getLatestDataTopUpDate',
         'dataUpdated' => 'getDataUpdated',
         'updated' => 'getUpdated',
-        'created' => 'getCreated'
+        'created' => 'getCreated',
+        'expires' => 'getExpires'
     ];
 
     /**
@@ -341,6 +371,10 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
     public function __construct(?array $data = null)
     {
         $this->setIfExists('id', $data ?? [], null);
+        $this->setIfExists('connectionLimit', $data ?? [], null);
+        $this->setIfExists('speedLimit', $data ?? [], null);
+        $this->setIfExists('fulfillmentKind', $data ?? [], null);
+        $this->setIfExists('rentalStatus', $data ?? [], null);
         $this->setIfExists('isAutoRenewal', $data ?? [], null);
         $this->setIfExists('autoRenewalPercentage', $data ?? [], null);
         $this->setIfExists('autoRenewalData', $data ?? [], null);
@@ -357,6 +391,7 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
         $this->setIfExists('dataUpdated', $data ?? [], null);
         $this->setIfExists('updated', $data ?? [], null);
         $this->setIfExists('created', $data ?? [], null);
+        $this->setIfExists('expires', $data ?? [], null);
     }
 
     /**
@@ -388,6 +423,14 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
 
         if (!is_null($this->container['id']) && (mb_strlen($this->container['id']) > 36)) {
             $invalidProperties[] = "invalid value for 'id', the character length must be smaller than or equal to 36.";
+        }
+
+        if (!is_null($this->container['speedLimit']) && ($this->container['speedLimit'] > 2147483647)) {
+            $invalidProperties[] = "invalid value for 'speedLimit', must be smaller than or equal to 2147483647.";
+        }
+
+        if (!is_null($this->container['speedLimit']) && ($this->container['speedLimit'] < 0)) {
+            $invalidProperties[] = "invalid value for 'speedLimit', must be bigger than or equal to 0.";
         }
 
         if ($this->container['isAutoRenewal'] === null) {
@@ -492,6 +535,129 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
         }
 
         $this->container['id'] = $id;
+
+        return $this;
+    }
+
+    /**
+     * Gets connectionLimit
+     *
+     * @return int|null
+     */
+    public function getConnectionLimit()
+    {
+        return $this->container['connectionLimit'];
+    }
+
+    /**
+     * Sets connectionLimit
+     *
+     * @param int|null $connectionLimit connectionLimit
+     *
+     * @return self
+     */
+    public function setConnectionLimit($connectionLimit)
+    {
+        if (is_null($connectionLimit)) {
+            throw new \InvalidArgumentException('non-nullable connectionLimit cannot be null');
+        }
+        $this->container['connectionLimit'] = $connectionLimit;
+
+        return $this;
+    }
+
+    /**
+     * Gets speedLimit
+     *
+     * @return int|null
+     */
+    public function getSpeedLimit()
+    {
+        return $this->container['speedLimit'];
+    }
+
+    /**
+     * Sets speedLimit
+     *
+     * @param int|null $speedLimit Bandwidth cap in Mbit/s applied across all connections for a user on this package. Set to 0 for unlimited.
+     *
+     * @return self
+     */
+    public function setSpeedLimit($speedLimit)
+    {
+        if (is_null($speedLimit)) {
+            throw new \InvalidArgumentException('non-nullable speedLimit cannot be null');
+        }
+
+        if (($speedLimit > 2147483647)) {
+            throw new \InvalidArgumentException('invalid value for $speedLimit when calling Order., must be smaller than or equal to 2147483647.');
+        }
+        if (($speedLimit < 0)) {
+            throw new \InvalidArgumentException('invalid value for $speedLimit when calling Order., must be bigger than or equal to 0.');
+        }
+
+        $this->container['speedLimit'] = $speedLimit;
+
+        return $this;
+    }
+
+    /**
+     * Gets fulfillmentKind
+     *
+     * @return string|null
+     */
+    public function getFulfillmentKind()
+    {
+        return $this->container['fulfillmentKind'];
+    }
+
+    /**
+     * Sets fulfillmentKind
+     *
+     * @param string|null $fulfillmentKind fulfillmentKind
+     *
+     * @return self
+     */
+    public function setFulfillmentKind($fulfillmentKind)
+    {
+        if (is_null($fulfillmentKind)) {
+            throw new \InvalidArgumentException('non-nullable fulfillmentKind cannot be null');
+        }
+        $this->container['fulfillmentKind'] = $fulfillmentKind;
+
+        return $this;
+    }
+
+    /**
+     * Gets rentalStatus
+     *
+     * @return string|null
+     */
+    public function getRentalStatus()
+    {
+        return $this->container['rentalStatus'];
+    }
+
+    /**
+     * Sets rentalStatus
+     *
+     * @param string|null $rentalStatus rentalStatus
+     *
+     * @return self
+     */
+    public function setRentalStatus($rentalStatus)
+    {
+        if (is_null($rentalStatus)) {
+            array_push($this->openAPINullablesSetToNull, 'rentalStatus');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('rentalStatus', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['rentalStatus'] = $rentalStatus;
 
         return $this;
     }
@@ -974,6 +1140,40 @@ class Order extends \ProxyRequest\Support\AdditionalProperties implements ModelI
             throw new \InvalidArgumentException('non-nullable created cannot be null');
         }
         $this->container['created'] = $created;
+
+        return $this;
+    }
+
+    /**
+     * Gets expires
+     *
+     * @return \DateTime|null
+     */
+    public function getExpires()
+    {
+        return $this->container['expires'];
+    }
+
+    /**
+     * Sets expires
+     *
+     * @param \DateTime|null $expires Date and time when this order expires and access is revoked. Leave blank for orders that do not expire.
+     *
+     * @return self
+     */
+    public function setExpires($expires)
+    {
+        if (is_null($expires)) {
+            array_push($this->openAPINullablesSetToNull, 'expires');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('expires', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['expires'] = $expires;
 
         return $this;
     }

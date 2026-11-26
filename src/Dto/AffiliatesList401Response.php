@@ -58,6 +58,7 @@ class AffiliatesList401Response extends \ProxyRequest\Support\AdditionalProperti
      * @var string[]
      */
     protected static $openAPITypes = [
+        'code' => 'string',
         'detail' => 'string',
         'nonFieldErrors' => 'string[]'
     ];
@@ -70,6 +71,7 @@ class AffiliatesList401Response extends \ProxyRequest\Support\AdditionalProperti
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
+        'code' => null,
         'detail' => null,
         'nonFieldErrors' => null
     ];
@@ -80,6 +82,7 @@ class AffiliatesList401Response extends \ProxyRequest\Support\AdditionalProperti
      * @var boolean[]
      */
     protected static array $openAPINullables = [
+        'code' => false,
         'detail' => false,
         'nonFieldErrors' => false
     ];
@@ -170,6 +173,7 @@ class AffiliatesList401Response extends \ProxyRequest\Support\AdditionalProperti
      * @var string[]
      */
     protected static $attributeMap = [
+        'code' => 'code',
         'detail' => 'detail',
         'nonFieldErrors' => 'non_field_errors'
     ];
@@ -180,6 +184,7 @@ class AffiliatesList401Response extends \ProxyRequest\Support\AdditionalProperti
      * @var string[]
      */
     protected static $setters = [
+        'code' => 'setCode',
         'detail' => 'setDetail',
         'nonFieldErrors' => 'setNonFieldErrors'
     ];
@@ -190,6 +195,7 @@ class AffiliatesList401Response extends \ProxyRequest\Support\AdditionalProperti
      * @var string[]
      */
     protected static $getters = [
+        'code' => 'getCode',
         'detail' => 'getDetail',
         'nonFieldErrors' => 'getNonFieldErrors'
     ];
@@ -251,6 +257,7 @@ class AffiliatesList401Response extends \ProxyRequest\Support\AdditionalProperti
      */
     public function __construct(?array $data = null)
     {
+        $this->setIfExists('code', $data ?? [], null);
         $this->setIfExists('detail', $data ?? [], null);
         $this->setIfExists('nonFieldErrors', $data ?? [], null);
     }
@@ -296,6 +303,33 @@ class AffiliatesList401Response extends \ProxyRequest\Support\AdditionalProperti
         return count($this->listInvalidProperties()) === 0;
     }
 
+
+    /**
+     * Gets code
+     *
+     * @return string|null
+     */
+    public function getCode()
+    {
+        return $this->container['code'];
+    }
+
+    /**
+     * Sets code
+     *
+     * @param string|null $code Stable machine-readable error code, when available.
+     *
+     * @return self
+     */
+    public function setCode($code)
+    {
+        if (is_null($code)) {
+            throw new \InvalidArgumentException('non-nullable code cannot be null');
+        }
+        $this->container['code'] = $code;
+
+        return $this;
+    }
 
     /**
      * Gets detail

@@ -322,7 +322,7 @@ verifyOtp($verifyOTPRequest, $acceptLanguage, $xImpersonateUser): \ProxyRequest\
 
 Complete two-factor sign-in
 
-Exchanges a single-use sign-in challenge and authenticator code for account tokens.
+Exchange a single-use sign-in challenge and authenticator or recovery code for access and refresh tokens.
 
 ### Example
 
@@ -337,7 +337,7 @@ $apiInstance = new ProxyRequest\Api\AuthorizationResource(
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client()
 );
-$verifyOTPRequest = {"challenge":"a-single-use-challenge-returned-by-login","code":"492031"}; // \ProxyRequest\Dto\VerifyOTPRequest
+$verifyOTPRequest = {"challenge":"challenge","code":"us"}; // \ProxyRequest\Dto\VerifyOTPRequest
 $acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
 $xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
 

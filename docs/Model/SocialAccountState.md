@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**provider** | [**\ProxyRequest\Dto\ProviderEnum**](ProviderEnum.md) |  |
+**provider** | [**\ProxyRequest\Dto\SocialAccountStateProviderEnum**](SocialAccountStateProviderEnum.md) |  |
 **linked** | **bool** |  |
 **canUnlink** | **bool** |  |
 **unlinkBlockReason** | **string** |  |

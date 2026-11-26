@@ -9,7 +9,9 @@ All URIs are relative to https://api.proxyrequest.com/api/v1, except if the oper
 | [**create()**](WebhooksResource.md#create) | **POST** /webhooks | Create a customer webhook |
 | [**delete()**](WebhooksResource.md#delete) | **DELETE** /webhooks/{id} | Delete a customer webhook |
 | [**get()**](WebhooksResource.md#get) | **GET** /webhooks/{id} | Get a customer webhook |
+| [**getStaticEvents()**](WebhooksResource.md#getStaticEvents) | **GET** /webhooks/{id}/static-events | Read static rental event subscriptions |
 | [**list()**](WebhooksResource.md#list) | **GET** /webhooks | List customer webhooks |
+| [**setStaticEvents()**](WebhooksResource.md#setStaticEvents) | **PATCH** /webhooks/{id}/static-events | Replace static rental event subscriptions |
 
 
 ## `create()`
@@ -224,6 +226,75 @@ try {
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
+## `getStaticEvents()`
+
+```php
+getStaticEvents($id, $acceptLanguage, $xImpersonateUser): \ProxyRequest\Dto\StaticWebhookSubscription
+```
+
+Read static rental event subscriptions
+
+Return the static event types selected for the owned user webhook.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: StaticAuth
+$config = ProxyRequest\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = ProxyRequest\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
+
+// Configure Bearer (JWT) authorization: BearerAuth
+$config = ProxyRequest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new ProxyRequest\Api\WebhooksResource(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$id = 'id_example'; // string | A unique value identifying this Webhook.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
+
+try {
+    $result = $apiInstance->getStaticEvents($id, $acceptLanguage, $xImpersonateUser);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling WebhooksResource->getStaticEvents: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **id** | **string**| A unique value identifying this Webhook. | |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
+
+### Return type
+
+[**\ProxyRequest\Dto\StaticWebhookSubscription**](../Model/StaticWebhookSubscription.md)
+
+### Authorization
+
+[StaticAuth](../../README.md#StaticAuth), [BearerAuth](../../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
 ## `list()`
 
 ```php
@@ -289,6 +360,77 @@ try {
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `setStaticEvents()`
+
+```php
+setStaticEvents($id, $acceptLanguage, $xImpersonateUser, $patchedStaticWebhookSubscriptionRequest): \ProxyRequest\Dto\StaticWebhookSubscription
+```
+
+Replace static rental event subscriptions
+
+Replace the set of static rental event types delivered to the owned user webhook. An empty list disables static events.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: StaticAuth
+$config = ProxyRequest\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = ProxyRequest\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
+
+// Configure Bearer (JWT) authorization: BearerAuth
+$config = ProxyRequest\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new ProxyRequest\Api\WebhooksResource(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$id = 'id_example'; // string | A unique value identifying this Webhook.
+$acceptLanguage = de; // string | Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English.
+$xImpersonateUser = 'xImpersonateUser_example'; // string | Act as this reseller for this request only. Requires a superuser Static API key.
+$patchedStaticWebhookSubscriptionRequest = {"static_events":["static.rental.fulfillment_finished"]}; // \ProxyRequest\Dto\PatchedStaticWebhookSubscriptionRequest
+
+try {
+    $result = $apiInstance->setStaticEvents($id, $acceptLanguage, $xImpersonateUser, $patchedStaticWebhookSubscriptionRequest);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling WebhooksResource->setStaticEvents: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **id** | **string**| A unique value identifying this Webhook. | |
+| **acceptLanguage** | **string**| Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. | [optional] [default to &#39;en&#39;] |
+| **xImpersonateUser** | **string**| Act as this reseller for this request only. Requires a superuser Static API key. | [optional] |
+| **patchedStaticWebhookSubscriptionRequest** | [**\ProxyRequest\Dto\PatchedStaticWebhookSubscriptionRequest**](../Model/PatchedStaticWebhookSubscriptionRequest.md)|  | [optional] |
+
+### Return type
+
+[**\ProxyRequest\Dto\StaticWebhookSubscription**](../Model/StaticWebhookSubscription.md)
+
+### Authorization
+
+[StaticAuth](../../README.md#StaticAuth), [BearerAuth](../../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

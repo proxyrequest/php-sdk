@@ -33,7 +33,7 @@ use \ProxyRequest\ObjectSerializer;
  * PricingEnum Class Doc Comment
  *
  * @category Class
- * @description * &#x60;fixed&#x60; - Fixed * &#x60;range&#x60; - Range
+ * @description * &#x60;fixed&#x60; - Fixed * &#x60;range&#x60; - Range * &#x60;bandwidth&#x60; - Bandwidth
  * @package  ProxyRequest
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
@@ -47,6 +47,8 @@ class PricingEnum
 
     public const RANGE = 'range';
 
+    public const BANDWIDTH = 'bandwidth';
+
     public const UNKNOWN_DEFAULT_OPEN_API = 'unknown_default_open_api';
 
     /**
@@ -58,6 +60,7 @@ class PricingEnum
         return [
             self::FIXED,
             self::RANGE,
+            self::BANDWIDTH,
             self::UNKNOWN_DEFAULT_OPEN_API
         ];
     }

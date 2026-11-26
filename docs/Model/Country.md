@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**count** | **int** | Node count in Rust search mode. | [optional] [readonly]
 **id** | **string** |  | [optional]
 **code** | **string** | Two-letter ISO 3166-1 alpha-2 country code. Must be unique. us de fr |
 **name** | **string** | English display name of the country used across the admin and API responses. |

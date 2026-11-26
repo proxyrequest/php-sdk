@@ -86,6 +86,9 @@ class LocationsResource
         'getRegion' => [
             'application/json',
         ],
+        'getZipcode' => [
+            'application/json',
+        ],
         'listAsns' => [
             'application/json',
         ],
@@ -102,6 +105,9 @@ class LocationsResource
             'application/json',
         ],
         'listRegions' => [
+            'application/json',
+        ],
+        'listZipcodes' => [
             'application/json',
         ],
     ];
@@ -160,17 +166,19 @@ class LocationsResource
      * @param  string $id id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCity'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \ProxyRequest\Dto\City|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     * @return \ProxyRequest\Dto\City|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function getCity($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null, $impersonateUserId = null)
+    public function getCity($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        list($response) = $this->getCityWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
+        list($response) = $this->getCityWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount);
         return $response;
     }
 
@@ -179,9 +187,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getCityWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null, $impersonateUserId = null): \ProxyRequest\ApiResponse
+    public function getCityWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getCityWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getCityWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount));
     }
 
     /**
@@ -192,17 +200,19 @@ class LocationsResource
      * @param  string $id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCity'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \ProxyRequest\Dto\City|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ProxyRequest\Dto\City|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getCityWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null, $impersonateUserId = null)
+    public function getCityWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        $request = $this->getCityRequest($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
+        $request = $this->getCityRequest($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\City',
 ));
@@ -216,6 +226,8 @@ class LocationsResource
      * @param  string $id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCity'] to see the possible values for this operation
@@ -223,9 +235,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getCityAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null, $impersonateUserId = null)
+    public function getCityAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        return $this->getCityAsyncWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId)
+        return $this->getCityAsyncWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -241,6 +253,8 @@ class LocationsResource
      * @param  string $id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCity'] to see the possible values for this operation
@@ -248,9 +262,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getCityAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null, $impersonateUserId = null)
+    public function getCityAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        $request = $this->getCityRequest($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
+        $request = $this->getCityRequest($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\City',
 ));
@@ -262,6 +276,8 @@ class LocationsResource
      * @param  string $id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCity'] to see the possible values for this operation
@@ -269,7 +285,7 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getCityRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null, $impersonateUserId = null)
+    public function getCityRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCity'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
 
         // verify the required parameter 'id' is set
@@ -287,6 +303,14 @@ class LocationsResource
         }
 
 
+        if ($maxCount !== null && $maxCount < 0) {
+            throw new \InvalidArgumentException('invalid value for "$maxCount" when calling LocationsResource.getCity, must be bigger than or equal to 0.');
+        }
+
+        if ($minCount !== null && $minCount < 0) {
+            throw new \InvalidArgumentException('invalid value for "$minCount" when calling LocationsResource.getCity, must be bigger than or equal to 0.');
+        }
+
 
 
 
@@ -302,6 +326,24 @@ class LocationsResource
             \is_bool($includeAsns) ? ($includeAsns ? 'true' : 'false') : $includeAsns,
             'include_asns', // param base name
             'boolean', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $maxCount,
+            'max_count', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $minCount,
+            'min_count', // param base name
+            'integer', // openApiType
             'form', // style
             true, // explode
             false // required
@@ -410,7 +452,7 @@ class LocationsResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \ProxyRequest\Dto\Continent|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     * @return \ProxyRequest\Dto\Continent|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
     public function getContinent($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getContinent'][0], $impersonateUserId = null)
     {
@@ -441,7 +483,7 @@ class LocationsResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \ProxyRequest\Dto\Continent|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ProxyRequest\Dto\Continent|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
     public function getContinentWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getContinent'][0], $impersonateUserId = null)
     {
@@ -635,17 +677,19 @@ class LocationsResource
      * @param  string $id id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCountry'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \ProxyRequest\Dto\Country|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     * @return \ProxyRequest\Dto\Country|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function getCountry($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null, $impersonateUserId = null)
+    public function getCountry($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        list($response) = $this->getCountryWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
+        list($response) = $this->getCountryWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount);
         return $response;
     }
 
@@ -654,9 +698,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getCountryWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null, $impersonateUserId = null): \ProxyRequest\ApiResponse
+    public function getCountryWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getCountryWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getCountryWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount));
     }
 
     /**
@@ -667,17 +711,19 @@ class LocationsResource
      * @param  string $id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCountry'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \ProxyRequest\Dto\Country|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ProxyRequest\Dto\Country|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getCountryWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null, $impersonateUserId = null)
+    public function getCountryWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        $request = $this->getCountryRequest($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
+        $request = $this->getCountryRequest($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\Country',
 ));
@@ -691,6 +737,8 @@ class LocationsResource
      * @param  string $id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCountry'] to see the possible values for this operation
@@ -698,9 +746,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getCountryAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null, $impersonateUserId = null)
+    public function getCountryAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        return $this->getCountryAsyncWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId)
+        return $this->getCountryAsyncWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -716,6 +764,8 @@ class LocationsResource
      * @param  string $id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCountry'] to see the possible values for this operation
@@ -723,9 +773,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getCountryAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null, $impersonateUserId = null)
+    public function getCountryAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        $request = $this->getCountryRequest($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
+        $request = $this->getCountryRequest($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\Country',
 ));
@@ -737,6 +787,8 @@ class LocationsResource
      * @param  string $id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCountry'] to see the possible values for this operation
@@ -744,7 +796,7 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getCountryRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null, $impersonateUserId = null)
+    public function getCountryRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getCountry'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
 
         // verify the required parameter 'id' is set
@@ -762,6 +814,14 @@ class LocationsResource
         }
 
 
+        if ($maxCount !== null && $maxCount < 0) {
+            throw new \InvalidArgumentException('invalid value for "$maxCount" when calling LocationsResource.getCountry, must be bigger than or equal to 0.');
+        }
+
+        if ($minCount !== null && $minCount < 0) {
+            throw new \InvalidArgumentException('invalid value for "$minCount" when calling LocationsResource.getCountry, must be bigger than or equal to 0.');
+        }
+
 
 
 
@@ -777,6 +837,24 @@ class LocationsResource
             \is_bool($includeAsns) ? ($includeAsns ? 'true' : 'false') : $includeAsns,
             'include_asns', // param base name
             'boolean', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $maxCount,
+            'max_count', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $minCount,
+            'min_count', // param base name
+            'integer', // openApiType
             'form', // style
             true, // explode
             false // required
@@ -880,17 +958,19 @@ class LocationsResource
      * @param  string $id id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRegion'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \ProxyRequest\Dto\Region|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     * @return \ProxyRequest\Dto\Region|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function getRegion($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null, $impersonateUserId = null)
+    public function getRegion($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        list($response) = $this->getRegionWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
+        list($response) = $this->getRegionWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount);
         return $response;
     }
 
@@ -899,9 +979,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function getRegionWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null, $impersonateUserId = null): \ProxyRequest\ApiResponse
+    public function getRegionWithResponse($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getRegionWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getRegionWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount));
     }
 
     /**
@@ -912,17 +992,19 @@ class LocationsResource
      * @param  string $id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRegion'] to see the possible values for this operation
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \ProxyRequest\Dto\Region|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ProxyRequest\Dto\Region|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getRegionWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null, $impersonateUserId = null)
+    public function getRegionWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        $request = $this->getRegionRequest($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
+        $request = $this->getRegionRequest($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\Region',
 ));
@@ -936,6 +1018,8 @@ class LocationsResource
      * @param  string $id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRegion'] to see the possible values for this operation
@@ -943,9 +1027,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getRegionAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null, $impersonateUserId = null)
+    public function getRegionAsync($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        return $this->getRegionAsyncWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId)
+        return $this->getRegionAsyncWithHttpInfo($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -961,6 +1045,8 @@ class LocationsResource
      * @param  string $id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRegion'] to see the possible values for this operation
@@ -968,9 +1054,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getRegionAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null, $impersonateUserId = null)
+    public function getRegionAsyncWithHttpInfo($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        $request = $this->getRegionRequest($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
+        $request = $this->getRegionRequest($id, $packageId, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\Region',
 ));
@@ -982,6 +1068,8 @@ class LocationsResource
      * @param  string $id (required)
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRegion'] to see the possible values for this operation
@@ -989,7 +1077,7 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getRegionRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null, $impersonateUserId = null)
+    public function getRegionRequest($id, $packageId, $acceptLanguage = null, string $contentType = self::contentTypes['getRegion'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
 
         // verify the required parameter 'id' is set
@@ -1007,6 +1095,14 @@ class LocationsResource
         }
 
 
+        if ($maxCount !== null && $maxCount < 0) {
+            throw new \InvalidArgumentException('invalid value for "$maxCount" when calling LocationsResource.getRegion, must be bigger than or equal to 0.');
+        }
+
+        if ($minCount !== null && $minCount < 0) {
+            throw new \InvalidArgumentException('invalid value for "$minCount" when calling LocationsResource.getRegion, must be bigger than or equal to 0.');
+        }
+
 
 
 
@@ -1022,6 +1118,24 @@ class LocationsResource
             \is_bool($includeAsns) ? ($includeAsns ? 'true' : 'false') : $includeAsns,
             'include_asns', // param base name
             'boolean', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $maxCount,
+            'max_count', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $minCount,
+            'min_count', // param base name
+            'integer', // openApiType
             'form', // style
             true, // explode
             false // required
@@ -1118,6 +1232,362 @@ class LocationsResource
     }
 
     /**
+     * Operation getZipcode
+     *
+     * Get an available ZIP code
+     *
+     * @param  string $id id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  string|null $asnCode ASN in the same observed combination. (optional)
+     * @param  string|null $cityCode City code in the same observed combination. (optional)
+     * @param  string|null $code Postal identifier; case, spaces and hyphens are normalized. Leading zeros are preserved. (optional)
+     * @param  string|null $countryCode Country code of an observed provider ZIP combination. (optional)
+     * @param  string|null $ispCode ISP in the same observed combination. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  string|null $regionCode Region code in the same observed combination. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getZipcode'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\Postal|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function getZipcode($id, $packageId, $asnCode = null, $cityCode = null, $code = null, $countryCode = null, $ispCode = null, $maxCount = null, $minCount = null, $regionCode = null, $acceptLanguage = null, string $contentType = self::contentTypes['getZipcode'][0], $impersonateUserId = null)
+    {
+        list($response) = $this->getZipcodeWithHttpInfo($id, $packageId, $asnCode, $cityCode, $code, $countryCode, $ispCode, $maxCount, $minCount, $regionCode, $acceptLanguage, $contentType, $impersonateUserId);
+        return $response;
+    }
+
+    /**
+     * Operation getZipcodeWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function getZipcodeWithResponse($id, $packageId, $asnCode = null, $cityCode = null, $code = null, $countryCode = null, $ispCode = null, $maxCount = null, $minCount = null, $regionCode = null, $acceptLanguage = null, string $contentType = self::contentTypes['getZipcode'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->getZipcodeWithHttpInfo($id, $packageId, $asnCode, $cityCode, $code, $countryCode, $ispCode, $maxCount, $minCount, $regionCode, $acceptLanguage, $contentType, $impersonateUserId));
+    }
+
+    /**
+     * Operation getZipcodeWithHttpInfo
+     *
+     * Get an available ZIP code
+     *
+     * @param  string $id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  string|null $asnCode ASN in the same observed combination. (optional)
+     * @param  string|null $cityCode City code in the same observed combination. (optional)
+     * @param  string|null $code Postal identifier; case, spaces and hyphens are normalized. Leading zeros are preserved. (optional)
+     * @param  string|null $countryCode Country code of an observed provider ZIP combination. (optional)
+     * @param  string|null $ispCode ISP in the same observed combination. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  string|null $regionCode Region code in the same observed combination. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getZipcode'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\Postal|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getZipcodeWithHttpInfo($id, $packageId, $asnCode = null, $cityCode = null, $code = null, $countryCode = null, $ispCode = null, $maxCount = null, $minCount = null, $regionCode = null, $acceptLanguage = null, string $contentType = self::contentTypes['getZipcode'][0], $impersonateUserId = null)
+    {
+        $request = $this->getZipcodeRequest($id, $packageId, $asnCode, $cityCode, $code, $countryCode, $ispCode, $maxCount, $minCount, $regionCode, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\Postal',
+));
+    }
+
+    /**
+     * Operation getZipcodeAsync
+     *
+     * Get an available ZIP code
+     *
+     * @param  string $id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  string|null $asnCode ASN in the same observed combination. (optional)
+     * @param  string|null $cityCode City code in the same observed combination. (optional)
+     * @param  string|null $code Postal identifier; case, spaces and hyphens are normalized. Leading zeros are preserved. (optional)
+     * @param  string|null $countryCode Country code of an observed provider ZIP combination. (optional)
+     * @param  string|null $ispCode ISP in the same observed combination. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  string|null $regionCode Region code in the same observed combination. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getZipcode'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getZipcodeAsync($id, $packageId, $asnCode = null, $cityCode = null, $code = null, $countryCode = null, $ispCode = null, $maxCount = null, $minCount = null, $regionCode = null, $acceptLanguage = null, string $contentType = self::contentTypes['getZipcode'][0], $impersonateUserId = null)
+    {
+        return $this->getZipcodeAsyncWithHttpInfo($id, $packageId, $asnCode, $cityCode, $code, $countryCode, $ispCode, $maxCount, $minCount, $regionCode, $acceptLanguage, $contentType, $impersonateUserId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getZipcodeAsyncWithHttpInfo
+     *
+     * Get an available ZIP code
+     *
+     * @param  string $id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  string|null $asnCode ASN in the same observed combination. (optional)
+     * @param  string|null $cityCode City code in the same observed combination. (optional)
+     * @param  string|null $code Postal identifier; case, spaces and hyphens are normalized. Leading zeros are preserved. (optional)
+     * @param  string|null $countryCode Country code of an observed provider ZIP combination. (optional)
+     * @param  string|null $ispCode ISP in the same observed combination. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  string|null $regionCode Region code in the same observed combination. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getZipcode'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getZipcodeAsyncWithHttpInfo($id, $packageId, $asnCode = null, $cityCode = null, $code = null, $countryCode = null, $ispCode = null, $maxCount = null, $minCount = null, $regionCode = null, $acceptLanguage = null, string $contentType = self::contentTypes['getZipcode'][0], $impersonateUserId = null)
+    {
+        $request = $this->getZipcodeRequest($id, $packageId, $asnCode, $cityCode, $code, $countryCode, $ispCode, $maxCount, $minCount, $regionCode, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\Postal',
+));
+    }
+
+    /**
+     * Create request for operation 'getZipcode'
+     *
+     * @param  string $id (required)
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  string|null $asnCode ASN in the same observed combination. (optional)
+     * @param  string|null $cityCode City code in the same observed combination. (optional)
+     * @param  string|null $code Postal identifier; case, spaces and hyphens are normalized. Leading zeros are preserved. (optional)
+     * @param  string|null $countryCode Country code of an observed provider ZIP combination. (optional)
+     * @param  string|null $ispCode ISP in the same observed combination. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  string|null $regionCode Region code in the same observed combination. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getZipcode'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getZipcodeRequest($id, $packageId, $asnCode = null, $cityCode = null, $code = null, $countryCode = null, $ispCode = null, $maxCount = null, $minCount = null, $regionCode = null, $acceptLanguage = null, string $contentType = self::contentTypes['getZipcode'][0], $impersonateUserId = null)
+    {
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling getZipcode'
+            );
+        }
+
+        // verify the required parameter 'packageId' is set
+        if ($packageId === null || (is_array($packageId) && count($packageId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $packageId when calling getZipcode'
+            );
+        }
+
+
+
+
+
+
+        if ($maxCount !== null && $maxCount < 0) {
+            throw new \InvalidArgumentException('invalid value for "$maxCount" when calling LocationsResource.getZipcode, must be bigger than or equal to 0.');
+        }
+
+        if ($minCount !== null && $minCount < 0) {
+            throw new \InvalidArgumentException('invalid value for "$minCount" when calling LocationsResource.getZipcode, must be bigger than or equal to 0.');
+        }
+
+
+
+
+
+        $resourcePath = '/locations/zipcodes/{id}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $asnCode,
+            'asn__code', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $cityCode,
+            'city__code', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $code,
+            'code', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $countryCode,
+            'country__code', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $ispCode,
+            'isp__code', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $maxCount,
+            'max_count', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $minCount,
+            'min_count', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $packageId,
+            'package_id', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            true // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $regionCode,
+            'region__code', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation listAsns
      *
      * List available autonomous systems
@@ -1125,12 +1595,14 @@ class LocationsResource
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code code (optional)
      * @param  string|null $countryCode countryCode (optional)
-     * @param  bool|null $global Set to true to return only globally targetable ASNs. (optional)
+     * @param  bool|null $global Set to true to return only globally targetable ASNs when country__code is absent. A country filter takes precedence. (optional)
      * @param  bool|null $includeGeo Include geographic scopes for each ASN. By default geo is an empty list. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: code, name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across ASN fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -1138,11 +1610,11 @@ class LocationsResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \ProxyRequest\Dto\PaginatedLocationASNRecordList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     * @return \ProxyRequest\Dto\PaginatedLocationASNRecordList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listAsns($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null, $impersonateUserId = null)
+    public function listAsns($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        list($response) = $this->listAsnsWithHttpInfo($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeGeo, $impersonateUserId);
+        list($response) = $this->listAsnsWithHttpInfo($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeGeo, $impersonateUserId, $maxCount, $minCount);
         return $response;
     }
 
@@ -1151,9 +1623,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listAsnsWithResponse($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null, $impersonateUserId = null): \ProxyRequest\ApiResponse
+    public function listAsnsWithResponse($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null, $impersonateUserId = null, $maxCount = null, $minCount = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listAsnsWithHttpInfo($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeGeo, $impersonateUserId));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listAsnsWithHttpInfo($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeGeo, $impersonateUserId, $maxCount, $minCount));
     }
 
     /**
@@ -1164,12 +1636,14 @@ class LocationsResource
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
-     * @param  bool|null $global Set to true to return only globally targetable ASNs. (optional)
+     * @param  bool|null $global Set to true to return only globally targetable ASNs when country__code is absent. A country filter takes precedence. (optional)
      * @param  bool|null $includeGeo Include geographic scopes for each ASN. By default geo is an empty list. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: code, name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across ASN fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -1177,11 +1651,11 @@ class LocationsResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \ProxyRequest\Dto\PaginatedLocationASNRecordList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ProxyRequest\Dto\PaginatedLocationASNRecordList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listAsnsWithHttpInfo($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null, $impersonateUserId = null)
+    public function listAsnsWithHttpInfo($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        $request = $this->listAsnsRequest($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeGeo, $impersonateUserId);
+        $request = $this->listAsnsRequest($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeGeo, $impersonateUserId, $maxCount, $minCount);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedLocationASNRecordList',
 ));
@@ -1195,12 +1669,14 @@ class LocationsResource
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
-     * @param  bool|null $global Set to true to return only globally targetable ASNs. (optional)
+     * @param  bool|null $global Set to true to return only globally targetable ASNs when country__code is absent. A country filter takes precedence. (optional)
      * @param  bool|null $includeGeo Include geographic scopes for each ASN. By default geo is an empty list. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: code, name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across ASN fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -1209,9 +1685,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listAsnsAsync($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null, $impersonateUserId = null)
+    public function listAsnsAsync($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        return $this->listAsnsAsyncWithHttpInfo($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeGeo, $impersonateUserId)
+        return $this->listAsnsAsyncWithHttpInfo($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeGeo, $impersonateUserId, $maxCount, $minCount)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1227,12 +1703,14 @@ class LocationsResource
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
-     * @param  bool|null $global Set to true to return only globally targetable ASNs. (optional)
+     * @param  bool|null $global Set to true to return only globally targetable ASNs when country__code is absent. A country filter takes precedence. (optional)
      * @param  bool|null $includeGeo Include geographic scopes for each ASN. By default geo is an empty list. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: code, name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across ASN fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -1241,9 +1719,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listAsnsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null, $impersonateUserId = null)
+    public function listAsnsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        $request = $this->listAsnsRequest($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeGeo, $impersonateUserId);
+        $request = $this->listAsnsRequest($packageId, $code, $countryCode, $global, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeGeo, $impersonateUserId, $maxCount, $minCount);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedLocationASNRecordList',
 ));
@@ -1255,12 +1733,14 @@ class LocationsResource
      * @param  string $packageId Package whose targeting availability should be returned. (required)
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
-     * @param  bool|null $global Set to true to return only globally targetable ASNs. (optional)
+     * @param  bool|null $global Set to true to return only globally targetable ASNs when country__code is absent. A country filter takes precedence. (optional)
      * @param  bool|null $includeGeo Include geographic scopes for each ASN. By default geo is an empty list. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: code, name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across ASN fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -1269,7 +1749,7 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listAsnsRequest($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null, $impersonateUserId = null)
+    public function listAsnsRequest($packageId, $code = null, $countryCode = null, $global = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listAsns'][0], $includeGeo = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
 
         // verify the required parameter 'packageId' is set
@@ -1283,6 +1763,14 @@ class LocationsResource
 
 
 
+
+        if ($maxCount !== null && $maxCount < 0) {
+            throw new \InvalidArgumentException('invalid value for "$maxCount" when calling LocationsResource.listAsns, must be bigger than or equal to 0.');
+        }
+
+        if ($minCount !== null && $minCount < 0) {
+            throw new \InvalidArgumentException('invalid value for "$minCount" when calling LocationsResource.listAsns, must be bigger than or equal to 0.');
+        }
 
 
 
@@ -1338,6 +1826,24 @@ class LocationsResource
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
             $limit,
             'limit', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $maxCount,
+            'max_count', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $minCount,
+            'min_count', // param base name
             'integer', // openApiType
             'form', // style
             true, // explode
@@ -1472,9 +1978,11 @@ class LocationsResource
      * @param  string|null $countryCode countryCode (optional)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: id, code, name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $regionCode regionCode (optional)
      * @param  string|null $search Case-insensitive partial search across City fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
@@ -1483,11 +1991,11 @@ class LocationsResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \ProxyRequest\Dto\PaginatedCityList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     * @return \ProxyRequest\Dto\PaginatedCityList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listCities($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null, $impersonateUserId = null)
+    public function listCities($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        list($response) = $this->listCitiesWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
+        list($response) = $this->listCitiesWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount);
         return $response;
     }
 
@@ -1496,9 +2004,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listCitiesWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null, $impersonateUserId = null): \ProxyRequest\ApiResponse
+    public function listCitiesWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listCitiesWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listCitiesWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount));
     }
 
     /**
@@ -1511,9 +2019,11 @@ class LocationsResource
      * @param  string|null $countryCode (optional)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: id, code, name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $regionCode (optional)
      * @param  string|null $search Case-insensitive partial search across City fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
@@ -1522,11 +2032,11 @@ class LocationsResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \ProxyRequest\Dto\PaginatedCityList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ProxyRequest\Dto\PaginatedCityList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listCitiesWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null, $impersonateUserId = null)
+    public function listCitiesWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        $request = $this->listCitiesRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
+        $request = $this->listCitiesRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedCityList',
 ));
@@ -1542,9 +2052,11 @@ class LocationsResource
      * @param  string|null $countryCode (optional)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: id, code, name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $regionCode (optional)
      * @param  string|null $search Case-insensitive partial search across City fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
@@ -1554,9 +2066,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listCitiesAsync($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null, $impersonateUserId = null)
+    public function listCitiesAsync($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        return $this->listCitiesAsyncWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId)
+        return $this->listCitiesAsyncWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1574,9 +2086,11 @@ class LocationsResource
      * @param  string|null $countryCode (optional)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: id, code, name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $regionCode (optional)
      * @param  string|null $search Case-insensitive partial search across City fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
@@ -1586,9 +2100,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listCitiesAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null, $impersonateUserId = null)
+    public function listCitiesAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        $request = $this->listCitiesRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
+        $request = $this->listCitiesRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedCityList',
 ));
@@ -1602,9 +2116,11 @@ class LocationsResource
      * @param  string|null $countryCode (optional)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: id, code, name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $regionCode (optional)
      * @param  string|null $search Case-insensitive partial search across City fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
@@ -1614,7 +2130,7 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listCitiesRequest($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null, $impersonateUserId = null)
+    public function listCitiesRequest($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCities'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
 
         // verify the required parameter 'packageId' is set
@@ -1627,6 +2143,14 @@ class LocationsResource
 
 
 
+
+        if ($maxCount !== null && $maxCount < 0) {
+            throw new \InvalidArgumentException('invalid value for "$maxCount" when calling LocationsResource.listCities, must be bigger than or equal to 0.');
+        }
+
+        if ($minCount !== null && $minCount < 0) {
+            throw new \InvalidArgumentException('invalid value for "$minCount" when calling LocationsResource.listCities, must be bigger than or equal to 0.');
+        }
 
 
 
@@ -1674,6 +2198,24 @@ class LocationsResource
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
             $limit,
             'limit', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $maxCount,
+            'max_count', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $minCount,
+            'min_count', // param base name
             'integer', // openApiType
             'form', // style
             true, // explode
@@ -1817,7 +2359,7 @@ class LocationsResource
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: id, code, name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across Continent fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -1825,7 +2367,7 @@ class LocationsResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \ProxyRequest\Dto\PaginatedContinentList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     * @return \ProxyRequest\Dto\PaginatedContinentList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
     public function listContinents($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listContinents'][0], $impersonateUserId = null)
     {
@@ -1853,7 +2395,7 @@ class LocationsResource
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: id, code, name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across Continent fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -1861,7 +2403,7 @@ class LocationsResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \ProxyRequest\Dto\PaginatedContinentList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ProxyRequest\Dto\PaginatedContinentList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
     public function listContinentsWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listContinents'][0], $impersonateUserId = null)
     {
@@ -1881,7 +2423,7 @@ class LocationsResource
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: id, code, name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across Continent fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -1910,7 +2452,7 @@ class LocationsResource
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: id, code, name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across Continent fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -1935,7 +2477,7 @@ class LocationsResource
      * @param  int|null $limit Number of results to return per page. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: id, code, name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across Continent fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -2116,9 +2658,11 @@ class LocationsResource
      * @param  string|null $code code (optional)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: id, code, name, original_name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across Country fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -2126,11 +2670,11 @@ class LocationsResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \ProxyRequest\Dto\PaginatedCountryList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     * @return \ProxyRequest\Dto\PaginatedCountryList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listCountries($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null, $impersonateUserId = null)
+    public function listCountries($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        list($response) = $this->listCountriesWithHttpInfo($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
+        list($response) = $this->listCountriesWithHttpInfo($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount);
         return $response;
     }
 
@@ -2139,9 +2683,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listCountriesWithResponse($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null, $impersonateUserId = null): \ProxyRequest\ApiResponse
+    public function listCountriesWithResponse($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listCountriesWithHttpInfo($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listCountriesWithHttpInfo($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount));
     }
 
     /**
@@ -2153,9 +2697,11 @@ class LocationsResource
      * @param  string|null $code (optional)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: id, code, name, original_name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across Country fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -2163,11 +2709,11 @@ class LocationsResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \ProxyRequest\Dto\PaginatedCountryList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ProxyRequest\Dto\PaginatedCountryList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listCountriesWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null, $impersonateUserId = null)
+    public function listCountriesWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        $request = $this->listCountriesRequest($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
+        $request = $this->listCountriesRequest($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedCountryList',
 ));
@@ -2182,9 +2728,11 @@ class LocationsResource
      * @param  string|null $code (optional)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: id, code, name, original_name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across Country fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -2193,9 +2741,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listCountriesAsync($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null, $impersonateUserId = null)
+    public function listCountriesAsync($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        return $this->listCountriesAsyncWithHttpInfo($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId)
+        return $this->listCountriesAsyncWithHttpInfo($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2212,9 +2760,11 @@ class LocationsResource
      * @param  string|null $code (optional)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: id, code, name, original_name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across Country fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -2223,9 +2773,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listCountriesAsyncWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null, $impersonateUserId = null)
+    public function listCountriesAsyncWithHttpInfo($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        $request = $this->listCountriesRequest($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
+        $request = $this->listCountriesRequest($packageId, $code, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedCountryList',
 ));
@@ -2238,9 +2788,11 @@ class LocationsResource
      * @param  string|null $code (optional)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: id, code, name, original_name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across Country fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -2249,7 +2801,7 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listCountriesRequest($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null, $impersonateUserId = null)
+    public function listCountriesRequest($packageId, $code = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listCountries'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
 
         // verify the required parameter 'packageId' is set
@@ -2261,6 +2813,14 @@ class LocationsResource
 
 
 
+
+        if ($maxCount !== null && $maxCount < 0) {
+            throw new \InvalidArgumentException('invalid value for "$maxCount" when calling LocationsResource.listCountries, must be bigger than or equal to 0.');
+        }
+
+        if ($minCount !== null && $minCount < 0) {
+            throw new \InvalidArgumentException('invalid value for "$minCount" when calling LocationsResource.listCountries, must be bigger than or equal to 0.');
+        }
 
 
 
@@ -2298,6 +2858,24 @@ class LocationsResource
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
             $limit,
             'limit', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $maxCount,
+            'max_count', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $minCount,
+            'min_count', // param base name
             'integer', // openApiType
             'form', // style
             true, // explode
@@ -2431,9 +3009,11 @@ class LocationsResource
      * @param  string|null $code code (optional)
      * @param  string|null $countryCode countryCode (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: code, name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across ISP fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -2441,11 +3021,11 @@ class LocationsResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \ProxyRequest\Dto\PaginatedISPList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     * @return \ProxyRequest\Dto\PaginatedISPList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listIsps($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0], $impersonateUserId = null)
+    public function listIsps($packageId, $code = null, $countryCode = null, $limit = null, $maxCount = null, $minCount = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0], $impersonateUserId = null)
     {
-        list($response) = $this->listIspsWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId);
+        list($response) = $this->listIspsWithHttpInfo($packageId, $code, $countryCode, $limit, $maxCount, $minCount, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId);
         return $response;
     }
 
@@ -2454,9 +3034,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listIspsWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
+    public function listIspsWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $maxCount = null, $minCount = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listIspsWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listIspsWithHttpInfo($packageId, $code, $countryCode, $limit, $maxCount, $minCount, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId));
     }
 
     /**
@@ -2468,9 +3048,11 @@ class LocationsResource
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: code, name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across ISP fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -2478,11 +3060,11 @@ class LocationsResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \ProxyRequest\Dto\PaginatedISPList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ProxyRequest\Dto\PaginatedISPList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listIspsWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0], $impersonateUserId = null)
+    public function listIspsWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $maxCount = null, $minCount = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0], $impersonateUserId = null)
     {
-        $request = $this->listIspsRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId);
+        $request = $this->listIspsRequest($packageId, $code, $countryCode, $limit, $maxCount, $minCount, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedISPList',
 ));
@@ -2497,9 +3079,11 @@ class LocationsResource
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: code, name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across ISP fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -2508,9 +3092,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listIspsAsync($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0], $impersonateUserId = null)
+    public function listIspsAsync($packageId, $code = null, $countryCode = null, $limit = null, $maxCount = null, $minCount = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0], $impersonateUserId = null)
     {
-        return $this->listIspsAsyncWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId)
+        return $this->listIspsAsyncWithHttpInfo($packageId, $code, $countryCode, $limit, $maxCount, $minCount, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2527,9 +3111,11 @@ class LocationsResource
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: code, name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across ISP fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -2538,9 +3124,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listIspsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0], $impersonateUserId = null)
+    public function listIspsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $maxCount = null, $minCount = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0], $impersonateUserId = null)
     {
-        $request = $this->listIspsRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId);
+        $request = $this->listIspsRequest($packageId, $code, $countryCode, $limit, $maxCount, $minCount, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $impersonateUserId);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedISPList',
 ));
@@ -2553,9 +3139,11 @@ class LocationsResource
      * @param  string|null $code (optional)
      * @param  string|null $countryCode (optional)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: code, name. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across ISP fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -2564,7 +3152,7 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listIspsRequest($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0], $impersonateUserId = null)
+    public function listIspsRequest($packageId, $code = null, $countryCode = null, $limit = null, $maxCount = null, $minCount = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listIsps'][0], $impersonateUserId = null)
     {
 
         // verify the required parameter 'packageId' is set
@@ -2576,6 +3164,14 @@ class LocationsResource
 
 
 
+
+        if ($maxCount !== null && $maxCount < 0) {
+            throw new \InvalidArgumentException('invalid value for "$maxCount" when calling LocationsResource.listIsps, must be bigger than or equal to 0.');
+        }
+
+        if ($minCount !== null && $minCount < 0) {
+            throw new \InvalidArgumentException('invalid value for "$minCount" when calling LocationsResource.listIsps, must be bigger than or equal to 0.');
+        }
 
 
 
@@ -2613,6 +3209,24 @@ class LocationsResource
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
             $limit,
             'limit', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $maxCount,
+            'max_count', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $minCount,
+            'min_count', // param base name
             'integer', // openApiType
             'form', // style
             true, // explode
@@ -2747,9 +3361,11 @@ class LocationsResource
      * @param  string|null $countryCode countryCode (optional)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: id, code, name, original_name, iso31662. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across Region fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -2757,11 +3373,11 @@ class LocationsResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \ProxyRequest\Dto\PaginatedRegionList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     * @return \ProxyRequest\Dto\PaginatedRegionList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
      */
-    public function listRegions($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null, $impersonateUserId = null)
+    public function listRegions($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        list($response) = $this->listRegionsWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
+        list($response) = $this->listRegionsWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount);
         return $response;
     }
 
@@ -2770,9 +3386,9 @@ class LocationsResource
      *
      * @return \ProxyRequest\ApiResponse
      */
-    public function listRegionsWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null, $impersonateUserId = null): \ProxyRequest\ApiResponse
+    public function listRegionsWithResponse($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null): \ProxyRequest\ApiResponse
     {
-        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listRegionsWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId));
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listRegionsWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount));
     }
 
     /**
@@ -2785,9 +3401,11 @@ class LocationsResource
      * @param  string|null $countryCode (optional)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: id, code, name, original_name, iso31662. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across Region fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -2795,11 +3413,11 @@ class LocationsResource
      *
      * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \ProxyRequest\Dto\PaginatedRegionList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ProxyRequest\Dto\PaginatedRegionList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listRegionsWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null, $impersonateUserId = null)
+    public function listRegionsWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        $request = $this->listRegionsRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
+        $request = $this->listRegionsRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount);
         return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedRegionList',
 ));
@@ -2815,9 +3433,11 @@ class LocationsResource
      * @param  string|null $countryCode (optional)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: id, code, name, original_name, iso31662. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across Region fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -2826,9 +3446,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listRegionsAsync($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null, $impersonateUserId = null)
+    public function listRegionsAsync($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        return $this->listRegionsAsyncWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId)
+        return $this->listRegionsAsyncWithHttpInfo($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2846,9 +3466,11 @@ class LocationsResource
      * @param  string|null $countryCode (optional)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: id, code, name, original_name, iso31662. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across Region fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -2857,9 +3479,9 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listRegionsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null, $impersonateUserId = null)
+    public function listRegionsAsyncWithHttpInfo($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
-        $request = $this->listRegionsRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId);
+        $request = $this->listRegionsRequest($packageId, $code, $countryCode, $limit, $name, $offset, $ordering, $search, $acceptLanguage, $contentType, $includeAsns, $impersonateUserId, $maxCount, $minCount);
         return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
   200 => '\\ProxyRequest\\Dto\\PaginatedRegionList',
 ));
@@ -2873,9 +3495,11 @@ class LocationsResource
      * @param  string|null $countryCode (optional)
      * @param  bool|null $includeAsns The asns field is always present and defaults to an empty array. Pass include_asns&#x3D;true to include available autonomous system numbers. This option does not affect the standalone /locations/asn endpoint or the compact proxy-node response format. (optional, default to false)
      * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
      * @param  string|null $name (optional)
      * @param  int|null $offset The initial index from which to return the results. (optional)
-     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $ordering Comma-separated fields: id, code, name, original_name, iso31662. Prefix a field with - for descending order. Unsupported fields are ignored. Name ordering follows the catalog collation. (optional)
      * @param  string|null $search Case-insensitive partial search across Region fields: &#x60;code&#x60; and &#x60;name&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
      * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
      * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
@@ -2884,7 +3508,7 @@ class LocationsResource
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listRegionsRequest($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null, $impersonateUserId = null)
+    public function listRegionsRequest($packageId, $code = null, $countryCode = null, $limit = null, $name = null, $offset = null, $ordering = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listRegions'][0], $includeAsns = null, $impersonateUserId = null, $maxCount = null, $minCount = null)
     {
 
         // verify the required parameter 'packageId' is set
@@ -2897,6 +3521,14 @@ class LocationsResource
 
 
 
+
+        if ($maxCount !== null && $maxCount < 0) {
+            throw new \InvalidArgumentException('invalid value for "$maxCount" when calling LocationsResource.listRegions, must be bigger than or equal to 0.');
+        }
+
+        if ($minCount !== null && $minCount < 0) {
+            throw new \InvalidArgumentException('invalid value for "$minCount" when calling LocationsResource.listRegions, must be bigger than or equal to 0.');
+        }
 
 
 
@@ -2950,6 +3582,24 @@ class LocationsResource
         ) ?? []);
         // query params
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $maxCount,
+            'max_count', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $minCount,
+            'min_count', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
             $name,
             'name', // param base name
             'string', // openApiType
@@ -2983,6 +3633,402 @@ class LocationsResource
             'form', // style
             true, // explode
             true // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $search,
+            'search', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+
+        // header params
+        if ($acceptLanguage !== null) {
+            $headerParams['Accept-Language'] = ObjectSerializer::toHeaderValue($acceptLanguage);
+        }
+        // header params
+        if ($impersonateUserId !== null) {
+            $headerParams['X-Impersonate-User'] = ObjectSerializer::toHeaderValue($impersonateUserId);
+        }
+
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \ProxyRequest\Support\Json::encode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation listZipcodes
+     *
+     * List available ZIP codes
+     *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  string|null $asnCode ASN in the same observed combination. (optional)
+     * @param  string|null $cityCode City code in the same observed combination. (optional)
+     * @param  string|null $code Postal identifier; case, spaces and hyphens are normalized. Leading zeros are preserved. (optional)
+     * @param  string|null $countryCode Country code of an observed provider ZIP combination. (optional)
+     * @param  string|null $ispCode ISP in the same observed combination. (optional)
+     * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $offset The initial index from which to return the results. (optional)
+     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $regionCode Region code in the same observed combination. (optional)
+     * @param  string|null $search Case-insensitive partial search across zip code fields: &#x60;code&#x60; and &#x60;normalized_code&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listZipcodes'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \ProxyRequest\Dto\PaginatedPostalList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response
+     */
+    public function listZipcodes($packageId, $asnCode = null, $cityCode = null, $code = null, $countryCode = null, $ispCode = null, $limit = null, $maxCount = null, $minCount = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listZipcodes'][0], $impersonateUserId = null)
+    {
+        list($response) = $this->listZipcodesWithHttpInfo($packageId, $asnCode, $cityCode, $code, $countryCode, $ispCode, $limit, $maxCount, $minCount, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $impersonateUserId);
+        return $response;
+    }
+
+    /**
+     * Operation listZipcodesWithResponse
+     *
+     * @return \ProxyRequest\ApiResponse
+     */
+    public function listZipcodesWithResponse($packageId, $asnCode = null, $cityCode = null, $code = null, $countryCode = null, $ispCode = null, $limit = null, $maxCount = null, $minCount = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listZipcodes'][0], $impersonateUserId = null): \ProxyRequest\ApiResponse
+    {
+        return \ProxyRequest\ApiResponse::fromHttpInfo($this->listZipcodesWithHttpInfo($packageId, $asnCode, $cityCode, $code, $countryCode, $ispCode, $limit, $maxCount, $minCount, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $impersonateUserId));
+    }
+
+    /**
+     * Operation listZipcodesWithHttpInfo
+     *
+     * List available ZIP codes
+     *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  string|null $asnCode ASN in the same observed combination. (optional)
+     * @param  string|null $cityCode City code in the same observed combination. (optional)
+     * @param  string|null $code Postal identifier; case, spaces and hyphens are normalized. Leading zeros are preserved. (optional)
+     * @param  string|null $countryCode Country code of an observed provider ZIP combination. (optional)
+     * @param  string|null $ispCode ISP in the same observed combination. (optional)
+     * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $offset The initial index from which to return the results. (optional)
+     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $regionCode Region code in the same observed combination. (optional)
+     * @param  string|null $search Case-insensitive partial search across zip code fields: &#x60;code&#x60; and &#x60;normalized_code&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listZipcodes'] to see the possible values for this operation
+     *
+     * @throws \ProxyRequest\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \ProxyRequest\Dto\PaginatedPostalList|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response|\ProxyRequest\Dto\AffiliatesList401Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function listZipcodesWithHttpInfo($packageId, $asnCode = null, $cityCode = null, $code = null, $countryCode = null, $ispCode = null, $limit = null, $maxCount = null, $minCount = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listZipcodes'][0], $impersonateUserId = null)
+    {
+        $request = $this->listZipcodesRequest($packageId, $asnCode, $cityCode, $code, $countryCode, $ispCode, $limit, $maxCount, $minCount, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::send($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\PaginatedPostalList',
+));
+    }
+
+    /**
+     * Operation listZipcodesAsync
+     *
+     * List available ZIP codes
+     *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  string|null $asnCode ASN in the same observed combination. (optional)
+     * @param  string|null $cityCode City code in the same observed combination. (optional)
+     * @param  string|null $code Postal identifier; case, spaces and hyphens are normalized. Leading zeros are preserved. (optional)
+     * @param  string|null $countryCode Country code of an observed provider ZIP combination. (optional)
+     * @param  string|null $ispCode ISP in the same observed combination. (optional)
+     * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $offset The initial index from which to return the results. (optional)
+     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $regionCode Region code in the same observed combination. (optional)
+     * @param  string|null $search Case-insensitive partial search across zip code fields: &#x60;code&#x60; and &#x60;normalized_code&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listZipcodes'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listZipcodesAsync($packageId, $asnCode = null, $cityCode = null, $code = null, $countryCode = null, $ispCode = null, $limit = null, $maxCount = null, $minCount = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listZipcodes'][0], $impersonateUserId = null)
+    {
+        return $this->listZipcodesAsyncWithHttpInfo($packageId, $asnCode, $cityCode, $code, $countryCode, $ispCode, $limit, $maxCount, $minCount, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $impersonateUserId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation listZipcodesAsyncWithHttpInfo
+     *
+     * List available ZIP codes
+     *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  string|null $asnCode ASN in the same observed combination. (optional)
+     * @param  string|null $cityCode City code in the same observed combination. (optional)
+     * @param  string|null $code Postal identifier; case, spaces and hyphens are normalized. Leading zeros are preserved. (optional)
+     * @param  string|null $countryCode Country code of an observed provider ZIP combination. (optional)
+     * @param  string|null $ispCode ISP in the same observed combination. (optional)
+     * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $offset The initial index from which to return the results. (optional)
+     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $regionCode Region code in the same observed combination. (optional)
+     * @param  string|null $search Case-insensitive partial search across zip code fields: &#x60;code&#x60; and &#x60;normalized_code&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listZipcodes'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listZipcodesAsyncWithHttpInfo($packageId, $asnCode = null, $cityCode = null, $code = null, $countryCode = null, $ispCode = null, $limit = null, $maxCount = null, $minCount = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listZipcodes'][0], $impersonateUserId = null)
+    {
+        $request = $this->listZipcodesRequest($packageId, $asnCode, $cityCode, $code, $countryCode, $ispCode, $limit, $maxCount, $minCount, $offset, $ordering, $regionCode, $search, $acceptLanguage, $contentType, $impersonateUserId);
+        return \ProxyRequest\Support\ResponseHandler::sendAsync($this->client, $request, $this->createHttpClientOption(), array (
+  200 => '\\ProxyRequest\\Dto\\PaginatedPostalList',
+));
+    }
+
+    /**
+     * Create request for operation 'listZipcodes'
+     *
+     * @param  string $packageId Package whose targeting availability should be returned. (required)
+     * @param  string|null $asnCode ASN in the same observed combination. (optional)
+     * @param  string|null $cityCode City code in the same observed combination. (optional)
+     * @param  string|null $code Postal identifier; case, spaces and hyphens are normalized. Leading zeros are preserved. (optional)
+     * @param  string|null $countryCode Country code of an observed provider ZIP combination. (optional)
+     * @param  string|null $ispCode ISP in the same observed combination. (optional)
+     * @param  int|null $limit Number of results to return per page. (optional)
+     * @param  int|null $maxCount Inclusive maximum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $minCount Inclusive minimum node count in the published location dictionary. Either bound may be omitted. Decimal digits only, with surrounding whitespace ignored; empty values, signs, fractions, overflow and min_count &gt; max_count return 400. Unknown counts are zero. Filters primary records before ordering/pagination; nested networks, parents and ASN geo are unchanged. A detail outside the range returns 404. Counts describe dictionary membership, not live node health. (optional)
+     * @param  int|null $offset The initial index from which to return the results. (optional)
+     * @param  string|null $ordering Which field to use when ordering the results. (optional)
+     * @param  string|null $regionCode Region code in the same observed combination. (optional)
+     * @param  string|null $search Case-insensitive partial search across zip code fields: &#x60;code&#x60; and &#x60;normalized_code&#x60;. Separate multiple terms with spaces or commas; every term must match at least one listed field. (optional)
+     * @param  string|null $acceptLanguage Preferred language for human-readable API errors. Supported languages: en, ru, uk, de, it, fr, es. Regional language tags and quality weights are accepted; unsupported or omitted values use English. (optional, default to 'en')
+     * @param  string|null $impersonateUserId Act as this reseller for this request only. Requires a superuser Static API key. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listZipcodes'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function listZipcodesRequest($packageId, $asnCode = null, $cityCode = null, $code = null, $countryCode = null, $ispCode = null, $limit = null, $maxCount = null, $minCount = null, $offset = null, $ordering = null, $regionCode = null, $search = null, $acceptLanguage = null, string $contentType = self::contentTypes['listZipcodes'][0], $impersonateUserId = null)
+    {
+
+        // verify the required parameter 'packageId' is set
+        if ($packageId === null || (is_array($packageId) && count($packageId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $packageId when calling listZipcodes'
+            );
+        }
+
+
+
+
+
+
+
+        if ($maxCount !== null && $maxCount < 0) {
+            throw new \InvalidArgumentException('invalid value for "$maxCount" when calling LocationsResource.listZipcodes, must be bigger than or equal to 0.');
+        }
+
+        if ($minCount !== null && $minCount < 0) {
+            throw new \InvalidArgumentException('invalid value for "$minCount" when calling LocationsResource.listZipcodes, must be bigger than or equal to 0.');
+        }
+
+
+
+
+
+
+
+
+        $resourcePath = '/locations/zipcodes';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $asnCode,
+            'asn__code', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $cityCode,
+            'city__code', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $code,
+            'code', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $countryCode,
+            'country__code', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $ispCode,
+            'isp__code', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $limit,
+            'limit', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $maxCount,
+            'max_count', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $minCount,
+            'min_count', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $offset,
+            'offset', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $ordering,
+            'ordering', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $packageId,
+            'package_id', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            true // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $regionCode,
+            'region__code', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
         ) ?? []);
         // query params
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(

@@ -100,7 +100,8 @@ class User extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
         'dataUpdated' => '\DateTime',
         'proxyPassword' => 'string',
         'proxyPasswordReset' => '\DateTime',
-        'orders' => '\ProxyRequest\Dto\Order[]'
+        'orders' => '\ProxyRequest\Dto\Order[]',
+        'kycPassed' => 'bool'
     ];
 
     /**
@@ -153,7 +154,8 @@ class User extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
         'dataUpdated' => 'date-time',
         'proxyPassword' => null,
         'proxyPasswordReset' => 'date-time',
-        'orders' => null
+        'orders' => null,
+        'kycPassed' => null
     ];
 
     /**
@@ -204,7 +206,8 @@ class User extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
         'dataUpdated' => true,
         'proxyPassword' => true,
         'proxyPasswordReset' => true,
-        'orders' => false
+        'orders' => false,
+        'kycPassed' => false
     ];
 
     /**
@@ -335,7 +338,8 @@ class User extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
         'dataUpdated' => 'data_updated',
         'proxyPassword' => 'proxy_password',
         'proxyPasswordReset' => 'proxy_password_reset',
-        'orders' => 'orders'
+        'orders' => 'orders',
+        'kycPassed' => 'kyc_passed'
     ];
 
     /**
@@ -386,7 +390,8 @@ class User extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
         'dataUpdated' => 'setDataUpdated',
         'proxyPassword' => 'setProxyPassword',
         'proxyPasswordReset' => 'setProxyPasswordReset',
-        'orders' => 'setOrders'
+        'orders' => 'setOrders',
+        'kycPassed' => 'setKycPassed'
     ];
 
     /**
@@ -437,7 +442,8 @@ class User extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
         'dataUpdated' => 'getDataUpdated',
         'proxyPassword' => 'getProxyPassword',
         'proxyPasswordReset' => 'getProxyPasswordReset',
-        'orders' => 'getOrders'
+        'orders' => 'getOrders',
+        'kycPassed' => 'getKycPassed'
     ];
 
     /**
@@ -540,6 +546,7 @@ class User extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
         $this->setIfExists('proxyPassword', $data ?? [], null);
         $this->setIfExists('proxyPasswordReset', $data ?? [], null);
         $this->setIfExists('orders', $data ?? [], null);
+        $this->setIfExists('kycPassed', $data ?? [], null);
     }
 
     /**
@@ -577,6 +584,10 @@ class User extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
         }
         if ((mb_strlen($this->container['username']) > 150)) {
             $invalidProperties[] = "invalid value for 'username', the character length must be smaller than or equal to 150.";
+        }
+
+        if ((mb_strlen($this->container['username']) < 3)) {
+            $invalidProperties[] = "invalid value for 'username', the character length must be bigger than or equal to 3.";
         }
 
         if ($this->container['email'] === null) {
@@ -755,7 +766,7 @@ class User extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
     /**
      * Sets username
      *
-     * @param string $username Value must contain only letters, numbers, and underscores. It must not start or end with an underscore.
+     * @param string $username At least 3 characters. Spaces and control characters are not allowed.
      *
      * @return self
      */
@@ -766,6 +777,9 @@ class User extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
         }
         if ((mb_strlen($username) > 150)) {
             throw new \InvalidArgumentException('invalid length for $username when calling User., must be smaller than or equal to 150.');
+        }
+        if ((mb_strlen($username) < 3)) {
+            throw new \InvalidArgumentException('invalid length for $username when calling User., must be bigger than or equal to 3.');
         }
 
         $this->container['username'] = $username;
@@ -1987,6 +2001,33 @@ class User extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
             throw new \InvalidArgumentException('non-nullable orders cannot be null');
         }
         $this->container['orders'] = $orders;
+
+        return $this;
+    }
+
+    /**
+     * Gets kycPassed
+     *
+     * @return bool|null
+     */
+    public function getKycPassed()
+    {
+        return $this->container['kycPassed'];
+    }
+
+    /**
+     * Sets kycPassed
+     *
+     * @param bool|null $kycPassed kycPassed
+     *
+     * @return self
+     */
+    public function setKycPassed($kycPassed)
+    {
+        if (is_null($kycPassed)) {
+            throw new \InvalidArgumentException('non-nullable kycPassed cannot be null');
+        }
+        $this->container['kycPassed'] = $kycPassed;
 
         return $this;
     }

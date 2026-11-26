@@ -20,7 +20,11 @@ foreach ($document['paths'] as $item) {
         if (\in_array($id, ['sessions_list', 'sessions_destroy'], true)) {
             continue;
         }
-        $resource = preg_replace('/[^a-zA-Z0-9]/', '', ucwords($operation['tags'][0])) . 'Resource.php';
+        $tag = $operation['tags'][0];
+        if ('MFA' === $tag) {
+            $tag = 'login_otp_create' === $id ? 'Authorization' : 'Profile';
+        }
+        $resource = preg_replace('/[^a-zA-Z0-9]/', '', ucwords($tag)) . 'Resource.php';
         foreach ($operation['responses'] as $status => $response) {
             if ((int) $status >= 200 && (int) $status < 300) {
                 $success[$resource][$config['operationIdNameMappings'][$id]][(int) $status] = empty($response['content']);
@@ -31,26 +35,21 @@ foreach ($document['paths'] as $item) {
 
 // Append the new option after every existing argument, including contentType.
 // This also rewrites forwarding calls, preserving positional and named calls from 4.0.
-function preserveLocationArguments(string $source): string
+function appendOptionalArguments(string $source, string $options, string $methods): string
 {
-    $methods = '(?:getCity|getCountry|getRegion|listAsns|listCities|listCountries|listRegions)(?:WithHttpInfo|AsyncWithHttpInfo|Async|Request|WithResponse)?';
+    $methods .= '(?:WithHttpInfo|AsyncWithHttpInfo|Async|Request|WithResponse)?';
     $pattern = '/(' . $methods . '\\()([^\\n()]*)(\\))/';
-    return preg_replace_callback($pattern, static function (array $match): string {
+    return preg_replace_callback($pattern, static function (array $match) use ($options): string {
         $parameters = explode(', ', $match[2]);
-        $option = null;
+        $optional = [];
         foreach ($parameters as $index => $parameter) {
-            if (preg_match('/^\\$include(?:Asns|Geo)(?: = (?:false|null))?$/', $parameter)) {
-                $option = str_replace(' = false', ' = null', $parameter);
+            if (preg_match('/^\\$(?:' . $options . ')(?: = (?:false|null))?$/', $parameter)) {
+                $optional[] = str_replace(' = false', ' = null', $parameter);
                 unset($parameters[$index]);
-                break;
             }
         }
-        if (null === $option) {
-            return $match[0];
-        }
-        $parameters[] = $option;
-        return $match[1] . implode(', ', $parameters) . $match[3];
-    }, $source) ?? throw new RuntimeException('Unable to preserve location arguments');
+        return $match[1] . implode(', ', [...$parameters, ...$optional]) . $match[3];
+    }, $source) ?? throw new RuntimeException('Unable to preserve positional arguments');
 }
 
 // Keep existing positional calls compatible when the optional impersonation
@@ -74,13 +73,14 @@ function preserveImpersonationArguments(string $source): string
     }, $source) ?? throw new RuntimeException('Unable to preserve impersonation arguments');
 }
 
+$locations = '(?:getCity|getCountry|getRegion|listAsns|listCities|listCountries|listRegions)';
 foreach (glob($root . '/src/Resource/*Resource.php') ?: [] as $path) {
     if ('SessionsResource.php' === basename($path)) {
         continue;
     }
     $source = (string) file_get_contents($path);
     if ('LocationsResource.php' === basename($path)) {
-        $source = preserveLocationArguments($source);
+        $source = appendOptionalArguments($source, 'includeAsns|includeGeo', $locations);
         $source = str_replace(
             '            $includeAsns,' . "\n            'include_asns', // param base name",
             '            \\is_bool($includeAsns) ? ($includeAsns ? \'true\' : \'false\') : $includeAsns,' . "\n            'include_asns', // param base name",
@@ -92,7 +92,7 @@ foreach (glob($root . '/src/Resource/*Resource.php') ?: [] as $path) {
             $source,
         );
         $docsPath = $root . '/docs/Api/LocationsResource.md';
-        $docs = preserveLocationArguments((string) file_get_contents($docsPath));
+        $docs = appendOptionalArguments((string) file_get_contents($docsPath), 'includeAsns|includeGeo', $locations);
         $docs = str_replace(', $includeAsns)', ', includeAsns: $includeAsns)', $docs);
         $docs = str_replace(', $includeGeo)', ', includeGeo: $includeGeo)', $docs);
         file_put_contents($docsPath, $docs);
@@ -101,6 +101,27 @@ foreach (glob($root . '/src/Resource/*Resource.php') ?: [] as $path) {
     // remains the final argument on those methods as well.
     $source = preserveImpersonationArguments($source);
     $source = str_replace('$xImpersonateUser', '$impersonateUserId', $source);
+    if ('LocationsResource.php' === basename($path)) {
+        $source = appendOptionalArguments($source, 'maxCount|minCount', $locations);
+        $docs = appendOptionalArguments((string) file_get_contents($docsPath), 'maxCount|minCount', $locations);
+        $docs = str_replace(
+            [', $maxCount', ', $minCount'],
+            [', maxCount: $maxCount', ', minCount: $minCount'],
+            $docs,
+        );
+        file_put_contents($docsPath, $docs);
+    }
+    if ('OrdersResource.php' === basename($path)) {
+        $source = appendOptionalArguments($source, 'endpointId', 'resetProxyPassword');
+        $docsPath = $root . '/docs/Api/OrdersResource.md';
+        $docs = appendOptionalArguments((string) file_get_contents($docsPath), 'endpointId', 'resetProxyPassword');
+        $docs = str_replace(
+            'resetProxyPassword($id, $acceptLanguage, $xImpersonateUser, $endpointId)',
+            'resetProxyPassword($id, $acceptLanguage, impersonateUserId: $xImpersonateUser, endpointId: $endpointId)',
+            $docs,
+        );
+        file_put_contents($docsPath, $docs);
+    }
     if ('AnalyticsResource.php' === basename($path)) {
         $source = str_replace(
             '            $includeSubUsers,' . "\n            'include_sub_users', // param base name",

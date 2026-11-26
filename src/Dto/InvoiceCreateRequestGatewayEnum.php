@@ -33,7 +33,7 @@ use \ProxyRequest\ObjectSerializer;
  * InvoiceCreateRequestGatewayEnum Class Doc Comment
  *
  * @category Class
- * @description * &#x60;crypto&#x60; - crypto * &#x60;credit_card&#x60; - credit_card * &#x60;wallet&#x60; - wallet * &#x60;manual&#x60; - manual * &#x60;stripe&#x60; - stripe * &#x60;coinbase&#x60; - coinbase * &#x60;cryptomus&#x60; - cryptomus * &#x60;coingate&#x60; - coingate * &#x60;whitepay&#x60; - whitepay * &#x60;wayforpay&#x60; - wayforpay * &#x60;usegateway&#x60; - usegateway * &#x60;binance&#x60; - binance * &#x60;anymoney&#x60; - anymoney * &#x60;coinpayments&#x60; - coinpayments * &#x60;checkoutcom&#x60; - checkoutcom * &#x60;nowpayments&#x60; - nowpayments * &#x60;btcpay&#x60; - btcpay * &#x60;braintree&#x60; - braintree * &#x60;monobank&#x60; - monobank * &#x60;liqpay&#x60; - liqpay * &#x60;iyzico&#x60; - iyzico * &#x60;paytr&#x60; - paytr * &#x60;payu&#x60; - payu * &#x60;tpay&#x60; - tpay * &#x60;przelewy24&#x60; - przelewy24 * &#x60;gopay&#x60; - gopay * &#x60;comgate&#x60; - comgate * &#x60;monei&#x60; - monei * &#x60;redsys&#x60; - redsys * &#x60;payplug&#x60; - payplug * &#x60;mollie&#x60; - mollie * &#x60;unzer&#x60; - unzer * &#x60;payone&#x60; - payone * &#x60;nexi_xpay&#x60; - nexi_xpay * &#x60;halyk_epay&#x60; - halyk_epay * &#x60;kaspi_pay&#x60; - kaspi_pay * &#x60;vipps_mobilepay&#x60; - vipps_mobilepay * &#x60;paytrail&#x60; - paytrail
+ * @description * &#x60;revolut&#x60; - revolut * &#x60;paypal&#x60; - paypal * &#x60;coinbase&#x60; - coinbase * &#x60;cryptomus&#x60; - cryptomus * &#x60;stripe&#x60; - stripe * &#x60;coingate&#x60; - coingate * &#x60;wallet&#x60; - wallet * &#x60;manual&#x60; - manual * &#x60;whitepay&#x60; - whitepay * &#x60;wayforpay&#x60; - wayforpay * &#x60;usegateway&#x60; - usegateway * &#x60;binance&#x60; - binance * &#x60;anymoney&#x60; - anymoney * &#x60;coinpayments&#x60; - coinpayments * &#x60;checkoutcom&#x60; - checkoutcom * &#x60;nowpayments&#x60; - nowpayments * &#x60;btcpay&#x60; - btcpay * &#x60;braintree&#x60; - braintree * &#x60;monobank&#x60; - monobank * &#x60;liqpay&#x60; - liqpay * &#x60;iyzico&#x60; - iyzico * &#x60;paytr&#x60; - paytr * &#x60;payu&#x60; - payu * &#x60;tpay&#x60; - tpay * &#x60;przelewy24&#x60; - przelewy24 * &#x60;gopay&#x60; - gopay * &#x60;comgate&#x60; - comgate * &#x60;monei&#x60; - monei * &#x60;redsys&#x60; - redsys * &#x60;payplug&#x60; - payplug * &#x60;mollie&#x60; - mollie * &#x60;unzer&#x60; - unzer * &#x60;payone&#x60; - payone * &#x60;nexi_xpay&#x60; - nexi_xpay * &#x60;halyk_epay&#x60; - halyk_epay * &#x60;kaspi_pay&#x60; - kaspi_pay * &#x60;vipps_mobilepay&#x60; - vipps_mobilepay * &#x60;paytrail&#x60; - paytrail * &#x60;crypto&#x60; - crypto * &#x60;credit_card&#x60; - credit_card
  * @package  ProxyRequest
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
@@ -43,21 +43,21 @@ class InvoiceCreateRequestGatewayEnum
     /**
      * Possible values of this enum
      */
-    public const CRYPTO = 'crypto';
+    public const REVOLUT = 'revolut';
 
-    public const CREDIT_CARD = 'credit_card';
-
-    public const WALLET = 'wallet';
-
-    public const MANUAL = 'manual';
-
-    public const STRIPE = 'stripe';
+    public const PAYPAL = 'paypal';
 
     public const COINBASE = 'coinbase';
 
     public const CRYPTOMUS = 'cryptomus';
 
+    public const STRIPE = 'stripe';
+
     public const COINGATE = 'coingate';
+
+    public const WALLET = 'wallet';
+
+    public const MANUAL = 'manual';
 
     public const WHITEPAY = 'whitepay';
 
@@ -119,6 +119,10 @@ class InvoiceCreateRequestGatewayEnum
 
     public const PAYTRAIL = 'paytrail';
 
+    public const CRYPTO = 'crypto';
+
+    public const CREDIT_CARD = 'credit_card';
+
     public const UNKNOWN_DEFAULT_OPEN_API = 'unknown_default_open_api';
 
     /**
@@ -128,14 +132,14 @@ class InvoiceCreateRequestGatewayEnum
     public static function getAllowableEnumValues()
     {
         return [
-            self::CRYPTO,
-            self::CREDIT_CARD,
-            self::WALLET,
-            self::MANUAL,
-            self::STRIPE,
+            self::REVOLUT,
+            self::PAYPAL,
             self::COINBASE,
             self::CRYPTOMUS,
+            self::STRIPE,
             self::COINGATE,
+            self::WALLET,
+            self::MANUAL,
             self::WHITEPAY,
             self::WAYFORPAY,
             self::USEGATEWAY,
@@ -166,6 +170,8 @@ class InvoiceCreateRequestGatewayEnum
             self::KASPI_PAY,
             self::VIPPS_MOBILEPAY,
             self::PAYTRAIL,
+            self::CRYPTO,
+            self::CREDIT_CARD,
             self::UNKNOWN_DEFAULT_OPEN_API
         ];
     }

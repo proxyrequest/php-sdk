@@ -57,6 +57,7 @@ class City extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
      * @var string[]
      */
     protected static $openAPITypes = [
+        'count' => 'int',
         'id' => 'string',
         'code' => 'string',
         'name' => 'string',
@@ -74,6 +75,7 @@ class City extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
+        'count' => null,
         'id' => null,
         'code' => null,
         'name' => null,
@@ -89,6 +91,7 @@ class City extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
      * @var boolean[]
      */
     protected static array $openAPINullables = [
+        'count' => false,
         'id' => false,
         'code' => false,
         'name' => false,
@@ -184,6 +187,7 @@ class City extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
      * @var string[]
      */
     protected static $attributeMap = [
+        'count' => 'count',
         'id' => 'id',
         'code' => 'code',
         'name' => 'name',
@@ -199,6 +203,7 @@ class City extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
      * @var string[]
      */
     protected static $setters = [
+        'count' => 'setCount',
         'id' => 'setId',
         'code' => 'setCode',
         'name' => 'setName',
@@ -214,6 +219,7 @@ class City extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
      * @var string[]
      */
     protected static $getters = [
+        'count' => 'getCount',
         'id' => 'getId',
         'code' => 'getCode',
         'name' => 'getName',
@@ -280,6 +286,7 @@ class City extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
      */
     public function __construct(?array $data = null)
     {
+        $this->setIfExists('count', $data ?? [], null);
         $this->setIfExists('id', $data ?? [], null);
         $this->setIfExists('code', $data ?? [], null);
         $this->setIfExists('name', $data ?? [], null);
@@ -315,6 +322,10 @@ class City extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
     public function listInvalidProperties()
     {
         $invalidProperties = [];
+
+        if (!is_null($this->container['count']) && ($this->container['count'] < 0)) {
+            $invalidProperties[] = "invalid value for 'count', must be bigger than or equal to 0.";
+        }
 
         if (!is_null($this->container['id']) && (mb_strlen($this->container['id']) > 36)) {
             $invalidProperties[] = "invalid value for 'id', the character length must be smaller than or equal to 36.";
@@ -360,6 +371,38 @@ class City extends \ProxyRequest\Support\AdditionalProperties implements ModelIn
         return count($this->listInvalidProperties()) === 0;
     }
 
+
+    /**
+     * Gets count
+     *
+     * @return int|null
+     */
+    public function getCount()
+    {
+        return $this->container['count'];
+    }
+
+    /**
+     * Sets count
+     *
+     * @param int|null $count Node count in Rust search mode.
+     *
+     * @return self
+     */
+    public function setCount($count)
+    {
+        if (is_null($count)) {
+            throw new \InvalidArgumentException('non-nullable count cannot be null');
+        }
+
+        if (($count < 0)) {
+            throw new \InvalidArgumentException('invalid value for $count when calling City., must be bigger than or equal to 0.');
+        }
+
+        $this->container['count'] = $count;
+
+        return $this;
+    }
 
     /**
      * Gets id

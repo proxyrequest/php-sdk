@@ -57,7 +57,7 @@ class OTPChallenge extends \ProxyRequest\Support\AdditionalProperties implements
      * @var string[]
      */
     protected static $openAPITypes = [
-        'status' => 'string',
+        'status' => '\ProxyRequest\Dto\OTPChallengeStatusEnum',
         'challenge' => 'string',
         'expiresIn' => 'int'
     ];
@@ -315,7 +315,7 @@ class OTPChallenge extends \ProxyRequest\Support\AdditionalProperties implements
     /**
      * Gets status
      *
-     * @return string
+     * @return \ProxyRequest\Dto\OTPChallengeStatusEnum
      */
     public function getStatus()
     {
@@ -325,7 +325,7 @@ class OTPChallenge extends \ProxyRequest\Support\AdditionalProperties implements
     /**
      * Sets status
      *
-     * @param string $status status
+     * @param \ProxyRequest\Dto\OTPChallengeStatusEnum $status status
      *
      * @return self
      */

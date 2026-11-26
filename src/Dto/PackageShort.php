@@ -61,7 +61,8 @@ class PackageShort extends \ProxyRequest\Support\AdditionalProperties implements
         'name' => 'string',
         'alias' => 'string',
         'isUnlimitedData' => 'bool',
-        'targetingOptions' => '\ProxyRequest\Dto\TargetingOptions'
+        'targetingOptions' => '\ProxyRequest\Dto\TargetingOptions',
+        'connectionLimit' => 'int'
     ];
 
     /**
@@ -76,7 +77,8 @@ class PackageShort extends \ProxyRequest\Support\AdditionalProperties implements
         'name' => null,
         'alias' => null,
         'isUnlimitedData' => null,
-        'targetingOptions' => null
+        'targetingOptions' => null,
+        'connectionLimit' => null
     ];
 
     /**
@@ -89,7 +91,8 @@ class PackageShort extends \ProxyRequest\Support\AdditionalProperties implements
         'name' => false,
         'alias' => false,
         'isUnlimitedData' => false,
-        'targetingOptions' => false
+        'targetingOptions' => false,
+        'connectionLimit' => false
     ];
 
     /**
@@ -182,7 +185,8 @@ class PackageShort extends \ProxyRequest\Support\AdditionalProperties implements
         'name' => 'name',
         'alias' => 'alias',
         'isUnlimitedData' => 'is_unlimited_data',
-        'targetingOptions' => 'targeting_options'
+        'targetingOptions' => 'targeting_options',
+        'connectionLimit' => 'connection_limit'
     ];
 
     /**
@@ -195,7 +199,8 @@ class PackageShort extends \ProxyRequest\Support\AdditionalProperties implements
         'name' => 'setName',
         'alias' => 'setAlias',
         'isUnlimitedData' => 'setIsUnlimitedData',
-        'targetingOptions' => 'setTargetingOptions'
+        'targetingOptions' => 'setTargetingOptions',
+        'connectionLimit' => 'setConnectionLimit'
     ];
 
     /**
@@ -208,7 +213,8 @@ class PackageShort extends \ProxyRequest\Support\AdditionalProperties implements
         'name' => 'getName',
         'alias' => 'getAlias',
         'isUnlimitedData' => 'getIsUnlimitedData',
-        'targetingOptions' => 'getTargetingOptions'
+        'targetingOptions' => 'getTargetingOptions',
+        'connectionLimit' => 'getConnectionLimit'
     ];
 
     /**
@@ -273,6 +279,7 @@ class PackageShort extends \ProxyRequest\Support\AdditionalProperties implements
         $this->setIfExists('alias', $data ?? [], null);
         $this->setIfExists('isUnlimitedData', $data ?? [], null);
         $this->setIfExists('targetingOptions', $data ?? [], null);
+        $this->setIfExists('connectionLimit', $data ?? [], null);
     }
 
     /**
@@ -502,6 +509,33 @@ class PackageShort extends \ProxyRequest\Support\AdditionalProperties implements
             throw new \InvalidArgumentException('non-nullable targetingOptions cannot be null');
         }
         $this->container['targetingOptions'] = $targetingOptions;
+
+        return $this;
+    }
+
+    /**
+     * Gets connectionLimit
+     *
+     * @return int|null
+     */
+    public function getConnectionLimit()
+    {
+        return $this->container['connectionLimit'];
+    }
+
+    /**
+     * Sets connectionLimit
+     *
+     * @param int|null $connectionLimit connectionLimit
+     *
+     * @return self
+     */
+    public function setConnectionLimit($connectionLimit)
+    {
+        if (is_null($connectionLimit)) {
+            throw new \InvalidArgumentException('non-nullable connectionLimit cannot be null');
+        }
+        $this->container['connectionLimit'] = $connectionLimit;
 
         return $this;
     }

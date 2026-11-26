@@ -4,6 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**payerDetails** | **array<string,string>** | Regional payer data: first_name, last_name, identity_number, address, city, country, phone. Required keys depend on the provider. | [optional]
+**pricingPlanId** | **string** | Required for bandwidth pricing: active plan from the package catalogue. Defines Mbps, duration in 24-hour days and price; omit data/amount/quantity/expires. | [optional]
+**quoteToken** | **string** | For an active bandwidth upgrade, pass the signed token from POST /invoices/quote/. Valid for 60 seconds and bound to the buyer, plan and current access. Upgrades require wallet payment. | [optional]
 **packageId** | **string** | Package to purchase. Required for package purchases. | [optional]
 **userId** | **string** | Account receiving the purchase. Omit for your own account. Sending user_id requires is_reseller; a reseller can target its own sub-user, while a superuser with is_reseller can target another account. Do not send your own ID. | [optional]
 **gateway** | [**\ProxyRequest\Dto\InvoiceCreateRequestGatewayEnum**](InvoiceCreateRequestGatewayEnum.md) |  |
